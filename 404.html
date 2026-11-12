@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>404 · Horror Aesthetic</title>
+<style>
+html,body{margin:0;height:100%;background:#030505;color:#e7d9cf;font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;opacity:.28;image-rendering:pixelated}
+.glow{position:fixed;inset:0;background:radial-gradient(55% 60% at 50% 70%,rgba(160,205,198,.45),rgba(50,95,95,.15) 55%,transparent 80%)}
+svg{position:fixed;left:50%;bottom:0;height:78vh;width:48vh;margin-left:-24vh;transform:translateY(100%);animation:up 9s cubic-bezier(.2,.6,.2,1) .8s forwards;filter:drop-shadow(0 0 8px #000)}
+@keyframes up{to{transform:translateY(6%)}}
+main{position:relative;z-index:2;text-align:center;padding:9vh 18px 0}
+h1{margin:0;font:900 clamp(72px,22vw,190px)/.9 Georgia,"Times New Roman",serif;letter-spacing:.06em;color:#e7d9cf;text-shadow:5px 0 rgba(196,22,31,.9),-5px 0 rgba(60,170,180,.6);animation:j 3.6s steps(1,end) infinite}
+@keyframes j{0%,86%,100%{transform:none}87%{transform:translateX(-8px)}89%{transform:translateX(10px) skewX(6deg)}91%{transform:none}}
+p{margin:18px auto 0;max-width:460px;font-size:13px;line-height:1.7;letter-spacing:.14em;text-transform:uppercase;color:#d2c5bb;text-shadow:0 0 8px #000}
+a{display:inline-block;margin-top:26px;color:#e7d9cf;border:1px solid #c4161f;padding:13px 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;background:rgba(0,0,0,.65)}
+a:hover,a:focus-visible{background:#c4161f}
+@media (prefers-reduced-motion:reduce){svg{animation:none;transform:translateY(6%)}h1{animation:none}}
+</style></head><body>
+<canvas id="n" width="200" height="112" aria-hidden="true"></canvas><div class="glow"></div>
+<svg viewBox="0 0 100 160" aria-hidden="true"><path fill="#050303" d="M40 58C40 32 82 32 82 58C86 92 82 128 92 160L28 160C40 128 37 92 40 58Z"/><g fill="none" stroke="#050303" stroke-linecap="round"><path stroke-width="2" d="M38 72Q28 104 33 150"/><path stroke-width="1.6" d="M84 74Q92 108 86 150"/></g></svg>
+<main><h1>404</h1><p id="t"></p><a href="/horror-aesthetic/" id="b"></a></main>
+<script>
+var ru=(navigator.language||"").toLowerCase().indexOf("ru")===0;
+document.documentElement.lang=ru?"ru":"en";
+document.getElementById("t").textContent=ru?"Такой страницы нет. Или она есть, но смотрит на вас из колодца.":"There is no such page. Or there is, and it is looking at you from the well.";
+document.getElementById("b").textContent=ru?"Вернуться на сайт":"Back to the site";
+var c=document.getElementById("n"),x=c.getContext("2d");
+if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches)){setInterval(function(){var im=x.createImageData(200,112),p=im.data;for(var i=0;i<p.length;i+=4){var v=Math.random()*255|0;p[i]=v;p[i+1]=v*.9;p[i+2]=v*.9;p[i+3]=255}x.putImageData(im,0,0)},80)}
+</script></body></html>
