@@ -1598,6 +1598,14 @@ html.ha-calm .hair path,html.ha-calm .snd.hb::before,html.ha-calm .snd.hb::after
 @media(prefers-reduced-motion:reduce){.ticker span::after,.sec-h::after,.sec-h::before,.card::after,#filters button[aria-pressed="true"]::after{animation:none!important}}
 html.ha-calm .ticker span::after,html.ha-calm .sec-h::after,html.ha-calm .sec-h::before,html.ha-calm .card::after,html.ha-calm #filters button[aria-pressed="true"]::after{animation:none!important}
 
+/* ===== v115: trailer section ===== */
+.tr-box{position:relative;max-width:980px;margin:0 auto;border:1px solid var(--blood);background:#000;box-shadow:0 20px 60px -30px rgba(196,22,31,.8)}
+.tr-box video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.tr-box::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.55)}
+.tr-cap{max-width:980px;margin:12px auto 0;color:var(--mute,#9a8f8f);font-size:14px}
+.ct-mail{margin:10px 0 0;font-size:15px}
+.ct-mail a{color:var(--bt,var(--blood));word-break:break-all}
+
 </style></head><body data-lang="en">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -2036,6 +2044,12 @@ html.ha-calm .ticker span::after,html.ha-calm .sec-h::after,html.ha-calm .sec-h:
     <div class="shelves" id="shelves-host"></div>
   </section>
 
+  <section data-cat="trailer" data-kj="映" id="trailer">
+    <div class="sec-h"><h2><svg class="ic" viewBox="0 0 24 24"><use href="#i-tape"/></svg><span data-t="h_trailer"></span></h2><small data-t="s_trailer"></small></div>
+    <div class="tr-box"><video controls preload="none" playsinline poster="img/trailer_poster.webp" src="media/trailer.mp4" aria-label="Horror Aesthetic trailer"></video></div>
+    <p class="tr-cap" data-t="c_trailer"></p>
+  </section>
+
   <section data-cat="art" data-kj="絵" id="art">
     <div class="sec-h"><h2><svg class="ic" viewBox="0 0 24 24"><use href="#i-frame"/></svg><span data-t="h_art_g"></span></h2><small data-t="s_art_g"></small></div>
     <div class="gal-f" id="gal-f"></div>
@@ -2057,14 +2071,14 @@ html.ha-calm .ticker span::after,html.ha-calm .sec-h::after,html.ha-calm .sec-h:
 </div>
 
 <script>
-var IMG={"banner":"img/banner.webp","logo":"img/logo.webp","logo_cathedral":"img/logo_cathedral.webp","logo_goat":"img/logo_goat.webp","zombie":"img/zombie.webp","schoolgirl":"img/schoolgirl.webp","cyber":"img/cyber.webp","monster":"img/monster.webp","poster":"img/poster.webp","welcome":"img/welcome.webp","jp":"img/jp.webp","circus":"img/circus.webp","vintage":"img/vintage.webp","comic":"img/comic.webp","statue":"img/statue.webp","slashers":"img/slashers.webp","collage":"img/collage.webp","circle1":"img/circle1.webp","skull":"img/skull.webp","gothic":"img/gothic.webp","room":"img/room.webp","chars":"img/chars.webp","collage2":"img/collage2.webp","pano1":"img/pano1.webp","eye":"img/eye.webp","pano2":"img/pano2.webp","poster17":"img/poster17.webp","n_wide1":"img/n_wide1.webp","n_trio":"img/n_trio.webp","n_shattered":"img/n_shattered.webp","n_circlew":"img/n_circlew.webp","n_crown":"img/n_crown.webp","n_castle":"img/n_castle.webp","n_window":"img/n_window.webp","n_wide2":"img/n_wide2.webp","n_alien":"img/n_alien.webp","n_hb1":"img/n_hb1.webp","n_jason":"img/n_jason.webp","jh1":"img/jh1.webp","jh2":"img/jh2.webp","jh3":"img/jh3.webp","jh4":"img/jh4.webp","jh5":"img/jh5.webp","jh6":"img/jh6.webp","jh7":"img/jh7.webp","jh8":"img/jh8.webp","jh9":"img/jh9.webp","jh10":"img/jh10.webp","jh11":"img/jh11.webp","jh12":"img/jh12.webp","jh13":"img/jh13.webp","jh14":"img/jh14.webp","jh15":"img/jh15.webp","jh16":"img/jh16.webp","jh17":"img/jh17.webp","jh18":"img/jh18.webp","jh19":"img/jh19.webp","jh20":"img/jh20.webp","scream":"img/scream.webp","w_hand":"img/w_hand.webp","w_torii":"img/w_torii.webp","w_skull":"img/w_skull.webp","w_raven":"img/w_raven.webp","w_back":"img/w_back.webp","s_cinema_ru":"img/s_cinema_ru.webp","s_cinema":"img/s_cinema.webp","s_library":"img/s_library.webp","s_welcome":"img/s_welcome.webp","s_archives":"img/s_archives.webp","s_reviews":"img/s_reviews.webp","s_dark":"img/s_dark.webp","w_sadako":"img/w_sadako.webp","s_main":"img/s_main.webp","s_gen1":"img/s_gen1.webp","s_gen2":"img/s_gen2.webp","s_gen3":"img/s_gen3.webp","logo_ha":"img/logo_ha.webp","cv_psych":"img/cv_psych.webp","cv_wide3":"img/cv_wide3.webp","hero_blood":"img/hero_blood.webp","hero_red2":"img/hero_red2.webp","hero_kaidan":"img/hero_kaidan.webp","hero_ringu":"img/hero_ringu.webp","hero_omc":"img/hero_omc.webp","hero_juon":"img/hero_juon.webp","hero_juon2":"img/hero_juon2.webp","hero_tomie":"img/hero_tomie.webp","hero_tomie2":"img/hero_tomie2.webp","hero_tomie3":"img/hero_tomie3.webp","p_red_house":"img/p_red_house.webp","p_shrine":"img/p_shrine.webp","p_call_sq":"img/p_call_sq.webp","p_juon_sq":"img/p_juon_sq.webp","p_tomie_sq":"img/p_tomie_sq.webp","p_tomie_sq2":"img/p_tomie_sq2.webp","p_red_wide":"img/p_red_wide.webp","p_call2":"img/p_call2.webp","p_call1":"img/p_call1.webp","p_juon_wide":"img/p_juon_wide.webp","p_tomie_collage":"img/p_tomie_collage.webp","p_tomie_wide":"img/p_tomie_wide.webp","b_red":"img/b_red.webp","b_shrine_ru":"img/b_shrine_ru.webp","b_fox":"img/b_fox.webp","b_call":"img/b_call.webp","b_juon":"img/b_juon.webp","b_tomie_spiral":"img/b_tomie_spiral.webp","b_tomie":"img/b_tomie.webp"};
+var IMG={"banner":"img/banner.webp","logo":"img/logo.webp","logo_cathedral":"img/logo_cathedral.webp","logo_goat":"img/logo_goat.webp","zombie":"img/zombie.webp","schoolgirl":"img/schoolgirl.webp","cyber":"img/cyber.webp","monster":"img/monster.webp","poster":"img/poster.webp","welcome":"img/welcome.webp","jp":"img/jp.webp","circus":"img/circus.webp","vintage":"img/vintage.webp","comic":"img/comic.webp","statue":"img/statue.webp","slashers":"img/slashers.webp","collage":"img/collage.webp","circle1":"img/circle1.webp","skull":"img/skull.webp","gothic":"img/gothic.webp","room":"img/room.webp","chars":"img/chars.webp","collage2":"img/collage2.webp","pano1":"img/pano1.webp","eye":"img/eye.webp","pano2":"img/pano2.webp","poster17":"img/poster17.webp","n_wide1":"img/n_wide1.webp","n_trio":"img/n_trio.webp","n_shattered":"img/n_shattered.webp","n_circlew":"img/n_circlew.webp","n_crown":"img/n_crown.webp","n_castle":"img/n_castle.webp","n_window":"img/n_window.webp","n_wide2":"img/n_wide2.webp","n_alien":"img/n_alien.webp","n_hb1":"img/n_hb1.webp","n_jason":"img/n_jason.webp","jh1":"img/jh1.webp","jh2":"img/jh2.webp","jh3":"img/jh3.webp","jh4":"img/jh4.webp","jh5":"img/jh5.webp","jh6":"img/jh6.webp","jh7":"img/jh7.webp","jh8":"img/jh8.webp","jh9":"img/jh9.webp","jh10":"img/jh10.webp","jh11":"img/jh11.webp","jh12":"img/jh12.webp","jh13":"img/jh13.webp","jh14":"img/jh14.webp","jh15":"img/jh15.webp","jh16":"img/jh16.webp","jh17":"img/jh17.webp","jh18":"img/jh18.webp","jh19":"img/jh19.webp","jh20":"img/jh20.webp","scream":"img/scream.webp","w_hand":"img/w_hand.webp","w_torii":"img/w_torii.webp","w_skull":"img/w_skull.webp","w_raven":"img/w_raven.webp","w_back":"img/w_back.webp","s_cinema_ru":"img/s_cinema_ru.webp","s_cinema":"img/s_cinema.webp","s_library":"img/s_library.webp","s_welcome":"img/s_welcome.webp","s_archives":"img/s_archives.webp","s_reviews":"img/s_reviews.webp","s_dark":"img/s_dark.webp","w_sadako":"img/w_sadako.webp","s_main":"img/s_main.webp","s_gen1":"img/s_gen1.webp","s_gen2":"img/s_gen2.webp","s_gen3":"img/s_gen3.webp","logo_ha":"img/logo_ha.webp","cv_psych":"img/cv_psych.webp","cv_wide3":"img/cv_wide3.webp","hero_blood":"img/hero_blood.webp","hero_red2":"img/hero_red2.webp","hero_kaidan":"img/hero_kaidan.webp","hero_ringu":"img/hero_ringu.webp","hero_omc":"img/hero_omc.webp","hero_juon":"img/hero_juon.webp","hero_juon2":"img/hero_juon2.webp","hero_tomie":"img/hero_tomie.webp","hero_tomie2":"img/hero_tomie2.webp","hero_tomie3":"img/hero_tomie3.webp","p_red_house":"img/p_red_house.webp","p_shrine":"img/p_shrine.webp","p_call_sq":"img/p_call_sq.webp","p_juon_sq":"img/p_juon_sq.webp","p_tomie_sq":"img/p_tomie_sq.webp","p_tomie_sq2":"img/p_tomie_sq2.webp","p_red_wide":"img/p_red_wide.webp","p_call2":"img/p_call2.webp","p_call1":"img/p_call1.webp","p_juon_wide":"img/p_juon_wide.webp","p_tomie_collage":"img/p_tomie_collage.webp","p_tomie_wide":"img/p_tomie_wide.webp","b_red":"img/b_red.webp","b_shrine_ru":"img/b_shrine_ru.webp","b_fox":"img/b_fox.webp","b_call":"img/b_call.webp","b_juon":"img/b_juon.webp","b_tomie_spiral":"img/b_tomie_spiral.webp","b_tomie":"img/b_tomie.webp","hero_vamp":"img/hero_vamp.webp","v_sq":"img/v_sq.webp","v_wide":"img/v_wide.webp","hero_urban":"img/hero_urban.webp","u_sq":"img/u_sq.webp","u_wide":"img/u_wide.webp","hero_scis":"img/hero_scis.webp","s_sq":"img/s_sq.webp","s_wide":"img/s_wide.webp","hero_thea":"img/hero_thea.webp","t_sq":"img/t_sq.webp","t_wide":"img/t_wide.webp","hero_kairo":"img/hero_kairo.webp","k_sq":"img/k_sq.webp","k_wide":"img/k_wide.webp","hero_onmy":"img/hero_onmy.webp","o_sq":"img/o_sq.webp","o_wide":"img/o_wide.webp","x_tetsuo":"img/x_tetsuo.webp","trailer_poster":"img/trailer_poster.webp","tt_wide":"img/tt_wide.webp","hero_tets":"img/hero_tets.webp","hero_dream":"img/hero_dream.webp","d_wide":"img/d_wide.webp","d_sq":"img/d_sq.webp","kd_sq":"img/kd_sq.webp","hero_kai2":"img/hero_kai2.webp","kd_wide":"img/kd_wide.webp"};
 var LANG="en";
 function a(ru,en){return {ru:ru,en:en}}
 function T(x){return x[LANG]}
 
 var UI={
  warn:a("Психологический ужас. Смотрите в темноте и в одиночку, если не боитесь","Psychological horror. Best watched alone, in the dark"),
- upd:a("Обновлено 04.11.2026","Updated 04.11.2026"),
+ upd:a("Обновлено 12.11.2026","Updated 12.11.2026"),
  mast_p:a("Ужас всех поджанров: новинки, рецензии, подборки и всё, что страшно смотреть в одиночку.","Horror in every subgenre: new releases, reviews, shelves and everything that is too scary to watch alone."),
  h_about:a("Добро пожаловать","Welcome"),
  h_spot:a("Миры ужаса: главные франшизы и поджанры","Worlds of horror: key franchises and subgenres"),
@@ -2133,7 +2147,7 @@ var UI={
  foot1:a("Horror Aesthetic · горит красная лампа","Horror Aesthetic · the red lamp is on"),
  foot2:a("Рецензии, оценки и заметки на странице — образцы","Reviews, ratings and notes on this page are samples"),
  foot3:a("Оформление и арт: Horror Aesthetic","Design and artwork: Horror Aesthetic"),
- sec_mylist:a("Моё","My list"),sec_home:a("Главная","Home"),sec_all:a("Всё","All"),sec_spot:a("Франшизы","Franchises"),sec_about:a("О нас","About"),sec_articles:a("Статья","Feature"),sec_releases:a("Новинки","New"),sec_manga:a("Манга и аниме","Manga & anime"),sec_news:a("Новости","News"),sec_genres:a("Жанры","Genres"),sec_reviews:a("Рецензии","Reviews"),sec_stats:a("Данные","Data"),sec_lists:a("Лучшее","Best"),sec_shelves:a("Подборки","Shelves"),sec_art:a("Арт","Art")
+ sec_trailer:a("Трейлер","Trailer"),h_trailer:a("Трейлер","Trailer"),s_trailer:a("двадцать секунд из коридора","twenty seconds from the corridor"),c_trailer:a("Со звуком. Лучше смотреть ночью и в наушниках.","With sound. Best watched at night with headphones."),sec_mylist:a("Моё","My list"),sec_home:a("Главная","Home"),sec_all:a("Всё","All"),sec_spot:a("Франшизы","Franchises"),sec_about:a("О нас","About"),sec_articles:a("Статья","Feature"),sec_releases:a("Новинки","New"),sec_manga:a("Манга и аниме","Manga & anime"),sec_news:a("Новости","News"),sec_genres:a("Жанры","Genres"),sec_reviews:a("Рецензии","Reviews"),sec_stats:a("Данные","Data"),sec_lists:a("Лучшее","Best"),sec_shelves:a("Подборки","Shelves"),sec_art:a("Арт","Art")
 };
 var PL={ru:["рецензия","рецензии","рецензий"],en:["review","reviews","reviews"]};
 
@@ -3187,7 +3201,34 @@ var GALLERY=[
  ["zombie","art",a("Зомби с бензопилой","Zombie with a chainsaw")],
  ["schoolgirl","art",a("Школьница и кровавая катана","The schoolgirl and the bloody blade")],
  ["cyber","art",a("Киберрука среди черепов","Cyber arm among the skulls")],
- ["monster","art",a("Монстр на пентаграмме","Monster on the pentagram")]
+ ["monster","art",a("Монстр на пентаграмме","Monster on the pentagram")],
+ ["v_wide","poster",a("Постер: J-Horror вампир, дом под луной","Poster: the J-Horror vampire, the house under the moon")],
+ ["v_sq","poster",a("Обложка: J-Horror вампир и красная луна","Cover: the J-Horror vampire and the red moon")],
+ ["hero_vamp","banner",a("Баннер: J-Horror вампир","Banner: J-Horror vampire")],
+ ["u_wide","poster",a("Постер: городские легенды Японии","Poster: Japanese urban legends")],
+ ["u_sq","poster",a("Обложка: городские легенды, 都市の怪談","Cover: urban legends, 都市の怪談")],
+ ["hero_urban","banner",a("Баннер: Кутисакэ-онна, Хикико-сан и электричка","Banner: Kuchisake-onna, Hikiko-san and the train")],
+ ["s_wide","poster",a("Постер: ножницы и маска","Poster: the scissors and the mask")],
+ ["s_sq","poster",a("Обложка: женщина с разрезанным ртом","Cover: the slit-mouthed woman")],
+ ["hero_scis","banner",a("Баннер: красная луна и тории, 口裂け女","Banner: the red moon and torii, 口裂け女")],
+ ["t_wide","poster",a("Постер: призрачный театр, 幽霊の劇場","Poster: the ghost theatre, 幽霊の劇場")],
+ ["t_sq","poster",a("Обложка: маски Но и пустой зал","Cover: Noh masks and the empty hall")],
+ ["hero_thea","banner",a("Баннер: призрак на сцене","Banner: the ghost on the stage")],
+ ["k_wide","poster",a("Кадр: Kairo, 2001, красный глаз на плёнке","Still: Kairo, 2001, the red eye on tape")],
+ ["k_sq","poster",a("Обложка: Kairo, 回路","Cover: Kairo, 回路")],
+ ["hero_kairo","banner",a("Баннер: Kairo, заброшенный дом и коридор","Banner: Kairo, the abandoned building and the corridor")],
+ ["o_wide","poster",a("Постер: онмёдзи, печать и красная нить","Poster: onmyoji, the seal and the red thread")],
+ ["o_sq","poster",a("Обложка: онмёдзи, 陰陽師","Cover: onmyoji, 陰陽師")],
+ ["hero_onmy","banner",a("Баннер: онмёдзи, тории и духи у воды","Banner: onmyoji, torii and spirits by the water")],
+ ["x_tetsuo","poster",a("Постер: железо и плоть, ホラーエステティック","Poster: metal and flesh, ホラーエステティック")],
+ ["tt_wide","poster",a("Постер: Тэцуо, плоть и железо","Poster: Tetsuo, flesh and metal")],
+ ["hero_tets","banner",a("Баннер: Тэцуо, 鉄男","Banner: Tetsuo, 鉄男")],
+ ["hero_dream","banner",a("Баннер: это не сон, 夢ではない","Banner: this is not a dream, 夢ではない")],
+ ["d_wide","poster",a("Постер: часы, телевизор и коридор","Poster: the clock, the TV and the corridor")],
+ ["d_sq","poster",a("Обложка: 2002.07.12, 03:27","Cover: 2002.07.12, 03:27")],
+ ["kd_sq","poster",a("Обложка: Кайдан, кукла и красные ликорисы","Cover: Kaidan, the doll and the red spider lilies")],
+ ["hero_kai2","banner",a("Баннер: Кайдан, дом и телевизор","Banner: Kaidan, the house and the TV")],
+ ["kd_wide","poster",a("Постер: девочки в дверях, 怪談","Poster: the girls in the doorway, 怪談")],
 ];
 
 var ART={
@@ -3602,7 +3643,7 @@ function renderStatic(){
   renderGal();
 
   var fh=document.getElementById("filters");
-  var FILTERS=[["home","eye"],["all","chart"],["spot","jhorror"],["about","eye"],["articles","book"],["library","book"],["play","pent"],["calendar","cal"],["quiz","ghost"],["releases","clap"],["news","news"],["start","saw"],["subs","web"],["genres","pent"],["reviews","gore"],["dirs","clap"],["catalog","reel"],["manga","book"],["mylist","star"],["stats","chart"],["lists","list"],["shelves","tape"],["art","frame"],["badges","star"]];
+  var FILTERS=[["home","eye"],["all","chart"],["trailer","tape"],["spot","jhorror"],["about","eye"],["articles","book"],["library","book"],["play","pent"],["calendar","cal"],["quiz","ghost"],["releases","clap"],["news","news"],["start","saw"],["subs","web"],["genres","pent"],["reviews","gore"],["dirs","clap"],["catalog","reel"],["manga","book"],["mylist","star"],["stats","chart"],["lists","list"],["shelves","tape"],["art","frame"],["badges","star"]];
   FILTERS[1][1]="chart";
   fh.innerHTML=FILTERS.map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(f[0]===secFilter)+'">'+ic(f[1])+esc(T(UI["sec_"+f[0]]))+'</button>'}).join("");
 
@@ -5334,9 +5375,9 @@ setLang(start);
    if(f.querySelector('[name=bot-field]').value)return;
    btn.disabled=true;msg.textContent="…";
    var body="form-name=subscribe&email="+encodeURIComponent(em)+"&lang="+LANG;
-   fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){
+   window.HAF(body).then(function(r){
     if(!r.ok)throw 0;msg.textContent=TM("Готово. Вы в списке.","Done. You are on the list.");f.reset();try{ach("mail")}catch(e){}
-   }).catch(function(){msg.textContent=TM("Подписка работает на опубликованном сайте. Пока можно подписаться на RSS.","Sign-up works on the published site. For now you can follow the RSS feed.")}).then(function(){btn.disabled=false})})
+   }).catch(function(){msg.innerHTML=TM("Не удалось отправить. Подпишитесь на RSS или напишите на ","Could not send. Follow the RSS feed or write to ")+'<a href="mailto:'+window.HAM()+'">'+window.HAM()+'</a>'}).then(function(){btn.disabled=false})})
  })();
 
  /* ================= panel + rail buttons ================= */
@@ -5810,6 +5851,7 @@ setLang(start);
    var p=x.placeholder||x.title||x.name||x.id;if(p)x.setAttribute("aria-label",p)})}
  /* ---------- what's new ---------- */
  var FEAT=[
+  {id:"n9",d:"12.11.2026",t:TM("Трейлер, новые арты и формы","Trailer, new art and working forms"),p:TM("На сайте появился раздел «Трейлер» с видео. В шапке и в галерее новые арты: вампир, городские легенды, театр призраков, Kairo, онмёдзи, Тэцуо и другие. Формы подписки и обратной связи теперь приходят нам на почту.","A new Trailer section with a video. New art in the header and the gallery: the vampire, urban legends, the ghost theatre, Kairo, onmyoji, Tetsuo and more. The subscribe and contact forms now reach our email.")},
   {id:"n8",d:"10.11.2026",t:TM("Новый арт в шапке","New header art"),p:TM("У тонов Ringu, Дзю-он, ТОМИЕ, Кровь и Кайдан теперь свои слайды в шапке.","Ringu, Ju-On, TOMIE, Blood and Kaidan now have their own header slides.")},
   {id:"n7",d:"10.11.2026",t:TM("Манга и аниме, ещё 116 фильмов и живая лента","Manga and anime, 116 more films and a live feed"),p:TM("Новый раздел «Манга и аниме». В каталог добавлено 116 фильмов. Лента «Новое» теперь собирается сама.","A new Manga & anime section. 116 films were added to the catalogue. The What's new feed now builds itself.")},
   {id:"n6",d:"09.11.2026",t:TM("Новое на сайте, подборки по тонам и «Страница дня»","What's new, collections by tone and Page of the Day"),p:TM("У каждого тона теперь своя подборка фильмов и манги. Каждый день выходит новая «страница»: фильм и короткий факт. Иногда в углу экрана что-то мелькает. Не пугайтесь, оно безвредно.","Every tone now has its own shelf of films and manga. A new “page” appears every day: a film and a short fact. Sometimes something flickers in the corner of the screen. Do not be alarmed, it is harmless.")},
@@ -5970,7 +6012,7 @@ setLang(start);
 /* ===== v102: per-tone hero art (own slideshow; old one keeps running on tones without art) ===== */
 (function(){
  var root=document.documentElement,box=document.querySelector(".hslides");if(!box)return;
- var SET={ringu:["hero_ringu","hero_omc","hero_juon2"],juon:["hero_juon","hero_juon2","hero_ringu"],tomie:["hero_tomie","hero_tomie2","hero_tomie3"],blood:["hero_blood","hero_red2"],kaidan:["hero_kaidan","hero_red2"],blue:["hero_ringu","hero_juon"],green:["hero_juon2","hero_omc"],clean:["hero_red2","hero_blood"]};
+ var SET={ringu:["hero_ringu","hero_omc","hero_juon2","hero_kairo"],juon:["hero_juon","hero_juon2","hero_ringu"],tomie:["hero_tomie","hero_tomie2","hero_tomie3"],blood:["hero_blood","hero_red2","hero_vamp","hero_scis","hero_tets"],kaidan:["hero_kaidan","hero_red2","hero_thea","hero_onmy","hero_kai2"],psy:["hero_dream","hero_tets"],blue:["hero_ringu","hero_juon","hero_kairo","hero_dream"],green:["hero_juon2","hero_omc","hero_urban"],clean:["hero_red2","hero_blood","hero_kai2","hero_dream"]};
  var made={};
  function mk(tone){
   if(made[tone])return;made[tone]=1;
@@ -6083,7 +6125,7 @@ setLang(start);
    if(f.querySelector("[name=bot-field]").value)return;
    btn.disabled=true;msg.textContent="…";
    var body="form-name=contact&email="+encodeURIComponent(em)+"&name="+encodeURIComponent(f.querySelector("[name=name]").value.trim())+"&message="+encodeURIComponent(tx)+"&lang="+LANG;
-   fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body}).then(function(r){if(!r.ok)throw 0;msg.textContent=TM("Отправлено. Спасибо.","Sent. Thank you.");f.reset()}).catch(function(){msg.textContent=TM("Форма работает на опубликованном сайте. Пока напишите нам во ВКонтакте.","The form works on the published site. For now message us on VK.")}).then(function(){btn.disabled=false})})}
+   window.HAF(body).then(function(r){if(!r.ok)throw 0;msg.textContent=TM("Отправлено. Спасибо.","Sent. Thank you.");f.reset()}).catch(function(){msg.innerHTML=TM("Не удалось отправить. Напишите нам на ","Could not send. Write to us at ")+'<a href="mailto:'+window.HAM()+'">'+window.HAM()+'</a>'}).then(function(){btn.disabled=false})})}
  /* ----- share card ----- */
  var W=1080,Hh=1350;
  function wrap(c,t,x,y,mw,lh,max){var w=String(t).split(/\s+/),l="",n=0;
@@ -6310,7 +6352,7 @@ setLang(start);
  var H=window.HA||{};
  var GRID=[["spot","特","Франшизы","Franchises"],["reviews","怨","Рецензии","Reviews"],["catalog","録","Каталог","Catalogue"],["manga","漫","Манга и аниме","Manga & anime"],["articles","記","Статьи","Features"],["lists","選","Подборки","Lists"],["start","始","Новичкам","Start here"],["dirs","監","Режиссёры","Directors"],["library","蔵","Библиотека","Library"],["play","呪","Игры","Games"],["quiz","問","Тест","Quiz"],["mylist","印","Моё","My list"],["about","序","О нас","About"]];
  function L(a,b){return LANG==="ru"?a:b}
- function mark(){["pod","whatsnew","releases"].forEach(function(id){var e=document.getElementById(id);if(e)e.dataset.home="1"});
+ function mark(){["pod","trailer","whatsnew","releases"].forEach(function(id){var e=document.getElementById(id);if(e)e.dataset.home="1"});
   var n=document.getElementById("homenav");if(!n)return;
   n.innerHTML='<div class="hn-in"><h2 class="hn-h">'+L("Куда пойдём?","Where to?")+'</h2><p class="hn-p">'+L("Выберите раздел — всё остальное спрятано, чтобы не пугать сразу.","Pick a section — the rest stays hidden so it doesn't spook you all at once.")+'</p><div class="hn-g">'+GRID.map(function(g){return '<button type="button" data-go="'+g[0]+'"><i aria-hidden="true">'+g[1]+'</i><span>'+L(g[2],g[3])+'</span></button>'}).join("")+'</div><button type="button" class="hn-all" data-go="all">'+L("Показать всё сразу","Show everything")+'</button></div>'}
  var s=document.createElement("section");s.id="homenav";s.dataset.cat="home";s.dataset.home="1";
@@ -6466,6 +6508,26 @@ setLang(start);
  setTimeout(incoming,1800);
  /* make sure back-to-top exists and is visible after scroll */
  var tt=document.getElementById("totop");if(tt){function f(){tt.classList.toggle("on",scrollY>700)}addEventListener("scroll",f,{passive:true});f()}
+})();
+
+
+/* ===== v115: forms via FormSubmit (no Netlify) + contact email ===== */
+(function(){
+ var MAIL=["horroraestheticofficial","gmail.com"].join("@");
+ window.HAM=function(){return MAIL};
+ window.HAF=function(body){
+  var o={},p=new URLSearchParams(body);p.forEach(function(v,k){if(k!=="form-name"&&k!=="bot-field")o[k]=v});
+  var kind=p.get("form-name")||"form";
+  o._subject="Horror Aesthetic: "+(kind==="subscribe"?"подписка":"сообщение с сайта");o._captcha="false";o._template="table";o.form=kind;
+  return fetch("https://formsubmit.co/ajax/"+MAIL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(o)})
+   .then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok&&!(j&&(j.success===false||j.success==="false"))}})})};
+ function mailLine(){
+  var c=document.getElementById("ct-msg");if(!c||document.getElementById("ct-mail"))return;
+  var p=document.createElement("p");p.id="ct-mail";p.className="ct-mail";
+  var ru=document.documentElement.lang!=="en";
+  p.innerHTML='<span class="l-ru">Или напишите на почту: </span><span class="l-en">Or write by email: </span><a href="mailto:'+MAIL+'">'+MAIL+'</a>';
+  c.parentNode.insertBefore(p,c.nextSibling)}
+ mailLine();setTimeout(mailLine,800);
 })();
 
 </script>
