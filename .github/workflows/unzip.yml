@@ -1,0 +1,19 @@
+name: unzip
+on:
+  push:
+    paths: ['horroraesthetic-github.zip']
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          unzip -oq horroraesthetic-github.zip
+          rm horroraesthetic-github.zip
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Unpack site"
+          git push
