@@ -1,0 +1,110 @@
+/* HORROR AESTHETIC — accessibility and navigation refinement */
+:root { color-scheme: dark; }
+html { scroll-padding-top: 5.5rem; }
+body { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+#ha-reading-progress {
+  position: fixed; inset: 0 0 auto; height: 3px; z-index: 99999;
+  background: rgba(216,35,43,.12); pointer-events: none;
+}
+#ha-reading-progress > span {
+  display: block; width: 0; height: 100%;
+  background: linear-gradient(90deg,#8d171d,#ed3a43 62%,#f2c7b5);
+  box-shadow: 0 0 12px rgba(216,35,43,.65);
+  transform-origin: left center;
+}
+.ha-skip-link {
+  position: fixed; z-index: 100000; top: .75rem; left: .75rem;
+  padding: .75rem 1rem; color: #fff; background: #a91d25;
+  border: 1px solid #ff777d; font: 600 14px/1.3 "IBM Plex Mono",monospace;
+  transform: translateY(-180%); transition: transform .18s ease;
+}
+.ha-skip-link:focus { transform: translateY(0); }
+:where(a,button,input,select,textarea,[tabindex]):focus-visible {
+  outline: 2px solid #f3b6ad !important;
+  outline-offset: 3px;
+}
+:where(button,a) { touch-action: manipulation; }
+img, video { max-width: 100%; }
+input, select, textarea { max-width: 100%; }
+::selection { color: #fff; background: #8d171d; }
+@media (max-width: 640px) {
+  html { scroll-padding-top: 4.25rem; }
+  .ha-skip-link { font-size: 12px; }
+  #ha-reading-progress { height: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media print {
+  #ha-reading-progress, .ha-skip-link, #totop, .rail, .marquee,
+  .strip, .ticker, canvas, video, .lb { display: none !important; }
+  body, .wrap { color: #111 !important; background: #fff !important; }
+  a { color: #111 !important; text-decoration: underline !important; }
+  section { break-inside: avoid; }
+}
+
+/* Site-wide reading controls */
+.ha-top {
+  position: fixed; right: 18px; bottom: 18px; z-index: 9998;
+  width: 44px; height: 44px; border: 1px solid rgba(239,90,96,.65);
+  border-radius: 50%; color: #f4e9e6; background: rgba(12,10,15,.88);
+  box-shadow: 0 5px 24px rgba(0,0,0,.35); font: 700 22px/1 sans-serif;
+  cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  backdrop-filter: blur(8px);
+}
+.ha-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.ha-top:hover { background: #8d171d; border-color: #ff858a; }
+#totop:focus-visible, .ha-top:focus-visible { outline: 2px solid #f3b6ad; outline-offset: 4px; }
+@media (max-width: 640px) {
+  .ha-top { right: 12px; bottom: 12px; width: 40px; height: 40px; }
+}
+@media print { .ha-top { display: none !important; } }
+
+/* THE DARK ARCHIVE entry panel */
+.ha-archive-gate {
+  position: relative; display: grid; grid-template-columns: 104px minmax(0,1fr);
+  gap: 20px; align-items: center; margin: 22px 0 8px; padding: clamp(18px,3vw,30px);
+  overflow: hidden; border: 1px solid rgba(196,31,43,.62);
+  background: radial-gradient(ellipse at 0 50%,rgba(140,18,30,.24),transparent 55%),linear-gradient(125deg,#160d13,#09070a 72%);
+}
+.ha-archive-gate::after {
+  content: "記録"; position: absolute; right: 18px; bottom: -25px;
+  color: rgba(231,205,194,.045); font: 900 94px/1 serif; pointer-events: none;
+}
+.ha-archive-mark {
+  display: grid; place-items: center; width: 96px; aspect-ratio: 1;
+  border: 1px solid rgba(220,66,76,.65); color: #e9b7ae;
+  background: repeating-linear-gradient(135deg,rgba(196,31,43,.1) 0 2px,transparent 2px 7px);
+  font: 500 48px/1 serif; box-shadow: inset 0 0 30px rgba(196,31,43,.13),0 0 24px rgba(196,31,43,.08);
+}
+.ha-archive-copy { min-width: 0; position: relative; z-index: 1; }
+.ha-archive-k { color: #df6870; font: 700 10px/1.5 var(--f-mono,monospace); letter-spacing: .18em; }
+.ha-archive-copy h3 { margin: 7px 0 5px; color: var(--bone,#eee4dc); font: 800 clamp(19px,3vw,28px)/1.08 var(--f-head,Impact,sans-serif); text-transform: uppercase; }
+.ha-archive-copy p { margin: 0 0 15px; color: var(--dim,#a99ba0); font: 11px/1.6 var(--f-mono,monospace); letter-spacing: .06em; }
+.ha-archive-copy a { display: inline-block; padding: 10px 14px; color: #fff; background: #8d171d; border: 1px solid #d83b45; text-decoration: none; font: 700 10px/1.3 var(--f-mono,monospace); letter-spacing: .14em; }
+.ha-archive-copy a:hover { background: #b3212b; }
+@media(max-width:520px) {
+  .ha-archive-gate { grid-template-columns: 62px minmax(0,1fr); gap: 13px; padding: 15px; }
+  .ha-archive-mark { width: 60px; font-size: 32px; }
+  .ha-archive-copy p { font-size: 10px; }
+}
+
+/* Research modules: Director Archives + Horror Timeline */
+.ha-research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 8px}
+.ha-research-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:188px;padding:19px 20px;overflow:hidden;border:1px solid rgba(196,31,43,.48);background:linear-gradient(135deg,#1a1017,#0a080b 78%);text-decoration:none;color:var(--bone,#eee4dc);transition:border-color .2s,background .2s}
+.ha-research-card:hover{border-color:#e34b55;background:linear-gradient(135deg,#281019,#100a0e 78%)}
+.ha-research-jp{position:absolute;right:15px;top:7px;color:rgba(231,205,194,.07);font:900 82px/1 serif;pointer-events:none}
+.ha-research-label{color:#df6870;font:700 9px/1.4 var(--f-mono,monospace);letter-spacing:.17em}
+.ha-research-card strong{position:relative;margin:16px 0 7px;font:800 clamp(19px,2.6vw,27px)/1 var(--f-head,Impact,sans-serif);letter-spacing:.02em}
+.ha-research-card small{position:relative;color:var(--dim,#a99ba0);font:10px/1.6 var(--f-mono,monospace)}
+.ha-research-enter{margin-top:auto;padding-top:18px;color:#f0b9b6;font:700 10px/1.3 var(--f-mono,monospace);letter-spacing:.12em}
+@media(max-width:560px){.ha-research-grid{grid-template-columns:1fr}.ha-research-card{min-height:160px}}
+
+@media(min-width:900px){.ha-research-grid-three{grid-template-columns:repeat(3,minmax(0,1fr))}}

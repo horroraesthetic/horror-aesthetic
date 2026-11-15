@@ -1,5 +1,5 @@
 /* Horror Aesthetic service worker: offline shell, fresh data */
-const V='ha-v152',SHELL=['/horror-aesthetic/','/horror-aesthetic/index.html','/horror-aesthetic/manifest.webmanifest','/horror-aesthetic/favicon-48.png'];
+const V='ha-v157',SHELL=['/horror-aesthetic/','/horror-aesthetic/index.html','/horror-aesthetic/manifest.webmanifest','/horror-aesthetic/favicon-48.png','/horror-aesthetic/enhancements.css','/horror-aesthetic/enhancements.js','/horror-aesthetic/archives/','/horror-aesthetic/directors/','/horror-aesthetic/timeline/','/horror-aesthetic/library/','/horror-aesthetic/folklore/','/horror-aesthetic/culture/'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
