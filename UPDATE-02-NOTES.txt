@@ -1,0 +1,14 @@
+HORROR AESTHETIC — UPDATE 02
+
+What's new:
+- Site-wide reading progress indicator on standalone pages and the homepage.
+- Accessible skip-to-content link with automatic main-content detection.
+- Floating back-to-top control on standalone pages.
+- Homepage keeps its existing top button and navigation behavior.
+- Reduced-motion preference is respected.
+- Search fields receive mobile-friendly search hints.
+- Service Worker cache bumped to ha-v154.
+
+Installation:
+Upload/extract the contents of this ZIP into the repository root, replacing existing files.
+Do not upload the ZIP itself into the website root.
