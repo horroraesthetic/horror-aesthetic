@@ -720,3 +720,44 @@ body:not(:has(.w)) .shell h1 span{
   color:#ff9a9e;
   text-shadow:0 0 12px rgba(255,80,90,.45);
 }
+
+
+/* CURSED TAPE — playback control */
+.ha-cursed-tape{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.55em;
+  margin:.55rem .35rem;
+  padding:.8rem 1rem;
+  border:1px solid rgba(185,72,82,.52);
+  border-radius:2px;
+  background:linear-gradient(145deg,rgba(35,13,20,.96),rgba(9,8,11,.98));
+  color:#d6b8b8;
+  font:inherit;
+  font-size:.78rem;
+  letter-spacing:.13em;
+  cursor:pointer;
+  box-shadow:inset 0 0 18px rgba(122,21,36,.12),0 8px 24px rgba(0,0,0,.25);
+  transition:color .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.ha-cursed-tape:hover,.ha-cursed-tape:focus-visible{
+  color:#ffe4df;
+  border-color:rgba(231,103,112,.85);
+  outline:none;
+  box-shadow:0 0 0 2px rgba(180,42,57,.15),0 0 25px rgba(160,25,43,.2);
+}
+.ha-cursed-tape.is-playing{
+  color:#ffb2b3;
+  border-color:#a84450;
+  background:linear-gradient(145deg,#260e17,#10090e);
+  animation:ha-tape-flicker 3.8s steps(1,end) infinite;
+  box-shadow:0 0 22px rgba(173,34,52,.22),inset 0 0 20px rgba(173,34,52,.13);
+}
+@keyframes ha-tape-flicker{
+  0%,91%,94%,100%{opacity:1}
+  92%{opacity:.72}
+  93%{opacity:.94}
+  95%{opacity:.78}
+}
+@media(prefers-reduced-motion:reduce){.ha-cursed-tape.is-playing{animation:none}}
