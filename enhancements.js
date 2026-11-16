@@ -515,3 +515,45 @@
   share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view');
  },0)));
 })();
+
+
+/* HORROR AESTHETIC — Dark Archive decade navigator */
+(() => {
+ 'use strict';
+ const decade=document.getElementById('decade');
+ const controls=document.querySelector('.ha-archive-page .controls');
+ if(!decade||!controls||controls.parentElement.querySelector('.ha-decade-nav'))return;
+ const nav=document.createElement('nav');
+ nav.className='ha-decade-nav';
+ nav.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Быстрый выбор десятилетия':'Quick decade navigation');
+ const label=document.createElement('span');
+ label.className='ha-decade-label';
+ label.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'ЭПОХА':'DECADE';
+ nav.appendChild(label);
+ const buttons=[];
+ [...decade.options].filter(option=>option.value).forEach(option=>{
+  const button=document.createElement('button');
+  button.type='button';button.className='ha-decade-chip';
+  button.textContent=option.textContent;
+  button.setAttribute('aria-pressed','false');
+  button.addEventListener('click',()=>{
+   decade.value=decade.value===option.value?'':option.value;
+   decade.dispatchEvent(new Event('change',{bubbles:true}));
+   sync();
+  });
+  buttons.push({button,value:option.value});nav.appendChild(button);
+ });
+ const all=document.createElement('button');
+ all.type='button';all.className='ha-decade-chip ha-decade-all';
+ all.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'ВСЕ':'ALL';
+ all.setAttribute('aria-pressed','true');
+ all.addEventListener('click',()=>{decade.value='';decade.dispatchEvent(new Event('change',{bubbles:true}));sync()});
+ nav.insertBefore(all,nav.children[1]);
+ const sync=()=>{
+  all.setAttribute('aria-pressed',String(!decade.value));
+  buttons.forEach(item=>item.button.setAttribute('aria-pressed',String(decade.value===item.value)));
+ };
+ decade.addEventListener('change',sync);
+ controls.parentElement.insertBefore(nav,controls);
+ sync();
+})();
