@@ -655,3 +655,32 @@
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
+
+
+/* HORROR AESTHETIC — CINEMA MODE / immersive visual grade */
+(() => {
+ 'use strict';
+ const boot=()=>{
+  if(document.querySelector('.ha-cinema-toggle'))return;
+  const ru=()=>((document.documentElement.dataset.l||document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+  const key='ha-cinema-mode';
+  let enabled=false;
+  try{enabled=localStorage.getItem(key)==='on'}catch(_){}
+  const button=document.createElement('button');
+  button.type='button';button.className='ha-cinema-toggle';
+  button.setAttribute('aria-pressed','false');
+  button.innerHTML='<span class="ha-cinema-orb" aria-hidden="true"></span><span class="ha-cinema-label"></span>';
+  document.body.appendChild(button);
+  const apply=()=>{
+   document.documentElement.classList.toggle('ha-cinema-mode',enabled);
+   button.setAttribute('aria-pressed',String(enabled));
+   button.querySelector('.ha-cinema-label').textContent=enabled?(ru()?'РЕЖИМ КИНО ВКЛ.':'CINEMA MODE ON'):(ru()?'РЕЖИМ КИНО':'CINEMA MODE');
+   button.title=enabled?(ru()?'Выключить атмосферный режим':'Turn off cinematic atmosphere'):(ru()?'Включить атмосферный режим':'Enable cinematic atmosphere');
+   try{localStorage.setItem(key,enabled?'on':'off')}catch(_){}
+  };
+  button.addEventListener('click',()=>{enabled=!enabled;apply()});
+  document.querySelectorAll('[data-lang],.lg button').forEach(el=>el.addEventListener('click',()=>window.setTimeout(apply,0)));
+  apply();
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
