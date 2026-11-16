@@ -1,0 +1,12 @@
+HORROR AESTHETIC — UPDATE 22
+CUMULATIVE CONSOLIDATION / FIELD NOTES INTEGRATION
+
+- Rebased the package on the cumulative Update 14 site archive (448-file build).
+- Applied the latest available cumulative homepage and root-page files from the Update 21 working build.
+- Preserved existing research sections, film reviews, archives, visual collections, and the GitHub Actions ZIP unpack workflow.
+- Integrated FIELD NOTES into the homepage research directory with RU/EN labels.
+- Added FIELD NOTES to the XML sitemap.
+- Added FIELD NOTES to the offline Service Worker shell and advanced the cache version to ha-v166.
+- Kept the update as a full repository snapshot so the tested automatic ZIP unpack workflow can deploy it.
+
+This package consolidates the latest source files available in the working session; it does not claim to recreate missing intermediate Update 15–21 ZIP archives byte-for-byte.

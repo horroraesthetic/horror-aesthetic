@@ -72,3 +72,83 @@
     if (field) field.setAttribute('enterkeyhint', 'search');
   });
 })();
+
+/* HORROR AESTHETIC — personal dossier shelf 2.0 / reading tracker */
+(() => {
+  'use strict';
+  const KEY = 'ha-personal-dossiers-v1';
+  const ru = (document.documentElement.dataset.l || document.documentElement.lang || 'en').toLowerCase().startsWith('ru');
+  const t = (en, r) => ru ? r : en;
+  const safeUrl = value => {
+    try { const u = new URL(value, location.href); return u.origin === location.origin && /^https?:$/.test(u.protocol) ? u.href : null; }
+    catch (_) { return null; }
+  };
+  const read = () => {
+    try {
+      const value = JSON.parse(localStorage.getItem(KEY) || '[]');
+      return Array.isArray(value) ? value.filter(x => x && typeof x.title === 'string' && safeUrl(x.url)).slice(0, 300).map(x => ({
+        title: x.title.slice(0, 240), url: safeUrl(x.url), kind: String(x.kind || t('SAVED PAGE','СОХРАНЁННАЯ СТРАНИЦА')).slice(0, 80),
+        savedAt: x.savedAt || new Date().toISOString(), status: x.status === 'read' ? 'read' : 'unread', note: String(x.note || '').slice(0, 500)
+      })) : [];
+    } catch (_) { return []; }
+  };
+  const write = items => { try { localStorage.setItem(KEY, JSON.stringify(items.slice(0, 300))); return true; } catch (_) { return false; } };
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const url = safeUrl(canonical ? canonical.href : location.href.split('#')[0]) || location.href.split('#')[0];
+  const heading = document.querySelector('main h1, article h1, h1');
+  const title = (heading && heading.textContent.trim()) || document.title || location.pathname;
+  const kind = /\/reviews?\//.test(location.pathname) ? t('FILM DOSSIER','ДОСЬЕ ФИЛЬМА') : /\/articles?\//.test(location.pathname) ? t('FEATURE','СТАТЬЯ') : t('ARCHIVE PAGE','РАЗДЕЛ АРХИВА');
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'ha-shelf-trigger'; button.setAttribute('aria-haspopup','dialog');
+  button.innerHTML = '<span aria-hidden="true">▤</span><span class="ha-shelf-trigger-label">' + t('MY ARCHIVE','МОЙ АРХИВ') + '</span>';
+  const panel = document.createElement('section');
+  panel.className = 'ha-shelf-panel'; panel.hidden = true; panel.setAttribute('role','dialog'); panel.setAttribute('aria-modal','false'); panel.setAttribute('aria-labelledby','ha-shelf-title');
+  panel.innerHTML = '<div class="ha-shelf-head"><div><small>HORROR AESTHETIC / PERSONAL FILE</small><h2 id="ha-shelf-title">' + t('MY ARCHIVE','МОЙ АРХИВ') + '</h2></div><button type="button" class="ha-shelf-close" aria-label="' + t('Close','Закрыть') + '">×</button></div><p class="ha-shelf-note">' + t('A private reading tracker stored only in this browser.','Личный список чтения хранится только в этом браузере.') + '</p><div class="ha-shelf-actions"><button type="button" data-action="save"></button><button type="button" data-action="export">' + t('EXPORT','ЭКСПОРТ') + '</button><button type="button" data-action="import">' + t('IMPORT','ИМПОРТ') + '</button></div><input class="ha-shelf-file" type="file" accept="application/json,.json" hidden><input class="ha-shelf-search" type="search" placeholder="' + t('Search saved pages…','Поиск в сохранённом…') + '" aria-label="' + t('Search saved pages','Поиск сохранённых страниц') + '"><p class="ha-shelf-count" aria-live="polite"></p><ul class="ha-shelf-list"></ul><button type="button" class="ha-shelf-clear">' + t('CLEAR MY ARCHIVE','ОЧИСТИТЬ МОЙ АРХИВ') + '</button>';
+  document.body.append(button, panel);
+  const list = panel.querySelector('.ha-shelf-list'), count = panel.querySelector('.ha-shelf-count');
+  const save = panel.querySelector('[data-action="save"]'), search = panel.querySelector('.ha-shelf-search');
+  const current = () => read().some(x => x.url === url);
+  const render = () => {
+    const items = read(), query = search.value.trim().toLocaleLowerCase();
+    const done = items.filter(x => x.status === 'read').length;
+    save.textContent = current() ? t('✓ SAVED','✓ СОХРАНЕНО') : t('+ SAVE THIS PAGE','+ СОХРАНИТЬ СТРАНИЦУ');
+    save.disabled = current();
+    count.textContent = t(`${items.length} SAVED · ${done} READ`, `СОХРАНЕНО: ${items.length} · ПРОЧИТАНО: ${done}`);
+    list.replaceChildren();
+    const shown = items.filter(x => (x.title + ' ' + x.kind + ' ' + x.note).toLocaleLowerCase().includes(query));
+    if (!shown.length) { const empty = document.createElement('li'); empty.className = 'ha-shelf-empty'; empty.textContent = items.length ? t('No matching pages.','Совпадений не найдено.') : t('Your archive is empty. Save a film dossier or research section.','Здесь пока пусто. Сохраняйте рецензии и исследовательские разделы.'); list.append(empty); }
+    shown.forEach(item => {
+      const li = document.createElement('li'); li.className = 'ha-shelf-item' + (item.status === 'read' ? ' is-read' : '');
+      const a = document.createElement('a'); a.href = item.url; a.textContent = item.title;
+      const meta = document.createElement('small'); meta.textContent = item.kind + ' · ' + (item.status === 'read' ? t('READ','ПРОЧИТАНО') : t('TO READ','К ПРОЧТЕНИЮ'));
+      const status = document.createElement('button'); status.type = 'button'; status.className = 'ha-shelf-status'; status.textContent = item.status === 'read' ? '✓' : '○'; status.title = t('Toggle reading status','Изменить статус чтения'); status.setAttribute('aria-label', t('Toggle reading status for ','Изменить статус чтения: ') + item.title);
+      status.addEventListener('click', () => { const all = read(); const x = all.find(y => y.url === item.url); if (x) x.status = x.status === 'read' ? 'unread' : 'read'; write(all); render(); });
+      const note = document.createElement('button'); note.type = 'button'; note.className = 'ha-shelf-note-button'; note.textContent = item.note ? t('EDIT NOTE','ИЗМЕНИТЬ ЗАМЕТКУ') : t('+ NOTE','+ ЗАМЕТКА');
+      note.addEventListener('click', () => { const value = prompt(t('Personal note (up to 500 characters):','Личная заметка (до 500 символов):'), item.note); if (value === null) return; const all = read(), x = all.find(y => y.url === item.url); if (x) x.note = value.slice(0,500); write(all); render(); });
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'ha-shelf-remove'; remove.textContent = '×'; remove.setAttribute('aria-label',t('Remove ','Удалить ') + item.title);
+      remove.addEventListener('click', () => { write(read().filter(x => x.url !== item.url)); render(); });
+      li.append(a, meta, status, note, remove);
+      if (item.note) { const n = document.createElement('p'); n.className = 'ha-shelf-item-note'; n.textContent = item.note; li.append(n); }
+      list.append(li);
+    });
+  };
+  const open = () => { render(); panel.hidden = false; button.setAttribute('aria-expanded','true'); panel.querySelector('.ha-shelf-close').focus(); };
+  const close = () => { panel.hidden = true; button.setAttribute('aria-expanded','false'); button.focus(); };
+  button.setAttribute('aria-expanded','false'); button.addEventListener('click', () => panel.hidden ? open() : close());
+  panel.querySelector('.ha-shelf-close').addEventListener('click', close);
+  search.addEventListener('input', render);
+  save.addEventListener('click', () => { const items = read(); if (!items.some(x => x.url === url)) { items.unshift({title, url, kind, savedAt:new Date().toISOString(), status:'unread', note:''}); if (!write(items)) alert(t('Storage is full. Export your archive and remove older items.','Недостаточно места. Экспортируйте архив и удалите старые записи.')); } render(); });
+  panel.querySelector('[data-action="export"]').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({format:'horror-aesthetic-personal-archive',version:2,items:read()},null,2)],{type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'horror-aesthetic-personal-archive.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  });
+  const file = panel.querySelector('.ha-shelf-file');
+  panel.querySelector('[data-action="import"]').addEventListener('click', () => file.click());
+  file.addEventListener('change', async () => {
+    const f = file.files && file.files[0]; if (!f) return;
+    try { const data = JSON.parse(await f.text()); const incoming = Array.isArray(data) ? data : data.items; if (!Array.isArray(incoming)) throw new Error('format'); const merged = new Map(read().map(x=>[x.url,x])); incoming.forEach(x=>{const safe = x && safeUrl(x.url); if(safe && typeof x.title==='string') merged.set(safe,{title:x.title.slice(0,240),url:safe,kind:String(x.kind||t('SAVED PAGE','СОХРАНЁННАЯ СТРАНИЦА')).slice(0,80),savedAt:x.savedAt||new Date().toISOString(),status:x.status==='read'?'read':'unread',note:String(x.note||'').slice(0,500)})}); if(!write([...merged.values()])) throw new Error('storage'); render(); } catch (_) { alert(t('This archive file could not be imported.','Не удалось импортировать этот файл архива.')); } finally { file.value=''; }
+  });
+  panel.querySelector('.ha-shelf-clear').addEventListener('click', () => { if (confirm(t('Clear all saved pages from this device?','Удалить все сохранённые страницы с этого устройства?'))) { write([]); render(); } });
+  document.addEventListener('keydown', e => { if(e.key==='Escape' && !panel.hidden) close(); });
+  render();
+})();
