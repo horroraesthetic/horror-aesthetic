@@ -1027,3 +1027,20 @@ body.ha-archive-page .ha-decade-chip:focus-visible{outline:2px solid #f0b4ad;out
 body.ha-command-open{overflow:hidden}
 @media(max-width:520px){.ha-command-trigger{left:10px;bottom:10px;min-height:40px;padding:0 10px;gap:7px;font-size:8px}.ha-command-trigger kbd{display:none}.ha-command-overlay{padding:12px 8px}.ha-command-panel{max-height:90vh}.ha-command-head{padding:17px 16px 13px}.ha-command-search-label{padding-inline:16px}.ha-command-search{width:calc(100% - 32px);margin-inline:16px}.ha-command-hint{padding-inline:16px}.ha-command-foot{gap:10px;font-size:8px}.ha-command-result{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.ha-command-trigger,.ha-command-result{transition:none}}
+
+
+/* UPDATE 27 — CINEMA MODE / blood-red lens, film grain and edge vignette */
+.ha-cinema-toggle{position:fixed;z-index:109;right:clamp(62px,7vw,86px);bottom:clamp(14px,2.6vw,30px);display:flex;align-items:center;gap:9px;min-height:44px;padding:0 13px;border:1px solid rgba(194,91,103,.35);background:rgba(10,7,12,.86);backdrop-filter:blur(12px);color:#cdb9b5;font:700 9px/1 ui-monospace,monospace;letter-spacing:.12em;cursor:pointer;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+.ha-cinema-orb{width:8px;height:8px;border-radius:50%;background:#78404a;box-shadow:0 0 0 3px rgba(160,54,68,.12);transition:background .25s,box-shadow .25s}
+.ha-cinema-toggle:hover,.ha-cinema-toggle[aria-pressed="true"]{border-color:rgba(229,111,119,.8);color:#fff0e8;background:rgba(48,10,20,.92);box-shadow:0 0 28px rgba(160,24,43,.14)}
+.ha-cinema-toggle[aria-pressed="true"] .ha-cinema-orb{background:#f06a70;box-shadow:0 0 5px #ff727a,0 0 18px rgba(240,72,88,.8)}
+.ha-cinema-toggle:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+html.ha-cinema-mode{color-scheme:dark}
+html.ha-cinema-mode::before{content:"";position:fixed;z-index:9990;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 38%,rgba(8,0,7,.16) 72%,rgba(5,0,5,.42) 100%),linear-gradient(115deg,rgba(100,8,22,.045),transparent 38%,rgba(122,10,24,.055));box-shadow:inset 0 0 100px rgba(112,5,23,.14)}
+html.ha-cinema-mode::after{content:"";position:fixed;z-index:9991;inset:0;pointer-events:none;opacity:.11;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0,rgba(255,255,255,.07) 1px,transparent 1px,transparent 3px),radial-gradient(circle at 17% 29%,rgba(255,255,255,.22) 0 0.5px,transparent 1px),radial-gradient(circle at 73% 61%,rgba(255,255,255,.16) 0 0.6px,transparent 1.2px);background-size:auto,97px 83px,131px 109px;mix-blend-mode:soft-light}
+html.ha-cinema-mode body{--ha-cinema-glow:rgba(146,18,38,.12)}
+html.ha-cinema-mode :where(main,.w,.container,.page,.content){text-shadow:0 0 24px rgba(115,12,31,.035)}
+html.ha-cinema-mode :where(img,video){filter:saturate(.88) contrast(1.035)}
+@media(max-width:520px){.ha-cinema-toggle{right:60px;bottom:10px;min-height:40px;padding:0 9px;gap:7px;font-size:8px}.ha-cinema-orb{width:7px;height:7px}}
+@media(prefers-reduced-motion:reduce){.ha-cinema-toggle,.ha-cinema-orb{transition:none}}
+@media print{.ha-cinema-toggle{display:none!important}html.ha-cinema-mode::before,html.ha-cinema-mode::after{display:none!important}}
