@@ -895,3 +895,14 @@ body:not(:has(.w)) :where(footer,.site-footer)::before{
 @media(prefers-reduced-motion:reduce){
   body:not(:has(.w)) :where(button,.button,[role=button],.top a,.site-header a){transition:none!important}
 }
+
+
+/* UPDATE 18 — HAUNTED MOTION / editorial reveal */
+.ha-reveal{opacity:0;transform:translate3d(0,22px,0);filter:blur(2px);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .8s ease;transition-delay:var(--ha-reveal-delay,0ms)}
+.ha-reveal.is-in{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+body:not(:has(.w)) :where(.ha-editorial-cover)::before{
+ content:"";position:absolute;z-index:3;inset:9px;pointer-events:none;border:1px solid rgba(226,190,177,.14);
+ background:linear-gradient(#d58a87,#d58a87) left top/24px 1px no-repeat,linear-gradient(#d58a87,#d58a87) left top/1px 24px no-repeat,linear-gradient(#d58a87,#d58a87) right top/24px 1px no-repeat,linear-gradient(#d58a87,#d58a87) right top/1px 24px no-repeat,linear-gradient(#d58a87,#d58a87) left bottom/24px 1px no-repeat,linear-gradient(#d58a87,#d58a87) left bottom/1px 24px no-repeat,linear-gradient(#d58a87,#d58a87) right bottom/24px 1px no-repeat,linear-gradient(#d58a87,#d58a87) right bottom/1px 24px no-repeat;
+ opacity:.7;
+}
+@media(prefers-reduced-motion:reduce){.ha-reveal{opacity:1;transform:none;filter:none;transition:none}}
