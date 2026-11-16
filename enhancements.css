@@ -761,3 +761,137 @@ body:not(:has(.w)) .shell h1 span{
   95%{opacity:.78}
 }
 @media(prefers-reduced-motion:reduce){.ha-cursed-tape.is-playing{animation:none}}
+
+
+/* UPDATE 17 — CINEMATIC VISUAL SYSTEM / THE RED ROOM */
+:root{
+  --ha-ink:#070609;
+  --ha-bone:#eee4dc;
+  --ha-crimson:#c83243;
+  --ha-crimson-soft:rgba(200,50,67,.18);
+  --ha-film-line:rgba(211,151,145,.22);
+}
+html{background:var(--ha-ink);scroll-behavior:smooth}
+body{
+  background-color:var(--ha-ink);
+  background-image:
+    radial-gradient(ellipse at 50% -18%,rgba(115,24,39,.2),transparent 48%),
+    radial-gradient(ellipse at 0% 48%,rgba(67,20,36,.11),transparent 38%),
+    radial-gradient(ellipse at 100% 76%,rgba(63,20,32,.1),transparent 34%);
+}
+body::before{
+  content:"";
+  position:fixed;
+  z-index:50;
+  inset:0;
+  pointer-events:none;
+  opacity:.19;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+  mix-blend-mode:soft-light;
+}
+body::after{
+  content:"";
+  position:fixed;
+  z-index:49;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.34) 100%);
+}
+body:not(:has(.w)) :where(main,article,.shell,.wrap,.sr-wrap){
+  position:relative;
+}
+body:not(:has(.w)) :where(.ha-editorial-cover,.hero-image,.feature-image){
+  isolation:isolate;
+  border-color:rgba(204,91,102,.36);
+  box-shadow:0 24px 70px rgba(0,0,0,.48),0 0 0 1px rgba(255,220,210,.025),0 0 55px rgba(137,24,43,.1);
+}
+body:not(:has(.w)) :where(.ha-editorial-cover img,.hero-image img,.feature-image img){
+  aspect-ratio:16/7;
+  object-fit:cover;
+}
+body:not(:has(.w)) :where(.ha-cover-stamp){
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:11px 15px;
+  border-top:1px solid rgba(201,91,101,.25);
+  background:linear-gradient(90deg,rgba(15,8,13,.96),rgba(29,12,19,.88));
+  color:#d8b9b4;
+  font:10px/1.4 ui-monospace,monospace;
+  letter-spacing:.19em;
+}
+body:not(:has(.w)) :where(h1){
+  text-shadow:0 5px 28px rgba(0,0,0,.65),0 0 38px rgba(165,28,48,.2);
+}
+body:not(:has(.w)) :where(h2){
+  text-wrap:balance;
+}
+body:not(:has(.w)) :where(.top,.site-header,header.site-header){
+  backdrop-filter:blur(12px);
+}
+body:not(:has(.w)) :where(.top a,.site-header a,.brand,.logo){
+  transition:color .22s ease,text-shadow .22s ease;
+}
+body:not(:has(.w)) :where(.top a:hover,.site-header a:hover,.brand:hover,.logo:hover){
+  color:#fff0e8;
+  text-shadow:0 0 18px rgba(221,80,91,.4);
+}
+body:not(:has(.w)) :where(.grid,.cards,.cards-grid,.archive-grid,.research-grid){
+  align-items:stretch;
+}
+body:not(:has(.w)) :where(.grid > *, .cards > *, .cards-grid > *, .archive-grid > *, .research-grid > *){
+  min-width:0;
+}
+body:not(:has(.w)) :where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card){
+  isolation:isolate;
+}
+body:not(:has(.w)) :where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card)::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(115deg,transparent 15%,rgba(255,230,220,.055) 48%,transparent 72%);
+  transform:translateX(-35%);
+  transition:opacity .35s ease,transform .65s ease;
+}
+body:not(:has(.w)) :where(.film:hover,.card:hover,.feature-card:hover,.archive-card:hover,.research-card:hover,.ha-research-card:hover)::after{
+  opacity:1;
+  transform:translateX(35%);
+}
+body:not(:has(.w)) :where(button,.button,[role=button]){
+  transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+}
+body:not(:has(.w)) :where(button:hover,.button:hover,[role=button]:hover){
+  border-color:rgba(225,103,112,.75);
+}
+body:not(:has(.w)) :where(.stats,.stat,.controls,.guide-intro,.ha-review-index-tools,.ha-archive-tools){
+  backdrop-filter:blur(10px);
+}
+body:not(:has(.w)) :where(footer,.site-footer){
+  position:relative;
+}
+body:not(:has(.w)) :where(footer,.site-footer)::before{
+  content:"";
+  display:block;
+  width:min(180px,35%);
+  height:1px;
+  margin:0 0 20px;
+  background:linear-gradient(90deg,var(--ha-crimson),transparent);
+}
+@media(min-width:900px){
+  body:not(:has(.w)) :where(.shell,.wrap,.sr-wrap){padding-bottom:clamp(70px,9vw,130px)}
+  body:not(:has(.w)) :where(.ha-editorial-cover){margin-block:clamp(26px,4vw,54px)}
+}
+@media(max-width:640px){
+  body::before{opacity:.12}
+  body::after{background:radial-gradient(ellipse at center,transparent 58%,rgba(0,0,0,.24) 100%)}
+  body:not(:has(.w)) :where(.ha-cover-stamp){font-size:9px;letter-spacing:.12em;padding:9px 11px}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(:has(.w)) :where(button,.button,[role=button],.top a,.site-header a){transition:none!important}
+}
