@@ -1183,3 +1183,17 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
 .ha-skip-link{cursor:pointer}
 #ha-main-content:focus,[id="ha-main-content"]:focus{outline:2px solid rgba(220,91,103,.72);outline-offset:5px}
 @media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}}
+
+
+/* MOBILE ACCESSIBILITY — make skip navigation visible on touch screens */
+@media (hover:none) and (pointer:coarse){
+  .ha-skip-link{
+    position:relative!important;display:inline-flex!important;align-items:center;
+    width:max-content;max-width:calc(100% - 1rem);margin:.5rem .5rem .25rem;
+    inset:auto!important;transform:none!important;z-index:100000;
+    padding:.48rem .72rem;font-size:11px;line-height:1.3;
+    border:1px solid rgba(255,119,125,.72);background:#68131b;color:#fff;
+    text-decoration:none;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  }
+  .ha-skip-link:active{background:#a91d25}
+}
