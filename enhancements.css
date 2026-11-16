@@ -937,3 +937,14 @@ body:not(:has(.w)) :where(.ha-editorial-cover)::before{
  .ha-home-cinema::before{background-position:58% center;background-image:linear-gradient(90deg,rgba(5,4,8,.88),rgba(5,4,8,.42)),linear-gradient(0deg,rgba(5,4,8,.86),transparent 75%),url("/horror-aesthetic/img/ha-home-hero.svg")}
 }
 @media(prefers-reduced-motion:reduce){.ha-home-cinema::before{transform:none}}
+
+
+/* UPDATE 20 — ARCHIVE NAVIGATION / reading progress + return to top */
+.ha-reading-progress{position:fixed;z-index:120;inset:0 0 auto;height:2px;background:rgba(255,255,255,.055);pointer-events:none}
+.ha-reading-progress>span{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#6d1826,#e34b58 58%,#e9b5a5);box-shadow:0 0 12px rgba(221,62,80,.55);will-change:transform}
+.ha-back-top{position:fixed;z-index:110;right:clamp(14px,2.6vw,34px);bottom:clamp(14px,2.6vw,34px);width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(214,111,119,.42);border-radius:50%;background:rgba(12,7,12,.86);backdrop-filter:blur(12px);color:#f1d9d2;font:18px/1 ui-monospace,monospace;box-shadow:0 8px 28px rgba(0,0,0,.42);opacity:0;visibility:hidden;transform:translateY(9px);transition:opacity .25s ease,transform .25s ease,visibility .25s,border-color .25s,background .25s;cursor:pointer}
+.ha-back-top.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
+.ha-back-top:hover{border-color:#e35b67;background:rgba(48,12,22,.94)}
+.ha-back-top:focus-visible{outline:2px solid #f0b4ad;outline-offset:4px}
+@media(max-width:640px){.ha-back-top{width:42px;height:42px;right:13px;bottom:13px}}
+@media(prefers-reduced-motion:reduce){.ha-back-top{transition:none}}
