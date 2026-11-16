@@ -8,5 +8,6 @@ Updated:
 - j-horror/index.html — J-Horror cover and responsive intrinsic dimensions
 - reviews/index.html — reviews cover and preload
 - visual-archive/index.html — new original poster card
+- sw.js — advanced cache to ha-v178 and added the new art to the offline shell
 
 All new images are optimized JPEGs. Titles and bilingual copy remain live HTML text.
