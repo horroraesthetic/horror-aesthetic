@@ -50,26 +50,26 @@ const htmlFiles = walk(root);
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
   const relative = file.slice(root.length + 1);
-  if (!/<title\\b[^>]*>\\s*[^<]+<\\/title>/i.test(html)) {
+  if (!/<title\b[^>]*>\s*[^<]+<\/title>/i.test(html)) {
     warnings.push(`Missing or empty title: ${relative}`);
   }
-  if (!/<meta\\s+name=["']viewport["']/i.test(html)) {
+  if (!/<meta\s+name=["']viewport["']/i.test(html)) {
     warnings.push(`Missing viewport meta: ${relative}`);
   }
-  if (!/<html\\b[^>]*\\blang=["'][^"']+["']/i.test(html)) {
+  if (!/<html\b[^>]*\blang=["'][^"']+["']/i.test(html)) {
     warnings.push(`Missing document language: ${relative}`);
   }
-  const ids = [...html.matchAll(/\\bid=["']([^"']+)["']/gi)].map(match => match[1]);
+  const ids = [...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]);
   const seenIds = new Set();
   for (const id of ids) {
     if (seenIds.has(id)) warnings.push(`Duplicate id "${id}": ${relative}`);
     seenIds.add(id);
   }
-  const images = [...html.matchAll(/<img\\b[^>]*>/gi)].map(match => match[0]);
+  const images = [...html.matchAll(/<img\b[^>]*>/gi)].map(match => match[0]);
   for (const image of images) {
-    if (!/\\balt\\s*=/.test(image)) warnings.push(`Image missing alt text: ${relative}`);
+    if (!/\balt\s*=/.test(image)) warnings.push(`Image missing alt text: ${relative}`);
   }
-  const sharedAssets = /(?:href|src)=["'][^"']*enhancements\\.(?:css|js)(?:\\?[^"']*)?["']/i.test(html);
+  const sharedAssets = /(?:href|src)=["'][^"']*enhancements\.(?:css|js)(?:\?[^"']*)?["']/i.test(html);
   if (!['index.html', '404.html', 'offline.html'].includes(relative) && !relative.startsWith('preview/') && !sharedAssets) {
     warnings.push(`Shared visual system not loaded: ${relative}`);
   }
