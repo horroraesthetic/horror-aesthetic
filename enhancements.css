@@ -980,3 +980,14 @@ body.ha-archive-page .ha-share-view:hover{background:rgba(66,37,43,.5);border-co
 body.ha-archive-page .ha-share-view:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
 @media(max-width:520px){body.ha-archive-page .ha-share-view{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){body.ha-archive-page .ha-share-view{transition:none}}
+
+
+/* UPDATE 24 — DARK ARCHIVE / tactile decade navigation */
+body.ha-archive-page .ha-decade-nav{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:2px 0 13px;margin-top:4px;scrollbar-width:thin;scrollbar-color:rgba(190,90,100,.35) transparent}
+body.ha-archive-page .ha-decade-label{flex:0 0 auto;margin-right:5px;color:rgba(226,192,181,.55);font:700 9px/1.2 ui-monospace,monospace;letter-spacing:.16em}
+body.ha-archive-page .ha-decade-chip{flex:0 0 auto;min-width:43px;padding:7px 10px;border:1px solid rgba(201,155,145,.2);background:rgba(17,12,17,.52);color:#cbb9b4;font:10px/1.2 ui-monospace,monospace;letter-spacing:.04em;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+body.ha-archive-page .ha-decade-chip:hover{border-color:rgba(220,116,120,.65);color:#fff0e8}
+body.ha-archive-page .ha-decade-chip[aria-pressed="true"]{border-color:rgba(222,104,112,.8);background:rgba(100,24,38,.42);color:#fff0e8;box-shadow:inset 0 -2px #c94c5b}
+body.ha-archive-page .ha-decade-chip:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+@media(max-width:520px){body.ha-archive-page .ha-decade-nav{margin-inline:-2px;padding-bottom:12px}body.ha-archive-page .ha-decade-label{font-size:8px}}
+@media(prefers-reduced-motion:reduce){body.ha-archive-page .ha-decade-chip{transition:none}}
