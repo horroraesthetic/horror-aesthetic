@@ -1,18 +1,68 @@
-/* HORROR AESTHETIC — responsive image proportions */
-@media (max-width: 560px) {
-  .feature-grid { grid-template-columns: 1fr; gap: 18px; }
-  .feature, .feature.large {
-    min-height: 0;
-    aspect-ratio: 16 / 9;
-    width: 100%;
-  }
-  .feature img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+/* HORROR AESTHETIC — editorial cleanup and responsive cards */
+
+/* The archive cover artwork already contains its own title lettering.
+   Keep the artwork clean and let the caption below carry the description. */
+.archive-card .pad h3 { display: none; }
+.archive-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  object-position: center;
 }
-@media (min-width: 561px) and (max-width: 850px) {
-  .feature, .feature.large { min-height: 0; aspect-ratio: 4 / 3; }
+.archive-card .pad { padding: 17px 19px 20px; }
+
+/* The editorial thumbnails contain the HA wordmark; remove them from
+   the narrow story rows to avoid a second logo beside the headline. */
+.story {
+  display: block;
+  padding: 22px 0;
+}
+.story img { display: none; }
+.story > div { max-width: 680px; }
+.story h3 { margin: 7px 0 9px; }
+
+/* Wide, consistent image windows on the J-Horror and collection cards. */
+.feature-grid { align-items: stretch; }
+.feature {
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+}
+.feature.large {
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+}
+.feature img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.feature-copy {
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+}
+.feature:after {
+  inset: 35% 0 0;
+}
+
+/* Mobile: no forced square crops, no overlapping card titles. */
+@media (max-width: 850px) {
+  .feature.large { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .feature-grid, .cardgrid { grid-template-columns: 1fr; gap: 16px; }
+  .feature, .feature.large {
+    grid-column: auto;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+  .feature-copy h3 { font-size: 30px; }
+  .archive-card img { aspect-ratio: 16 / 7; }
+  .story { padding: 20px 0; }
+  .story h3 { font-size: 25px; }
+  .story p { font-size: 12px; line-height: 1.8; }
+  .hero { min-height: 520px; }
 }
