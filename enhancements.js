@@ -152,3 +152,88 @@
   document.addEventListener('keydown', e => { if(e.key==='Escape' && !panel.hidden) close(); });
   render();
 })();
+
+
+/* HORROR AESTHETIC — TONE: THE CALL / synthesized mechanical telephone bell */
+(() => {
+  'use strict';
+  const ru = (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
+  const candidates = [...document.querySelectorAll('button,a,[role="button"]')];
+  const trigger = candidates.find(el => /тон\s*[:—-]?\s*звонок|ring\s*tone|the\s*call/i.test((el.textContent || '').replace(/\\s+/g,' ').trim()));
+  if (!trigger || trigger.dataset.haCallToneReady) return;
+  trigger.dataset.haCallToneReady = '1';
+  const originalLabel = trigger.textContent.trim();
+  let ctx = null, master = null, timer = null, ringing = false, nodes = [];
+  const status = document.createElement('span');
+  status.className = 'ha-call-tone-status';
+  status.setAttribute('aria-live','polite');
+  status.textContent = ru ? ' · ВЫКЛ' : ' · OFF';
+  trigger.append(status);
+  trigger.setAttribute('aria-pressed','false');
+  trigger.setAttribute('aria-label', (ru ? 'Тон звонка. Выключен' : 'Telephone ring tone. Off'));
+  const setStatus = on => {
+    status.textContent = on ? (ru ? ' · ЗВОНИТ' : ' · RINGING') : (ru ? ' · ВЫКЛ' : ' · OFF');
+    trigger.setAttribute('aria-pressed',String(on));
+    trigger.setAttribute('aria-label',(ru ? 'Тон звонка. ' : 'Telephone ring tone. ') + (on ? (ru ? 'Включён' : 'On') : (ru ? 'Выключен' : 'Off')));
+    trigger.classList.toggle('ha-call-tone-active',on);
+  };
+  const stop = () => {
+    ringing = false;
+    if (timer) { clearInterval(timer); timer = null; }
+    if (master && ctx) {
+      const now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setTargetAtTime(0,now,.06);
+    }
+    nodes.forEach(n => { try { n.stop(); } catch (_) {} });
+    nodes = [];
+    setStatus(false);
+  };
+  const start = async () => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { status.textContent = ru ? ' · НЕТ AUDIO API' : ' · AUDIO UNAVAILABLE'; return; }
+    if (!ctx) {
+      ctx = new AC();
+      master = ctx.createGain();
+      master.gain.value = 0;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 1850; filter.Q.value = .7;
+      master.connect(filter); filter.connect(ctx.destination);
+      // A slightly detuned pair and quiet upper partials evoke a resonant metal bell.
+      [[440,.105],[480,.095],[880,.026],[960,.022],[1320,.009]].forEach(([hz,level],i) => {
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = i < 2 ? 'sine' : 'triangle';
+        osc.frequency.value = hz;
+        if (i === 1) osc.detune.value = -3;
+        gain.gain.value = level;
+        osc.connect(gain); gain.connect(master); osc.start(); nodes.push(osc);
+      });
+    }
+    await ctx.resume();
+    ringing = true;
+    const pulse = () => {
+      if (!ringing || !ctx) return;
+      const now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(0,now);
+      // Two uneven metallic strikes within each ring burst.
+      master.gain.linearRampToValueAtTime(.72,now+.035);
+      master.gain.setValueAtTime(.72,now+.48);
+      master.gain.linearRampToValueAtTime(.16,now+.55);
+      master.gain.linearRampToValueAtTime(.72,now+.64);
+      master.gain.setValueAtTime(.72,now+1.22);
+      master.gain.linearRampToValueAtTime(0,now+1.34);
+    };
+    pulse();
+    timer = setInterval(pulse,4700);
+    setStatus(true);
+  };
+  trigger.addEventListener('click', async event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (ringing) { stop(); return; }
+    try { await start(); }
+    catch (_) { stop(); status.textContent = ru ? ' · ЗВУК НЕДОСТУПЕН' : ' · AUDIO BLOCKED'; }
+  }, true);
+  window.addEventListener('pagehide',stop,{once:true});
+})();
