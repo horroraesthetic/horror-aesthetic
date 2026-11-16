@@ -948,3 +948,10 @@ body:not(:has(.w)) :where(.ha-editorial-cover)::before{
 .ha-back-top:focus-visible{outline:2px solid #f0b4ad;outline-offset:4px}
 @media(max-width:640px){.ha-back-top{width:42px;height:42px;right:13px;bottom:13px}}
 @media(prefers-reduced-motion:reduce){.ha-back-top{transition:none}}
+
+
+/* UPDATE 21 — ACCESSIBILITY / quiet focus and skip navigation */
+.ha-skip-link{position:fixed;z-index:300;top:12px;left:12px;padding:12px 16px;transform:translateY(calc(-100% - 18px));border:1px solid rgba(230,145,145,.7);background:#170b12;color:#fff0e8;text-decoration:none;font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.06em;box-shadow:0 8px 28px rgba(0,0,0,.5);transition:transform .18s ease}
+.ha-skip-link:focus{transform:translateY(0);outline:2px solid #f1c0b5;outline-offset:3px}
+body:not(:has(.w)) :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid rgba(239,164,157,.92);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.ha-skip-link{transition:none}}
