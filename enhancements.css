@@ -582,3 +582,121 @@ body:not(:has(.w)) :where(footer,.site-footer){
 @media(prefers-reduced-motion:reduce){
   body:not(:has(.w)) :where(.ha-editorial-cover img,.hero img,.hero-image img,.feature-image img,.ha-research-card,.archive-card,.research-card,.card,.feature-card){transition:none!important}
 }
+
+
+/* UPDATE 16 — DARK ARCHIVE FILM INDEX */
+body:not(:has(.w)) .shell .grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));
+  gap:12px;
+  border:0;
+  background:transparent;
+}
+body:not(:has(.w)) .shell .film{
+  position:relative;
+  isolation:isolate;
+  min-height:190px;
+  padding:19px;
+  overflow:hidden;
+  border:1px solid rgba(190,83,96,.25);
+  background:
+    radial-gradient(ellipse at 100% 0%,rgba(135,27,45,.16),transparent 48%),
+    linear-gradient(145deg,#191019 0%,#0d090e 78%);
+  box-shadow:0 12px 30px rgba(0,0,0,.26);
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease,background .28s ease;
+}
+body:not(:has(.w)) .shell .film::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:auto -24px -44px auto;
+  width:120px;
+  height:120px;
+  border:1px solid rgba(204,68,81,.12);
+  border-radius:50%;
+  box-shadow:0 0 0 16px rgba(204,68,81,.025),0 0 0 34px rgba(204,68,81,.018);
+  pointer-events:none;
+}
+body:not(:has(.w)) .shell .film:hover{
+  transform:translateY(-4px);
+  border-color:rgba(226,94,105,.68);
+  background:
+    radial-gradient(ellipse at 100% 0%,rgba(160,31,50,.24),transparent 52%),
+    linear-gradient(145deg,#21121d 0%,#100a10 78%);
+  box-shadow:0 20px 42px rgba(0,0,0,.42),0 0 28px rgba(174,31,48,.10);
+}
+body:not(:has(.w)) .shell .film:focus-within{
+  outline:2px solid #ef9b9c;
+  outline-offset:3px;
+}
+body:not(:has(.w)) .shell .film-top{
+  padding-bottom:9px;
+  border-bottom:1px solid rgba(190,83,96,.18);
+  color:#bca9ae;
+}
+body:not(:has(.w)) .shell .film .rating{
+  color:#dfbd91;
+  text-shadow:0 0 14px rgba(223,189,145,.14);
+}
+body:not(:has(.w)) .shell .film h2{
+  margin:17px 0 5px;
+  color:#f2e8e0;
+  font-size:clamp(20px,2vw,24px);
+  line-height:1.02;
+  letter-spacing:.015em;
+  text-wrap:balance;
+}
+body:not(:has(.w)) .shell .film .ru{
+  color:#c6aeb0;
+  font-size:13px;
+}
+body:not(:has(.w)) .shell .film .director{
+  color:#a99a9e;
+  line-height:1.65;
+}
+body:not(:has(.w)) .shell .film .open{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:#e78388;
+  letter-spacing:.16em;
+  transition:color .2s ease,gap .2s ease;
+}
+body:not(:has(.w)) .shell .film:hover .open{
+  color:#fff0e8;
+  gap:14px;
+}
+body:not(:has(.w)) .shell .controls{
+  border-color:rgba(194,91,103,.34);
+  box-shadow:0 18px 46px rgba(0,0,0,.34);
+}
+body:not(:has(.w)) .shell .resultline{
+  color:#c5afb3;
+}
+body:not(:has(.w)) .shell .stat{
+  min-width:136px;
+  border-color:rgba(194,91,103,.3);
+  background:linear-gradient(145deg,#1b1119,#0d090e);
+}
+body:not(:has(.w)) .shell .stat b{
+  font-size:30px;
+  text-shadow:0 0 20px rgba(202,52,66,.16);
+}
+body:not(:has(.w)) .shell h1{
+  letter-spacing:-.025em;
+}
+body:not(:has(.w)) .shell h1 span{
+  color:#e75a65;
+  text-shadow:0 0 34px rgba(209,44,60,.2);
+}
+@media(max-width:760px){
+  body:not(:has(.w)) .shell .grid{gap:9px}
+  body:not(:has(.w)) .shell .film{min-height:174px;padding:16px}
+}
+@media(hover:none){
+  body:not(:has(.w)) .shell .film:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(:has(.w)) .shell .film,
+  body:not(:has(.w)) .shell .film .open{transition:none!important}
+}
