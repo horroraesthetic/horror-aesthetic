@@ -170,7 +170,7 @@
   ];
   let selected = presets[0];
   try { selected = presets.find(p => p.id === localStorage.getItem('ha-call-tone-preset')) || presets[0]; } catch (_) {}
-  let ctx = null, master = null, timer = null, ringing = false, nodes = [];
+  let ctx = null, master = null, timer = null, ringing = false, nodes = [], pulseRing = null;
   const status = document.createElement('span');
   status.className = 'ha-call-tone-status';
   status.setAttribute('aria-live','polite');
@@ -191,7 +191,7 @@
       if (nodes[i]) nodes[i].frequency.setTargetAtTime(hz,ctx.currentTime,.08);
     });
     try { localStorage.setItem('ha-call-tone-preset',selected.id); } catch (_) {}
-    if (ringing && timer) { clearInterval(timer); timer = setInterval(pulse,selected.interval); pulse(); }
+    if (ringing && timer && pulseRing) { clearInterval(timer); pulseRing(); timer = setInterval(pulseRing,selected.interval); }
   };
   chooser.addEventListener('change', () => {
     selected = presets.find(p => p.id === chooser.value) || presets[0];
@@ -239,7 +239,7 @@
     }
     await ctx.resume();
     ringing = true;
-    const pulse = () => {
+    pulseRing = () => {
       if (!ringing || !ctx) return;
       const now = ctx.currentTime;
       master.gain.cancelScheduledValues(now);
@@ -261,8 +261,8 @@
         master.gain.linearRampToValueAtTime(0,now+1.34);
       }
     };
-    pulse();
-    timer = setInterval(pulse,selected.interval);
+    pulseRing();
+    timer = setInterval(pulseRing,selected.interval);
     setStatus(true);
   };
   trigger.addEventListener('click', async event => {
