@@ -361,3 +361,26 @@
   });
   apply();
 })();
+
+
+/* HORROR AESTHETIC — haunted editorial reveal */
+(() => {
+ 'use strict';
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(!('IntersectionObserver' in window))return;
+ const selectors=['.ha-editorial-cover','.stats .stat','.stat','.guide-intro','.film','.card','.feature-card','.archive-card','.research-card','.ha-research-card','.section-card','.panel'];
+ const nodes=[...new Set(selectors.flatMap(selector=>[...document.querySelectorAll(selector)]))];
+ if(!nodes.length)return;
+ const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+   if(!entry.isIntersecting)return;
+   entry.target.classList.add('is-in');
+   observer.unobserve(entry.target);
+  });
+ },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+ nodes.forEach((node,index)=>{
+  node.classList.add('ha-reveal');
+  node.style.setProperty('--ha-reveal-delay',String(Math.min(index%5,4)*75)+'ms');
+  observer.observe(node);
+ });
+})();
