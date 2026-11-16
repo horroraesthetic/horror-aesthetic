@@ -426,3 +426,159 @@ body:not(:has(.w)) :where(::selection) {
   body:not(:has(.w)) :where(h1) { animation:none!important; }
   body:not(:has(.w)) :where(a,button) { transition:none!important; }
 }
+
+
+/* UPDATE 15 — VISUAL SYSTEM / THE DARK EDITORIAL */
+:root{
+  --ha-ink:#070609;
+  --ha-panel:#100b10;
+  --ha-panel-raised:#171017;
+  --ha-bone:#eee4dc;
+  --ha-muted:#aa989d;
+  --ha-red:#c51f2b;
+  --ha-red-hot:#ef5962;
+  --ha-gold:#c9a77e;
+  --ha-hairline:rgba(213,105,112,.24);
+  --ha-shadow:0 24px 70px rgba(0,0,0,.48);
+}
+html{scrollbar-color:#6d2631 #080609}
+body:not(:has(.w)){
+  color:var(--ha-bone);
+  background-color:var(--ha-ink);
+  background-image:
+    radial-gradient(ellipse at 50% 0%,rgba(112,19,37,.25),transparent 42%),
+    radial-gradient(ellipse at 4% 48%,rgba(68,23,43,.12),transparent 32%),
+    linear-gradient(180deg,#0b080c 0%,#070609 60%,#0b080b 100%);
+}
+body:not(:has(.w)) .shell,
+body:not(:has(.w)) .wrap,
+body:not(:has(.w)) main{
+  isolation:isolate;
+}
+body:not(:has(.w)) :where(.top,header.site-header,.site-header){
+  border-bottom:1px solid var(--ha-hairline);
+}
+body:not(:has(.w)) :where(.brand,.logo,.site-title){
+  letter-spacing:.12em;
+  text-shadow:0 0 24px rgba(211,54,67,.16);
+}
+body:not(:has(.w)) :where(.kicker,.eyebrow,.section-kicker,.ha-cover-stamp){
+  color:#e2767d;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+body:not(:has(.w)) :where(h1,h2,h3){
+  letter-spacing:-.015em;
+}
+body:not(:has(.w)) :where(h1){
+  line-height:.91;
+  text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 42px rgba(176,29,46,.16);
+}
+body:not(:has(.w)) :where(.lead,.intro,.description){
+  color:#c8b9b6;
+  line-height:1.75;
+}
+body:not(:has(.w)) :where(.ha-editorial-cover,.hero,.hero-image,.feature-image){
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--ha-hairline);
+  background:#100b10;
+  box-shadow:var(--ha-shadow);
+}
+body:not(:has(.w)) :where(.ha-editorial-cover img,.hero img,.hero-image img,.feature-image img){
+  display:block;
+  width:100%;
+  height:auto;
+  filter:brightness(.84) saturate(.82) contrast(1.08);
+  transition:filter .7s ease,transform 1.2s cubic-bezier(.2,.7,.2,1);
+}
+body:not(:has(.w)) :where(.ha-editorial-cover:hover img,.hero:hover img,.feature-image:hover img){
+  filter:brightness(.98) saturate(.98) contrast(1.06);
+  transform:scale(1.018);
+}
+body:not(:has(.w)) :where(.ha-editorial-cover)::after,
+body:not(:has(.w)) :where(.hero,.hero-image,.feature-image)::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,4,7,.22),transparent 45%,rgba(5,4,7,.12)),linear-gradient(0deg,rgba(5,4,7,.34),transparent 35%);
+}
+body:not(:has(.w)) :where(.ha-research-grid,.research-grid,.archive-grid,.cards-grid){
+  gap:clamp(12px,1.6vw,22px);
+}
+body:not(:has(.w)) :where(.ha-research-card,.archive-card,.research-card,.card,.feature-card){
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--ha-hairline);
+  background:linear-gradient(145deg,rgba(30,17,26,.96),rgba(10,8,12,.98) 72%);
+  box-shadow:0 12px 34px rgba(0,0,0,.24);
+  transition:transform .32s ease,border-color .32s ease,box-shadow .32s ease,background .32s ease;
+}
+body:not(:has(.w)) :where(.ha-research-card,.archive-card,.research-card,.card,.feature-card)::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:2px;
+  background:linear-gradient(180deg,transparent,#a92b3b,transparent);
+  opacity:.55;
+  pointer-events:none;
+}
+body:not(:has(.w)) :where(.ha-research-card:hover,.archive-card:hover,.research-card:hover,.card:hover,.feature-card:hover){
+  transform:translateY(-4px);
+  border-color:rgba(220,91,101,.62);
+  background:linear-gradient(145deg,#24131d,#100a10 78%);
+  box-shadow:0 22px 48px rgba(0,0,0,.4),0 0 30px rgba(170,27,43,.11);
+}
+body:not(:has(.w)) :where(.ha-research-card img,.archive-card img,.research-card img,.card img,.feature-card img){
+  transition:transform .7s ease,filter .5s ease;
+}
+body:not(:has(.w)) :where(.ha-research-card:hover img,.archive-card:hover img,.research-card:hover img,.card:hover img,.feature-card:hover img){
+  transform:scale(1.035);
+  filter:saturate(1.05) contrast(1.06);
+}
+body:not(:has(.w)) :where(.ha-research-card strong,.archive-card h2,.research-card h2,.card h2,.feature-card h2){
+  color:#f0e6df;
+  text-wrap:balance;
+}
+body:not(:has(.w)) :where(.stats .stat,.stat,.ha-review-index-tools,.ha-archive-tools,.controls){
+  border-color:var(--ha-hairline);
+  background:linear-gradient(145deg,rgba(26,16,24,.94),rgba(10,8,11,.96));
+  box-shadow:0 12px 34px rgba(0,0,0,.2);
+}
+body:not(:has(.w)) :where(.stat b,.stats b){color:#f0e5dc}
+body:not(:has(.w)) :where(input,select,textarea){
+  accent-color:var(--ha-red);
+}
+body:not(:has(.w)) :where(input:not([type=checkbox]):not([type=radio]),select,textarea){
+  border-color:rgba(174,103,112,.38);
+  background-color:#0b080c;
+  color:var(--ha-bone);
+}
+body:not(:has(.w)) :where(input:focus,select:focus,textarea:focus){
+  border-color:#d75b66;
+  box-shadow:0 0 0 3px rgba(197,31,43,.16);
+}
+body:not(:has(.w)) :where(button,.button,[role=button]){
+  border-radius:0;
+}
+body:not(:has(.w)) :where(.lang button[aria-pressed=true],.button-primary,.primary-button){
+  border-color:#a92b3b;
+  background:linear-gradient(135deg,#8f1828,#4b101c);
+  color:#fff0e8;
+  box-shadow:0 7px 24px rgba(133,20,37,.22);
+}
+body:not(:has(.w)) :where(footer,.site-footer){
+  border-top:1px solid var(--ha-hairline);
+  color:#a99a9c;
+}
+@media(max-width:640px){
+  body:not(:has(.w)) :where(.ha-editorial-cover,.hero,.hero-image,.feature-image){box-shadow:0 14px 36px rgba(0,0,0,.38)}
+  body:not(:has(.w)) :where(.ha-research-card,.archive-card,.research-card,.card,.feature-card){box-shadow:0 8px 24px rgba(0,0,0,.24)}
+}
+@media(hover:none){
+  body:not(:has(.w)) :where(.ha-research-card:hover,.archive-card:hover,.research-card:hover,.card:hover,.feature-card:hover){transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(:has(.w)) :where(.ha-editorial-cover img,.hero img,.hero-image img,.feature-image img,.ha-research-card,.archive-card,.research-card,.card,.feature-card){transition:none!important}
+}
