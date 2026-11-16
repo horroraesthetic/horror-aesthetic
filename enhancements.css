@@ -999,3 +999,31 @@ body.ha-archive-page .ha-decade-chip:focus-visible{outline:2px solid #f0b4ad;out
 .ha-review-controls .ha-review-share:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
 @media(max-width:600px){.ha-review-controls .ha-review-share{width:100%}}
 @media(prefers-reduced-motion:reduce){.ha-review-controls .ha-review-share{transition:none}}
+
+
+/* UPDATE 26 — UNIVERSAL HORROR AESTHETIC COMMAND PALETTE */
+.ha-command-trigger{position:fixed;z-index:108;left:clamp(12px,2.4vw,30px);bottom:clamp(14px,2.6vw,30px);display:flex;align-items:center;gap:9px;min-height:44px;padding:0 13px;border:1px solid rgba(203,111,119,.4);background:rgba(12,8,13,.88);backdrop-filter:blur(14px);color:#e7d5d0;box-shadow:0 8px 28px rgba(0,0,0,.38);font:700 9px/1 ui-monospace,monospace;letter-spacing:.12em;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.ha-command-trigger>span:first-child{font:24px/1 Georgia,serif;color:#df6973}
+.ha-command-trigger kbd{padding:4px 5px;border:1px solid rgba(220,180,170,.2);color:#ad9998;font:10px/1 ui-monospace,monospace}
+.ha-command-trigger:hover{border-color:#d96a75;background:rgba(48,13,23,.94);transform:translateY(-2px)}
+.ha-command-trigger:focus-visible,.ha-command-close:focus-visible,.ha-command-result:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+.ha-command-overlay{position:fixed;z-index:10000;inset:0;display:grid;place-items:start center;padding:clamp(16px,8vh,90px) 14px 20px;background:rgba(3,2,5,.78);backdrop-filter:blur(12px)}
+.ha-command-overlay[hidden]{display:none}
+.ha-command-panel{width:min(620px,100%);max-height:min(720px,84vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(196,91,103,.52);background:radial-gradient(ellipse at 0 0,rgba(106,23,39,.22),transparent 52%),#100b11;color:#eee4dc;box-shadow:0 30px 100px #000b,0 0 60px rgba(133,24,44,.14)}
+.ha-command-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:22px 22px 15px;border-bottom:1px solid rgba(198,113,117,.2)}
+.ha-command-kicker{color:#d36a73;font:700 9px/1.4 ui-monospace,monospace;letter-spacing:.2em}
+.ha-command-head h2{margin:8px 0 0;color:#f0e4df;font:700 clamp(20px,4vw,28px)/1.1 Georgia,serif}
+.ha-command-close{width:34px;height:34px;border:1px solid rgba(220,180,170,.2);background:#1a1017;color:#e8d6d0;font:24px/1 Georgia,serif;cursor:pointer}
+.ha-command-search-label{padding:15px 22px 6px;color:#c98b8b;font:700 9px/1.3 ui-monospace,monospace;letter-spacing:.16em}
+.ha-command-search{width:calc(100% - 44px);margin:0 22px 12px;padding:13px 14px;border:1px solid rgba(213,130,132,.38);border-radius:0;background:#08070b;color:#fff0e8;font:15px/1.4 Georgia,serif;outline:none}
+.ha-command-search:focus{border-color:#dc7a80;box-shadow:0 0 0 3px rgba(196,61,76,.12)}
+.ha-command-hint{padding:0 22px 10px;color:#8f7f83;font:10px/1.4 ui-monospace,monospace}
+.ha-command-results{overflow:auto;padding:0 12px 12px}
+.ha-command-result{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 10px;border-top:1px solid rgba(220,180,170,.08);color:#e5d5d0;text-decoration:none;font:14px/1.3 Georgia,serif}
+.ha-command-result small{color:#8f7d83;font:9px/1.3 ui-monospace,monospace}
+.ha-command-result:hover,.ha-command-result[aria-current="true"]{background:rgba(112,28,43,.22);color:#fff0e8}
+.ha-command-empty{padding:18px 10px;color:#b9a7a6;font:13px/1.5 Georgia,serif}
+.ha-command-foot{display:flex;justify-content:flex-end;gap:16px;padding:11px 18px;border-top:1px solid rgba(220,180,170,.12);color:#a38f91;font:9px/1 ui-monospace,monospace;letter-spacing:.08em}
+body.ha-command-open{overflow:hidden}
+@media(max-width:520px){.ha-command-trigger{left:10px;bottom:10px;min-height:40px;padding:0 10px;gap:7px;font-size:8px}.ha-command-trigger kbd{display:none}.ha-command-overlay{padding:12px 8px}.ha-command-panel{max-height:90vh}.ha-command-head{padding:17px 16px 13px}.ha-command-search-label{padding-inline:16px}.ha-command-search{width:calc(100% - 32px);margin-inline:16px}.ha-command-hint{padding-inline:16px}.ha-command-foot{gap:10px;font-size:8px}.ha-command-result{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.ha-command-trigger,.ha-command-result{transition:none}}
