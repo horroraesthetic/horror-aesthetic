@@ -1030,7 +1030,7 @@ body.ha-command-open{overflow:hidden}
 
 
 /* UPDATE 27 — CINEMA MODE / blood-red lens, film grain and edge vignette */
-.ha-cinema-toggle{position:fixed;z-index:109;right:clamp(62px,7vw,86px);bottom:clamp(14px,2.6vw,30px);display:flex;align-items:center;gap:9px;min-height:44px;padding:0 13px;border:1px solid rgba(194,91,103,.35);background:rgba(10,7,12,.86);backdrop-filter:blur(12px);color:#cdb9b5;font:700 9px/1 ui-monospace,monospace;letter-spacing:.12em;cursor:pointer;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+.ha-cinema-toggle{position:fixed;z-index:9992;right:clamp(62px,7vw,86px);bottom:clamp(14px,2.6vw,30px);display:flex;align-items:center;gap:9px;min-height:44px;padding:0 13px;border:1px solid rgba(194,91,103,.35);background:rgba(10,7,12,.86);backdrop-filter:blur(12px);color:#cdb9b5;font:700 9px/1 ui-monospace,monospace;letter-spacing:.12em;cursor:pointer;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
 .ha-cinema-orb{width:8px;height:8px;border-radius:50%;background:#78404a;box-shadow:0 0 0 3px rgba(160,54,68,.12);transition:background .25s,box-shadow .25s}
 .ha-cinema-toggle:hover,.ha-cinema-toggle[aria-pressed="true"]{border-color:rgba(229,111,119,.8);color:#fff0e8;background:rgba(48,10,20,.92);box-shadow:0 0 28px rgba(160,24,43,.14)}
 .ha-cinema-toggle[aria-pressed="true"] .ha-cinema-orb{background:#f06a70;box-shadow:0 0 5px #ff727a,0 0 18px rgba(240,72,88,.8)}
