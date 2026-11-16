@@ -217,3 +217,102 @@ body:has(.w){background:radial-gradient(ellipse at 50% -12%,#291019 0,transparen
 .ha-shelf-item .ha-shelf-status{min-width:28px;color:#f08087;font-size:13px}
 .ha-shelf-item .ha-shelf-remove{top:9px}
 .ha-shelf-item-note{margin:7px 0 0;padding:7px 9px;border-left:2px solid #85404a;background:#130d12;color:#c7b8b6;font:10px/1.55 var(--f-mono,monospace);white-space:pre-wrap;overflow-wrap:anywhere}
+
+
+/* UPDATE 13 — mobile editorial polish / HORROR AESTHETIC */
+:root {
+  --ha-glow: rgba(191, 35, 48, .18);
+  --ha-line-soft: rgba(196, 91, 99, .28);
+}
+.ha-archive-gate,
+.ha-research-card,
+.ha-editorial-cover,
+.ha-review-index-tools {
+  box-shadow: 0 16px 42px rgba(0,0,0,.22);
+}
+.ha-archive-gate {
+  isolation: isolate;
+  border-color: var(--ha-line-soft);
+}
+.ha-archive-gate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(220,65,75,.055), transparent 78%);
+}
+.ha-research-card {
+  min-height: 204px;
+  border-color: var(--ha-line-soft);
+  background-color: #0d090d;
+}
+.ha-research-card:focus-visible,
+.ha-archive-copy a:focus-visible,
+.ha-editorial-cover a:focus-visible {
+  outline: 2px solid #f3b6ad;
+  outline-offset: 4px;
+}
+.ha-research-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.3), 0 0 24px var(--ha-glow);
+}
+.ha-research-card strong {
+  text-wrap: balance;
+}
+.ha-editorial-cover {
+  border-color: var(--ha-line-soft);
+  box-shadow: 0 18px 48px rgba(0,0,0,.32);
+}
+.ha-editorial-cover img {
+  filter: saturate(.82) contrast(1.06);
+}
+.ha-review-index-tools {
+  border-color: var(--ha-line-soft);
+}
+.ha-review-controls input,
+.ha-review-controls select {
+  min-height: 46px;
+}
+.ha-review-controls button,
+.ha-shelf-actions button,
+.ha-shelf-clear,
+.ha-shelf-trigger {
+  min-height: 42px;
+}
+.ha-shelf-panel {
+  overscroll-behavior: contain;
+  scrollbar-color: #71323a #100b10;
+}
+@media (min-width: 900px) {
+  .ha-research-card { min-height: 220px; padding: 23px; }
+  .ha-archive-gate { margin-top: 28px; margin-bottom: 14px; }
+}
+@media (max-width: 640px) {
+  .ha-archive-gate { margin: 16px 0 10px; }
+  .ha-research-grid { gap: 12px; }
+  .ha-research-card {
+    min-height: 154px;
+    padding: 17px 18px;
+  }
+  .ha-research-card strong {
+    font-size: clamp(21px, 6vw, 27px);
+    line-height: 1.02;
+  }
+  .ha-editorial-cover img {
+    aspect-ratio: 4 / 3;
+    object-position: center;
+  }
+  .ha-archive-tools {
+    font-size: 9px;
+    line-height: 1.7;
+  }
+}
+@media (hover: none) {
+  .ha-research-card:hover { transform: none; }
+  .ha-editorial-cover:hover img { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ha-research-card,
+  .ha-editorial-cover img { transition: none !important; }
+}
