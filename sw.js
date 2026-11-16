@@ -1,5 +1,6 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v167';
+const CACHE_VERSION = 'ha-v168';
+const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
 const SHELL = [
@@ -36,6 +37,16 @@ self.addEventListener('activate', event => {
   })());
 });
 
+async function storeBounded(cache, request, response) {
+  if (!response || !response.ok || response.type === 'opaque' || response.status === 206) return;
+  await cache.put(request, response);
+  const keys = await cache.keys();
+  const runtimeKeys = keys.filter(key => !SHELL.includes(new URL(key.url).pathname));
+  if (runtimeKeys.length > MAX_RUNTIME_ENTRIES) {
+    await Promise.all(runtimeKeys.slice(0, runtimeKeys.length - MAX_RUNTIME_ENTRIES).map(key => cache.delete(key)));
+  }
+}
+
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -50,7 +61,7 @@ self.addEventListener('fetch', event => {
         const response = await fetch(request);
         if (response && response.ok) {
           const cache = await caches.open(CACHE_VERSION);
-          cache.put(request, response.clone()).catch(() => {});
+          storeBounded(cache, request, response.clone()).catch(() => {});
         }
         return response;
       } catch (error) {
@@ -75,7 +86,7 @@ self.addEventListener('fetch', event => {
       const response = await fetch(request);
       if (response && response.ok) {
         const cache = await caches.open(CACHE_VERSION);
-        cache.put(request, response.clone()).catch(() => {});
+        storeBounded(cache, request, response.clone()).catch(() => {});
       }
       return response;
     } catch (error) {
