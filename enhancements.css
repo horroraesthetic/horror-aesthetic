@@ -700,3 +700,23 @@ body:not(:has(.w)) .shell h1 span{
   body:not(:has(.w)) .shell .film,
   body:not(:has(.w)) .shell .film .open{transition:none!important}
 }
+
+
+/* TONE: THE CALL — restrained active-state feedback */
+.ha-call-tone-status{
+  display:inline-block;
+  margin-left:.45em;
+  color:#d77a80;
+  font-size:.72em;
+  letter-spacing:.12em;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+.ha-call-tone-active{
+  border-color:rgba(221,83,96,.9)!important;
+  box-shadow:0 0 0 1px rgba(221,83,96,.22),0 0 22px rgba(177,25,43,.22)!important;
+}
+.ha-call-tone-active .ha-call-tone-status{
+  color:#ff9a9e;
+  text-shadow:0 0 12px rgba(255,80,90,.45);
+}
