@@ -1,5 +1,5 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v178';
+const CACHE_VERSION = 'ha-v179';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
@@ -16,7 +16,8 @@ const SHELL = [
   ...[
     'img/ha-home-hero-v2.jpg','img/ha-folklore-hero-v2.jpg',
     'img/ha-jhorror-hero-v2.jpg','img/ha-reviews-cover-v2.jpg',
-    'img/ha-jhorror-poster-v2.jpg'
+    'img/ha-jhorror-poster-v2.jpg','img/ha-dark-archive-cover-v2.jpg',
+    'img/ha-library-cover-v2.jpg','img/ha-games-cover-v2.jpg'
   ].map(path => BASE + path)
 ];
 
