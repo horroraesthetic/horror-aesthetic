@@ -55,6 +55,23 @@ for (const file of htmlFiles) {
   }
   if (!/<meta\s+name=["']viewport["']/i.test(html)) {
     warnings.push(`Missing viewport meta: ${relative}`);
+  if (!/<html\b[^>]*\blang=["'][^"']+["']/i.test(html)) {
+    warnings.push(\`Missing document language: \${relative}\`);
+  }
+  const ids = [...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]);
+  const seenIds = new Set();
+  for (const id of ids) {
+    if (seenIds.has(id)) warnings.push(\`Duplicate id "\${id}": \${relative}\`);
+    seenIds.add(id);
+  }
+  const images = [...html.matchAll(/<img\b[^>]*>/gi)].map(match => match[0]);
+  for (const image of images) {
+    if (!/\balt\s*=/i.test(image)) warnings.push(\`Image missing alt text: \${relative}\`);
+  }
+  const sharedAssets = /(?:href|src)=["'][^"']*enhancements\.(?:css|js)(?:\?[^"']*)?["']/i.test(html);
+  if (!['index.html', '404.html', 'offline.html'].includes(relative) && !relative.startsWith('preview/') && !sharedAssets) {
+    warnings.push(\`Shared visual system not loaded: \${relative}\`);
+  }
   }
 }
 
