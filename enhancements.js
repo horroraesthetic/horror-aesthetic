@@ -8,12 +8,28 @@
 
   const main = document.querySelector('main, article, .w, #spot, .wrap') || document.body;
   if (!main.id) main.id = 'ha-main-content';
+  if (main !== document.body && !main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+  if (main !== document.body) main.style.scrollMarginTop = '18px';
 
-  const skip = document.createElement('a');
-  skip.className = 'ha-skip-link';
+  let skip = document.querySelector('.ha-skip-link');
+  if (!skip) {
+    skip = document.createElement('a');
+    skip.className = 'ha-skip-link';
+    document.body.prepend(skip);
+  }
   skip.href = '#' + main.id;
   skip.textContent = ru ? 'Перейти к содержимому' : 'Skip to content';
-  document.body.prepend(skip);
+  if (!skip.dataset.haSkipFixed) {
+    skip.addEventListener('click', event => {
+      const target = document.getElementById(main.id);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      try { target.focus({ preventScroll: true }); } catch (_) { target.focus(); }
+      if (window.location.hash !== '#' + main.id) history.replaceState(null, '', '#' + main.id);
+    });
+    skip.dataset.haSkipFixed = '1';
+  }
 
   const progress = document.createElement('div');
   progress.id = 'ha-reading-progress';

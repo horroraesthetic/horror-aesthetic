@@ -1177,3 +1177,9 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
  background-size:cover!important;background-position:center!important;
 }
 @media(max-width:640px){.ha-home-cinema::before{background-position:62% center!important;opacity:.82}}
+
+
+/* ACCESSIBILITY FIX — reliable skip-to-content navigation */
+.ha-skip-link{cursor:pointer}
+#ha-main-content:focus,[id="ha-main-content"]:focus{outline:2px solid rgba(220,91,103,.72);outline-offset:5px}
+@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}}
