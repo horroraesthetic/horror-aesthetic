@@ -991,3 +991,11 @@ body.ha-archive-page .ha-decade-chip[aria-pressed="true"]{border-color:rgba(222,
 body.ha-archive-page .ha-decade-chip:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
 @media(max-width:520px){body.ha-archive-page .ha-decade-nav{margin-inline:-2px;padding-bottom:12px}body.ha-archive-page .ha-decade-label{font-size:8px}}
 @media(prefers-reduced-motion:reduce){body.ha-archive-page .ha-decade-chip{transition:none}}
+
+
+/* UPDATE 25 — REVIEW INDEX / shareable catalogue controls */
+.ha-review-controls .ha-review-share{appearance:none;align-self:end;min-height:42px;padding:10px 14px;border:1px solid rgba(209,104,113,.38);background:rgba(55,15,25,.32);color:#e8c8c0;font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.ha-review-controls .ha-review-share:hover{background:rgba(105,24,39,.55);border-color:#df6872;color:#fff0e8}
+.ha-review-controls .ha-review-share:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+@media(max-width:600px){.ha-review-controls .ha-review-share{width:100%}}
+@media(prefers-reduced-motion:reduce){.ha-review-controls .ha-review-share{transition:none}}
