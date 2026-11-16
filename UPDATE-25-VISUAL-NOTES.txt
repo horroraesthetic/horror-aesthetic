@@ -1,0 +1,10 @@
+HORROR AESTHETIC — UPDATE 25 / ARCHIVE COVER COLLECTION
+
+Added three original wide covers under img/:
+- ha-dark-archive-cover-v2.jpg — film reels and a classified dossier in a low-lit archive
+- ha-library-cover-v2.jpg — an open old book and a shadowed library
+- ha-games-cover-v2.jpg — an abandoned arcade cabinet with static
+
+Updated the Archives, Library and Games section covers and their Open Graph previews. Added the images to the Visual Archive and advanced the offline cache to ha-v179.
+
+The artwork contains no embedded titles; headings remain accessible live page text.
