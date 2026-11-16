@@ -162,13 +162,41 @@
   const trigger = candidates.find(el => /тон\s*[:—-]?\s*звонок|ring\s*tone|the\s*call/i.test((el.textContent || '').replace(/\\s+/g,' ').trim()));
   if (!trigger || trigger.dataset.haCallToneReady) return;
   trigger.dataset.haCallToneReady = '1';
-  const originalLabel = trigger.textContent.trim();
+  const presets = [
+    { id:'classic', ru:'Классический', en:'Classic', frequencies:[440,480,880,960,1320], interval:4700, shape:'double' },
+    { id:'retro', ru:'Старый телефон', en:'Retro phone', frequencies:[392,494,784,988,1176], interval:4200, shape:'double' },
+    { id:'japan', ru:'Японский звонок', en:'Japanese ring', frequencies:[523,659,784,1047,1318], interval:3600, shape:'single' },
+    { id:'haunting', ru:'Призрачный', en:'Haunting', frequencies:[220,277,330,415,554], interval:5600, shape:'slow' }
+  ];
+  let selected = presets[0];
+  try { selected = presets.find(p => p.id === localStorage.getItem('ha-call-tone-preset')) || presets[0]; } catch (_) {}
   let ctx = null, master = null, timer = null, ringing = false, nodes = [];
   const status = document.createElement('span');
   status.className = 'ha-call-tone-status';
   status.setAttribute('aria-live','polite');
   status.textContent = ru ? ' · ВЫКЛ' : ' · OFF';
   trigger.append(status);
+  const chooser = document.createElement('select');
+  chooser.className = 'ha-call-tone-select';
+  chooser.setAttribute('aria-label', ru ? 'Выбрать мелодию звонка' : 'Choose ring tone');
+  presets.forEach(p => {
+    const option = document.createElement('option');
+    option.value = p.id; option.textContent = ru ? p.ru : p.en;
+    chooser.append(option);
+  });
+  chooser.value = selected.id;
+  trigger.insertAdjacentElement('afterend', chooser);
+  const applyPreset = () => {
+    if (ctx && nodes.length) selected.frequencies.forEach((hz,i) => {
+      if (nodes[i]) nodes[i].frequency.setTargetAtTime(hz,ctx.currentTime,.08);
+    });
+    try { localStorage.setItem('ha-call-tone-preset',selected.id); } catch (_) {}
+    if (ringing && timer) { clearInterval(timer); timer = setInterval(pulse,selected.interval); pulse(); }
+  };
+  chooser.addEventListener('change', () => {
+    selected = presets.find(p => p.id === chooser.value) || presets[0];
+    applyPreset();
+  });
   trigger.setAttribute('aria-pressed','false');
   trigger.setAttribute('aria-label', (ru ? 'Тон звонка. Выключен' : 'Telephone ring tone. Off'));
   const setStatus = on => {
@@ -200,7 +228,7 @@
       filter.type = 'lowpass'; filter.frequency.value = 1850; filter.Q.value = .7;
       master.connect(filter); filter.connect(ctx.destination);
       // A slightly detuned pair and quiet upper partials evoke a resonant metal bell.
-      [[440,.105],[480,.095],[880,.026],[960,.022],[1320,.009]].forEach(([hz,level],i) => {
+      selected.frequencies.map((hz,i) => [hz,[.105,.095,.026,.022,.009][i]]).forEach(([hz,level],i) => {
         const osc = ctx.createOscillator(), gain = ctx.createGain();
         osc.type = i < 2 ? 'sine' : 'triangle';
         osc.frequency.value = hz;
@@ -216,16 +244,25 @@
       const now = ctx.currentTime;
       master.gain.cancelScheduledValues(now);
       master.gain.setValueAtTime(0,now);
-      // Two uneven metallic strikes within each ring burst.
-      master.gain.linearRampToValueAtTime(.72,now+.035);
-      master.gain.setValueAtTime(.72,now+.48);
-      master.gain.linearRampToValueAtTime(.16,now+.55);
-      master.gain.linearRampToValueAtTime(.72,now+.64);
-      master.gain.setValueAtTime(.72,now+1.22);
-      master.gain.linearRampToValueAtTime(0,now+1.34);
+      if (selected.shape === 'single') {
+        master.gain.linearRampToValueAtTime(.68,now+.05);
+        master.gain.setValueAtTime(.68,now+.82);
+        master.gain.linearRampToValueAtTime(0,now+1.05);
+      } else if (selected.shape === 'slow') {
+        master.gain.linearRampToValueAtTime(.42,now+.22);
+        master.gain.setValueAtTime(.42,now+1.05);
+        master.gain.linearRampToValueAtTime(0,now+1.9);
+      } else {
+        master.gain.linearRampToValueAtTime(.72,now+.035);
+        master.gain.setValueAtTime(.72,now+.48);
+        master.gain.linearRampToValueAtTime(.16,now+.55);
+        master.gain.linearRampToValueAtTime(.72,now+.64);
+        master.gain.setValueAtTime(.72,now+1.22);
+        master.gain.linearRampToValueAtTime(0,now+1.34);
+      }
     };
     pulse();
-    timer = setInterval(pulse,4700);
+    timer = setInterval(pulse,selected.interval);
     setStatus(true);
   };
   trigger.addEventListener('click', async event => {
