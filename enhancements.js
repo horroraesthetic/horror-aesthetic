@@ -399,3 +399,38 @@
  hero.dataset.haHomeHero='1';
  hero.classList.add('ha-home-cinema');
 })();
+
+
+/* HORROR AESTHETIC — archive reading navigation */
+(() => {
+ 'use strict';
+ if(document.querySelector('.w')||document.querySelector('.ha-reading-progress'))return;
+ const progress=document.createElement('div');
+ progress.className='ha-reading-progress';
+ progress.setAttribute('role','progressbar');
+ progress.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Прогресс чтения':'Reading progress');
+ progress.setAttribute('aria-valuemin','0');progress.setAttribute('aria-valuemax','100');progress.setAttribute('aria-valuenow','0');
+ const fill=document.createElement('span');progress.appendChild(fill);
+ const top=document.createElement('button');
+ top.type='button';top.className='ha-back-top';top.textContent='↑';
+ top.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Наверх страницы':'Back to top');
+ top.title=top.getAttribute('aria-label');
+ document.body.append(progress,top);
+ let scheduled=false;
+ const update=()=>{
+  const root=document.documentElement,max=Math.max(0,root.scrollHeight-window.innerHeight);
+  const value=max?Math.min(100,Math.max(0,window.scrollY/max*100)):0;
+  fill.style.transform='scaleX('+value/100+')';
+  progress.setAttribute('aria-valuenow',String(Math.round(value)));
+  top.classList.toggle('is-visible',window.scrollY>420);
+  scheduled=false;
+ };
+ const queue=()=>{if(!scheduled){scheduled=true;window.requestAnimationFrame(update)}};
+ window.addEventListener('scroll',queue,{passive:true});
+ window.addEventListener('resize',queue,{passive:true});
+ top.addEventListener('click',()=>{
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({top:0,behavior:reduced?'auto':'smooth'});
+ });
+ update();
+})();
