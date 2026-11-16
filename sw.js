@@ -1,13 +1,85 @@
-/* Horror Aesthetic service worker: offline shell, fresh data */
-const V='ha-v166',SHELL=['/horror-aesthetic/','/horror-aesthetic/index.html','/horror-aesthetic/manifest.webmanifest','/horror-aesthetic/favicon-48.png','/horror-aesthetic/enhancements.css','/horror-aesthetic/enhancements.js','/horror-aesthetic/review-tools.js','/horror-aesthetic/reviews-index.js','/horror-aesthetic/archives/','/horror-aesthetic/directors/','/horror-aesthetic/timeline/','/horror-aesthetic/library/','/horror-aesthetic/folklore/','/horror-aesthetic/culture/','/horror-aesthetic/j-horror/','/horror-aesthetic/games/','/horror-aesthetic/visual-archive/','/horror-aesthetic/database/','/horror-aesthetic/bestiarum/','/horror-aesthetic/journal/','/horror-aesthetic/screening-room/','/horror-aesthetic/field-notes/'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
-self.addEventListener('fetch',e=>{
- const r=e.request,u=new URL(r.url);
- if(r.method!=='GET'||u.origin!==location.origin||u.pathname.startsWith('/horror-aesthetic/media/'))return;
- const fresh=r.mode==='navigate'||u.pathname.endsWith('/updates.json')||u.pathname.endsWith('/sw.js');
- if(fresh){
-  e.respondWith(fetch(r).then(x=>{const c=x.clone();caches.open(V).then(h=>h.put(r,c));return x}).catch(()=>caches.match(r).then(x=>x||caches.match('/horror-aesthetic/index.html'))));
-  return}
- e.respondWith(caches.match(r).then(x=>x||fetch(r).then(n=>{if(n.ok){const c=n.clone();caches.open(V).then(h=>h.put(r,c))}return n})));
+/* HORROR AESTHETIC — offline-first shell, network-first pages */
+const CACHE_VERSION = 'ha-v167';
+const BASE = '/horror-aesthetic/';
+const OFFLINE_URL = BASE + 'offline.html';
+const SHELL = [
+  BASE, BASE + 'index.html', OFFLINE_URL,
+  BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
+  BASE + 'enhancements.css', BASE + 'enhancements.js',
+  BASE + 'review-tools.js', BASE + 'reviews-index.js',
+  ...[
+    'archives/','directors/','timeline/','library/','folklore/',
+    'culture/','j-horror/','games/','visual-archive/','database/',
+    'bestiarum/','journal/','screening-room/','field-notes/'
+  ].map(path => BASE + path)
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_VERSION);
+    // Cache each shell entry independently: one missing optional page must
+    // not prevent the new worker from installing.
+    await Promise.all(SHELL.map(url =>
+      cache.add(url).catch(() => null)
+    ));
+    await self.skipWaiting();
+  })());
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys
+      .filter(key => key.startsWith('ha-v') && key !== CACHE_VERSION)
+      .map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith(BASE + 'media/')) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(request);
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_VERSION);
+          cache.put(request, response.clone()).catch(() => {});
+        }
+        return response;
+      } catch (error) {
+        const cachedPage = await caches.match(request);
+        if (cachedPage) return cachedPage;
+        const offlinePage = await caches.match(OFFLINE_URL);
+        if (offlinePage) return offlinePage;
+        return new Response('Offline', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+        });
+      }
+    })());
+    return;
+  }
+
+  event.respondWith((async () => {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    try {
+      const response = await fetch(request);
+      if (response && response.ok) {
+        const cache = await caches.open(CACHE_VERSION);
+        cache.put(request, response.clone()).catch(() => {});
+      }
+      return response;
+    } catch (error) {
+      return new Response('', { status: 504, statusText: 'Gateway Timeout' });
+    }
+  })());
 });
