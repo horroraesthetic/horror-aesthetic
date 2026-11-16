@@ -1169,3 +1169,11 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
  :where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card),
  .ha-editorial-cover img{transition:none!important}
 }
+
+
+/* UPDATE 29 — THE RED SHRINE: standalone homepage hero artwork */
+.ha-home-cinema::before{
+ background-image:linear-gradient(90deg,rgba(4,3,7,.94) 0%,rgba(4,3,7,.72) 39%,rgba(4,3,7,.12) 100%),linear-gradient(0deg,rgba(4,3,7,.74),transparent 58%),url("/horror-aesthetic/img/ha-home-banner.svg")!important;
+ background-size:cover!important;background-position:center!important;
+}
+@media(max-width:640px){.ha-home-cinema::before{background-position:62% center!important;opacity:.82}}
