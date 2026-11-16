@@ -152,3 +152,11 @@
   document.addEventListener('keydown', e => { if(e.key==='Escape' && !panel.hidden) close(); });
   render();
 })();
+
+/* HORROR AESTHETIC — UPDATE 24 visual integration loader */
+(function(){
+  var s=document.createElement('script');
+  s.src='/horror-aesthetic/visual-integration.js';
+  s.defer=true;
+  document.head.appendChild(s);
+})();
