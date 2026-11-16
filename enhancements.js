@@ -434,3 +434,29 @@
  });
  update();
 })();
+
+
+/* HORROR AESTHETIC — accessible skip link + image loading hints */
+(() => {
+ 'use strict';
+ if(document.querySelector('.w'))return;
+ const main=document.querySelector('main,[role="main"]');
+ if(main&&!document.querySelector('.ha-skip-link')){
+  if(!main.id)main.id='ha-main-content';
+  if(!main.hasAttribute('tabindex'))main.setAttribute('tabindex','-1');
+  const skip=document.createElement('a');
+  skip.className='ha-skip-link';
+  skip.href='#'+main.id;
+  skip.textContent=(document.documentElement.lang||document.documentElement.dataset.l||'en').toLowerCase().startsWith('ru')?'Перейти к содержимому':'Skip to content';
+  document.body.insertBefore(skip,document.body.firstChild);
+ }
+ const images=[...document.images];
+ images.forEach((img,index)=>{
+  if(!img.hasAttribute('decoding'))img.decoding='async';
+  if(!img.hasAttribute('loading')){
+   const rect=img.getBoundingClientRect();
+   img.loading=(index<2||rect.top<window.innerHeight*1.25)?'eager':'lazy';
+  }
+  if(index===0&&!img.hasAttribute('fetchpriority'))img.setAttribute('fetchpriority','high');
+ });
+})();
