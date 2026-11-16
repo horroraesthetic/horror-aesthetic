@@ -955,3 +955,20 @@ body:not(:has(.w)) :where(.ha-editorial-cover)::before{
 .ha-skip-link:focus{transform:translateY(0);outline:2px solid #f1c0b5;outline-offset:3px}
 body:not(:has(.w)) :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid rgba(239,164,157,.92);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.ha-skip-link{transition:none}}
+
+
+/* UPDATE 22 — DARK ARCHIVE / catalogue controls */
+body.ha-archive-page .resultline{flex-wrap:wrap;row-gap:9px}
+body.ha-archive-page .ha-clear-filters{appearance:none;border:1px solid rgba(209,104,113,.38);background:rgba(55,15,25,.32);color:#e8c8c0;padding:8px 11px;font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+body.ha-archive-page .ha-clear-filters:hover{background:rgba(105,24,39,.55);border-color:#df6872;color:#fff0e8}
+body.ha-archive-page .ha-clear-filters:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+body.ha-archive-page .film{position:relative;overflow:hidden;border:0;box-shadow:inset 0 0 0 1px rgba(255,220,210,.025)}
+body.ha-archive-page .film::before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(transparent,rgba(205,64,80,.72),transparent);opacity:.3;transition:opacity .25s,transform .35s;transform:scaleY(.45);transform-origin:center}
+body.ha-archive-page .film:hover::before,body.ha-archive-page .film:focus-within::before{opacity:1;transform:scaleY(1)}
+body.ha-archive-page .film h2{transition:color .2s,text-shadow .2s}
+body.ha-archive-page .film:hover h2{color:#fff0e8;text-shadow:0 0 22px rgba(206,58,77,.2)}
+body.ha-archive-page .film .open{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+body.ha-archive-page .film .open::after{content:"";height:1px;width:22px;background:currentColor;opacity:.55;transition:width .25s}
+body.ha-archive-page .film:hover .open::after{width:38px}
+@media(max-width:520px){body.ha-archive-page .resultline{align-items:flex-start}body.ha-archive-page .ha-clear-filters{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){body.ha-archive-page .film::before,body.ha-archive-page .film h2,body.ha-archive-page .film .open::after{transition:none}}
