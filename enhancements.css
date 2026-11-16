@@ -1044,3 +1044,128 @@ html.ha-cinema-mode :where(img,video){filter:saturate(.88) contrast(1.035)}
 @media(max-width:520px){.ha-cinema-toggle{right:60px;bottom:10px;min-height:40px;padding:0 9px;gap:7px;font-size:8px}.ha-cinema-orb{width:7px;height:7px}}
 @media(prefers-reduced-motion:reduce){.ha-cinema-toggle,.ha-cinema-orb{transition:none}}
 @media print{.ha-cinema-toggle{display:none!important}html.ha-cinema-mode::before,html.ha-cinema-mode::after{display:none!important}}
+
+
+/* UPDATE 28 — THE RED ROOM / site-wide cinematic art direction */
+:root{
+ --ha-ink:#070509;--ha-blood:#a91c2b;--ha-scarlet:#e34c59;
+ --ha-bone:#f0e3dc;--ha-smoke:rgba(220,198,190,.62);
+ --ha-line:rgba(197,92,102,.24);
+}
+html{background:#070509}
+body{position:relative;isolation:isolate}
+body::before{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:
+  radial-gradient(ellipse at 50% -12%,rgba(115,16,33,.23),transparent 48%),
+  radial-gradient(ellipse at 0% 54%,rgba(64,14,30,.12),transparent 42%),
+  radial-gradient(ellipse at 100% 76%,rgba(76,12,29,.11),transparent 40%),
+  linear-gradient(180deg,rgba(5,3,7,.02),rgba(5,3,7,.24));
+}
+body::after{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.13;
+ background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 4px);
+ mix-blend-mode:soft-light;
+}
+body>*{position:relative;z-index:1}
+body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-panel,.ha-cinema-toggle,.ha-top,#ha-top,.ha-back-top,#ha-reading-progress,.ha-reading-progress,.ha-skip-link){z-index:10000}
+:where(.ha-editorial-cover,.ha-home-cinema,.ha-archive-gate,.ha-research-card,.ha-command-panel,.ha-shelf-panel){
+ --ha-edge:rgba(224,93,105,.42);
+}
+.ha-editorial-cover{
+ border-color:var(--ha-edge)!important;
+ box-shadow:0 18px 65px rgba(0,0,0,.36),0 0 34px rgba(117,12,29,.12),inset 0 0 0 1px rgba(255,226,214,.035);
+}
+.ha-editorial-cover::before{
+ content:"";position:absolute;z-index:1;inset:0;pointer-events:none;
+ border:1px solid rgba(255,220,210,.08);
+ background:
+  linear-gradient(90deg,rgba(5,3,7,.34),transparent 34%,transparent 68%,rgba(5,3,7,.22)),
+  linear-gradient(0deg,rgba(5,3,7,.52),transparent 38%);
+}
+.ha-editorial-cover img{
+ filter:saturate(.78) contrast(1.08) brightness(.84);
+ transform:scale(1.002);
+}
+.ha-editorial-cover:hover img{filter:saturate(.98) contrast(1.08) brightness(.98);transform:scale(1.035)}
+.ha-cover-stamp{
+ letter-spacing:.18em!important;
+ border-color:rgba(231,185,178,.62)!important;
+ background:rgba(7,4,8,.62);
+ backdrop-filter:blur(8px);
+ box-shadow:0 4px 24px rgba(0,0,0,.35);
+}
+:where(.kicker,.k,.ha-archive-k,.ha-research-label,.ha-command-kicker){
+ text-shadow:0 0 18px rgba(219,65,81,.22);
+}
+:where(h1,.ha-home-cinema h1){
+ text-wrap:balance;
+ text-shadow:0 5px 30px rgba(0,0,0,.42),0 0 34px rgba(125,13,32,.12);
+}
+:where(.stats .stat,.stat){
+ position:relative;overflow:hidden;
+ border-color:var(--ha-line)!important;
+ box-shadow:inset 0 1px rgba(255,230,220,.035),0 9px 28px rgba(0,0,0,.16);
+}
+:where(.stats .stat,.stat)::after{
+ content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+ background:linear-gradient(90deg,transparent,rgba(222,79,91,.72),transparent);
+ opacity:.72;
+}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card){
+ position:relative;
+ isolation:isolate;
+ transition:transform .28s ease,border-color .28s ease,background-color .28s ease,box-shadow .28s ease;
+}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card)::after{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
+ background:radial-gradient(ellipse at 0 0,rgba(180,35,53,.14),transparent 65%);
+ transition:opacity .28s ease;
+}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card):hover{
+ border-color:rgba(220,91,103,.48);
+ box-shadow:0 16px 38px rgba(0,0,0,.25),0 0 28px rgba(135,15,34,.09);
+}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card):hover::after{opacity:1}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card) :where(h2,h3,strong){
+ transition:color .22s ease,text-shadow .22s ease;
+}
+:where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card):hover :where(h2,h3){
+ text-shadow:0 0 22px rgba(224,72,87,.17);
+}
+:where(.controls,.ha-review-controls,.ha-archive-controls){
+ border-color:var(--ha-line)!important;
+ box-shadow:0 12px 36px rgba(0,0,0,.18);
+}
+:where(input[type="search"],.controls input,.controls select){
+ border-radius:0!important;
+}
+:where(button,.button,.open,.back){
+ transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+:where(button,.button):active{transform:translateY(1px)}
+.ha-command-trigger,.ha-cinema-toggle,.ha-shelf-trigger{
+ box-shadow:0 9px 30px rgba(0,0,0,.42),0 0 22px rgba(131,14,34,.1);
+}
+.ha-command-overlay{background:rgba(2,1,4,.86)!important}
+.ha-command-panel,.ha-shelf-panel{
+ border-color:rgba(209,89,101,.55)!important;
+ box-shadow:0 34px 120px rgba(0,0,0,.78),0 0 70px rgba(130,12,34,.18)!important;
+}
+.ha-command-panel::before,.ha-shelf-panel::before{
+ content:"";position:absolute;top:0;left:0;right:0;height:2px;
+ background:linear-gradient(90deg,transparent,#9e1c2b,#e46a70,#9e1c2b,transparent);
+}
+@media(min-width:900px){
+ .ha-editorial-cover{margin-block:30px 38px}
+ :where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card):hover{transform:translateY(-3px)}
+}
+@media(max-width:640px){
+ body::after{opacity:.075}
+ .ha-editorial-cover{margin-inline:-2px}
+ .ha-editorial-cover img{aspect-ratio:16/9;object-fit:cover}
+}
+@media(prefers-reduced-motion:reduce){
+ :where(.film,.card,.feature-card,.archive-card,.research-card,.ha-research-card,.section-card),
+ .ha-editorial-cover img{transition:none!important}
+}
