@@ -761,3 +761,16 @@ body:not(:has(.w)) .shell h1 span{
   95%{opacity:.78}
 }
 @media(prefers-reduced-motion:reduce){.ha-cursed-tape.is-playing{animation:none}}
+
+
+/* Selectable telephone ring presets */
+
+.ha-call-tone-select{
+  display:inline-block;max-width:min(100%,190px);margin:.45rem .35rem;
+  padding:.62rem .78rem;border:1px solid rgba(190,35,48,.55);
+  border-radius:2px;background:#100d0e;color:#e9dfe0;
+  font:600 .72rem/1.2 inherit;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;vertical-align:middle;color-scheme:dark;
+}
+.ha-call-tone-select:focus-visible{outline:2px solid #b72b38;outline-offset:3px}
+@media(max-width:600px){.ha-call-tone-select{max-width:100%;margin:.4rem 0;}}
