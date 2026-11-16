@@ -19,5 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Validate sitemap and HTML basics
+      - name: Check shared JavaScript syntax
+        run: |-
+          node --check enhancements.js
+          node --check reviews-index.js
+          node --check review-tools.js
+          node --check sw.js
+          node --check scripts/site-audit.mjs
+      - name: Validate sitemap, accessibility and HTML basics
         run: node scripts/site-audit.mjs
