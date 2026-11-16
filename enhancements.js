@@ -384,3 +384,18 @@
   observer.observe(node);
  });
 })();
+
+
+/* HORROR AESTHETIC — homepage hero composition */
+(() => {
+ 'use strict';
+ const path=window.location.pathname.replace(/\\/+$/,'');
+ if(path!=='/horror-aesthetic'&&path!=='')return;
+ const main=document.querySelector('main');
+ if(!main)return;
+ const candidates=[...main.children];
+ const hero=candidates.find(node=>node.matches('section,header,div')&&node.querySelector('h1'))||main.querySelector('h1')?.parentElement;
+ if(!hero||hero.dataset.haHomeHero)return;
+ hero.dataset.haHomeHero='1';
+ hero.classList.add('ha-home-cinema');
+})();
