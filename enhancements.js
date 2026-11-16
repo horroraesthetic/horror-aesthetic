@@ -460,3 +460,58 @@
   if(index===0&&!img.hasAttribute('fetchpriority'))img.setAttribute('fetchpriority','high');
  });
 })();
+
+
+/* HORROR AESTHETIC — shareable Dark Archive searches */
+(() => {
+ 'use strict';
+ const search=document.getElementById('search');
+ const decade=document.getElementById('decade');
+ const rating=document.getElementById('rating');
+ const sort=document.getElementById('sort');
+ const line=document.querySelector('.ha-archive-page .resultline');
+ if(!search||!decade||!rating||!sort||!line||line.querySelector('.ha-share-view'))return;
+ const ru=()=>((document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+ const share=document.createElement('button');
+ share.type='button';share.className='ha-share-view';
+ share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';
+ share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view');
+ line.appendChild(share);
+ const fields=[['q',search],['decade',decade],['rating',rating],['sort',sort]];
+ const applyFromUrl=()=>{
+  const params=new URLSearchParams(location.search);
+  fields.forEach(([key,el])=>{
+   const value=params.get(key);
+   if(value===null)return;
+   if([...el.options].some(option=>option.value===value))el.value=value;
+  });
+  search.dispatchEvent(new Event('input',{bubbles:true}));
+  [decade,rating,sort].forEach(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
+ };
+ const syncUrl=()=>{
+  const url=new URL(location.href);
+  fields.forEach(([key,el])=>{if(el.value&&!(key==='sort'&&el.value==='title'))url.searchParams.set(key,el.value);else url.searchParams.delete(key)});
+  history.replaceState(null,'',url.pathname+url.search+url.hash);
+ };
+ applyFromUrl();
+ fields.forEach(([key,el])=>el.addEventListener(key==='q'?'input':'change',syncUrl));
+ window.addEventListener('popstate',applyFromUrl);
+ const copyFallback=value=>{
+  const field=document.createElement('textarea');field.value=value;field.setAttribute('readonly','');
+  field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();
+  try{document.execCommand('copy')}catch(_){}
+  field.remove();
+ };
+ share.addEventListener('click',async()=>{
+  const value=location.href;
+  try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(value);else copyFallback(value)}
+  catch(_){copyFallback(value)}
+  share.textContent=ru()?'ССЫЛКА СКОПИРОВАНА':'LINK COPIED';
+  share.setAttribute('aria-label',ru()?'Ссылка скопирована':'Link copied');
+  window.setTimeout(()=>{share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view')},1800);
+ });
+ document.querySelectorAll('[data-lang]').forEach(el=>el.addEventListener('click',()=>window.setTimeout(()=>{
+  share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';
+  share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view');
+ },0)));
+})();
