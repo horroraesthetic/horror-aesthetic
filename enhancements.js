@@ -389,7 +389,7 @@
 /* HORROR AESTHETIC — homepage hero composition */
 (() => {
  'use strict';
- const path=window.location.pathname.replace(/\\/+$/,'');
+ const path=window.location.pathname.replace(/\/+$/,'');
  if(path!=='/horror-aesthetic'&&path!=='')return;
  const main=document.querySelector('main');
  if(!main)return;
