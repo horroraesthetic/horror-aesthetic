@@ -316,3 +316,113 @@ body:has(.w){background:radial-gradient(ellipse at 50% -12%,#291019 0,transparen
   .ha-research-card,
   .ha-editorial-cover img { transition: none !important; }
 }
+
+
+/* UPDATE 14 — CINEMATIC ARCHIVE ATMOSPHERE */
+@keyframes ha-ember-drift {
+  0%,100% { opacity:.24; transform:translate3d(0,0,0) scale(1); }
+  50% { opacity:.48; transform:translate3d(0,-1.2%,0) scale(1.025); }
+}
+@keyframes ha-scan-pass {
+  0% { transform:translateY(-110%); opacity:0; }
+  12% { opacity:.22; }
+  88% { opacity:.12; }
+  100% { transform:translateY(110vh); opacity:0; }
+}
+@keyframes ha-title-breathe {
+  0%,100% { text-shadow:0 0 18px rgba(180,25,40,.10),0 2px 0 #000; }
+  50% { text-shadow:0 0 34px rgba(210,35,50,.25),0 2px 0 #000; }
+}
+@keyframes ha-border-pulse {
+  0%,100% { border-color:rgba(190,54,65,.35); }
+  50% { border-color:rgba(224,79,89,.72); }
+}
+body:not(:has(.w)) {
+  background-color:#080609;
+  background-image:
+    radial-gradient(ellipse at 50% -18%,rgba(104,19,35,.22),transparent 55%),
+    radial-gradient(ellipse at 100% 42%,rgba(58,17,32,.12),transparent 42%),
+    linear-gradient(180deg,#0b080c 0%,#080609 52%,#0b070a 100%);
+  background-attachment:fixed;
+}
+body:not(:has(.w))::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.20;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 4px),
+    radial-gradient(ellipse at 50% 0%,rgba(190,38,53,.13),transparent 58%);
+  mix-blend-mode:screen;
+  animation:ha-ember-drift 18s ease-in-out infinite;
+}
+body:not(:has(.w))::after {
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:34vh;
+  z-index:9990;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(199,48,60,.045),transparent);
+  animation:ha-scan-pass 24s linear infinite;
+}
+body:not(:has(.w)) > * {
+  position:relative;
+}
+body:not(:has(.w)) :where(h1,h2,h3) {
+  text-wrap:balance;
+  text-shadow:0 2px 0 rgba(0,0,0,.5);
+}
+body:not(:has(.w)) :where(h1) {
+  animation:ha-title-breathe 8s ease-in-out infinite;
+}
+body:not(:has(.w)) :where(section,article,.card,.panel,.tile,.feature,.archive-card) {
+  scroll-margin-top:5.5rem;
+}
+body:not(:has(.w)) :where(a,button) {
+  transition:color .2s ease,border-color .25s ease,background-color .25s ease,filter .25s ease,transform .25s ease,box-shadow .25s ease;
+}
+body:not(:has(.w)) :where(a:not([class]),p a) {
+  text-decoration-color:rgba(213,89,99,.52);
+  text-underline-offset:3px;
+}
+body:not(:has(.w)) :where(img,video) {
+  backface-visibility:hidden;
+}
+body:not(:has(.w)) :where(img:not([width]):not([height])) {
+  content-visibility:auto;
+}
+body:not(:has(.w)) :where(button,.button,[role="button"]) {
+  -webkit-tap-highlight-color:transparent;
+}
+body:not(:has(.w)) :where(button:hover,.button:hover,[role="button"]:hover) {
+  filter:brightness(1.12);
+}
+body:not(:has(.w)) :where(a:focus-visible,button:focus-visible) {
+  outline:2px solid #ef9b9c;
+  outline-offset:4px;
+}
+body:not(:has(.w)) :where(hr) {
+  border:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(187,54,67,.65),rgba(238,202,190,.2),transparent);
+}
+body:not(:has(.w)) :where(::selection) {
+  color:#fff;
+  background:#8d1724;
+}
+@media(max-width:640px) {
+  body:not(:has(.w))::before { opacity:.13; }
+  body:not(:has(.w))::after { animation-duration:32s; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body:not(:has(.w))::before,
+  body:not(:has(.w))::after,
+  body:not(:has(.w)) :where(h1) { animation:none!important; }
+  body:not(:has(.w)) :where(a,button) { transition:none!important; }
+}
