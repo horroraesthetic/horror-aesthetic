@@ -237,3 +237,83 @@
   }, true);
   window.addEventListener('pagehide',stop,{once:true});
 })();
+
+
+/* HORROR AESTHETIC — CURSED TAPE / fragmented Japanese whisper */
+(() => {
+  'use strict';
+  const ru = (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
+  const call = [...document.querySelectorAll('button,a,[role="button"]')].find(el => /тон\s*[:—-]?\s*звонок|ring\s*tone|the\s*call/i.test((el.textContent || '').replace(/\\s+/g,' ').trim()));
+  if (!call || !window.speechSynthesis || call.dataset.haWhisperInstalled) return;
+  call.dataset.haWhisperInstalled = '1';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'ha-cursed-tape';
+  button.textContent = ru ? '▧ ПРОКЛЯТАЯ ЗАПИСЬ' : '▧ CURSED RECORDING';
+  button.setAttribute('aria-pressed','false');
+  button.setAttribute('aria-label',ru ? 'Включить японский шёпот проклятой записи' : 'Play the Japanese cursed whisper');
+  call.insertAdjacentElement('afterend',button);
+  const fragments = ['あ…','し…','ね…','み…','る…','か…','ゆ…','え…','お…','さ…','き…','と…','な…','れ…','う…','ま…'];
+  let active = false, timer = null, utterance = null, hissContext = null, hissGain = null;
+  const voices = () => window.speechSynthesis.getVoices().filter(v => /^ja([-_]|$)/i.test(v.lang));
+  const stop = () => {
+    active = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    window.speechSynthesis.cancel();
+    if (hissGain && hissContext) hissGain.gain.setTargetAtTime(0,hissContext.currentTime,.12);
+    button.classList.remove('is-playing');
+    button.setAttribute('aria-pressed','false');
+    button.textContent = ru ? '▧ ПРОКЛЯТАЯ ЗАПИСЬ' : '▧ CURSED RECORDING';
+  };
+  const schedule = () => {
+    if (!active) return;
+    const phrase = Array.from({length:2 + Math.floor(Math.random()*3)},() => fragments[Math.floor(Math.random()*fragments.length)]).join(' ');
+    utterance = new SpeechSynthesisUtterance(phrase);
+    const ja = voices();
+    if (ja.length) utterance.voice = ja[Math.floor(Math.random()*ja.length)];
+    utterance.lang = 'ja-JP';
+    utterance.rate = .62 + Math.random()*.16;
+    utterance.pitch = .48 + Math.random()*.18;
+    utterance.volume = .18 + Math.random()*.08;
+    utterance.onend = () => {
+      if (active) timer = setTimeout(schedule,2200 + Math.random()*5200);
+    };
+    utterance.onerror = () => {
+      if (active) timer = setTimeout(schedule,5000);
+    };
+    window.speechSynthesis.speak(utterance);
+  };
+  const start = async () => {
+    active = true;
+    button.classList.add('is-playing');
+    button.setAttribute('aria-pressed','true');
+    button.textContent = ru ? '▧ ЗАПИСЬ ВОСПРОИЗВОДИТСЯ · СТОП' : '▧ TAPE PLAYING · STOP';
+    // Very quiet filtered tape hiss under the fragmented voice.
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) {
+      try {
+        if (!hissContext) {
+          hissContext = new AC();
+          const length = hissContext.sampleRate * 2;
+          const buffer = hissContext.createBuffer(1,length,hissContext.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i=0;i<length;i++) data[i] = (Math.random()*2-1) * .22;
+          const source = hissContext.createBufferSource(); source.buffer=buffer; source.loop=true;
+          const filter = hissContext.createBiquadFilter(); filter.type='bandpass'; filter.frequency.value=1450; filter.Q.value=.55;
+          hissGain = hissContext.createGain(); hissGain.gain.value=0;
+          source.connect(filter); filter.connect(hissGain); hissGain.connect(hissContext.destination); source.start();
+        }
+        await hissContext.resume();
+        hissGain.gain.setTargetAtTime(.035,hissContext.currentTime,.4);
+      } catch (_) {}
+    }
+    schedule();
+  };
+  button.addEventListener('click',async () => {
+    if (active) { stop(); return; }
+    try { await start(); } catch (_) { stop(); }
+  });
+  document.addEventListener('visibilitychange',() => { if (document.hidden && active) stop(); });
+  window.addEventListener('pagehide',stop);
+  window.speechSynthesis.onvoiceschanged = () => {};
+})();
