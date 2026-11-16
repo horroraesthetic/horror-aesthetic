@@ -906,3 +906,34 @@ body:not(:has(.w)) :where(.ha-editorial-cover)::before{
  opacity:.7;
 }
 @media(prefers-reduced-motion:reduce){.ha-reveal{opacity:1;transform:none;filter:none;transition:none}}
+
+
+/* UPDATE 19 — THE RED ROOM / homepage cinematic masthead */
+.ha-home-cinema{
+ position:relative!important;isolation:isolate;overflow:hidden;
+ min-height:clamp(470px,76vh,790px);
+ display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(30px,7vw,104px)!important;
+ border:1px solid rgba(202,91,102,.36);
+ background:#08060b;
+ box-shadow:0 30px 90px rgba(0,0,0,.5),0 0 70px rgba(132,20,39,.12);
+}
+.ha-home-cinema::before{
+ content:"";position:absolute;z-index:-2;inset:0;
+ background-image:linear-gradient(90deg,rgba(5,4,8,.94) 0%,rgba(5,4,8,.76) 38%,rgba(5,4,8,.18) 100%),linear-gradient(0deg,rgba(5,4,8,.78),transparent 55%),url("/horror-aesthetic/img/ha-home-hero.svg");
+ background-position:center;background-size:cover;background-repeat:no-repeat;
+ transform:scale(1.015);
+}
+.ha-home-cinema::after{
+ content:"";position:absolute;z-index:-1;inset:12px;pointer-events:none;
+ border:1px solid rgba(220,171,158,.17);
+ background:linear-gradient(#d58a87,#d58a87) left top/32px 1px no-repeat,linear-gradient(#d58a87,#d58a87) left top/1px 32px no-repeat,linear-gradient(#d58a87,#d58a87) right top/32px 1px no-repeat,linear-gradient(#d58a87,#d58a87) right top/1px 32px no-repeat,linear-gradient(#d58a87,#d58a87) left bottom/32px 1px no-repeat,linear-gradient(#d58a87,#d58a87) left bottom/1px 32px no-repeat,linear-gradient(#d58a87,#d58a87) right bottom/32px 1px no-repeat,linear-gradient(#d58a87,#d58a87) right bottom/1px 32px no-repeat;
+}
+.ha-home-cinema :where(h1,.title,.lead,.intro,p,a,button){position:relative;z-index:1}
+.ha-home-cinema :where(h1){max-width:900px;text-shadow:0 4px 35px #000,0 0 45px rgba(190,34,53,.25)}
+.ha-home-cinema :where(.lead,.intro,p){max-width:680px;text-shadow:0 2px 18px #000}
+@media(max-width:640px){
+ .ha-home-cinema{min-height:540px;padding:28px 20px!important}
+ .ha-home-cinema::before{background-position:58% center;background-image:linear-gradient(90deg,rgba(5,4,8,.88),rgba(5,4,8,.42)),linear-gradient(0deg,rgba(5,4,8,.86),transparent 75%),url("/horror-aesthetic/img/ha-home-hero.svg")}
+}
+@media(prefers-reduced-motion:reduce){.ha-home-cinema::before{transform:none}}
