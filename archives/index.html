@@ -131,4 +131,29 @@ const FILMS = [{"slug":"alien","title":"Alien","ru":"Чужой","year":"1979","
  render();
 })();
 </script>
+
+<script>
+(() => {
+ 'use strict';
+ const search=document.getElementById('search'), decade=document.getElementById('decade'), rating=document.getElementById('rating'), sort=document.getElementById('sort'), line=document.querySelector('.resultline');
+ if(!search||!decade||!rating||!sort||!line||document.body.classList.contains('ha-archive-page'))return;
+ document.body.classList.add('ha-archive-page');
+ const clear=document.createElement('button');clear.type='button';clear.className='ha-clear-filters';clear.hidden=true;
+ const isRu=()=>((document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+ const label=()=>{clear.textContent=isRu()?'СБРОСИТЬ ФИЛЬТРЫ':'CLEAR FILTERS';clear.setAttribute('aria-label',isRu()?'Сбросить поиск и все фильтры':'Clear search and all filters')};
+ const active=()=>Boolean(search.value.trim()||decade.value||rating.value||sort.value!=='title');
+ const refresh=()=>{clear.hidden=!active();label()};
+ line.appendChild(clear);
+ clear.addEventListener('click',()=>{search.value='';decade.value='';rating.value='';sort.value='title';[search,decade,rating,sort].forEach(el=>el.dispatchEvent(new Event(el===search?'input':'change',{bubbles:true})));search.focus();refresh()});
+ [search,decade,rating,sort].forEach(el=>el.addEventListener(el===search?'input':'change',refresh));
+ document.querySelectorAll('[data-lang]').forEach(el=>el.addEventListener('click',()=>setTimeout(label,0)));
+ document.addEventListener('keydown',event=>{
+  if(event.altKey||event.ctrlKey||event.metaKey)return;
+  const target=event.target,typing=target&&(/INPUT|TEXTAREA|SELECT/.test(target.tagName)||target.isContentEditable);
+  if(event.key==='/'&&!typing){event.preventDefault();search.focus()}
+  if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));refresh()}
+ });
+ label();refresh();
+})();
+</script>
 </body></html>
