@@ -1,3 +1,1 @@
-HORROR AESTHETIC — NEW DESIGN PREVIEW
-
-Open /preview/index.html on GitHub Pages after uploading this folder. This is a separate preview and does not replace the current homepage. Existing source pages and assets remain in the repository.
+HORROR AESTHETIC — mobile-first editorial redesign. Upload this preview/ folder to replace the existing preview. Existing root site and /img assets are unchanged.
