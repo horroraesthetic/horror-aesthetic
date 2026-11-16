@@ -972,3 +972,11 @@ body.ha-archive-page .film .open::after{content:"";height:1px;width:22px;backgro
 body.ha-archive-page .film:hover .open::after{width:38px}
 @media(max-width:520px){body.ha-archive-page .resultline{align-items:flex-start}body.ha-archive-page .ha-clear-filters{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){body.ha-archive-page .film::before,body.ha-archive-page .film h2,body.ha-archive-page .film .open::after{transition:none}}
+
+
+/* UPDATE 23 — DARK ARCHIVE / shareable filtered views */
+body.ha-archive-page .ha-share-view{appearance:none;border:1px solid rgba(190,151,143,.3);background:rgba(18,15,20,.58);color:#d8c6c1;padding:8px 11px;font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+body.ha-archive-page .ha-share-view:hover{background:rgba(66,37,43,.5);border-color:rgba(224,150,145,.75);color:#fff0e8}
+body.ha-archive-page .ha-share-view:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
+@media(max-width:520px){body.ha-archive-page .ha-share-view{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){body.ha-archive-page .ha-share-view{transition:none}}
