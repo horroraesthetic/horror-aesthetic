@@ -2015,3 +2015,36 @@ footer .ft-legal a:hover{opacity:1}
     display: none !important;
   }
 }
+
+
+/* LIGHTWEIGHT KAIDAN FIREFLIES — four tiny CSS particles instead of a full-screen canvas on phones. */
+.ha-mobile-firefly{display:none}
+@media (max-width:760px){
+  :root[data-tone="kaidan"] .ha-mobile-firefly{
+    display:block!important;
+    position:fixed!important;
+    z-index:37;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    pointer-events:none;
+    background:radial-gradient(circle,#e1fff8 0 12%,#9be8d8 28%,rgba(105,205,187,.14) 58%,transparent 78%);
+    box-shadow:0 0 7px 1px rgba(126,231,211,.28);
+    will-change:transform,opacity;
+  }
+  :root[data-tone="kaidan"] .ha-mobile-firefly.f1{left:17vw;top:32vh;animation:ha-firefly-a 7.8s ease-in-out -2.2s infinite}
+  :root[data-tone="kaidan"] .ha-mobile-firefly.f2{left:73vw;top:24vh;animation:ha-firefly-b 9.2s ease-in-out -5.1s infinite}
+  :root[data-tone="kaidan"] .ha-mobile-firefly.f3{left:39vw;top:61vh;animation:ha-firefly-a 8.6s ease-in-out -4.3s infinite}
+  :root[data-tone="kaidan"] .ha-mobile-firefly.f4{left:84vw;top:74vh;animation:ha-firefly-b 10s ease-in-out -1.4s infinite}
+}
+@keyframes ha-firefly-a{
+  0%,100%{opacity:.18;transform:translate3d(0,0,0) scale(.75)}
+  48%{opacity:.78;transform:translate3d(10px,-13px,0) scale(1.12)}
+}
+@keyframes ha-firefly-b{
+  0%,100%{opacity:.16;transform:translate3d(0,0,0) scale(.8)}
+  54%{opacity:.68;transform:translate3d(-8px,11px,0) scale(1.08)}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  :root[data-tone="kaidan"] .ha-mobile-firefly{animation:none;opacity:.42;transform:none}
+}
