@@ -131,3 +131,65 @@ for (const file of htmlFiles) {
     }
   }
 }
+
+
+// Homepage asset budgets and offline-cache integrity.
+const homepagePath = resolve(root, 'index.html');
+const homeCssPath = resolve(root, 'home.css');
+const homeJsPath = resolve(root, 'home.js');
+const serviceWorkerPath = resolve(root, 'sw.js');
+const homepage = readFileSync(homepagePath, 'utf8');
+const serviceWorker = readFileSync(serviceWorkerPath, 'utf8');
+const assetBudget = [
+  ['index.html', homepagePath, 100 * 1024],
+  ['home.css', homeCssPath, 250 * 1024],
+  ['home.js', homeJsPath, 1200 * 1024]
+];
+
+for (const [name, path, limit] of assetBudget) {
+  try {
+    const size = statSync(path).size;
+    if (size > limit) errors.push(`Performance budget exceeded: ${name} is ${size} bytes (limit ${limit}).`);
+    else console.log(`BUDGET PASS: ${name} ${size}/${limit} bytes.`);
+  } catch {
+    errors.push(`Required homepage asset is missing: ${name}`);
+  }
+}
+
+if (!/<link\\s+rel=["']stylesheet["']\\s+href=["']home\\.css["']/i.test(homepage)) {
+  errors.push('Homepage does not load the extracted home.css stylesheet.');
+}
+if (!/<script\\s+defer\\s+src=["']home\\.js["']/i.test(homepage)) {
+  errors.push('Homepage does not load the extracted home.js script.');
+}
+if (homepage.indexOf('href="home.css"') > homepage.indexOf('href="enhancements.css"')) {
+  errors.push('home.css must load before enhancements.css to preserve cascade order.');
+}
+if (!serviceWorker.includes("BASE + 'home.css'") || !serviceWorker.includes("BASE + 'home.js'")) {
+  errors.push('Service worker shell is missing home.css or home.js.');
+}
+
+let imageCount = 0;
+let largeImageCount = 0;
+function inspectImages(directory) {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const full = join(directory, entry.name);
+    if (entry.isDirectory()) inspectImages(full);
+    else if (/\\.(?:webp|jpe?g|png|avif)$/i.test(entry.name)) {
+      imageCount++;
+      const size = statSync(full).size;
+      if (size > 350 * 1024) {
+        largeImageCount++;
+        warnings.push(`Large image asset (${Math.round(size / 1024)} KB): ${full.slice(root.length + 1)}`);
+      }
+    }
+  }
+}
+const imageRoot = resolve(root, 'img');
+try {
+  inspectImages(imageRoot);
+  console.log(`IMAGE AUDIT: ${imageCount} image assets; ${largeImageCount} exceed 350 KB.`);
+} catch {
+  warnings.push('Image directory could not be inspected.');
+}
+
