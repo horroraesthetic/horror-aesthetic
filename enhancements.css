@@ -1197,3 +1197,19 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
   }
   .ha-skip-link:active{background:#a91d25}
 }
+
+
+/* Mobile accessibility: comfortable touch targets and visible disclosure focus */
+:where(button, input:not([type="checkbox"]):not([type="radio"]), select, textarea, summary) {
+  min-height: 44px;
+}
+:where(summary) { cursor: pointer; }
+:where(summary, [role="button"]):focus-visible {
+  outline: 2px solid #f3b6ad !important;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  :where(button, input:not([type="checkbox"]):not([type="radio"]), select) {
+    min-height: 44px;
+  }
+}
