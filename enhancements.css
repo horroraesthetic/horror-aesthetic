@@ -371,8 +371,10 @@ body:not(:has(.w))::after {
   background:linear-gradient(180deg,transparent,rgba(199,48,60,.045),transparent);
   animation:ha-scan-pass 24s linear infinite;
 }
-body:not(:has(.w)) > * {
+body:not(:has(.w)) > .wrap,
+body:not(:has(.w)) > section:not(.ha-shelf-panel):not(.ha-command-overlay) {
   position:relative;
+  z-index:1;
 }
 body:not(:has(.w)) :where(h1,h2,h3) {
   text-wrap:balance;
