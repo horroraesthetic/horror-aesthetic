@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "purpose": "Film poster rights and provenance register for the HORROR AESTHETIC film database.",
+  "policy": "Only render an image as a film poster after its exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope have been verified. A film still, fan art, scan, or poster found online is not automatically reusable.",
+  "films": [
+    {
+      "title": "Kwaidan",
+      "year": 1964,
+      "candidate": "../img/posters/kwaidan.webp",
+      "status": "review",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+    },
+    {
+      "title": "Onibaba",
+      "year": 1964,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Kuroneko",
+      "year": 1968,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "House",
+      "year": 1977,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "The Ring",
+      "year": 1998,
+      "candidate": "../img/posters/ringu.webp",
+      "status": "review",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+    },
+    {
+      "title": "Audition",
+      "year": 1999,
+      "candidate": "../img/posters/audition.webp",
+      "status": "review",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+    },
+    {
+      "title": "Cure",
+      "year": 1997,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Tetsuo: The Iron Man",
+      "year": 1989,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Pulse",
+      "year": 2001,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Dark Water",
+      "year": 2002,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Noroi: The Curse",
+      "year": 2005,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Occult",
+      "year": 2009,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    }
+  ],
+  "research_log": {
+    "checked_on": "2026-11-17",
+    "sources_checked": [
+      {
+        "name": "Wikimedia Commons film poster policy",
+        "url": "https://commons.wikimedia.org/wiki/Category:Film_posters",
+        "finding": "Commons accepts only freely licensed or public-domain posters; fair-use posters are not allowed."
+      },
+      {
+        "name": "Wikimedia Commons licensing guidance",
+        "url": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+        "finding": "A file needs a verifiable source, creator/rights information, and a valid license or public-domain basis."
+      }
+    ],
+    "title_checks": [
+      {
+        "title": "Kwaidan",
+        "year": 1964,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Kwaidan+1964+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified; existing local image remains unapproved."
+      },
+      {
+        "title": "Onibaba",
+        "year": 1964,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Onibaba+1964+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "Kuroneko",
+        "year": 1968,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Kuroneko+1968+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "Search results included unrelated cosplay; not a film poster."
+      },
+      {
+        "title": "House",
+        "year": 1977,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=House+1977+Obayashi+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "The Ring",
+        "year": 1998,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Ring+1998+Hideo+Nakata+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "Search surfaced unrelated 1995 title card; not accepted as a poster."
+      },
+      {
+        "title": "Audition",
+        "year": 1999,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Audition+1999+Takashi+Miike+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified; existing local image remains unapproved."
+      },
+      {
+        "title": "Cure",
+        "year": 1997,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Cure+1997+Kiyoshi+Kurosawa+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "Results included posters for unrelated films titled The Cure and Cure; rejected."
+      },
+      {
+        "title": "Tetsuo: The Iron Man",
+        "year": 1989,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Tetsuo+The+Iron+Man+1989+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "Pulse",
+        "year": 2001,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Pulse+2001+Kiyoshi+Kurosawa+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "Dark Water",
+        "year": 2002,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Dark+Water+2002+Hideo+Nakata+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "Noroi: The Curse",
+        "year": 2005,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Noroi+The+Curse+2005+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      },
+      {
+        "title": "Occult",
+        "year": 2009,
+        "query_url": "https://commons.wikimedia.org/w/index.php?search=Occult+2009+Koji+Shiraishi+film+poster&title=Special:MediaSearch&type=image",
+        "finding": "No matching licensed film-poster file verified."
+      }
+    ],
+    "decision": "Do not install unrelated or unverified posters. Keep all current film-poster records unapproved until a matching license/permission can be substantiated."
+  }
+}
