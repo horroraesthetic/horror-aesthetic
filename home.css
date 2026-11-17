@@ -2048,3 +2048,37 @@ footer .ft-legal a:hover{opacity:1}
 @media (max-width:760px) and (prefers-reduced-motion:reduce){
   :root[data-tone="kaidan"] .ha-mobile-firefly{animation:none;opacity:.42;transform:none}
 }
+
+
+/* MOBILE TOUCH POLISH — brief, local feedback with no idle animation layers. */
+@media (max-width:760px) and (hover:none){
+  .sec-h{gap:8px 10px;margin-bottom:20px}
+  .sec-h h2{font-size:clamp(1.2rem,5vw,1.6rem);line-height:1.2;text-wrap:balance}
+  .sp:hover{transform:none;box-shadow:none}
+  .sp:active{transform:translateY(-2px) scale(.995);box-shadow:0 0 0 1px var(--c)}
+  .gal button:hover img{transform:none;filter:saturate(1.05)}
+  .gal button:active img{transform:scale(1.025);filter:saturate(1.12)}
+  .card:active,.film:active,.ha-research-card:active,.research-card:active{
+    transform:translateY(-1px);
+    border-color:var(--bt,var(--blood));
+    outline:1px solid color-mix(in srgb,var(--bt,var(--blood)) 42%,transparent);
+    outline-offset:1px;
+  }
+  .btn,.snd,button,summary{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  .btn:active,.snd:active,button:active,summary:active{
+    transform:scale(.975);
+    transition-duration:.12s;
+  }
+  #filters button[aria-pressed="true"],.bt-tabs button[aria-pressed="true"],.mg-tabs button[aria-pressed="true"]{
+    box-shadow:inset 0 -2px 0 var(--bt,var(--blood));
+  }
+}
+@media (max-width:760px) and (hover:hover){
+  .sp:hover{transform:translateY(-2px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .sp,.card,.btn,.snd,button,summary,.gal img{transition:none!important}
+}
