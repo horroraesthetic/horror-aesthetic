@@ -1912,13 +1912,18 @@ footer .ft-legal a:hover{opacity:1}
 
 
 
-/* Keep the known blanking fog layer disabled on mobile; restore the earlier ambient effects. */
-@media (max-width: 760px) {
-  #fog {
+/* MOBILE EFFECT BUDGET — preserve Kaidan fireflies, stop stacked full-screen paint on phones. */
+@media (max-width: 760px), (pointer: coarse) {
+  #fog, #kfog, .vig {
     display: none !important;
     animation: none !important;
     filter: none !important;
   }
+  #dust, #tink, #bld, #gsl, #rst, #rip {
+    display: none !important;
+    animation: none !important;
+  }
+  #rcrt, #rbar, #jbeam, #tsp, #bbeat { animation: none !important; }
 }
 
 
@@ -1946,7 +1951,16 @@ footer .ft-legal a:hover{opacity:1}
 }
 
 
-/* Mobile content remains visible; the original scroll-reveal behavior is restored. */
+/* MOBILE CONTENT SAFETY — keep sections visible if Android misses a scroll observer. */
+@media (max-width: 760px) {
+  .js .rv, .js .rv.in {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 
 /* MOBILE LOW-MOTION MODE — keep reading content, stop costly atmospheric paint on touch screens */
