@@ -1908,3 +1908,47 @@ footer .ft-legal a:hover{opacity:1}
  @keyframes wkpn{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
  @keyframes wkcf{from{transform:scale(1,1) skewX(-3deg)}to{transform:scale(.88,1.14) skewX(3deg)}}
 }
+
+
+/* ===== Mobile stability patch: HORROR AESTHETIC =====
+   Keep the full catalogue, but prevent grid overflow and reduce costly
+   decorative compositing on narrow Android screens. Touch feedback remains.
+*/
+@media (max-width: 700px) {
+  html, body { max-width: 100%; }
+  body { overflow-x: clip; }
+  .wrap, header, .mast, .hero, .rail, section, #homenav {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #homenav .hn-g {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #homenav .hn-g > *,
+  #homenav .hn-g button {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  #homenav .hn-g button {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+  #filters { min-width: 0; max-width: 100%; }
+  .rail { max-width: 100vw; }
+  img, video, canvas, svg { max-width: 100%; }
+  /* Fixed atmospheric overlays are especially expensive to composite on
+     mid-range mobile GPUs. Keep their appearance, remove costly filters. */
+  body::after { mix-blend-mode: normal; opacity: .035; }
+  .hairs g.all { filter: none; }
+  .hslides img.glitch { filter: none; }
+  .hero.burst .hslides { filter: none; }
+  .card, .sp { transition-duration: .12s; }
+}
+@media (max-width: 380px) {
+  #homenav .hn-g { grid-template-columns: minmax(0, 1fr); }
+  #homenav .hn-g button { padding: 12px; }
+}
