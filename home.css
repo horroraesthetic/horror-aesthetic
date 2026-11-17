@@ -1912,15 +1912,12 @@ footer .ft-legal a:hover{opacity:1}
 
 
 
-/* MOBILE REPAIR — prevent the cinematic fog from widening the page */
+/* MOBILE REPAIR — remove fixed atmospheric overlays that obscure lower viewport tiles */
 @media (max-width: 760px) {
-  #kfog {
-    left: 0 !important;
-    right: 0 !important;
-    transform: none !important;
+  #kfog, .vig {
+    display: none !important;
     animation: none !important;
-    filter: blur(9px) !important;
-    opacity: .24 !important;
+    filter: none !important;
   }
   #hit, #dust, #tink, #bld, #gsl, #rst, #rip {
     display: none !important;
