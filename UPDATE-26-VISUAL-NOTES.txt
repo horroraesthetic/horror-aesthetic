@@ -1,0 +1,10 @@
+HORROR AESTHETIC — UPDATE 26 / DIRECTORS, CULTURE AND TIMELINE
+
+Added three original wide section covers under img/:
+- ha-directors-cover-v2.jpg — an empty soundstage with a vintage camera and director chair
+- ha-culture-cover-v2.jpg — a vinyl record and shadow reflection in a quiet listening room
+- ha-timeline-cover-v2.jpg — a film strip winding toward a projector through an archive
+
+Updated the Director, Culture and Timeline section covers, Open Graph previews, alt text and intrinsic image dimensions. Added the artwork to the Visual Archive and advanced the offline cache to ha-v180.
+
+The artwork contains no embedded titles; headings remain accessible live page text.

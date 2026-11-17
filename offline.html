@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru" data-l="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0606">
+  <title>Нет соединения · HORROR AESTHETIC</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0a0606;--panel:#130b0e;--text:#e9ded8;--muted:#a99a98;--red:#c52a35;--line:#51232c}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 30%,#291017 0,transparent 58%),var(--bg);color:var(--text);font:16px/1.65 Georgia,serif}
+    main{width:min(100%,680px);padding:clamp(24px,6vw,54px);border:1px solid var(--line);background:linear-gradient(145deg,#170d12ee,#0b080bee);box-shadow:0 24px 90px #0009}
+    .mark{color:#e15b65;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:.22em}
+    h1{margin:18px 0 12px;font:900 clamp(32px,8vw,66px)/.98 Impact,"Arial Black",sans-serif;letter-spacing:.025em;text-transform:uppercase}
+    p{max-width:48ch;color:var(--muted)}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    a,button{display:inline-block;padding:12px 16px;border:1px solid var(--red);background:#8d171d;color:#fff;text-decoration:none;font:700 11px/1.3 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+    button{background:transparent}
+    a:focus-visible,button:focus-visible{outline:2px solid #f3b6ad;outline-offset:4px}
+    .en{display:none}
+    html[data-l=en] .ru{display:none}
+    html[data-l=en] .en{display:block}
+    .lang{float:right;border:1px solid var(--line);padding:5px 9px;background:transparent;color:var(--text);font:11px ui-monospace,monospace}
+  </style>
+</head>
+<body>
+  <main>
+    <button class="lang" type="button" id="lang" aria-label="Switch language">EN</button>
+    <div class="mark">HORROR AESTHETIC / OFFLINE ARCHIVE</div>
+    <section class="ru" lang="ru">
+      <h1>Связь потеряна</h1>
+      <p>Эта страница пока недоступна без интернета. Если вы уже открывали её раньше, попробуйте вернуться назад: сохранённая версия может быть доступна офлайн.</p>
+      <p>Ваш архив не исчез. Когда соединение восстановится, сайт снова будет доступен.</p>
+      <div class="actions"><a href="/horror-aesthetic/">НА ГЛАВНУЮ</a><button type="button" onclick="location.reload()">ПОВТОРИТЬ</button></div>
+    </section>
+    <section class="en" lang="en">
+      <h1>Signal lost</h1>
+      <p>This page is not available without a connection. If you opened it before, try going back: a cached copy may still be available offline.</p>
+      <p>Your archive is still here. The site will return when the connection is restored.</p>
+      <div class="actions"><a href="/horror-aesthetic/">HOME</a><button type="button" onclick="location.reload()">RETRY</button></div>
+    </section>
+  </main>
+  <script>
+    (function(){
+      var root=document.documentElement,button=document.getElementById('lang');
+      var lang=(navigator.language||'').toLowerCase().startsWith('ru')?'ru':'en';
+      function set(value){root.lang=value;root.dataset.l=value;button.textContent=value==='ru'?'EN':'RU';}
+      button.addEventListener('click',function(){set(root.dataset.l==='ru'?'en':'ru');});
+      set(lang);
+    })();
+  </script>
+</body>
+</html>

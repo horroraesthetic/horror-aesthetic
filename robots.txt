@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://horroraesthetic.github.io/horror-aesthetic/sitemap.xml

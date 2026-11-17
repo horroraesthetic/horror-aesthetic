@@ -1,0 +1,13 @@
+HORROR AESTHETIC — UPDATE 10
+THE VISUAL ARCHIVE
+
+Added:
+- New /visual-archive/ gallery with nine original section-cover artworks.
+- Category filters, bilingual search, live result count and responsive layout.
+- New homepage research card linking to the gallery.
+- Sitemap entry and service-worker offline shell support.
+- Service-worker cache version bumped to ha-v161.
+
+Installation:
+Upload this ZIP to the repository root and commit. The existing unzip workflow will extract the changed files.
+This is a delta update for the project after Update 09.

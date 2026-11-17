@@ -1,0 +1,792 @@
+/* HORROR AESTHETIC — site-wide reading tools */
+(() => {
+  'use strict';
+  const ru = (document.documentElement.lang || '').toLowerCase().startsWith('ru') ||
+             document.documentElement.dataset.l === 'ru';
+  const reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const main = document.querySelector('main, article, .w, #spot, .wrap') || document.body;
+  if (!main.id) main.id = 'ha-main-content';
+  if (main !== document.body && !main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+  if (main !== document.body) main.style.scrollMarginTop = '18px';
+
+  let skip = document.querySelector('.ha-skip-link');
+  if (!skip) {
+    skip = document.createElement('a');
+    skip.className = 'ha-skip-link';
+    document.body.prepend(skip);
+  }
+  skip.href = '#' + main.id;
+  skip.textContent = ru ? 'Перейти к содержимому' : 'Skip to content';
+  if (!skip.dataset.haSkipFixed) {
+    skip.addEventListener('click', event => {
+      const target = document.getElementById(main.id);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      try { target.focus({ preventScroll: true }); } catch (_) { target.focus(); }
+      if (window.location.hash !== '#' + main.id) history.replaceState(null, '', '#' + main.id);
+    });
+    skip.dataset.haSkipFixed = '1';
+  }
+
+  const progress = document.createElement('div');
+  progress.id = 'ha-reading-progress';
+  progress.setAttribute('role', 'progressbar');
+  progress.setAttribute('aria-label', ru ? 'Прогресс чтения' : 'Reading progress');
+  progress.setAttribute('aria-valuemin', '0');
+  progress.setAttribute('aria-valuemax', '100');
+  const fill = document.createElement('span');
+  progress.appendChild(fill);
+  document.body.appendChild(progress);
+
+  let scheduled = false;
+  const update = () => {
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const value = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+    fill.style.width = value.toFixed(2) + '%';
+    progress.setAttribute('aria-valuenow', String(Math.round(value)));
+    scheduled = false;
+    topButton.classList.toggle('is-visible', window.scrollY > 420);
+  };
+  const onScroll = () => {
+    if (!scheduled) {
+      scheduled = true;
+      window.requestAnimationFrame(update);
+    }
+  };
+
+  let topButton = document.getElementById('totop');
+  if (!topButton) {
+    topButton = document.createElement('button');
+    topButton.type = 'button';
+    topButton.id = 'ha-top';
+    topButton.className = 'ha-top';
+    topButton.textContent = '↑';
+    topButton.setAttribute('aria-label', ru ? 'Наверх страницы' : 'Back to top');
+    document.body.appendChild(topButton);
+  }
+  topButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  if (window.ResizeObserver) {
+    const observer = new ResizeObserver(onScroll);
+    observer.observe(document.body);
+  }
+  update();
+
+  // Improve search ergonomics without changing the site's existing search logic.
+  [['q', 'Search reviews / Поиск рецензий'],
+   ['cq', 'Search the catalogue / Поиск по каталогу']].forEach(([id, hint]) => {
+    const field = document.getElementById(id);
+    if (field && !field.getAttribute('placeholder')) field.setAttribute('placeholder', hint);
+    if (field) field.setAttribute('enterkeyhint', 'search');
+  });
+})();
+
+/* HORROR AESTHETIC — personal dossier shelf 2.0 / reading tracker */
+(() => {
+  'use strict';
+  const KEY = 'ha-personal-dossiers-v1';
+  const ru = (document.documentElement.dataset.l || document.documentElement.lang || 'en').toLowerCase().startsWith('ru');
+  const t = (en, r) => ru ? r : en;
+  const safeUrl = value => {
+    try { const u = new URL(value, location.href); return u.origin === location.origin && /^https?:$/.test(u.protocol) ? u.href : null; }
+    catch (_) { return null; }
+  };
+  const read = () => {
+    try {
+      const value = JSON.parse(localStorage.getItem(KEY) || '[]');
+      return Array.isArray(value) ? value.filter(x => x && typeof x.title === 'string' && safeUrl(x.url)).slice(0, 300).map(x => ({
+        title: x.title.slice(0, 240), url: safeUrl(x.url), kind: String(x.kind || t('SAVED PAGE','СОХРАНЁННАЯ СТРАНИЦА')).slice(0, 80),
+        savedAt: x.savedAt || new Date().toISOString(), status: x.status === 'read' ? 'read' : 'unread', note: String(x.note || '').slice(0, 500)
+      })) : [];
+    } catch (_) { return []; }
+  };
+  const write = items => { try { localStorage.setItem(KEY, JSON.stringify(items.slice(0, 300))); return true; } catch (_) { return false; } };
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const url = safeUrl(canonical ? canonical.href : location.href.split('#')[0]) || location.href.split('#')[0];
+  const heading = document.querySelector('main h1, article h1, h1');
+  const title = (heading && heading.textContent.trim()) || document.title || location.pathname;
+  const kind = /\/reviews?\//.test(location.pathname) ? t('FILM DOSSIER','ДОСЬЕ ФИЛЬМА') : /\/articles?\//.test(location.pathname) ? t('FEATURE','СТАТЬЯ') : t('ARCHIVE PAGE','РАЗДЕЛ АРХИВА');
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'ha-shelf-trigger'; button.setAttribute('aria-haspopup','dialog');
+  button.innerHTML = '<span aria-hidden="true">▤</span><span class="ha-shelf-trigger-label">' + t('MY ARCHIVE','МОЙ АРХИВ') + '</span>';
+  const panel = document.createElement('section');
+  panel.className = 'ha-shelf-panel'; panel.hidden = true; panel.setAttribute('role','dialog'); panel.setAttribute('aria-modal','false'); panel.setAttribute('aria-labelledby','ha-shelf-title');
+  panel.innerHTML = '<div class="ha-shelf-head"><div><small>HORROR AESTHETIC / PERSONAL FILE</small><h2 id="ha-shelf-title">' + t('MY ARCHIVE','МОЙ АРХИВ') + '</h2></div><button type="button" class="ha-shelf-close" aria-label="' + t('Close','Закрыть') + '">×</button></div><p class="ha-shelf-note">' + t('A private reading tracker stored only in this browser.','Личный список чтения хранится только в этом браузере.') + '</p><div class="ha-shelf-actions"><button type="button" data-action="save"></button><button type="button" data-action="export">' + t('EXPORT','ЭКСПОРТ') + '</button><button type="button" data-action="import">' + t('IMPORT','ИМПОРТ') + '</button></div><input class="ha-shelf-file" type="file" accept="application/json,.json" hidden><input class="ha-shelf-search" type="search" placeholder="' + t('Search saved pages…','Поиск в сохранённом…') + '" aria-label="' + t('Search saved pages','Поиск сохранённых страниц') + '"><p class="ha-shelf-count" aria-live="polite"></p><ul class="ha-shelf-list"></ul><button type="button" class="ha-shelf-clear">' + t('CLEAR MY ARCHIVE','ОЧИСТИТЬ МОЙ АРХИВ') + '</button>';
+  document.body.append(button, panel);
+  const list = panel.querySelector('.ha-shelf-list'), count = panel.querySelector('.ha-shelf-count');
+  const save = panel.querySelector('[data-action="save"]'), search = panel.querySelector('.ha-shelf-search');
+  const current = () => read().some(x => x.url === url);
+  const render = () => {
+    const items = read(), query = search.value.trim().toLocaleLowerCase();
+    const done = items.filter(x => x.status === 'read').length;
+    save.textContent = current() ? t('✓ SAVED','✓ СОХРАНЕНО') : t('+ SAVE THIS PAGE','+ СОХРАНИТЬ СТРАНИЦУ');
+    save.disabled = current();
+    count.textContent = t(`${items.length} SAVED · ${done} READ`, `СОХРАНЕНО: ${items.length} · ПРОЧИТАНО: ${done}`);
+    list.replaceChildren();
+    const shown = items.filter(x => (x.title + ' ' + x.kind + ' ' + x.note).toLocaleLowerCase().includes(query));
+    if (!shown.length) { const empty = document.createElement('li'); empty.className = 'ha-shelf-empty'; empty.textContent = items.length ? t('No matching pages.','Совпадений не найдено.') : t('Your archive is empty. Save a film dossier or research section.','Здесь пока пусто. Сохраняйте рецензии и исследовательские разделы.'); list.append(empty); }
+    shown.forEach(item => {
+      const li = document.createElement('li'); li.className = 'ha-shelf-item' + (item.status === 'read' ? ' is-read' : '');
+      const a = document.createElement('a'); a.href = item.url; a.textContent = item.title;
+      const meta = document.createElement('small'); meta.textContent = item.kind + ' · ' + (item.status === 'read' ? t('READ','ПРОЧИТАНО') : t('TO READ','К ПРОЧТЕНИЮ'));
+      const status = document.createElement('button'); status.type = 'button'; status.className = 'ha-shelf-status'; status.textContent = item.status === 'read' ? '✓' : '○'; status.title = t('Toggle reading status','Изменить статус чтения'); status.setAttribute('aria-label', t('Toggle reading status for ','Изменить статус чтения: ') + item.title);
+      status.addEventListener('click', () => { const all = read(); const x = all.find(y => y.url === item.url); if (x) x.status = x.status === 'read' ? 'unread' : 'read'; write(all); render(); });
+      const note = document.createElement('button'); note.type = 'button'; note.className = 'ha-shelf-note-button'; note.textContent = item.note ? t('EDIT NOTE','ИЗМЕНИТЬ ЗАМЕТКУ') : t('+ NOTE','+ ЗАМЕТКА');
+      note.addEventListener('click', () => { const value = prompt(t('Personal note (up to 500 characters):','Личная заметка (до 500 символов):'), item.note); if (value === null) return; const all = read(), x = all.find(y => y.url === item.url); if (x) x.note = value.slice(0,500); write(all); render(); });
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'ha-shelf-remove'; remove.textContent = '×'; remove.setAttribute('aria-label',t('Remove ','Удалить ') + item.title);
+      remove.addEventListener('click', () => { write(read().filter(x => x.url !== item.url)); render(); });
+      li.append(a, meta, status, note, remove);
+      if (item.note) { const n = document.createElement('p'); n.className = 'ha-shelf-item-note'; n.textContent = item.note; li.append(n); }
+      list.append(li);
+    });
+  };
+  const open = () => { render(); panel.hidden = false; button.setAttribute('aria-expanded','true'); panel.querySelector('.ha-shelf-close').focus(); };
+  const close = () => { panel.hidden = true; button.setAttribute('aria-expanded','false'); button.focus(); };
+  button.setAttribute('aria-expanded','false'); button.addEventListener('click', () => panel.hidden ? open() : close());
+  panel.querySelector('.ha-shelf-close').addEventListener('click', close);
+  search.addEventListener('input', render);
+  save.addEventListener('click', () => { const items = read(); if (!items.some(x => x.url === url)) { items.unshift({title, url, kind, savedAt:new Date().toISOString(), status:'unread', note:''}); if (!write(items)) alert(t('Storage is full. Export your archive and remove older items.','Недостаточно места. Экспортируйте архив и удалите старые записи.')); } render(); });
+  panel.querySelector('[data-action="export"]').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({format:'horror-aesthetic-personal-archive',version:2,items:read()},null,2)],{type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'horror-aesthetic-personal-archive.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  });
+  const file = panel.querySelector('.ha-shelf-file');
+  panel.querySelector('[data-action="import"]').addEventListener('click', () => file.click());
+  file.addEventListener('change', async () => {
+    const f = file.files && file.files[0]; if (!f) return;
+    try { const data = JSON.parse(await f.text()); const incoming = Array.isArray(data) ? data : data.items; if (!Array.isArray(incoming)) throw new Error('format'); const merged = new Map(read().map(x=>[x.url,x])); incoming.forEach(x=>{const safe = x && safeUrl(x.url); if(safe && typeof x.title==='string') merged.set(safe,{title:x.title.slice(0,240),url:safe,kind:String(x.kind||t('SAVED PAGE','СОХРАНЁННАЯ СТРАНИЦА')).slice(0,80),savedAt:x.savedAt||new Date().toISOString(),status:x.status==='read'?'read':'unread',note:String(x.note||'').slice(0,500)})}); if(!write([...merged.values()])) throw new Error('storage'); render(); } catch (_) { alert(t('This archive file could not be imported.','Не удалось импортировать этот файл архива.')); } finally { file.value=''; }
+  });
+  panel.querySelector('.ha-shelf-clear').addEventListener('click', () => { if (confirm(t('Clear all saved pages from this device?','Удалить все сохранённые страницы с этого устройства?'))) { write([]); render(); } });
+  document.addEventListener('keydown', e => { if(e.key==='Escape' && !panel.hidden) close(); });
+  render();
+})();
+
+
+/* HORROR AESTHETIC — TONE: THE CALL / synthesized mechanical telephone bell */
+(() => {
+  'use strict';
+  const ru = (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
+  const candidates = [...document.querySelectorAll('button,a,[role="button"]')];
+  const trigger = candidates.find(el => /тон\s*[:—-]?\s*звонок|ring\s*tone|the\s*call/i.test((el.textContent || '').replace(/\\s+/g,' ').trim()));
+  if (!trigger || trigger.dataset.haCallToneReady) return;
+  trigger.dataset.haCallToneReady = '1';
+  const originalLabel = trigger.textContent.trim();
+  let ctx = null, master = null, timer = null, ringing = false, nodes = [];
+  const status = document.createElement('span');
+  status.className = 'ha-call-tone-status';
+  status.setAttribute('aria-live','polite');
+  status.textContent = ru ? ' · ВЫКЛ' : ' · OFF';
+  trigger.append(status);
+  trigger.setAttribute('aria-pressed','false');
+  trigger.setAttribute('aria-label', (ru ? 'Тон звонка. Выключен' : 'Telephone ring tone. Off'));
+  const setStatus = on => {
+    status.textContent = on ? (ru ? ' · ЗВОНИТ' : ' · RINGING') : (ru ? ' · ВЫКЛ' : ' · OFF');
+    trigger.setAttribute('aria-pressed',String(on));
+    trigger.setAttribute('aria-label',(ru ? 'Тон звонка. ' : 'Telephone ring tone. ') + (on ? (ru ? 'Включён' : 'On') : (ru ? 'Выключен' : 'Off')));
+    trigger.classList.toggle('ha-call-tone-active',on);
+  };
+  const stop = () => {
+    ringing = false;
+    if (timer) { clearInterval(timer); timer = null; }
+    if (master && ctx) {
+      const now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setTargetAtTime(0,now,.06);
+    }
+    nodes.forEach(n => { try { n.stop(); } catch (_) {} });
+    nodes = [];
+    setStatus(false);
+  };
+  const start = async () => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { status.textContent = ru ? ' · НЕТ AUDIO API' : ' · AUDIO UNAVAILABLE'; return; }
+    if (!ctx) {
+      ctx = new AC();
+      master = ctx.createGain();
+      master.gain.value = 0;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass'; filter.frequency.value = 1850; filter.Q.value = .7;
+      master.connect(filter); filter.connect(ctx.destination);
+      // A slightly detuned pair and quiet upper partials evoke a resonant metal bell.
+      [[440,.105],[480,.095],[880,.026],[960,.022],[1320,.009]].forEach(([hz,level],i) => {
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = i < 2 ? 'sine' : 'triangle';
+        osc.frequency.value = hz;
+        if (i === 1) osc.detune.value = -3;
+        gain.gain.value = level;
+        osc.connect(gain); gain.connect(master); osc.start(); nodes.push(osc);
+      });
+    }
+    await ctx.resume();
+    ringing = true;
+    const pulse = () => {
+      if (!ringing || !ctx) return;
+      const now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(0,now);
+      // Two uneven metallic strikes within each ring burst.
+      master.gain.linearRampToValueAtTime(.72,now+.035);
+      master.gain.setValueAtTime(.72,now+.48);
+      master.gain.linearRampToValueAtTime(.16,now+.55);
+      master.gain.linearRampToValueAtTime(.72,now+.64);
+      master.gain.setValueAtTime(.72,now+1.22);
+      master.gain.linearRampToValueAtTime(0,now+1.34);
+    };
+    pulse();
+    timer = setInterval(pulse,4700);
+    setStatus(true);
+  };
+  trigger.addEventListener('click', async event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (ringing) { stop(); return; }
+    try { await start(); }
+    catch (_) { stop(); status.textContent = ru ? ' · ЗВУК НЕДОСТУПЕН' : ' · AUDIO BLOCKED'; }
+  }, true);
+  window.addEventListener('pagehide',stop,{once:true});
+})();
+
+
+/* HORROR AESTHETIC — CURSED TAPE / fragmented Japanese whisper */
+(() => {
+  'use strict';
+  const ru = (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
+  const call = [...document.querySelectorAll('button,a,[role="button"]')].find(el => /тон\s*[:—-]?\s*звонок|ring\s*tone|the\s*call/i.test((el.textContent || '').replace(/\\s+/g,' ').trim()));
+  if (!call || !window.speechSynthesis || call.dataset.haWhisperInstalled) return;
+  call.dataset.haWhisperInstalled = '1';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'ha-cursed-tape';
+  button.textContent = ru ? '▧ ПРОКЛЯТАЯ ЗАПИСЬ' : '▧ CURSED RECORDING';
+  button.setAttribute('aria-pressed','false');
+  button.setAttribute('aria-label',ru ? 'Включить японский шёпот проклятой записи' : 'Play the Japanese cursed whisper');
+  call.insertAdjacentElement('afterend',button);
+  const fragments = ['あ…','し…','ね…','み…','る…','か…','ゆ…','え…','お…','さ…','き…','と…','な…','れ…','う…','ま…'];
+  let active = false, timer = null, utterance = null, hissContext = null, hissGain = null;
+  const voices = () => window.speechSynthesis.getVoices().filter(v => /^ja([-_]|$)/i.test(v.lang));
+  const stop = () => {
+    active = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    window.speechSynthesis.cancel();
+    if (hissGain && hissContext) hissGain.gain.setTargetAtTime(0,hissContext.currentTime,.12);
+    button.classList.remove('is-playing');
+    button.setAttribute('aria-pressed','false');
+    button.textContent = ru ? '▧ ПРОКЛЯТАЯ ЗАПИСЬ' : '▧ CURSED RECORDING';
+  };
+  const schedule = () => {
+    if (!active) return;
+    const phrase = Array.from({length:2 + Math.floor(Math.random()*3)},() => fragments[Math.floor(Math.random()*fragments.length)]).join(' ');
+    utterance = new SpeechSynthesisUtterance(phrase);
+    const ja = voices();
+    if (ja.length) utterance.voice = ja[Math.floor(Math.random()*ja.length)];
+    utterance.lang = 'ja-JP';
+    utterance.rate = .62 + Math.random()*.16;
+    utterance.pitch = .48 + Math.random()*.18;
+    utterance.volume = .18 + Math.random()*.08;
+    utterance.onend = () => {
+      if (active) timer = setTimeout(schedule,2200 + Math.random()*5200);
+    };
+    utterance.onerror = () => {
+      if (active) timer = setTimeout(schedule,5000);
+    };
+    window.speechSynthesis.speak(utterance);
+  };
+  const start = async () => {
+    active = true;
+    button.classList.add('is-playing');
+    button.setAttribute('aria-pressed','true');
+    button.textContent = ru ? '▧ ЗАПИСЬ ВОСПРОИЗВОДИТСЯ · СТОП' : '▧ TAPE PLAYING · STOP';
+    // Very quiet filtered tape hiss under the fragmented voice.
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) {
+      try {
+        if (!hissContext) {
+          hissContext = new AC();
+          const length = hissContext.sampleRate * 2;
+          const buffer = hissContext.createBuffer(1,length,hissContext.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i=0;i<length;i++) data[i] = (Math.random()*2-1) * .22;
+          const source = hissContext.createBufferSource(); source.buffer=buffer; source.loop=true;
+          const filter = hissContext.createBiquadFilter(); filter.type='bandpass'; filter.frequency.value=1450; filter.Q.value=.55;
+          hissGain = hissContext.createGain(); hissGain.gain.value=0;
+          source.connect(filter); filter.connect(hissGain); hissGain.connect(hissContext.destination); source.start();
+        }
+        await hissContext.resume();
+        hissGain.gain.setTargetAtTime(.035,hissContext.currentTime,.4);
+      } catch (_) {}
+    }
+    schedule();
+  };
+  button.addEventListener('click',async () => {
+    if (active) { stop(); return; }
+    try { await start(); } catch (_) { stop(); }
+  });
+  document.addEventListener('visibilitychange',() => { if (document.hidden && active) stop(); });
+  window.addEventListener('pagehide',stop);
+  window.speechSynthesis.onvoiceschanged = () => {};
+})();
+
+
+
+/* HORROR AESTHETIC — resilient homepage tone switch */
+(() => {
+  'use strict';
+  const button = document.getElementById('tnb');
+  if (!button || button.dataset.haToneSwitchReady) return;
+  button.dataset.haToneSwitchReady = '1';
+  const tones = ['kaidan','ringu','blue','green','juon','tomie','blood','psy','clean'];
+  const labels = {
+    kaidan:['🎞 Тон: Кайдан','🎞 Tone: Kaidan'],
+    ringu:['🎞 Тон: Звонок','🎞 Tone: Ringu'],
+    blue:['🎞 Тон: Синий','🎞 Tone: Blue'],
+    green:['🎞 Тон: Зелёный','🎞 Tone: Green'],
+    juon:['🎞 Тон: Проклятие','🎞 Tone: Ju-On'],
+    tomie:['🎞 Тон: Томие','🎞 Tone: Tomie'],
+    blood:['🎞 Тон: Кровь','🎞 Tone: Blood'],
+    psy:['🎞 Тон: Психологический','🎞 Tone: Psychological'],
+    clean:['🎞 Тон: Ясный','🎞 Tone: Clear']
+  };
+  const ru = () => (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
+  let current = document.documentElement.dataset.tone || 'kaidan';
+  try { const saved = localStorage.getItem('ha-tone'); if (tones.includes(saved)) current = saved; } catch (_) {}
+  const apply = () => {
+    document.documentElement.dataset.tone = current;
+    button.textContent = labels[current][ru() ? 0 : 1];
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0b1213';
+    button.setAttribute('aria-label', labels[current][ru() ? 0 : 1] + ' — ' + (ru() ? 'нажмите, чтобы сменить оформление' : 'click to change theme'));
+  };
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const index = tones.indexOf(current);
+    current = tones[(index < 0 ? 0 : index + 1) % tones.length];
+    try { localStorage.setItem('ha-tone', current); } catch (_) {}
+    apply();
+  }, true);
+  window.addEventListener('storage', event => {
+    if (event.key === 'ha-tone' && tones.includes(event.newValue)) { current = event.newValue; apply(); }
+  });
+  apply();
+})();
+
+
+/* HORROR AESTHETIC — haunted editorial reveal */
+(() => {
+ 'use strict';
+ if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(!('IntersectionObserver' in window))return;
+ const selectors=['.ha-editorial-cover','.stats .stat','.stat','.guide-intro','.film','.card','.feature-card','.archive-card','.research-card','.ha-research-card','.section-card','.panel'];
+ const nodes=[...new Set(selectors.flatMap(selector=>[...document.querySelectorAll(selector)]))];
+ if(!nodes.length)return;
+ const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+   if(!entry.isIntersecting)return;
+   entry.target.classList.add('is-in');
+   observer.unobserve(entry.target);
+  });
+ },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+ nodes.forEach((node,index)=>{
+  node.classList.add('ha-reveal');
+  node.style.setProperty('--ha-reveal-delay',String(Math.min(index%5,4)*75)+'ms');
+  observer.observe(node);
+ });
+})();
+
+
+/* HORROR AESTHETIC — homepage hero composition */
+(() => {
+ 'use strict';
+ const path=window.location.pathname.replace(/\/+$/,'');
+ if(path!=='/horror-aesthetic'&&path!=='')return;
+ const main=document.querySelector('main');
+ if(!main)return;
+ const candidates=[...main.children];
+ const hero=candidates.find(node=>node.matches('section,header,div')&&node.querySelector('h1'))||main.querySelector('h1')?.parentElement;
+ if(!hero||hero.dataset.haHomeHero)return;
+ hero.dataset.haHomeHero='1';
+ hero.classList.add('ha-home-cinema');
+})();
+
+
+/* HORROR AESTHETIC — archive reading navigation */
+(() => {
+ 'use strict';
+ if(document.querySelector('.w')||document.querySelector('.ha-reading-progress'))return;
+ const progress=document.createElement('div');
+ progress.className='ha-reading-progress';
+ progress.setAttribute('role','progressbar');
+ progress.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Прогресс чтения':'Reading progress');
+ progress.setAttribute('aria-valuemin','0');progress.setAttribute('aria-valuemax','100');progress.setAttribute('aria-valuenow','0');
+ const fill=document.createElement('span');progress.appendChild(fill);
+ const top=document.createElement('button');
+ top.type='button';top.className='ha-back-top';top.textContent='↑';
+ top.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Наверх страницы':'Back to top');
+ top.title=top.getAttribute('aria-label');
+ document.body.append(progress,top);
+ let scheduled=false;
+ const update=()=>{
+  const root=document.documentElement,max=Math.max(0,root.scrollHeight-window.innerHeight);
+  const value=max?Math.min(100,Math.max(0,window.scrollY/max*100)):0;
+  fill.style.transform='scaleX('+value/100+')';
+  progress.setAttribute('aria-valuenow',String(Math.round(value)));
+  top.classList.toggle('is-visible',window.scrollY>420);
+  scheduled=false;
+ };
+ const queue=()=>{if(!scheduled){scheduled=true;window.requestAnimationFrame(update)}};
+ window.addEventListener('scroll',queue,{passive:true});
+ window.addEventListener('resize',queue,{passive:true});
+ top.addEventListener('click',()=>{
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({top:0,behavior:reduced?'auto':'smooth'});
+ });
+ update();
+})();
+
+
+/* HORROR AESTHETIC — accessible skip link + image loading hints */
+(() => {
+ 'use strict';
+ if(document.querySelector('.w'))return;
+ const main=document.querySelector('main,[role="main"]');
+ if(main&&!document.querySelector('.ha-skip-link')){
+  if(!main.id)main.id='ha-main-content';
+  if(!main.hasAttribute('tabindex'))main.setAttribute('tabindex','-1');
+  const skip=document.createElement('a');
+  skip.className='ha-skip-link';
+  skip.href='#'+main.id;
+  skip.textContent=(document.documentElement.lang||document.documentElement.dataset.l||'en').toLowerCase().startsWith('ru')?'Перейти к содержимому':'Skip to content';
+  document.body.insertBefore(skip,document.body.firstChild);
+ }
+ const images=[...document.images];
+ images.forEach((img,index)=>{
+  if(!img.hasAttribute('decoding'))img.decoding='async';
+  if(!img.hasAttribute('loading')){
+   const rect=img.getBoundingClientRect();
+   img.loading=(index<2||rect.top<window.innerHeight*1.25)?'eager':'lazy';
+  }
+  if(index===0&&!img.hasAttribute('fetchpriority'))img.setAttribute('fetchpriority','high');
+ });
+})();
+
+
+/* HORROR AESTHETIC — shareable Dark Archive searches */
+(() => {
+ 'use strict';
+ const search=document.getElementById('search');
+ const decade=document.getElementById('decade');
+ const rating=document.getElementById('rating');
+ const sort=document.getElementById('sort');
+ const line=document.querySelector('.ha-archive-page .resultline');
+ if(!search||!decade||!rating||!sort||!line||line.querySelector('.ha-share-view'))return;
+ const ru=()=>((document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+ const share=document.createElement('button');
+ share.type='button';share.className='ha-share-view';
+ share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';
+ share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view');
+ line.appendChild(share);
+ const fields=[['q',search],['decade',decade],['rating',rating],['sort',sort]];
+ const applyFromUrl=()=>{
+  const params=new URLSearchParams(location.search);
+  fields.forEach(([key,el])=>{
+   const value=params.get(key);
+   if(value===null)return;
+   if([...el.options].some(option=>option.value===value))el.value=value;
+  });
+  search.dispatchEvent(new Event('input',{bubbles:true}));
+  [decade,rating,sort].forEach(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
+ };
+ const syncUrl=()=>{
+  const url=new URL(location.href);
+  fields.forEach(([key,el])=>{if(el.value&&!(key==='sort'&&el.value==='title'))url.searchParams.set(key,el.value);else url.searchParams.delete(key)});
+  history.replaceState(null,'',url.pathname+url.search+url.hash);
+ };
+ applyFromUrl();
+ fields.forEach(([key,el])=>el.addEventListener(key==='q'?'input':'change',syncUrl));
+ window.addEventListener('popstate',applyFromUrl);
+ const copyFallback=value=>{
+  const field=document.createElement('textarea');field.value=value;field.setAttribute('readonly','');
+  field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();
+  try{document.execCommand('copy')}catch(_){}
+  field.remove();
+ };
+ share.addEventListener('click',async()=>{
+  const value=location.href;
+  try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(value);else copyFallback(value)}
+  catch(_){copyFallback(value)}
+  share.textContent=ru()?'ССЫЛКА СКОПИРОВАНА':'LINK COPIED';
+  share.setAttribute('aria-label',ru()?'Ссылка скопирована':'Link copied');
+  window.setTimeout(()=>{share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view')},1800);
+ });
+ document.querySelectorAll('[data-lang]').forEach(el=>el.addEventListener('click',()=>window.setTimeout(()=>{
+  share.textContent=ru()?'КОПИРОВАТЬ ССЫЛКУ':'COPY VIEW LINK';
+  share.setAttribute('aria-label',ru()?'Скопировать ссылку на текущую выборку':'Copy link to current filtered view');
+ },0)));
+})();
+
+
+/* HORROR AESTHETIC — Dark Archive decade navigator */
+(() => {
+ 'use strict';
+ const decade=document.getElementById('decade');
+ const controls=document.querySelector('.ha-archive-page .controls');
+ if(!decade||!controls||controls.parentElement.querySelector('.ha-decade-nav'))return;
+ const nav=document.createElement('nav');
+ nav.className='ha-decade-nav';
+ nav.setAttribute('aria-label',(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'Быстрый выбор десятилетия':'Quick decade navigation');
+ const label=document.createElement('span');
+ label.className='ha-decade-label';
+ label.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'ЭПОХА':'DECADE';
+ nav.appendChild(label);
+ const buttons=[];
+ [...decade.options].filter(option=>option.value).forEach(option=>{
+  const button=document.createElement('button');
+  button.type='button';button.className='ha-decade-chip';
+  button.textContent=option.textContent;
+  button.setAttribute('aria-pressed','false');
+  button.addEventListener('click',()=>{
+   decade.value=decade.value===option.value?'':option.value;
+   decade.dispatchEvent(new Event('change',{bubbles:true}));
+   sync();
+  });
+  buttons.push({button,value:option.value});nav.appendChild(button);
+ });
+ const all=document.createElement('button');
+ all.type='button';all.className='ha-decade-chip ha-decade-all';
+ all.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('ru')?'ВСЕ':'ALL';
+ all.setAttribute('aria-pressed','true');
+ all.addEventListener('click',()=>{decade.value='';decade.dispatchEvent(new Event('change',{bubbles:true}));sync()});
+ nav.insertBefore(all,nav.children[1]);
+ const sync=()=>{
+  all.setAttribute('aria-pressed',String(!decade.value));
+  buttons.forEach(item=>item.button.setAttribute('aria-pressed',String(decade.value===item.value)));
+ };
+ decade.addEventListener('change',sync);
+ controls.parentElement.insertBefore(nav,controls);
+ sync();
+})();
+
+
+/* HORROR AESTHETIC — universal command palette / quick navigation */
+(() => {
+ 'use strict';
+ const start=()=>{
+  if(document.querySelector('.ha-command-trigger'))return;
+  const ru=()=>((document.documentElement.dataset.l||document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+  const entries=[
+   ['/horror-aesthetic/','Home','Главная','home'],
+   ['/horror-aesthetic/reviews/','All reviews','Все рецензии','films cinema'],
+   ['/horror-aesthetic/archives/','The Dark Archive','Тёмный архив','films catalogue dossiers'],
+   ['/horror-aesthetic/j-horror/','J-Horror Master Archive','Архив японского хоррора','japan kaidan ringu ju-on'],
+   ['/horror-aesthetic/directors/','Director Archives','Архив режиссёров','filmmakers'],
+   ['/horror-aesthetic/timeline/','Horror Timeline','Хронология хоррора','history years'],
+   ['/horror-aesthetic/database/','Film Database','База фильмов','search titles'],
+   ['/horror-aesthetic/visual-archive/','Visual Archive','Визуальный архив','art posters'],
+   ['/horror-aesthetic/folklore/','Folklore & Legends','Фольклор и легенды','yokai myths'],
+   ['/horror-aesthetic/bestiarum/','Yokai Bestiarum','Бестиарий ёкаев','creatures monsters'],
+   ['/horror-aesthetic/library/','Library of Horror','Библиотека ужасов','books manga'],
+   ['/horror-aesthetic/themes/','Thematic Index','Тематический указатель','collections'],
+   ['/horror-aesthetic/culture/','Horror Culture','Культура хоррора','music art'],
+   ['/horror-aesthetic/games/','Horror Games','Хоррор-игры','gaming'],
+   ['/horror-aesthetic/screening-room/','Screening Room','Кинозал','watchlist watched'],
+   ['/horror-aesthetic/journal/','The Dark Journal','Тёмный журнал','essays'],
+   ['/horror-aesthetic/articles/','Essays & Features','Статьи и эссе','long reads'],
+   ['/horror-aesthetic/field-notes/','Field Notes','Полевые заметки','research'],
+   ['/horror-aesthetic/about.html','About the Project','О проекте','about'],
+   ['/horror-aesthetic/privacy.html','Privacy Policy','Политика конфиденциальности','privacy']
+  ];
+  const trigger=document.createElement('button');
+  trigger.type='button';trigger.className='ha-command-trigger';
+  trigger.innerHTML='<span aria-hidden="true">⌕</span><span class="ha-command-trigger-label"></span><kbd>⌘ K</kbd>';
+  trigger.querySelector('.ha-command-trigger-label').textContent=ru()?'БЫСТРЫЙ ПЕРЕХОД':'QUICK JUMP';
+  trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-expanded','false');
+  const overlay=document.createElement('div');overlay.className='ha-command-overlay';overlay.hidden=true;
+  overlay.innerHTML='<section class="ha-command-panel" role="dialog" aria-modal="true" aria-labelledby="ha-command-title"><header class="ha-command-head"><div><span class="ha-command-kicker">HORROR AESTHETIC / INDEX</span><h2 id="ha-command-title"></h2></div><button type="button" class="ha-command-close" aria-label="Close">×</button></header><label class="ha-command-search-label" for="ha-command-search"></label><input id="ha-command-search" class="ha-command-search" type="search" autocomplete="off" spellcheck="false"><div class="ha-command-hint"></div><nav class="ha-command-results" aria-label="Site sections"></nav><footer class="ha-command-foot"><span>ESC <i></i></span><span>↑ ↓ <i></i></span><span>ENTER <i></i></span></footer></section>';
+  document.body.append(trigger,overlay);
+  const input=overlay.querySelector('input'),results=overlay.querySelector('.ha-command-results'),close=overlay.querySelector('.ha-command-close');
+  let active=0,visible=[];
+  const text=(en,ruText)=>ru()?ruText:en;
+  const render=()=>{
+   const q=input.value.trim().toLocaleLowerCase();
+   visible=entries.filter(item=>(item[1]+' '+item[2]+' '+item[3]).toLocaleLowerCase().includes(q));
+   results.replaceChildren();active=0;
+   if(!visible.length){const empty=document.createElement('p');empty.className='ha-command-empty';empty.textContent=text('No matching sections. Try another search.','Ничего не найдено. Попробуйте другой запрос.');results.appendChild(empty);return}
+   visible.forEach((item,index)=>{
+    const link=document.createElement('a');link.className='ha-command-result';link.href=item[0];link.setAttribute('aria-current',String(index===active?'true':'false'));
+    const name=document.createElement('span');name.textContent=text(item[1],item[2]);
+    const path=document.createElement('small');path.textContent=item[0].replace('/horror-aesthetic/','/');link.append(name,path);
+    link.addEventListener('mouseenter',()=>setActive(index));results.appendChild(link);
+   });
+  };
+  const setActive=index=>{
+   if(!visible.length)return;
+   active=(index+visible.length)%visible.length;
+   [...results.querySelectorAll('a')].forEach((link,i)=>{link.setAttribute('aria-current',String(i===active));if(i===active)link.scrollIntoView({block:'nearest'})});
+  };
+  const open=()=>{
+   overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';render();
+   document.body.classList.add('ha-command-open');input.focus();
+  };
+  const shut=()=>{
+   overlay.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ha-command-open');trigger.focus();
+  };
+  trigger.addEventListener('click',open);close.addEventListener('click',shut);
+  overlay.addEventListener('click',event=>{if(event.target===overlay)shut()});
+  input.addEventListener('input',render);
+  overlay.addEventListener('keydown',event=>{
+   if(event.key==='Escape'){event.preventDefault();shut()}
+   else if(event.key==='ArrowDown'){event.preventDefault();setActive(active+1)}
+   else if(event.key==='ArrowUp'){event.preventDefault();setActive(active-1)}
+   else if(event.key==='Enter'&&visible[active]){event.preventDefault();location.href=visible[active][0]}
+   else if(event.key==='Tab'){
+    const focusable=[input,close,...results.querySelectorAll('a')].filter(el=>el.offsetParent!==null);
+    if(event.shiftKey&&document.activeElement===focusable[0]){event.preventDefault();focusable.at(-1).focus()}
+    else if(!event.shiftKey&&document.activeElement===focusable.at(-1)){event.preventDefault();focusable[0].focus()}
+   }
+  });
+  document.addEventListener('keydown',event=>{
+   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();overlay.hidden?open():shut()}
+  });
+  const localize=()=>{
+   trigger.querySelector('.ha-command-trigger-label').textContent=text('QUICK JUMP','БЫСТРЫЙ ПЕРЕХОД');
+   trigger.querySelector('kbd').textContent='⌘ K';
+   overlay.querySelector('#ha-command-title').textContent=text('Find your way through the archive','Найти нужный раздел архива');
+   overlay.querySelector('.ha-command-search-label').textContent=text('SEARCH THE SITE','ПОИСК ПО САЙТУ');
+   input.placeholder=text('Search films, archives, essays…','Поиск фильмов, архивов, статей…');
+   overlay.querySelector('.ha-command-hint').textContent=text('Type to filter every section','Начните вводить название раздела');
+   overlay.querySelector('.ha-command-foot').innerHTML='<span>ESC '+text('CLOSE','ЗАКРЫТЬ')+'</span><span>↑ ↓ '+text('MOVE','ВЫБРАТЬ')+'</span><span>ENTER '+text('OPEN','ОТКРЫТЬ')+'</span>';
+   close.setAttribute('aria-label',text('Close','Закрыть'));
+   render();
+  };
+  document.querySelectorAll('[data-lang],.lg button').forEach(button=>button.addEventListener('click',()=>window.setTimeout(localize,0)));
+  localize();
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
+
+/* HORROR AESTHETIC — CINEMA MODE / immersive visual grade */
+(() => {
+ 'use strict';
+ const boot=()=>{
+  if(document.querySelector('.ha-cinema-toggle'))return;
+  const ru=()=>((document.documentElement.dataset.l||document.documentElement.lang||'en').toLowerCase().startsWith('ru'));
+  const key='ha-cinema-mode';
+  let enabled=false;
+  try{enabled=localStorage.getItem(key)==='on'}catch(_){}
+  const button=document.createElement('button');
+  button.type='button';button.className='ha-cinema-toggle';
+  button.setAttribute('aria-pressed','false');
+  button.innerHTML='<span class="ha-cinema-orb" aria-hidden="true"></span><span class="ha-cinema-label"></span>';
+  document.body.appendChild(button);
+  const apply=()=>{
+   document.documentElement.classList.toggle('ha-cinema-mode',enabled);
+   button.setAttribute('aria-pressed',String(enabled));
+   button.querySelector('.ha-cinema-label').textContent=enabled?(ru()?'РЕЖИМ КИНО ВКЛ.':'CINEMA MODE ON'):(ru()?'РЕЖИМ КИНО':'CINEMA MODE');
+   button.title=enabled?(ru()?'Выключить атмосферный режим':'Turn off cinematic atmosphere'):(ru()?'Включить атмосферный режим':'Enable cinematic atmosphere');
+   try{localStorage.setItem(key,enabled?'on':'off')}catch(_){}
+  };
+  button.addEventListener('click',()=>{enabled=!enabled;apply()});
+  document.querySelectorAll('[data-lang],.lg button').forEach(el=>el.addEventListener('click',()=>window.setTimeout(apply,0)));
+  apply();
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
+
+
+/* HORROR AESTHETIC — tactile ember burst */
+(() => {
+  'use strict';
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.documentElement.dataset.haEmbersInstalled) return;
+  document.documentElement.dataset.haEmbersInstalled = '1';
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'ha-touch-embers';
+  canvas.setAttribute('aria-hidden', 'true');
+  Object.assign(canvas.style, {
+    position: 'fixed', inset: '0', width: '100%', height: '100%',
+    pointerEvents: 'none', zIndex: '99997'
+  });
+  document.addEventListener('DOMContentLoaded', () => document.body.appendChild(canvas), { once: true });
+  if (document.body) document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) { canvas.remove(); return; }
+  let width = 0, height = 0, dpr = 1, raf = 0;
+  const particles = [];
+  const palette = ['#f6d7bd', '#e85a61', '#c52a38', '#f0a56b', '#fff0df'];
+
+  const resize = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const draw = now => {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      const age = (now - p.born) / p.life;
+      if (age >= 1) { particles.splice(i, 1); continue; }
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= .982; p.vy = p.vy * .982 + .035;
+      const alpha = (1 - age) * p.opacity;
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = p.color;
+      ctx.fillStyle = p.color;
+      ctx.lineWidth = p.width;
+      ctx.shadowBlur = 9;
+      ctx.shadowColor = p.color;
+      ctx.beginPath();
+      if (p.streak) {
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - p.vx * 2.2, p.y - p.vy * 2.2);
+        ctx.stroke();
+      } else {
+        ctx.arc(p.x, p.y, Math.max(.35, p.size * (1 - age * .45)), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    if (particles.length) raf = requestAnimationFrame(draw);
+    else { raf = 0; ctx.clearRect(0, 0, width, height); }
+  };
+
+  const burst = (x, y) => {
+    if (particles.length > 180) particles.splice(0, particles.length - 180);
+    const now = performance.now();
+    for (let i = 0; i < 22; i++) {
+      const angle = Math.PI * 2 * (i / 22) + (Math.random() - .5) * .28;
+      const speed = 1.1 + Math.random() * 3.5;
+      const streak = Math.random() > .28;
+      particles.push({
+        x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        born: now, life: 420 + Math.random() * 340,
+        color: palette[Math.floor(Math.random() * palette.length)],
+        size: 1 + Math.random() * 2.2, width: .8 + Math.random() * 1.1,
+        opacity: .65 + Math.random() * .35, streak
+      });
+    }
+    if (!raf) raf = requestAnimationFrame(draw);
+  };
+
+  document.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (event.target.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
+    burst(event.clientX, event.clientY);
+  }, { passive: true });
+})();

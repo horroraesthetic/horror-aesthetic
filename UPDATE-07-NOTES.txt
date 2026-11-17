@@ -1,0 +1,23 @@
+HORROR AESTHETIC — UPDATE 07
+THE EDITORIAL ART DIRECTION
+
+Visual upgrade:
+- Eight original custom vector cover illustrations created for the eight research archives:
+  The Dark Archive, Director Archives, Horror Timeline, Cursed Library,
+  Japanese Folklore, Horror Culture, J-Horror Master Archive and Horror Game Archive.
+- Each archive page now has a dedicated responsive editorial hero cover.
+- Homepage research cards now use matching archive artwork as subtle backgrounds.
+- Each archive has its own PNG social preview (Open Graph / large social card).
+- Responsive mobile crop, reduced-motion support, image dimensions and preload hints added.
+- Shared CSS retains the existing site's visual language: charcoal, crimson, aged paper and Japanese editorial motifs.
+
+Technical:
+- No third-party image hotlinks; all cover artwork is stored locally in /img/.
+- Original SVG artwork plus PNG social previews.
+- Existing content, review data, GitHub Actions unzip workflow and offline routes preserved.
+- SVG XML, inline JavaScript, sitemap XML and the existing one-file installer checked.
+
+Install:
+Upload this file as horroraesthetic-github.zip into the repository root and commit.
+Do not rename the ZIP. The existing GitHub Actions workflow unpacks it and removes it.
+This cumulative delta includes the Update 06 research modules and this Update 07 visual upgrade. It is intended for a repository that already has Update 05 installed.

@@ -1,0 +1,22 @@
+HORROR AESTHETIC — UPDATE 11
+THE PERSONAL DOSSIER SHELF
+
+New site-wide feature:
+- Added MY ARCHIVE / МОЙ АРХИВ to the shared site enhancement layer.
+- Save the current film review, article, or research archive page to a personal reading shelf.
+- Open saved pages from a compact mobile-friendly panel.
+- Remove individual entries or clear the shelf.
+- Export the shelf as a JSON backup and import it on another browser/device.
+- Saved entries remain local to the browser/device; no account, server, or tracking is used.
+- Added keyboard Escape close behavior, accessible labels, responsive layout, and print hiding.
+- Service Worker cache bumped to ha-v162.
+
+Compatibility:
+- Existing review content, archive entries, language controls, search/filter tools,
+  homepage interactions, and GitHub Actions unzip workflow are preserved.
+- The feature is added to the shared enhancements.js / enhancements.css layer.
+
+Install:
+Upload the complete horroraesthetic-github.zip archive to the repository root and commit.
+If the archive is split for the GitHub browser upload limit, upload the parts sequentially
+and wait for the GitHub Actions run to finish after each part.

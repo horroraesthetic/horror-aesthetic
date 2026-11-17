@@ -1,0 +1,31 @@
+HORROR AESTHETIC — UPDATE 06
+J-HORROR MASTER ARCHIVE + HORROR GAME ARCHIVE
+
+New sections:
+1) /j-horror/
+   - 20 curated Japanese horror film entries, from silent-era and kaidan roots
+     through experimental/cult cinema, the late-1990s/early-2000s J-horror boom,
+     and contemporary titles
+   - Japanese titles, years, thematic categories and bilingual editorial notes
+   - Search, category filtering, sorting and expandable film entries
+   - Further-reading links to BFI, Film Forum, Criterion Collection and Meiji University
+
+2) /games/
+   - 16 curated horror-game entries across survival horror, psychological horror,
+     Japanese supernatural horror, first-person horror and interactive slashers
+   - Japanese titles where applicable, years, categories and bilingual descriptions
+   - Search, category filtering, sorting and expandable entries
+   - Further-reading link to an academic conference paper on survival-horror history
+
+Integration:
+- New homepage cards for both archives
+- Cross-navigation across all research archives
+- Sitemap updated
+- Service Worker cache updated to ha-v158; both new routes included in offline shell
+- Existing shared accessibility/reading enhancements retained
+
+Installation:
+Upload this file as horroraesthetic-github.zip into the repository root and commit.
+The existing GitHub Actions workflow will unpack it, commit the extracted files,
+and remove the ZIP. Do not rename the ZIP.
+This is a delta update intended for the current repository after Update 05.

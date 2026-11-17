@@ -1,0 +1,10 @@
+HORROR AESTHETIC — UPDATE 23 / VISUAL COLLECTION
+
+This is an additive overlay package. It does not replace existing site files.
+
+Added:
+- visual-archive/index.html — responsive gallery page
+- img/visual-archive/*.webp — seven optimized visual boards
+
+After GitHub Actions unpacks the archive, open:
+https://horroraesthetic.github.io/horror-aesthetic/visual-archive/
