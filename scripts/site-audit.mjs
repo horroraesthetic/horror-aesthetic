@@ -154,6 +154,7 @@ for (const [index, banner] of homepageBanners.entries()) {
   }
 }
 
+const homeJs = readFileSync(homeJsPath, 'utf8');
 const serviceWorker = readFileSync(serviceWorkerPath, 'utf8');
 const assetBudget = [
   ['index.html', homepagePath, 100 * 1024],
