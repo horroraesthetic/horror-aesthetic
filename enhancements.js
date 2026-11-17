@@ -716,8 +716,14 @@
     position: 'fixed', inset: '0', width: '100%', height: '100%',
     pointerEvents: 'none', zIndex: '99997'
   });
-  document.addEventListener('DOMContentLoaded', () => document.body.appendChild(canvas), { once: true });
-  if (document.body) document.body.appendChild(canvas);
+  const mountCanvas = () => {
+    if (document.body && canvas.parentNode !== document.body) document.body.appendChild(canvas);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountCanvas, { once: true });
+  } else {
+    mountCanvas();
+  }
 
   const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) { canvas.remove(); return; }
@@ -784,9 +790,21 @@
     if (!raf) raf = requestAnimationFrame(draw);
   };
 
-  document.addEventListener('pointerdown', event => {
+  const handlePointerDown = event => {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
-    if (event.target.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
+    const target = event.target;
+    if (target && target.closest && target.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
     burst(event.clientX, event.clientY);
-  }, { passive: true });
+  };
+  if ('PointerEvent' in window) {
+    document.addEventListener('pointerdown', handlePointerDown, { passive: true, capture: true });
+  } else {
+    // Legacy touch fallback for browsers without Pointer Events.
+    document.addEventListener('touchstart', event => {
+      for (const touch of event.changedTouches) burst(touch.clientX, touch.clientY);
+    }, { passive: true, capture: true });
+    document.addEventListener('mousedown', event => {
+      if (event.button === 0) burst(event.clientX, event.clientY);
+    }, { passive: true, capture: true });
+  }
 })();
