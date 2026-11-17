@@ -164,13 +164,13 @@ for (const [name, path, limit] of assetBudget) {
   }
 }
 
-if (!homepage.includes('<link rel="stylesheet" href="home.css">')) {
+if (!/<link\b(?=[^>]*\brel=["\']stylesheet["\'])(?=[^>]*\bhref=["\']home\.css(?:\?[^"\']*)?["\'])[^>]*>/i.test(homepage)) {
   errors.push('Homepage does not load the extracted home.css stylesheet.');
 }
-if (!homepage.includes('<script defer src="home.js"></script>')) {
+if (!/<script\b(?=[^>]*\bdefer)(?=[^>]*\bsrc=["\']home\.js(?:\?[^"\']*)?["\'])[^>]*>\s*<\/script>/i.test(homepage)) {
   errors.push('Homepage does not load the extracted home.js script.');
 }
-if (homepage.indexOf('href="home.css"') > homepage.indexOf('href="enhancements.css"')) {
+if (homepage.indexOf('href="home.css') > homepage.indexOf('href="enhancements.css')) {
   errors.push('home.css must load before enhancements.css to preserve cascade order.');
 }
 if (!homeJs.includes('var cur=null,query="",secFilter="home",picked=null;') || !homeJs.includes('if (event.persisted || secFilter !== "home") return;')) {
@@ -181,7 +181,7 @@ const homeVisibleSections = homepageSections.filter(([tag]) => /\bdata-home=["']
 if (!homeVisibleSections.length) {
   errors.push('Homepage-first mode has no data-home sections to display; the initial page would be blank.');
 }
-if (!serviceWorker.includes("BASE + 'home.css'") || !serviceWorker.includes("BASE + 'home.js'")) {
+if (!/BASE\s*\+\s*[\'"]home\.css(?:\?[^\'"]*)?[\'"]/.test(serviceWorker) || !/BASE\s*\+\s*[\'"]home\.js(?:\?[^\'"]*)?[\'"]/.test(serviceWorker)) {
   errors.push('Service worker shell is missing home.css or home.js.');
 }
 
