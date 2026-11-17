@@ -147,3 +147,55 @@ section .sec-h h2{
 @media(prefers-reduced-motion:reduce){
   .mast .hero img,.sbanner img,.cards .card{transition:none!important;animation:none!important}
 }
+
+/* VISUAL EVOLUTION 01B — archive surfaces.
+   CSS-only refinement: no DOM assumptions beyond existing site classes. */
+.spot .sp{
+  border-color:color-mix(in srgb,var(--c,var(--blood)) 48%,var(--line));
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),transparent 48%),
+    linear-gradient(180deg,#101719,#080b0c);
+  box-shadow:inset 0 1px rgba(255,255,255,.035),0 14px 32px -28px #000;
+}
+.spot .sp h3{letter-spacing:.015em;text-wrap:balance}
+.spot .sp .cnt{padding-top:8px;border-top:1px solid color-mix(in srgb,var(--c,var(--blood)) 28%,transparent)}
+.genres .genre{
+  background:linear-gradient(150deg,rgba(255,255,255,.035),transparent 56%),var(--panel);
+  transition:background-color .18s,border-color .18s;
+}
+.genres .genre[aria-pressed="true"]{
+  background:linear-gradient(145deg,rgba(181,42,49,.16),transparent 72%),#190d10;
+}
+.genres .genre:focus-visible,
+.bar:focus-visible,
+.gal button:focus-visible{
+  outline:2px solid var(--ha-paper);
+  outline-offset:3px;
+  z-index:2;
+}
+.chart,.shelf,.file,.watch{
+  border-color:rgba(208,184,160,.24);
+  background:linear-gradient(155deg,rgba(255,255,255,.028),transparent 48%),linear-gradient(180deg,var(--panel),var(--bg));
+}
+.kpis .kpi{
+  background:linear-gradient(145deg,rgba(255,255,255,.035),transparent 68%),var(--panel);
+}
+.briefs .brief{
+  border-top-color:var(--ha-rust);
+}
+.gal button{
+  border-color:rgba(208,184,160,.28);
+  background:#080b0c;
+}
+.gal figcaption{
+  color:var(--ha-paper);
+  letter-spacing:.12em;
+}
+footer{
+  border-top-color:var(--ha-rule);
+}
+@media(max-width:760px){
+  .spot .sp{min-height:0;padding:17px 15px}
+  .chart,.shelf,.file,.watch{padding:16px}
+  .gal{gap:9px}
+}
