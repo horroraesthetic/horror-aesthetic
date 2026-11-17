@@ -7,14 +7,15 @@
       "title": "Kwaidan",
       "year": 1964,
       "candidate": "../img/posters/kwaidan.webp",
-      "status": "review",
-      "approved": false,
-      "creator": null,
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original vector poster artwork created for this archive; not an original 1964 theatrical poster.",
+      "src": "../img/posters/kwaidan-1964.svg"
     },
     {
       "title": "Onibaba",
