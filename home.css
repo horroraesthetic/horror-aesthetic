@@ -2054,7 +2054,7 @@ footer .ft-legal a:hover{opacity:1}
 @media (max-width:760px) and (hover:none){
   .sec-h{gap:8px 10px;margin-bottom:20px}
   .sec-h h2{font-size:clamp(1.2rem,5vw,1.6rem);line-height:1.2;text-wrap:balance}
-  .sp:hover{transform:none;box-shadow:none}
+  .sp:hover{transform:none;box-shadow:0 0 22px -10px var(--c)}
   .sp:active{transform:translateY(-2px) scale(.995);box-shadow:0 0 0 1px var(--c)}
   .gal button:hover img{transform:none;filter:saturate(1.05)}
   .gal button:active img{transform:scale(1.025);filter:saturate(1.12)}
@@ -2079,6 +2079,6 @@ footer .ft-legal a:hover{opacity:1}
 @media (max-width:760px) and (hover:hover){
   .sp:hover{transform:translateY(-2px)}
 }
-@media (prefers-reduced-motion:reduce){
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
   .sp,.card,.btn,.snd,button,summary,.gal img{transition:none!important}
 }
