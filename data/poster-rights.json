@@ -86,15 +86,16 @@
     {
       "title": "Kuroneko",
       "year": 1968,
-      "candidate": null,
-      "status": "missing",
-      "approved": false,
-      "creator": null,
+      "candidate": "../img/posters/kuroneko-1968-horror-aesthetic.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "No verified poster asset is currently available in the repository."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1968 theatrical poster.",
+      "src": "../img/posters/kuroneko-1968-horror-aesthetic.webp"
     },
     {
       "title": "Blind Beast",
