@@ -1969,13 +1969,6 @@ footer .ft-legal a:hover{opacity:1}
   html.ha-calm,
   html.ha-calm * {
     scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
-  }
-  html.ha-calm *::before,
-  html.ha-calm *::after {
-    animation: none !important;
-    transition: none !important;
   }
   html.ha-calm body {
     background-attachment: scroll !important;
