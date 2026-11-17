@@ -1429,8 +1429,8 @@ html.ha-calm #ps-vig,html.ha-calm #ps-sh,html.ha-calm #ps-eyes,html.ha-calm #ps-
 :root[data-tone="juon"]{--bt:#d8614c}
 :root[data-tone="blood"]{--bt:#ee3e48}
 :root[data-tone="clean"]{--bt:#e55e64}
-section[data-cat]{content-visibility:auto;contain-intrinsic-size:auto 900px}
-section[data-cat]:target,section[data-cat]:focus-within{content-visibility:visible}
+/* content-visibility removed in v192: on Android it left black gaps and froze scrolling below the first sections */
+section[data-cat]{content-visibility:visible}
 #homenav{padding:28px 0 8px}
 #homenav .hn-h{font-size:1.5rem;margin:0 0 6px}
 #homenav .hn-p{opacity:.75;margin:0 0 16px}
