@@ -1,5 +1,5 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v200';
+const CACHE_VERSION = 'ha-v201';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
@@ -8,6 +8,7 @@ const SHELL = [
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
   BASE + 'home.css?v=195', BASE + 'enhancements.css?v=184', BASE + 'visual-refresh.css?v=1', BASE + 'enhancements.js?v=184', BASE + 'home.js?v=189',
   BASE + 'reference.css', BASE + 'reference.js',
+  BASE + 'data/poster-rights.json',
   BASE + 'review-tools.js', BASE + 'reviews-index.js',
   ...[
     'archives/','directors/','timeline/','library/','folklore/','reviews/','articles/',
