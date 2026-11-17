@@ -156,10 +156,10 @@ for (const [name, path, limit] of assetBudget) {
   }
 }
 
-if (!/<link\\s+rel=["']stylesheet["']\\s+href=["']home\\.css["']/i.test(homepage)) {
+if (!homepage.includes('<link rel="stylesheet" href="home.css">')) {
   errors.push('Homepage does not load the extracted home.css stylesheet.');
 }
-if (!/<script\\s+defer\\s+src=["']home\\.js["']/i.test(homepage)) {
+if (!homepage.includes('<script defer src="home.js"></script>')) {
   errors.push('Homepage does not load the extracted home.js script.');
 }
 if (homepage.indexOf('href="home.css"') > homepage.indexOf('href="enhancements.css"')) {
@@ -175,7 +175,7 @@ function inspectImages(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     const full = join(directory, entry.name);
     if (entry.isDirectory()) inspectImages(full);
-    else if (/\\.(?:webp|jpe?g|png|avif)$/i.test(entry.name)) {
+    else if (['.webp', '.jpg', '.jpeg', '.png', '.avif'].includes(extname(entry.name).toLowerCase())) {
       imageCount++;
       const size = statSync(full).size;
       if (size > 350 * 1024) {
