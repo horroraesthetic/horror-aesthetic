@@ -1930,9 +1930,9 @@ footer .ft-legal a:hover{opacity:1}
 }
 
 
-/* MOBILE RELEASES — keep the long list fully rendered instead of a 900px placeholder */
+/* MOBILE RENDERING — avoid skipped sections and stale intrinsic-size placeholders in Android WebViews */
 @media (max-width: 760px) {
-  #releases {
+  section[data-cat] {
     content-visibility: visible !important;
     contain-intrinsic-size: none !important;
   }
