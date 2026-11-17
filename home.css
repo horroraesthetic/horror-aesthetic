@@ -1912,18 +1912,13 @@ footer .ft-legal a:hover{opacity:1}
 
 
 
-/* MOBILE REPAIR — remove fixed atmospheric overlays that obscure lower viewport tiles */
+/* Keep the known blanking fog layer disabled on mobile; restore the earlier ambient effects. */
 @media (max-width: 760px) {
-  #fog, #kfog, .vig {
+  #fog {
     display: none !important;
     animation: none !important;
     filter: none !important;
   }
-  #hit, #dust, #tink, #bld, #gsl, #rst, #rip {
-    display: none !important;
-    animation: none !important;
-  }
-  #rcrt, #rbar, #jbeam, #tsp, #bbeat { animation: none !important; }
 }
 
 
@@ -1951,17 +1946,7 @@ footer .ft-legal a:hover{opacity:1}
 }
 
 
-/* MOBILE CONTENT SAFETY — never leave scroll-reveal blocks transparent when an observer misses them */
-@media (max-width: 760px) {
-  .js .rv,
-  .js .rv.in {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    animation: none !important;
-    transition: none !important;
-  }
-}
+/* Mobile content remains visible; the original scroll-reveal behavior is restored. */
 
 
 /* MOBILE LOW-MOTION MODE — keep reading content, stop costly atmospheric paint on touch screens */
