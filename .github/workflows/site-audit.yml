@@ -21,6 +21,8 @@ jobs:
           node-version: 22
       - name: Check enhancements JavaScript syntax
         run: node --check enhancements.js
+      - name: Check homepage JavaScript syntax
+        run: node --check home.js
       - name: Check review index JavaScript syntax
         run: node --check reviews-index.js
       - name: Check review tools JavaScript syntax
