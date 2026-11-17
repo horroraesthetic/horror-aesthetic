@@ -78,15 +78,7 @@ for (const file of htmlFiles) {
   }
 }
 
-console.log(`HORROR AESTHETIC SITE AUDIT`);
-console.log(`HTML documents: ${htmlFiles.length}`);
-console.log(`Sitemap URLs: ${locations.length}`);
-console.log(`Unique sitemap URLs: ${seen.size}`);
-console.log(`Warnings: ${warnings.length}`);
-for (const warning of warnings) console.warn(`WARN: ${warning}`);
-for (const error of errors) console.error(`ERROR: ${error}`);
-if (errors.length) process.exitCode = 1;
-else console.log('PASS: all sitemap URLs resolve to local files.');
+// Final report is emitted after every audit phase so late findings cannot be hidden.
 
 
 // Validate local links and assets used by HTML documents.
@@ -224,3 +216,15 @@ try {
   warnings.push('Image directory could not be inspected.');
 }
 
+
+
+console.log(`HORROR AESTHETIC SITE AUDIT`);
+console.log(`HTML documents: ${htmlFiles.length}`);
+console.log(`Sitemap URLs: ${locations.length}`);
+console.log(`Unique sitemap URLs: ${seen.size}`);
+console.log(`Images inspected: ${imageCount}; large images: ${largeImageCount}`);
+console.log(`Warnings: ${warnings.length}`);
+for (const warning of warnings) console.warn(`WARN: ${warning}`);
+for (const error of errors) console.error(`ERROR: ${error}`);
+if (errors.length) process.exitCode = 1;
+else console.log('PASS: all sitemap, link, asset and homepage checks completed.');
