@@ -176,6 +176,11 @@ if (homepage.indexOf('href="home.css"') > homepage.indexOf('href="enhancements.c
 if (!homeJs.includes('var cur=null,query="",secFilter="home",picked=null;') || !homeJs.includes('if (event.persisted || secFilter !== "home") return;')) {
   errors.push('Homepage must render the home view by default and prevent stale mobile scroll restoration.');
 }
+const homepageSections = [...homepage.matchAll(/<section\\b[^>]*data-cat=["'][^"']+["'][^>]*>/gi)];
+const homeVisibleSections = homepageSections.filter(([tag]) => /\\bdata-home=["']1["']/i.test(tag));
+if (!homeVisibleSections.length) {
+  errors.push('Homepage-first mode has no data-home sections to display; the initial page would be blank.');
+}
 if (!serviceWorker.includes("BASE + 'home.css'") || !serviceWorker.includes("BASE + 'home.js'")) {
   errors.push('Service worker shell is missing home.css or home.js.');
 }
