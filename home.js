@@ -1460,7 +1460,7 @@ function plural(n,f){if(LANG==="en")return n===1?f[0]:f[1];var m=n%100,b=n%10;if
 function nm(id){return F[id].n}
 function filmWord(n){return plural(n,T(UI.n_films))}
 
-var cur=null,query="",secFilter="home",picked=null;
+var cur=null,query="",secFilter="all",picked=null;
 
 function setImgs(){
   document.querySelectorAll("[data-bg]").forEach(function(b){var k=b.dataset.bg;if(IMG[k]&&!b.dataset.set){b.style.backgroundImage="url("+IMG[k]+")";b.dataset.set="1"}});
@@ -2361,7 +2361,7 @@ function watchRv(){document.querySelectorAll(".rv:not(.in)").forEach(function(el
 var _rs=renderStatic;renderStatic=function(){_rs();watchRv()};
 var start="en";
 try{if(localStorage.getItem("ha-lang")==="ru")start="ru"}catch(e){}
-try{var hh=(location.hash||"").slice(1);if(hh&&document.querySelector('section[data-cat="'+hh+'"]'))secFilter=hh}catch(e){}
+try{var hh=(location.hash||"").slice(1);if(hh&&hh!=="home"&&document.querySelector('section[data-cat="'+hh+'"]'))secFilter=hh}catch(e){}
 setLang(start);
 
 // The hash stores the selected section, not a browser scroll position.
@@ -2369,7 +2369,7 @@ setLang(start);
 try {
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   window.addEventListener("pageshow", function (event) {
-    if (event.persisted || secFilter !== "home") return;
+    if (event.persisted) return;
     requestAnimationFrame(function () { window.scrollTo(0, 0); });
   }, { once: true });
 } catch (e) {}
