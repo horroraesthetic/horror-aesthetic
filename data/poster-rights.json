@@ -179,15 +179,16 @@
     {
       "title": "The Ring",
       "year": 1998,
-      "candidate": "../img/posters/ringu.webp",
-      "status": "review",
-      "approved": false,
-      "creator": null,
+      "candidate": "../img/posters/ring-1998-horror-aesthetic.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1998 theatrical poster.",
+      "src": "../img/posters/ring-1998-horror-aesthetic.webp"
     },
     {
       "title": "Tomie",
