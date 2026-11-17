@@ -4,17 +4,57 @@
   "policy": "Only render an image as a film poster after its exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope have been verified. A film still, fan art, scan, or poster found online is not automatically reusable.",
   "films": [
     {
-      "title": "Kwaidan",
-      "year": 1964,
-      "candidate": "../img/posters/kwaidan.webp",
-      "status": "review",
+      "title": "Ugetsu",
+      "year": 1953,
+      "candidate": null,
+      "status": "missing",
       "approved": false,
       "creator": null,
       "source_page": null,
       "license": null,
       "license_url": null,
       "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "The Ghost of Yotsuya",
+      "year": 1959,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Jigoku",
+      "year": 1960,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Kwaidan",
+      "year": 1964,
+      "candidate": "../img/posters/kwaidan.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original vector poster artwork created for this archive; not an original 1964 theatrical poster.",
+      "src": "../img/posters/kwaidan-1964.svg"
     },
     {
       "title": "Onibaba",
@@ -30,6 +70,19 @@
       "notes": "No verified poster asset is currently available in the repository."
     },
     {
+      "title": "Woman in the Dunes",
+      "year": 1964,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
       "title": "Kuroneko",
       "year": 1968,
       "candidate": null,
@@ -41,6 +94,19 @@
       "license_url": null,
       "attribution": null,
       "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Blind Beast",
+      "year": 1969,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
     },
     {
       "title": "House",
@@ -56,34 +122,8 @@
       "notes": "No verified poster asset is currently available in the repository."
     },
     {
-      "title": "The Ring",
-      "year": 1998,
-      "candidate": "../img/posters/ringu.webp",
-      "status": "review",
-      "approved": false,
-      "creator": null,
-      "source_page": null,
-      "license": null,
-      "license_url": null,
-      "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
-    },
-    {
-      "title": "Audition",
-      "year": 1999,
-      "candidate": "../img/posters/audition.webp",
-      "status": "review",
-      "approved": false,
-      "creator": null,
-      "source_page": null,
-      "license": null,
-      "license_url": null,
-      "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
-    },
-    {
-      "title": "Cure",
-      "year": 1997,
+      "title": "Evil Dead Trap",
+      "year": 1988,
       "candidate": null,
       "status": "missing",
       "approved": false,
@@ -92,7 +132,7 @@
       "license": null,
       "license_url": null,
       "attribution": null,
-      "notes": "No verified poster asset is currently available in the repository."
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
     },
     {
       "title": "Tetsuo: The Iron Man",
@@ -108,6 +148,84 @@
       "notes": "No verified poster asset is currently available in the repository."
     },
     {
+      "title": "Cure",
+      "year": 1997,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Perfect Blue",
+      "year": 1997,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "The Ring",
+      "year": 1998,
+      "candidate": "../img/posters/ringu.webp",
+      "status": "review",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+    },
+    {
+      "title": "Tomie",
+      "year": 1998,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Audition",
+      "year": 1999,
+      "candidate": "../img/posters/audition.webp",
+      "status": "review",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+    },
+    {
+      "title": "Uzumaki",
+      "year": 2000,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
       "title": "Pulse",
       "year": 2001,
       "candidate": null,
@@ -119,6 +237,19 @@
       "license_url": null,
       "attribution": null,
       "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Suicide Club",
+      "year": 2001,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
     },
     {
       "title": "Dark Water",
@@ -134,6 +265,45 @@
       "notes": "No verified poster asset is currently available in the repository."
     },
     {
+      "title": "One Missed Call",
+      "year": 2003,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Infection",
+      "year": 2004,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Marebito",
+      "year": 2004,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
       "title": "Noroi: The Curse",
       "year": 2005,
       "candidate": null,
@@ -147,6 +317,32 @@
       "notes": "No verified poster asset is currently available in the repository."
     },
     {
+      "title": "Reincarnation",
+      "year": 2005,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Retribution",
+      "year": 2006,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
       "title": "Occult",
       "year": 2009,
       "candidate": null,
@@ -158,6 +354,45 @@
       "license_url": null,
       "attribution": null,
       "notes": "No verified poster asset is currently available in the repository."
+    },
+    {
+      "title": "Tag",
+      "year": 2015,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "One Cut of the Dead",
+      "year": 2017,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+    },
+    {
+      "title": "Kisaragi Station",
+      "year": 2022,
+      "candidate": null,
+      "status": "missing",
+      "approved": false,
+      "creator": null,
+      "source_page": null,
+      "license": null,
+      "license_url": null,
+      "attribution": null,
+      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
     }
   ],
   "research_log": {
