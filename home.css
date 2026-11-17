@@ -1992,3 +1992,26 @@ footer .ft-legal a:hover{opacity:1}
     opacity: .035 !important;
   }
 }
+
+
+/* MOBILE COMPOSITING GUARD — disable the two latest full-screen Red Room/Cinema layers only */
+@media (max-width: 760px), (pointer: coarse) {
+  body::before {
+    position: absolute !important;
+    background: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  body::after {
+    position: absolute !important;
+    background: none !important;
+    opacity: 0 !important;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+  }
+  html.ha-cinema-mode::before,
+  html.ha-cinema-mode::after {
+    content: none !important;
+    display: none !important;
+  }
+}
