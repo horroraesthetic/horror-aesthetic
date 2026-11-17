@@ -1429,8 +1429,8 @@ html.ha-calm #ps-vig,html.ha-calm #ps-sh,html.ha-calm #ps-eyes,html.ha-calm #ps-
 :root[data-tone="juon"]{--bt:#d8614c}
 :root[data-tone="blood"]{--bt:#ee3e48}
 :root[data-tone="clean"]{--bt:#e55e64}
-/* content-visibility removed in v192: on Android it left black gaps and froze scrolling below the first sections */
-section[data-cat]{content-visibility:visible}
+section[data-cat]{content-visibility:auto;contain-intrinsic-size:auto 900px}
+section[data-cat]:target,section[data-cat]:focus-within{content-visibility:visible}
 #homenav{padding:28px 0 8px}
 #homenav .hn-h{font-size:1.5rem;margin:0 0 6px}
 #homenav .hn-p{opacity:.75;margin:0 0 16px}
@@ -1910,45 +1910,3 @@ footer .ft-legal a:hover{opacity:1}
 }
 
 
-/* ===== Mobile stability patch: HORROR AESTHETIC =====
-   Keep the full catalogue, but prevent grid overflow and reduce costly
-   decorative compositing on narrow Android screens. Touch feedback remains.
-*/
-@media (max-width: 700px) {
-  html, body { max-width: 100%; }
-  body { overflow-x: clip; }
-  .wrap, header, .mast, .hero, .rail, section, #homenav {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-  }
-  #homenav .hn-g {
-    width: 100%;
-    min-width: 0;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  #homenav .hn-g > *,
-  #homenav .hn-g button {
-    min-width: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
-  }
-  #homenav .hn-g button {
-    padding: 12px 10px;
-    gap: 8px;
-  }
-  #filters { min-width: 0; max-width: 100%; }
-  .rail { max-width: 100vw; }
-  img, video, canvas, svg { max-width: 100%; }
-  /* Fixed atmospheric overlays are especially expensive to composite on
-     mid-range mobile GPUs. Keep their appearance, remove costly filters. */
-  body::after { mix-blend-mode: normal; opacity: .035; }
-  .hairs g.all { filter: none; }
-  .hslides img.glitch { filter: none; }
-  .hero.burst .hslides { filter: none; }
-  .card, .sp { transition-duration: .12s; }
-}
-@media (max-width: 380px) {
-  #homenav .hn-g { grid-template-columns: minmax(0, 1fr); }
-  #homenav .hn-g button { padding: 12px; }
-}
