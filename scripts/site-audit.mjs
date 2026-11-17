@@ -50,6 +50,9 @@ const htmlFiles = walk(root);
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
   const relative = file.slice(root.length + 1);
+  // Google Search Console verification files are plain-text tokens by design,
+  // so they are not normal HTML documents and should not trigger page-quality warnings.
+  if (/^google[0-9a-f]+\.html$/i.test(relative) && html.trim() === `google-site-verification: ${relative}`) continue;
   if (!/<title\b[^>]*>\s*[^<]+<\/title>/i.test(html)) {
     warnings.push(`Missing or empty title: ${relative}`);
   }
