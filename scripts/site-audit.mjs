@@ -84,3 +84,47 @@ for (const warning of warnings) console.warn(`WARN: ${warning}`);
 for (const error of errors) console.error(`ERROR: ${error}`);
 if (errors.length) process.exitCode = 1;
 else console.log('PASS: all sitemap URLs resolve to local files.');
+
+
+// Validate local links and assets used by HTML documents.
+function resolveLocalReference(file, reference) {
+  let value = reference.trim().split(/[?#]/, 1)[0];
+  if (!value) return null;
+  if (value.startsWith('/horror-aesthetic/')) value = value.slice('/horror-aesthetic/'.length);
+  else if (value.startsWith('/')) value = value.slice(1);
+  else value = join(file.slice(root.length + 1).split('/').slice(0, -1).join('/'), value);
+  let decoded;
+  try { decoded = decodeURIComponent(value); }
+  catch { return { invalid: true }; }
+  const target = resolve(root, decoded);
+  if (target !== root && !target.startsWith(root + '/')) return { unsafe: true };
+  return { target, trailingSlash: reference.split(/[?#]/, 1)[0].endsWith('/') };
+}
+
+for (const file of htmlFiles) {
+  const html = readFileSync(file, 'utf8');
+  const relative = file.slice(root.length + 1);
+  const references = [...html.matchAll(/(?:href|src|poster)=[\"']([^\"']+)[\"']/gi)];
+  for (const match of references) {
+    const raw = match[1].trim();
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw) || raw.startsWith('#')) continue;
+    const resolved = resolveLocalReference(file, raw);
+    if (!resolved) continue;
+    if (resolved.invalid) {
+      errors.push(`Invalid encoded local reference: ${relative} → ${raw}`);
+      continue;
+    }
+    if (resolved.unsafe) {
+      errors.push(`Local reference escapes the site root: ${relative} → ${raw}`);
+      continue;
+    }
+    let target = resolved.target;
+    try {
+      if (statSync(target).isDirectory()) target = join(target, 'index.html');
+      else if (resolved.trailingSlash) target = join(target, 'index.html');
+      if (!statSync(target).isFile()) errors.push(`Broken local reference: ${relative} → ${raw}`);
+    } catch {
+      errors.push(`Broken local reference: ${relative} → ${raw}`);
+    }
+  }
+}
