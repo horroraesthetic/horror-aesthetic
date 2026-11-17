@@ -702,10 +702,10 @@
 })();
 
 
-/* HORROR AESTHETIC — tactile ember burst */
+/* HORROR AESTHETIC — tactile ember burst (mouse + touch) */
 (() => {
   'use strict';
-  if (window.matchMedia && (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(pointer: coarse)').matches)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (document.documentElement.dataset.haEmbersInstalled) return;
   document.documentElement.dataset.haEmbersInstalled = '1';
 
