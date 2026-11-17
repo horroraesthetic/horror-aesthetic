@@ -181,8 +181,8 @@ if (!homepage.includes('<script defer src="home.js"></script>')) {
 if (homepage.indexOf('href="home.css"') > homepage.indexOf('href="enhancements.css"')) {
   errors.push('home.css must load before enhancements.css to preserve cascade order.');
 }
-if (!homeJs.includes('var cur=null,query="",secFilter="all",picked=null;') || !homeJs.includes('if (event.persisted) return;')) {
-  errors.push('Homepage must show all sections by default and avoid stale mobile scroll restoration.');
+if (!homeJs.includes('var cur=null,query="",secFilter="home",picked=null;') || !homeJs.includes('if (event.persisted || secFilter !== "home") return;')) {
+  errors.push('Homepage must render the home view by default and prevent stale mobile scroll restoration.');
 }
 if (!serviceWorker.includes("BASE + 'home.css'") || !serviceWorker.includes("BASE + 'home.js'")) {
   errors.push('Service worker shell is missing home.css or home.js.');
