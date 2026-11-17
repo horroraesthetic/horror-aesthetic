@@ -2364,6 +2364,17 @@ try{if(localStorage.getItem("ha-lang")==="ru")start="ru"}catch(e){}
 try{var hh=(location.hash||"").slice(1);if(hh&&document.querySelector('section[data-cat="'+hh+'"]'))secFilter=hh}catch(e){}
 setLang(start);
 
+// The hash stores the selected section, not a browser scroll position.
+// Avoid reopening the homepage halfway down after Android restores a stale offset.
+try {
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted || secFilter !== "home") return;
+    requestAnimationFrame(function () { window.scrollTo(0, 0); });
+  }, { once: true });
+} catch (e) {}
+
+
 (function(){
  var W=960,H=56,RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches,rows=[],vis=new Set(),raf=0,last=0;
  function R(){return Math.random()}
