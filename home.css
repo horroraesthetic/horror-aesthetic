@@ -1962,3 +1962,40 @@ footer .ft-legal a:hover{opacity:1}
     transition: none !important;
   }
 }
+
+
+/* MOBILE LOW-MOTION MODE — keep reading content, stop costly atmospheric paint on touch screens */
+@media (max-width: 760px), (pointer: coarse) {
+  html.ha-calm,
+  html.ha-calm * {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  html.ha-calm *::before,
+  html.ha-calm *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html.ha-calm body {
+    background-attachment: scroll !important;
+  }
+  html.ha-calm #cast,
+  html.ha-calm .hairs,
+  html.ha-calm #flo,
+  html.ha-calm .cursor-glow,
+  html.ha-calm #jbeam,
+  html.ha-calm #jbulb,
+  html.ha-calm #tsp,
+  html.ha-calm #r7,
+  html.ha-calm .vig,
+  html.ha-calm #glimpse {
+    display: none !important;
+  }
+  html.ha-calm body::before,
+  html.ha-calm body::after {
+    mix-blend-mode: normal !important;
+    filter: none !important;
+    opacity: .035 !important;
+  }
+}
