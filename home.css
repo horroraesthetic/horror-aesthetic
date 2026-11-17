@@ -1937,3 +1937,18 @@ footer .ft-legal a:hover{opacity:1}
     contain-intrinsic-size: none !important;
   }
 }
+
+
+/* MOBILE COMPOSITING — avoid fixed blend layers that can blank Android WebViews */
+@media (max-width: 760px) {
+  html.ha-cinema-mode::before,
+  html.ha-cinema-mode::after {
+    content: none !important;
+    display: none !important;
+  }
+  body::after {
+    position: absolute !important;
+    opacity: .045 !important;
+    mix-blend-mode: normal !important;
+  }
+}
