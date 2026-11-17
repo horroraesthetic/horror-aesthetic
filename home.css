@@ -1910,3 +1910,21 @@ footer .ft-legal a:hover{opacity:1}
 }
 
 
+
+
+/* MOBILE REPAIR — prevent the cinematic fog from widening the page */
+@media (max-width: 760px) {
+  #kfog {
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    animation: none !important;
+    filter: blur(9px) !important;
+    opacity: .24 !important;
+  }
+  #hit, #dust, #tink, #bld, #gsl, #rst, #rip {
+    display: none !important;
+    animation: none !important;
+  }
+  #rcrt, #rbar, #jbeam, #tsp, #bbeat { animation: none !important; }
+}
