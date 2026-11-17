@@ -705,7 +705,7 @@
 /* HORROR AESTHETIC — tactile ember burst */
 (() => {
   'use strict';
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia && (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(pointer: coarse)').matches)) return;
   if (document.documentElement.dataset.haEmbersInstalled) return;
   document.documentElement.dataset.haEmbersInstalled = '1';
 

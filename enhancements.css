@@ -1213,3 +1213,29 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
     min-height: 44px;
   }
 }
+
+
+/* MOBILE STABILITY — reduce compositing and prevent narrow-screen overflow */
+@media (max-width: 760px) {
+  html, body { max-width: 100%; overflow-x: clip; }
+  body:not(:has(.w)) {
+    background-attachment: scroll;
+  }
+  body:not(:has(.w))::before,
+  body:not(:has(.w))::after {
+    display: none !important;
+    animation: none !important;
+  }
+  body:not(:has(.w)) :where(h1) { animation: none !important; }
+  body:not(:has(.w)) :where(.ha-research-card,.archive-card,.research-card,.card,.feature-card,.film) {
+    transition: none !important;
+  }
+  body:not(:has(.w)) :where(.ha-research-card:hover,.archive-card:hover,.research-card:hover,.card:hover,.feature-card:hover,.film:hover) {
+    transform: none !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.24);
+  }
+  body:not(:has(.w)) :where(img,video,iframe,table,pre) { max-width: 100%; }
+  body:not(:has(.w)) :where(.grid,.ha-research-grid,.archive-grid,.research-grid,.cards-grid) {
+    min-width: 0;
+  }
+}
