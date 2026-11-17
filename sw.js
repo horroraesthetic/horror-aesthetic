@@ -1,5 +1,5 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v189';
+const CACHE_VERSION = 'ha-v190';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
@@ -7,11 +7,12 @@ const SHELL = [
   BASE, BASE + 'index.html', OFFLINE_URL,
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
   BASE + 'home.css', BASE + 'enhancements.css', BASE + 'enhancements.js', BASE + 'home.js',
+  BASE + 'reference.css', BASE + 'reference.js',
   BASE + 'review-tools.js', BASE + 'reviews-index.js',
   ...[
     'archives/','directors/','timeline/','library/','folklore/','reviews/','articles/',
     'culture/','j-horror/','games/','visual-archive/','database/',
-    'bestiarum/','journal/','screening-room/','field-notes/'
+    'bestiarum/','journal/','screening-room/','field-notes/','glossary/','nightmare-archive/'
   ].map(path => BASE + path),
   ...[
     'img/ha-home-hero-v2.jpg','img/ha-folklore-hero-v2.jpg',

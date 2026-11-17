@@ -29,6 +29,8 @@ jobs:
         run: node --check review-tools.js
       - name: Check service worker JavaScript syntax
         run: node --check sw.js
+      - name: Check reference JavaScript syntax
+        run: node --check reference.js
       - name: Check audit script syntax
         run: node --check scripts/site-audit.mjs
       - name: Validate sitemap, accessibility and HTML basics

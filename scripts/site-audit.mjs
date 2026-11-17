@@ -200,6 +200,18 @@ function inspectImages(directory) {
     }
   }
 }
+
+for (const requiredPage of ['glossary/index.html', 'nightmare-archive/index.html']) {
+  const requiredPath = resolve(root, requiredPage);
+  try {
+    if (!statSync(requiredPath).isFile()) errors.push(`Required editorial page is missing: ${requiredPage}`);
+  } catch {
+    errors.push(`Required editorial page is missing: ${requiredPage}`);
+  }
+}
+if (!serviceWorker.includes("BASE + 'reference.css'") || !serviceWorker.includes("BASE + 'reference.js'")) {
+  errors.push('Service worker shell is missing the shared reference assets.');
+}
 const imageRoot = resolve(root, 'img');
 try {
   inspectImages(imageRoot);
