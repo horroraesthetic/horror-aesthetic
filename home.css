@@ -1928,3 +1928,12 @@ footer .ft-legal a:hover{opacity:1}
   }
   #rcrt, #rbar, #jbeam, #tsp, #bbeat { animation: none !important; }
 }
+
+
+/* MOBILE RELEASES — keep the long list fully rendered instead of a 900px placeholder */
+@media (max-width: 760px) {
+  #releases {
+    content-visibility: visible !important;
+    contain-intrinsic-size: none !important;
+  }
+}
