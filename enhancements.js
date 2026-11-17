@@ -700,3 +700,93 @@
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+
+/* HORROR AESTHETIC — tactile ember burst */
+(() => {
+  'use strict';
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (document.documentElement.dataset.haEmbersInstalled) return;
+  document.documentElement.dataset.haEmbersInstalled = '1';
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'ha-touch-embers';
+  canvas.setAttribute('aria-hidden', 'true');
+  Object.assign(canvas.style, {
+    position: 'fixed', inset: '0', width: '100%', height: '100%',
+    pointerEvents: 'none', zIndex: '99997'
+  });
+  document.addEventListener('DOMContentLoaded', () => document.body.appendChild(canvas), { once: true });
+  if (document.body) document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) { canvas.remove(); return; }
+  let width = 0, height = 0, dpr = 1, raf = 0;
+  const particles = [];
+  const palette = ['#f6d7bd', '#e85a61', '#c52a38', '#f0a56b', '#fff0df'];
+
+  const resize = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const draw = now => {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      const age = (now - p.born) / p.life;
+      if (age >= 1) { particles.splice(i, 1); continue; }
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= .982; p.vy = p.vy * .982 + .035;
+      const alpha = (1 - age) * p.opacity;
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = p.color;
+      ctx.fillStyle = p.color;
+      ctx.lineWidth = p.width;
+      ctx.shadowBlur = 9;
+      ctx.shadowColor = p.color;
+      ctx.beginPath();
+      if (p.streak) {
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - p.vx * 2.2, p.y - p.vy * 2.2);
+        ctx.stroke();
+      } else {
+        ctx.arc(p.x, p.y, Math.max(.35, p.size * (1 - age * .45)), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    if (particles.length) raf = requestAnimationFrame(draw);
+    else { raf = 0; ctx.clearRect(0, 0, width, height); }
+  };
+
+  const burst = (x, y) => {
+    if (particles.length > 180) particles.splice(0, particles.length - 180);
+    const now = performance.now();
+    for (let i = 0; i < 22; i++) {
+      const angle = Math.PI * 2 * (i / 22) + (Math.random() - .5) * .28;
+      const speed = 1.1 + Math.random() * 3.5;
+      const streak = Math.random() > .28;
+      particles.push({
+        x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        born: now, life: 420 + Math.random() * 340,
+        color: palette[Math.floor(Math.random() * palette.length)],
+        size: 1 + Math.random() * 2.2, width: .8 + Math.random() * 1.1,
+        opacity: .65 + Math.random() * .35, streak
+      });
+    }
+    if (!raf) raf = requestAnimationFrame(draw);
+  };
+
+  document.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (event.target.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
+    burst(event.clientX, event.clientY);
+  }, { passive: true });
+})();
