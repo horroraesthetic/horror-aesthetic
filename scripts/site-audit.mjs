@@ -141,12 +141,12 @@ const serviceWorkerPath = resolve(root, 'sw.js');
 const homepage = readFileSync(homepagePath, 'utf8');
 
 // Homepage banner dimensions prevent layout shifts while artwork loads.
-const homepageBanners = [...homepage.matchAll(/<figure class="sbanner">([\\s\\S]*?)<\\/figure>/g)];
+const homepageBanners = [...homepage.matchAll(/<figure class="sbanner">([\s\S]*?)<\/figure>/g)];
 for (const [index, banner] of homepageBanners.entries()) {
-  const image = banner[1].match(/<img\\b[^>]*>/i)?.[0];
+  const image = banner[1].match(/<img\b[^>]*>/i)?.[0];
   if (!image) continue;
-  const width = Number(image.match(/\\bwidth=["'](\\d+)["']/i)?.[1]);
-  const height = Number(image.match(/\\bheight=["'](\\d+)["']/i)?.[1]);
+  const width = Number(image.match(/\bwidth=["'](\d+)["']/i)?.[1]);
+  const height = Number(image.match(/\bheight=["'](\d+)["']/i)?.[1]);
   if (!width || !height) {
     errors.push(`Homepage banner ${index + 1} is missing intrinsic image dimensions.`);
   } else if (Math.abs(width / height - 8 / 3) > 0.01) {
