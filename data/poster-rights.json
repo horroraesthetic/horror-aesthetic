@@ -153,28 +153,30 @@
     {
       "title": "Cure",
       "year": 1997,
-      "candidate": null,
-      "status": "missing",
-      "approved": false,
-      "creator": null,
+      "candidate": "../img/posters/cure-1997-horror-aesthetic.svg",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original vector artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "No verified poster asset is currently available in the repository."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original vector archive poster created for HORROR AESTHETIC; not an original theatrical poster.",
+      "src": "../img/posters/cure-1997-horror-aesthetic.svg"
     },
     {
       "title": "Perfect Blue",
       "year": 1997,
-      "candidate": null,
-      "status": "missing",
-      "approved": false,
-      "creator": null,
+      "candidate": "../img/posters/perfect-blue-1997-horror-aesthetic.svg",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original vector artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "Original archive artwork has not yet been created. No third-party poster is approved for display."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original vector archive poster created for HORROR AESTHETIC; not an original theatrical poster.",
+      "src": "../img/posters/perfect-blue-1997-horror-aesthetic.svg"
     },
     {
       "title": "The Ring",
@@ -206,15 +208,16 @@
     {
       "title": "Audition",
       "year": 1999,
-      "candidate": "../img/posters/audition.webp",
-      "status": "review",
-      "approved": false,
-      "creator": null,
+      "candidate": "../img/posters/audition-1999-horror-aesthetic.svg",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": null,
+      "license": "Original vector artwork created for HORROR AESTHETIC",
       "license_url": null,
-      "attribution": null,
-      "notes": "A local image candidate exists, but its provenance and reuse rights are not documented. It is not displayed as an approved poster."
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original vector archive poster created for HORROR AESTHETIC; not an original theatrical poster.",
+      "src": "../img/posters/audition-1999-horror-aesthetic.svg"
     },
     {
       "title": "Uzumaki",
