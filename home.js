@@ -2781,6 +2781,7 @@ try {
  function hand(x,y,sc,rot){fx.save();fx.translate(x,y);fx.rotate(rot);fx.scale(sc,sc);fx.globalCompositeOperation="destination-out";fx.shadowColor="#000";fx.shadowBlur=7;fx.fillStyle="#000";fx.beginPath();fx.ellipse(0,0,24,30,0,0,7);fx.fill();var fa=[[-32,-26,-.5,36],[-14,-48,-.18,40],[6,-54,.04,42],[24,-46,.26,38],[38,-6,1.1,30]];fa.forEach(function(f){fx.save();fx.translate(f[0],f[1]);fx.rotate(f[2]);fx.beginPath();fx.roundRect?fx.roundRect(-6,-f[3],12,f[3]+6,6):fx.rect(-6,-f[3],12,f[3]+6);fx.fill();fx.restore()});fx.restore()}
  function writeTxt(x,y){fx.save();fx.globalCompositeOperation="destination-out";fx.shadowColor="#000";fx.shadowBlur=5;fx.fillStyle="#000";fx.strokeStyle="#000";fx.lineWidth=3;fx.font="700 "+Math.min(96,innerWidth/6)+"px 'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif";fx.textAlign="center";var s="助けて";fx.fillText(s,x,y);var w=fx.measureText(s).width;for(var i=0;i<6;i++){var dx=x-w/2+w*(.1+Math.random()*.8),L=40+Math.random()*90;fx.lineWidth=2+Math.random()*2;fx.beginPath();fx.moveTo(dx,y+6);fx.lineTo(dx,y+6+L);fx.stroke()}fx.restore()}
  function startFog(){
+  if(window.matchMedia&&window.matchMedia("(max-width:760px), (pointer:coarse)").matches)return;
   if(fogOn||RM||document.hidden)return;fogOn=true;lastFog=Date.now();wiped=0;lastPt=null;
   fog=mk("canvas","fog");fog.setAttribute("aria-hidden","true");fog.width=Math.ceil(innerWidth/FS);fog.height=Math.ceil(innerHeight/FS);fx=fog.getContext("2d");fx.scale(1/FS,1/FS);
   fx.fillStyle="rgba(176,196,198,.34)";fx.fillRect(0,0,innerWidth,innerHeight);
