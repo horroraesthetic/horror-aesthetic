@@ -1914,7 +1914,7 @@ footer .ft-legal a:hover{opacity:1}
 
 /* MOBILE REPAIR — remove fixed atmospheric overlays that obscure lower viewport tiles */
 @media (max-width: 760px) {
-  #kfog, .vig {
+  #fog, #kfog, .vig {
     display: none !important;
     animation: none !important;
     filter: none !important;
