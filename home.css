@@ -1912,9 +1912,9 @@ footer .ft-legal a:hover{opacity:1}
 
 
 
-/* MOBILE EFFECT BUDGET — preserve Kaidan fireflies, stop stacked full-screen paint on phones. */
+/* MOBILE EFFECT BUDGET — disable full-screen atmospheric paint on phones. */
 @media (max-width: 760px), (pointer: coarse) {
-  #fog, #kfog, .vig {
+  #fog, #kfog, #hit, .vig {
     display: none !important;
     animation: none !important;
     filter: none !important;
