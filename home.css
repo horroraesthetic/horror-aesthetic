@@ -1949,3 +1949,16 @@ footer .ft-legal a:hover{opacity:1}
     mix-blend-mode: normal !important;
   }
 }
+
+
+/* MOBILE CONTENT SAFETY — never leave scroll-reveal blocks transparent when an observer misses them */
+@media (max-width: 760px) {
+  .js .rv,
+  .js .rv.in {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
