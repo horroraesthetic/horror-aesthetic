@@ -146,6 +146,7 @@ for (const [index, banner] of homepageBanners.entries()) {
   }
 }
 
+const homeCss = readFileSync(homeCssPath, 'utf8');
 const homeJs = readFileSync(homeJsPath, 'utf8');
 const serviceWorker = readFileSync(serviceWorkerPath, 'utf8');
 const assetBudget = [
@@ -172,6 +173,24 @@ if (!/<script\b(?=[^>]*\bdefer)(?=[^>]*\bsrc=["\']home\.js(?:\?[^"\']*)?["\'])[^
 }
 if (homepage.indexOf('href="home.css') > homepage.indexOf('href="enhancements.css')) {
   errors.push('home.css must load before enhancements.css to preserve cascade order.');
+}
+
+const mobileSectionRule = homeCss.match(/@media \(max-width: 760px\) \{\s*section\[data-cat\] \{([^}]*)\}/i)?.[1] || '';
+if (!mobileSectionRule.includes('content-visibility: visible !important') ||
+    !mobileSectionRule.includes('contain-intrinsic-size: none !important')) {
+  errors.push('Mobile section rendering must disable content-visibility placeholders on narrow screens.');
+}
+
+const homepageAssetRefs = [...homepage.matchAll(/(?:href|src)=["']([^"']+\.(?:css|js)(?:\?[^"']*)?)["']/gi)]
+  .map(match => match[1].split('/').pop());
+const workerAssetRefs = [...serviceWorker.matchAll(/BASE\s*\+\s*["']([^"']+\.(?:css|js)(?:\?[^"']*)?)["']/gi)]
+  .map(match => match[1].split('/').pop());
+for (const asset of ['home.css', 'enhancements.css', 'visual-refresh.css', 'enhancements.js', 'home.js']) {
+  const htmlRef = homepageAssetRefs.find(reference => reference.startsWith(asset));
+  const workerRef = workerAssetRefs.find(reference => reference.startsWith(asset));
+  if (!htmlRef || !workerRef || htmlRef !== workerRef) {
+    errors.push('Homepage and service worker asset versions must match: ' + asset + '.');
+  }
 }
 if (!homeJs.includes('var cur=null,query="",secFilter="home",picked=null;') || !homeJs.includes('if (event.persisted || secFilter !== "home") return;')) {
   errors.push('Homepage must render the home view by default and prevent stale mobile scroll restoration.');
