@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Film poster rights and provenance register for the HORROR AESTHETIC film database.",
-  "policy": "Only render an image as a film poster after its exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope have been verified. A film still, fan art, scan, or poster found online is not automatically reusable.",
+  "policy": "The 30 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
   "films": [
     {
       "title": "Ugetsu",
@@ -425,7 +425,7 @@
     }
   ],
   "research_log": {
-    "checked_on": "2026-11-17",
+    "checked_on": "2026-11-18",
     "sources_checked": [
       {
         "name": "Wikimedia Commons film poster policy",
@@ -512,6 +512,12 @@
         "finding": "No matching licensed film-poster file verified."
       }
     ],
-    "decision": "Do not install unrelated or unverified posters. Keep all current film-poster records unapproved until a matching license/permission can be substantiated."
+    "decision": "All 30 registered posters are original archive artworks created for HORROR AESTHETIC; all 30 records are approved for display (approved: true). Earlier title checks document searches for third-party/licensed theatrical poster files only and do not apply to the separately created original archive artworks. Keep future externally sourced images unapproved until matching license/permission and reuse scope are verified.",
+    "register_summary": {
+      "total_posters": 30,
+      "original_archive_artworks": 30,
+      "approved_for_archive_display": 30,
+      "note": "All registered entries are original HORROR AESTHETIC archive artwork; they are not represented as original theatrical posters."
+    }
   }
 }
