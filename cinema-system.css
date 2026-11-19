@@ -82,3 +82,118 @@ body:has(#archive-search) #archive-list li:hover{
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}
   body:has(#archive-search) #archive-list li:hover{transform:none}
 }
+
+
+/* Editorial feature and film-review pages */
+body:has(.w article),body:has(.w main){
+  background:
+    radial-gradient(ellipse at 50% -12%,rgba(112,20,39,.46),transparent 49%),
+    radial-gradient(ellipse at 100% 60%,rgba(49,18,33,.18),transparent 38%),
+    #080609!important;
+  color:#eee5db;
+}
+.w:has(article),.w:has(main){max-width:900px}
+.w:has(article)>.top,.w:has(main)>header{
+  border-color:rgba(190,92,105,.32);
+  padding-bottom:17px;
+}
+.w article,.w main{position:relative}
+.w article>.k,.w main>.k{
+  color:#e05260;
+  font:700 10px/1.5 ui-monospace,monospace;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  margin:clamp(34px,6vw,66px) 0 15px;
+}
+.w article h1,.w main h1{
+  color:#f2e9df;
+  font:900 clamp(42px,8.5vw,86px)/.92 Impact,"Arial Black",sans-serif;
+  letter-spacing:-.035em;
+  text-transform:uppercase;
+  margin:12px 0 20px;
+  text-wrap:balance;
+  text-shadow:0 10px 34px rgba(0,0,0,.32);
+}
+.w article h1 small{display:inline-block;color:#c68b8d;font:500 .34em/1.2 ui-monospace,monospace;letter-spacing:.12em;vertical-align:middle}
+.w article .m,.w main .meta{
+  color:#b6a8a1;
+  font:10px/1.7 ui-monospace,monospace;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.w article .dek,.w main .deck{
+  color:#e3d2ca;
+  font:italic clamp(19px,2.8vw,25px)/1.55 Georgia,serif;
+  border-left:2px solid #b52b40;
+  padding:5px 0 5px 20px;
+  margin:25px 0 34px;
+  max-width:760px;
+}
+.w article .pstf{
+  width:min(100%,360px);
+  margin:28px auto 34px;
+  border:1px solid rgba(202,85,99,.55);
+  background:#100a0e;
+  box-shadow:0 22px 65px rgba(0,0,0,.52),0 0 38px rgba(132,24,43,.12);
+  position:relative;
+}
+.w article .pstf:after{
+  content:"HORROR AESTHETIC / FILM FILE";
+  display:block;
+  padding:9px 11px;
+  color:#d58b8c;
+  font:9px/1.3 ui-monospace,monospace;
+  letter-spacing:.16em;
+}
+.w article .pstf img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.w article .sc{
+  display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 24px;
+}
+.w article .sc>span{
+  border:1px solid rgba(190,92,105,.34);
+  background:linear-gradient(135deg,rgba(40,17,26,.8),rgba(12,9,13,.8));
+  padding:10px 14px;color:#d9c8c1;
+  font:10px/1.4 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;
+}
+.w article .sc b{color:#f0c6bd;font-size:13px}
+.w article .body,.w main section{
+  max-width:760px;margin:0 auto;
+  color:#e0d5cd;font:18px/1.9 Georgia,serif;
+}
+.w article .body p,.w main section p{margin:0 0 1.35em}
+.w article .body p:first-child:first-letter,.w main section p:first-of-type:first-letter{
+  float:left;color:#c34b59;font:700 3.2em/.82 Georgia,serif;
+  padding:.08em .12em 0 0;
+}
+.w main h2,.w article .body h2{
+  color:#e6b5b1;font:800 clamp(24px,4vw,34px)/1.08 Impact,"Arial Black",sans-serif;
+  letter-spacing:.01em;text-transform:uppercase;margin:48px 0 14px;
+}
+.w main .pull,.w article blockquote{
+  margin:38px 0;padding:20px 24px;
+  border-top:1px solid rgba(190,92,105,.4);
+  border-bottom:1px solid rgba(190,92,105,.4);
+  border-left:0;color:#e8c9c3;
+  background:linear-gradient(90deg,rgba(91,22,37,.16),transparent);
+  font:italic clamp(20px,3vw,27px)/1.5 Georgia,serif;
+}
+.w .rel{
+  margin-top:56px;padding-top:22px;border-top:1px solid rgba(190,92,105,.35);
+  color:#d6c5bd;
+}
+.w .rel ul{gap:8px}
+.w .rel li{
+  padding:9px 12px;border:1px solid rgba(190,92,105,.2);
+  background:rgba(20,12,17,.7);
+}
+.w .rel li a{color:#e6b5b1;text-decoration:none}
+.w .rel li:hover{border-color:rgba(218,91,105,.6)}
+@media(max-width:600px){
+  .w article h1,.w main h1{font-size:clamp(38px,12vw,62px)}
+  .w article .body,.w main section{font-size:17px;line-height:1.82}
+  .w article .pstf{width:min(100%,300px)}
+  .w article .dek,.w main .deck{padding-left:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .w .rel li{transition:none}
+}
