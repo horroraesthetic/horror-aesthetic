@@ -1,0 +1,86 @@
+/* HORROR AESTHETIC — final mobile utility dock layout
+   Loaded after all legacy styles so each control owns a separate equal slot. */
+@media (max-width: 640px) {
+  :root { --ha-dock-gap: 8px; --ha-dock-edge: 12px; }
+  body {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 88px) !important;
+  }
+  .ha-cinema-toggle,
+  .ha-shelf-trigger,
+  .ha-command-trigger {
+    position: fixed !important;
+    top: auto !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
+    z-index: 10020 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    box-sizing: border-box !important;
+    width: calc((100vw - 2 * var(--ha-dock-edge) - 2 * var(--ha-dock-gap)) / 3) !important;
+    min-width: 0 !important;
+    max-width: calc((100vw - 2 * var(--ha-dock-edge) - 2 * var(--ha-dock-gap)) / 3) !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 4px 3px !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    font-size: 8px !important;
+    letter-spacing: .035em !important;
+    transform: none !important;
+    border-width: 1px !important;
+    border-radius: 2px !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.42) !important;
+  }
+  .ha-cinema-toggle {
+    left: var(--ha-dock-edge) !important;
+    right: auto !important;
+  }
+  .ha-shelf-trigger {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+  .ha-command-trigger {
+    left: auto !important;
+    right: var(--ha-dock-edge) !important;
+  }
+  .ha-cinema-toggle *,
+  .ha-shelf-trigger *,
+  .ha-command-trigger * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex-shrink: 1 !important;
+  }
+  .ha-cinema-toggle { letter-spacing: .025em !important; }
+  .ha-cinema-orb,
+  .ha-shelf-trigger > span:first-child,
+  .ha-command-trigger > span:first-child {
+    flex: 0 0 auto !important;
+    font-size: 13px !important;
+  }
+  .ha-shelf-trigger-label {
+    display: block !important;
+    overflow-wrap: anywhere !important;
+    font-size: 7.5px !important;
+    line-height: 1.1 !important;
+  }
+  .ha-command-trigger kbd { display: none !important; }
+  .ha-shelf-panel {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 68px) !important;
+    max-height: calc(100dvh - 100px) !important;
+  }
+}
+@media (max-width: 360px) {
+  .ha-cinema-toggle,
+  .ha-shelf-trigger,
+  .ha-command-trigger {
+    gap: 3px !important;
+    font-size: 7px !important;
+    letter-spacing: 0 !important;
+  }
+  .ha-shelf-trigger-label { font-size: 6.5px !important; }
+}
