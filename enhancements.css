@@ -1241,3 +1241,8 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
     min-width: 0;
   }
 }
+
+/* poster figure + lightbox (reviews / database) */
+.hpst{float:right;width:min(42%,230px);margin:4px 0 14px 18px;border:1px solid #71303a;box-shadow:0 14px 40px #0008;line-height:0}
+.hpst img{display:block;width:100%;height:auto;aspect-ratio:2/3}
+@media(max-width:560px){.hpst{width:38%;margin-left:14px}}
