@@ -1296,3 +1296,15 @@ html.ha-calm .ha-fog{display:none}
 .ha-strip img{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover}
 .ha-strip a span{display:block;padding:8px 6px;line-height:1.25;background:#10090e;font:600 10px/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
 @media(prefers-reduced-motion:reduce){.ha-prog{display:none}}
+
+
+/* MOBILE FIX — place MY ARCHIVE at the bottom centre, between the two utility controls */
+@media (max-width: 760px) {
+  .ha-shelf-trigger {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 12px !important;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+}
