@@ -1,0 +1,23 @@
+/* HORROR AESTHETIC — site effects pack */
+:root{--ha-fx-red:#c32c43;--ha-fx-paper:#eee5db}
+html.ha-cinema-mode{filter:contrast(1.06) saturate(.78)}
+html.ha-cinema-mode body{background-color:#050305!important}
+html.ha-cinema-mode body:after{content:"";position:fixed;inset:0;z-index:9990;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.48) 100%);box-shadow:inset 0 0 120px rgba(0,0,0,.45)}
+.ha-cinema-toggle,.ha-command-trigger{position:fixed;z-index:9995;border:1px solid rgba(205,77,91,.55);background:rgba(12,8,12,.9);color:#f0ded8;backdrop-filter:blur(12px);font:10px/1.2 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.ha-cinema-toggle{left:14px;bottom:14px;padding:11px 13px;border-radius:2px}
+.ha-cinema-toggle[aria-pressed=true]{background:#681725;border-color:#e45a69;box-shadow:0 0 24px rgba(190,35,56,.2)}
+.ha-command-trigger{right:14px;bottom:14px;padding:11px 13px}
+.ha-command-backdrop{position:fixed;inset:0;z-index:10000;display:grid;place-items:start center;padding:12vh 16px 20px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
+.ha-command{width:min(620px,100%);border:1px solid #71313e;background:linear-gradient(145deg,#1a0d14,#080609);box-shadow:0 24px 90px #000b;padding:18px}
+.ha-command input{width:100%;box-sizing:border-box;background:#080609;border:1px solid #67303b;color:#f0e5dc;padding:15px;font:14px ui-monospace,monospace;outline:none}
+.ha-command input:focus{border-color:#d95b68;box-shadow:0 0 0 2px #b52b4028}
+.ha-command-list{display:grid;gap:6px;max-height:48vh;overflow:auto;margin-top:12px}
+.ha-command-list a{display:flex;justify-content:space-between;gap:12px;padding:12px;color:#e9dcd4;text-decoration:none;border:1px solid transparent;background:#120c11;font:12px ui-monospace,monospace}
+.ha-command-list a:hover,.ha-command-list a:focus-visible{border-color:#8d3948;background:#25121a}
+.ha-command-hint{margin:12px 0 0;color:#a9979c;font:10px ui-monospace,monospace;letter-spacing:.08em}
+.ha-fx-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.ha-fx-reveal.ha-fx-visible{opacity:1;transform:none}
+.ha-fx-shard{position:fixed;z-index:9998;width:5px;height:5px;pointer-events:none;background:#c52d42;box-shadow:0 0 10px #e04b59;animation:haShard .65s ease-out forwards}
+@keyframes haShard{to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(180deg) scale(.1)}}
+@media(max-width:640px){.ha-cinema-toggle,.ha-command-trigger{bottom:10px;font-size:9px;padding:10px}.ha-cinema-toggle{left:10px}.ha-command-trigger{right:10px}}
+@media(prefers-reduced-motion:reduce){.ha-fx-reveal{opacity:1;transform:none;transition:none}.ha-fx-shard{display:none}html.ha-cinema-mode body:after{display:none}}
