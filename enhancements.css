@@ -1339,16 +1339,17 @@ html.ha-calm .ha-fog{display:none}
     letter-spacing: .07em !important;
     overflow: hidden !important;
   }
-  .ha-command-trigger {
+  .ha-cinema-toggle {
     left: 8px !important;
     right: auto !important;
+    transform: none !important;
   }
-  .ha-cinema-toggle {
+  .ha-shelf-trigger {
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
   }
-  .ha-shelf-trigger {
+  .ha-command-trigger {
     left: auto !important;
     right: 8px !important;
   }
