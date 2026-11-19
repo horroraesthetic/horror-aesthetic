@@ -26,16 +26,5 @@ if(!reduce&&'IntersectionObserver'in window){const targets=document.querySelecto
 if(!reduce&&matchMedia('(pointer: fine)').matches){let raf=0;addEventListener('pointermove',e=>{if(raf)return;raf=requestAnimationFrame(()=>{html.style.setProperty('--ha-pointer-x',e.clientX+'px');html.style.setProperty('--ha-pointer-y',e.clientY+'px');raf=0})},{passive:true})}
 if(!reduce&&matchMedia('(pointer: coarse)').matches){addEventListener('pointerdown',e=>{if(e.target.closest('a,button,input,textarea,select'))return;for(let i=0;i<7;i++){const s=document.createElement('i');s.className='ha-fx-shard';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';const a=(Math.PI*2*i/7)+Math.random()*.3,d=24+Math.random()*34;s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');document.body.appendChild(s);s.addEventListener('animationend',()=>s.remove(),{once:true})}},{passive:true})}
 
-/* Persistent REC clock — a decorative surveillance-style elapsed-time display.
-   It never accesses a camera, microphone, or recording API. */
-if(!document.querySelector('.ha-rec-clock')){
- const rec=document.createElement('div');
- rec.className='ha-rec-clock';
- rec.setAttribute('aria-label',t('REC indicator, decorative timer','Индикатор REC, декоративный таймер'));
- rec.innerHTML='<i aria-hidden="true"></i><b>REC</b><span>00:00</span>';
- document.body.appendChild(rec);
- const started=Date.now();
- const tick=()=>{const sec=Math.floor((Date.now()-started)/1000),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;rec.lastElementChild.textContent=h?String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'):String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')};
- tick();setInterval(tick,1000);
-}
+/* Duplicate floating REC clock removed; the archive card keeps its original REC timer. */
 })();
