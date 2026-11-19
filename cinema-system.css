@@ -1,0 +1,84 @@
+/* HORROR AESTHETIC — unified cinematic design layer
+   Shared visual language: ink, bone, dried blood, restrained motion.
+   Deliberately avoids layout, sizing, and navigation overrides. */
+:root{
+  --ha-ink:#080609;
+  --ha-bone:#eee5db;
+  --ha-muted:#b6a8a1;
+  --ha-blood:#b52b40;
+  --ha-blood-light:#e16a73;
+  --ha-line:rgba(190,92,105,.30);
+  color-scheme:dark;
+}
+html{scrollbar-color:#71303b #080609}
+body{
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  background-color:var(--ha-ink);
+}
+::selection{color:#fff;background:#8d1728}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid #f0b6ad!important;
+  outline-offset:3px;
+}
+:where(a){text-underline-offset:.22em}
+:where(a,button){-webkit-tap-highlight-color:rgba(190,45,62,.18)}
+:where(img,svg,video){max-width:100%}
+:where(h1,h2,h3){text-wrap:balance}
+:where(p,li){text-wrap:pretty}
+@media(prefers-reduced-motion:no-preference){
+  :where(a,button){transition-color:color .2s ease,border-color .2s ease,background-color .2s ease}
+}
+/* Bring the two editorial indexes back into the journal's blood-and-bone palette. */
+body:has(.archive-tools),
+body:has(#archive-search){
+  --bg:#080609;
+  --bone:#eee5db;
+  --dim:#b6a8a1;
+  --red:#c13a4b;
+  --line:#59313c;
+  background:
+    radial-gradient(ellipse at 50% -12%,rgba(113,23,42,.42),transparent 48%),
+    radial-gradient(ellipse at 100% 45%,rgba(58,20,34,.16),transparent 38%),
+    #080609;
+  color:#eee5db;
+}
+body:has(.archive-tools) a,
+body:has(#archive-search) a{color:#e6b5b1}
+body:has(.archive-tools) a:hover,
+body:has(#archive-search) a:hover{color:#fff}
+body:has(.archive-tools) .top,
+body:has(#archive-search) .top{border-color:rgba(224,166,166,.24)}
+body:has(.archive-tools) .top b,
+body:has(#archive-search) .top b,
+body:has(.archive-tools) .k,
+body:has(#archive-search) .k{color:#e05260}
+body:has(.archive-tools) .archive-tools{
+  border-color:#59313c;
+  background:rgba(16,9,14,.92);
+  box-shadow:0 12px 32px rgba(0,0,0,.22);
+}
+body:has(.archive-tools) .archive-tools input{
+  color:#eee5db;background:#080609;border-color:#70404a;
+}
+body:has(.archive-tools) .archive-tools input:focus{
+  border-color:#d15a68;box-shadow:0 0 0 2px rgba(181,43,64,.16);
+}
+body:has(#archive-search) #archive-list li{
+  border:1px solid rgba(190,92,105,.24);
+  background:linear-gradient(145deg,rgba(29,15,22,.92),rgba(12,9,13,.96));
+  padding:12px 14px;
+  transition:border-color .22s ease,transform .22s ease,background .22s ease;
+}
+body:has(#archive-search) #archive-list li:hover{
+  border-color:rgba(218,91,105,.62);
+  background:linear-gradient(145deg,#25121a,#100b10);
+  transform:translateY(-2px);
+}
+@media(max-width:560px){
+  body:has(#archive-search) #archive-list li{padding:11px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}
+  body:has(#archive-search) #archive-list li:hover{transform:none}
+}
