@@ -1420,10 +1420,6 @@ body[data-lang="ru"] .l-en,
 body[data-lang="en"] .l-ru {
   display: none !important;
 }
-body[data-lang="ru"] .l-ru,
-body[data-lang="en"] .l-en {
-  display: initial;
-}
 #ha-main-content:focus,
 #ha-main-content:focus-visible,
 [id="ha-main-content"]:focus,
