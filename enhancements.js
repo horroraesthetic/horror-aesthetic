@@ -1,7 +1,8 @@
 /* HORROR AESTHETIC — site-wide reading tools */
 (() => {
   'use strict';
-  const ru = (document.documentElement.lang || '').toLowerCase().startsWith('ru') ||
+  const ru = document.body?.dataset.lang === 'ru' ||
+             (document.documentElement.lang || '').toLowerCase().startsWith('ru') ||
              document.documentElement.dataset.l === 'ru';
   const reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
