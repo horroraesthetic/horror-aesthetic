@@ -1422,3 +1422,18 @@ html.ha-calm .ha-fog{display:none}
   outline: 2px solid rgba(220,91,103,.85);
   outline-offset: 3px;
 }
+
+
+/* LANGUAGE SWITCH FIX — show exactly one language, including date/meta lines */
+html[data-l="ru"] .l-en,
+html[data-l="ru"] [lang="en"],
+html[data-l="ru"] .body.l-en,
+html[data-l="en"] .l-ru,
+html[data-l="en"] [lang="ru"],
+html[data-l="en"] .body.l-ru {
+  display: none !important;
+}
+html[data-l="ru"] .l-ru,
+html[data-l="en"] .l-en {
+  visibility: visible;
+}
