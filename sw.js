@@ -1,5 +1,5 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v217';
+const CACHE_VERSION = 'ha-v218';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
@@ -8,12 +8,12 @@ const SHELL = [
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
   BASE + 'home.css?v=196', BASE + 'enhancements.css?v=188', BASE + 'visual-refresh.css?v=1', BASE + 'enhancements.js?v=189', BASE + 'home.js?v=189',
   BASE + 'reference.css', BASE + 'reference.js',
-  BASE + 'data/poster-rights.json',
+  BASE + 'data/poster-rights.json', BASE + 'data/film-strip.json',
   BASE + 'review-tools.js', BASE + 'reviews-index.js',
   ...[
     'archives/','directors/','timeline/','library/','folklore/','reviews/','articles/',
     'culture/','j-horror/','games/','visual-archive/','database/',
-    'bestiarum/','journal/','screening-room/','field-notes/','glossary/','nightmare-archive/'
+    'bestiarum/','journal/','screening-room/','field-notes/','glossary/','nightmare-archive/','posters/'
   ].map(path => BASE + path),
   ...[
     'img/ha-home-hero-v2.jpg','img/ha-folklore-hero-v2.jpg',
@@ -22,6 +22,9 @@ const SHELL = [
     'img/ha-library-cover-v2.jpg','img/posters/kwaidan-1964-horror-aesthetic(1).webp','img/posters/onibaba-1964-horror-aesthetic.webp','img/posters/kuroneko-1968-horror-aesthetic.webp','img/posters/house-1977-horror-aesthetic.webp','img/posters/ring-1998-horror-aesthetic.webp','img/posters/audition-1999-horror-aesthetic.svg','img/posters/cure-1997-horror-aesthetic.svg','img/posters/perfect-blue-1997-horror-aesthetic.svg','img/ha-games-cover-v2.jpg','img/ha-directors-cover-v2.jpg','img/ha-culture-cover-v2.jpg','img/ha-timeline-cover-v2.jpg'
   ].map(path => BASE + path)
 ];
+
+// Compare full request URLs so query-versioned shell assets are never evicted as runtime entries.
+const SHELL_URLS = new Set(SHELL.map(url => new URL(url, self.location.origin).href));
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
@@ -49,7 +52,7 @@ async function storeBounded(cache, request, response) {
   if (!response || !response.ok || response.type === 'opaque' || response.status === 206) return;
   await cache.put(request, response);
   const keys = await cache.keys();
-  const runtimeKeys = keys.filter(key => !SHELL.includes(new URL(key.url).pathname));
+  const runtimeKeys = keys.filter(key => !SHELL_URLS.has(new URL(key.url).href));
   if (runtimeKeys.length > MAX_RUNTIME_ENTRIES) {
     await Promise.all(runtimeKeys.slice(0, runtimeKeys.length - MAX_RUNTIME_ENTRIES).map(key => cache.delete(key)));
   }

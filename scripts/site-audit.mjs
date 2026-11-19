@@ -232,6 +232,51 @@ for (const requiredPage of ['glossary/index.html', 'nightmare-archive/index.html
 if (!serviceWorker.includes("BASE + 'reference.css'") || !serviceWorker.includes("BASE + 'reference.js'")) {
   errors.push('Service worker shell is missing the shared reference assets.');
 }
+
+const posterWallPath = resolve(root, 'posters/index.html');
+try {
+  if (!statSync(posterWallPath).isFile()) errors.push('Poster wall page is missing.');
+} catch {
+  errors.push('Poster wall page is missing.');
+}
+if (!serviceWorker.includes("BASE + 'posters/'")) {
+  errors.push('Service worker shell is missing the poster wall page.');
+}
+if (!serviceWorker.includes("BASE + 'data/film-strip.json'")) {
+  errors.push('Service worker shell is missing the review film-strip data.');
+}
+if (!serviceWorker.includes('const SHELL_URLS = new Set(SHELL.map(url => new URL(url, self.location.origin).href));') ||
+    !serviceWorker.includes('!SHELL_URLS.has(new URL(key.url).href)')) {
+  errors.push('Service worker cache eviction must preserve exact query-versioned shell URLs.');
+}
+try {
+  const filmStrip = JSON.parse(readFileSync(resolve(root, 'data/film-strip.json'), 'utf8'));
+  if (!Array.isArray(filmStrip) || !filmStrip.length) {
+    errors.push('Film-strip data must be a non-empty JSON array.');
+  } else {
+    for (const [index, item] of filmStrip.entries()) {
+      for (const [field, label] of [['p', 'poster'], ['r', 'review']]) {
+        const value = item?.[field];
+        if (typeof value !== 'string' || !value.trim()) {
+          errors.push('Film-strip item ' + index + ' is missing its ' + label + ' path.');
+          continue;
+        }
+        const target = resolve(root, value);
+        if (target !== root && !target.startsWith(root + '/')) {
+          errors.push('Film-strip ' + label + ' path escapes the site root: ' + value);
+          continue;
+        }
+        try {
+          if (!statSync(target).isFile()) errors.push('Film-strip ' + label + ' file is missing: ' + value);
+        } catch {
+          errors.push('Film-strip ' + label + ' file is missing: ' + value);
+        }
+      }
+    }
+  }
+} catch (error) {
+  errors.push('Film-strip data is missing or invalid JSON: ' + error.message);
+}
 const imageRoot = resolve(root, 'img');
 try {
   inspectImages(imageRoot);
