@@ -702,109 +702,107 @@
 })();
 
 
-/* HORROR AESTHETIC — tactile ember burst (mouse + touch) */
+/* HORROR AESTHETIC — classic touch: seven blood shards (the original effect, no explosion).
+   The home page already has this from home.js, so it is skipped there. */
 (() => {
   'use strict';
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (document.documentElement.dataset.haEmbersInstalled) return;
-  document.documentElement.dataset.haEmbersInstalled = '1';
+  if (document.querySelector('script[src*="home.js"]')) return;
+  if (document.documentElement.dataset.haShards) return;
+  document.documentElement.dataset.haShards = '1';
+  const N = 7;
+  document.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button) return;
+    const t = e.target;
+    if (t && t.closest && t.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
+    for (let k = 0; k < N; k++) {
+      const p = document.createElement('i');
+      p.className = 'jx-p';
+      p.style.left = e.clientX + 'px';
+      p.style.top = e.clientY + 'px';
+      p.style.setProperty('--a', (k * 360 / N + Math.random() * 30 - 15).toFixed(0) + 'deg');
+      p.style.setProperty('--d', (26 + Math.random() * 26).toFixed(0) + 'px');
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 900);
+    }
+  }, { passive: true });
+})();
 
-  const canvas = document.createElement('canvas');
-  canvas.className = 'ha-touch-embers';
-  canvas.setAttribute('aria-hidden', 'true');
-  Object.assign(canvas.style, {
-    position: 'fixed', inset: '0', width: '100%', height: '100%',
-    pointerEvents: 'none', zIndex: '99997'
-  });
-  const mountCanvas = () => {
-    if (document.body && canvas.parentNode !== document.body) document.body.appendChild(canvas);
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mountCanvas, { once: true });
-  } else {
-    mountCanvas();
-  }
-
-  const ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) { canvas.remove(); return; }
-  let width = 0, height = 0, dpr = 1, raf = 0;
-  const particles = [];
-  const palette = ['#f6d7bd', '#e85a61', '#c52a38', '#f0a56b', '#fff0df'];
-
-  const resize = () => {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = window.innerWidth; height = window.innerHeight;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  };
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
-
-  const draw = now => {
-    ctx.clearRect(0, 0, width, height);
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p = particles[i];
-      const age = (now - p.born) / p.life;
-      if (age >= 1) { particles.splice(i, 1); continue; }
-      p.x += p.vx; p.y += p.vy;
-      p.vx *= .982; p.vy = p.vy * .982 + .035;
-      const alpha = (1 - age) * p.opacity;
-      ctx.globalAlpha = alpha;
-      ctx.strokeStyle = p.color;
-      ctx.fillStyle = p.color;
-      ctx.lineWidth = p.width;
-      ctx.shadowBlur = 9;
-      ctx.shadowColor = p.color;
-      ctx.beginPath();
-      if (p.streak) {
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p.x - p.vx * 2.2, p.y - p.vy * 2.2);
-        ctx.stroke();
-      } else {
-        ctx.arc(p.x, p.y, Math.max(.35, p.size * (1 - age * .45)), 0, Math.PI * 2);
-        ctx.fill();
+/* HORROR AESTHETIC — visual layer 2 (subpages only: reviews, database) */
+(() => {
+  'use strict';
+  const init = () => {
+    const w = document.querySelector('.w article'), shell = document.querySelector('.shell');
+    if (!w && !shell) return;
+    if (document.querySelector('script[src*="home.js"]')) return;
+    document.body.classList.add('ha-fx');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      const fog = document.createElement('div');
+      fog.className = 'ha-fog'; fog.setAttribute('aria-hidden', 'true'); fog.innerHTML = '<i></i><i></i>';
+      document.body.appendChild(fog);
+    }
+    if (w) {
+      const img = w.querySelector('.hpst img');
+      if (img) w.style.setProperty('--poster', 'url("' + (img.currentSrc || img.src) + '")');
+      const sc = w.querySelector('.sc b');
+      const m = sc && /([0-9.]+)\s*\/\s*5/.exec(sc.textContent);
+      if (m && !w.querySelector('.ha-stars')) {
+        const v = Math.max(0, Math.min(5, parseFloat(m[1])));
+        const st = document.createElement('div'); st.className = 'ha-stars'; st.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 5; i++) {
+          const s = document.createElement('i');
+          s.style.setProperty('--f', (Math.max(0, Math.min(1, v - i)) * 100).toFixed(0) + '%');
+          st.appendChild(s);
+        }
+        w.querySelector('.sc').after(st);
       }
     }
-    ctx.globalAlpha = 1;
-    ctx.shadowBlur = 0;
-    if (particles.length) raf = requestAnimationFrame(draw);
-    else { raf = 0; ctx.clearRect(0, 0, width, height); }
-  };
-
-  const burst = (x, y) => {
-    if (particles.length > 180) particles.splice(0, particles.length - 180);
-    const now = performance.now();
-    for (let i = 0; i < 22; i++) {
-      const angle = Math.PI * 2 * (i / 22) + (Math.random() - .5) * .28;
-      const speed = 1.1 + Math.random() * 3.5;
-      const streak = Math.random() > .28;
-      particles.push({
-        x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-        born: now, life: 420 + Math.random() * 340,
-        color: palette[Math.floor(Math.random() * palette.length)],
-        size: 1 + Math.random() * 2.2, width: .8 + Math.random() * 1.1,
-        opacity: .65 + Math.random() * .35, streak
-      });
+    const cover = document.querySelector('.ha-editorial-cover');
+    if (cover && !reduce && !cover.querySelector('.ha-flame')) {
+      const f = document.createElement('i'); f.className = 'ha-flame'; f.setAttribute('aria-hidden', 'true'); cover.appendChild(f);
     }
-    if (!raf) raf = requestAnimationFrame(draw);
   };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
+})();
 
-  const handlePointerDown = event => {
-    if (event.pointerType === 'mouse' && event.button !== 0) return;
-    const target = event.target;
-    if (target && target.closest && target.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return;
-    burst(event.clientX, event.clientY);
+/* HORROR AESTHETIC — visual layer 3: reading progress bar + poster strip on film reviews */
+(() => {
+  'use strict';
+  const init = () => {
+    const art = document.querySelector('.w article');
+    if (!art || document.querySelector('script[src*="home.js"]')) return;
+    const isReview = /\/reviews\/[^/]+\.html$/.test(location.pathname);
+    if (isReview) {
+      const bar = document.createElement('div'); bar.className = 'ha-prog'; bar.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(bar);
+      let tick = false;
+      const upd = () => {
+        tick = false;
+        const h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0).toFixed(3) + ')';
+      };
+      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
+      upd();
+    }
+    const here = location.pathname.split('/').pop();
+    if (!art.querySelector('.hpst') || !isReview) return;
+    fetch('/horror-aesthetic/data/film-strip.json').then(r => r.ok ? r.json() : []).then(list => {
+      const items = list.filter(x => x.r.split('/').pop() !== here);
+      if (!items.length || document.querySelector('.ha-strip')) return;
+      const sec = document.createElement('section'); sec.className = 'ha-strip';
+      sec.innerHTML = '<h4><span class="l-ru">Из архива постеров</span><span class="l-en">From the poster archive</span></h4><ul></ul>';
+      const ul = sec.querySelector('ul');
+      items.forEach(x => {
+        const li = document.createElement('li');
+        const a = document.createElement('a'); a.href = '/horror-aesthetic/' + x.r;
+        const im = document.createElement('img'); im.src = '/horror-aesthetic/' + x.p; im.width = 640; im.height = 960; im.loading = 'lazy'; im.decoding = 'async'; im.alt = x.t + ' (' + x.y + ')';
+        const sp = document.createElement('span'); sp.textContent = x.y + ' · ' + x.t;
+        a.append(im, sp); li.appendChild(a); ul.appendChild(li);
+      });
+      const rel = document.querySelector('.rel');
+      if (rel) rel.before(sec); else art.after(sec);
+    }).catch(() => {});
   };
-  if ('PointerEvent' in window) {
-    document.addEventListener('pointerdown', handlePointerDown, { passive: true, capture: true });
-  } else {
-    // Legacy touch fallback for browsers without Pointer Events.
-    document.addEventListener('touchstart', event => {
-      for (const touch of event.changedTouches) burst(touch.clientX, touch.clientY);
-    }, { passive: true, capture: true });
-    document.addEventListener('mousedown', event => {
-      if (event.button === 0) burst(event.clientX, event.clientY);
-    }, { passive: true, capture: true });
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
 })();

@@ -1246,3 +1246,53 @@ body>:is(.ha-command-trigger,.ha-command-overlay,.ha-shelf-trigger,.ha-shelf-pan
 .hpst{float:right;width:min(42%,230px);margin:4px 0 14px 18px;border:1px solid #71303a;box-shadow:0 14px 40px #0008;line-height:0}
 .hpst img{display:block;width:100%;height:auto;aspect-ratio:2/3}
 @media(max-width:560px){.hpst{width:38%;margin-left:14px}}
+
+/* classic touch shards (same as home.css) */
+.jx-p{position:fixed;width:2px;height:13px;margin:-6px 0 0 -1px;border-radius:2px;background:linear-gradient(180deg,#ff6a74,#a50f1b);pointer-events:none;z-index:99999;transform-origin:50% 100%;animation:jxp .85s ease-out forwards}
+@keyframes jxp{0%{opacity:1;transform:rotate(var(--a)) translateY(-4px) scaleY(.6)}70%{opacity:.9}100%{opacity:0;transform:rotate(var(--a)) translateY(calc(var(--d) * -1)) scaleY(1.1) translateX(5px)}}
+/* subpage atmosphere: CSS only, off in calm mode and with reduced motion */
+.w .top,.shell .top{position:relative}
+.w .top::after,.shell .top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#e0525d,transparent) -60% 0/40% 100% no-repeat;animation:haSweep 7s linear infinite}
+@keyframes haSweep{to{background-position:160% 0}}
+.hpst{position:relative;z-index:2;background:#0a0507;animation:haGlow 5.5s ease-in-out infinite}
+@keyframes haGlow{0%,100%{box-shadow:0 14px 40px #0008,0 0 0 rgba(224,82,93,0)}50%{box-shadow:0 14px 40px #0008,0 0 26px rgba(224,82,93,.28)}}
+.w article>*{animation:haRise .7s ease-out both}.w article>*:nth-child(2){animation-delay:.08s}.w article>*:nth-child(3){animation-delay:.16s}.w article>*:nth-child(n+4){animation-delay:.24s}
+@keyframes haRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+html.ha-calm .hpst,html.ha-calm .w .top::after,html.ha-calm .shell .top::after{animation:none}
+@media(prefers-reduced-motion:reduce){.jx-p,.hpst,.w .top::after,.shell .top::after,.w article>*{animation:none!important}}
+
+/* ===== visual layer 2: film grain, vignette, fog, poster backdrop, stars, drop cap, living cover ===== */
+body.ha-fx::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:40;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%)}
+body.ha-fx::after{content:"";position:fixed;inset:-60px;pointer-events:none;z-index:41;background:url(img/ha-grain.png);opacity:.075;animation:haGrain .9s steps(6) infinite}
+@keyframes haGrain{0%{transform:translate(0,0)}17%{transform:translate(-18px,12px)}33%{transform:translate(14px,-22px)}50%{transform:translate(-26px,-8px)}67%{transform:translate(22px,18px)}83%{transform:translate(-10px,24px)}100%{transform:translate(0,0)}}
+.ha-fog{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.ha-fog i{position:absolute;width:140vmax;height:60vmax;left:-20vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(170,120,130,.09),transparent);animation:haFog 46s ease-in-out infinite alternate}
+.ha-fog i:nth-child(1){top:8vh}.ha-fog i:nth-child(2){top:48vh;animation-duration:62s;animation-delay:-20s;background:radial-gradient(closest-side,rgba(120,40,55,.10),transparent)}
+@keyframes haFog{from{transform:translateX(-14vw)}to{transform:translateX(14vw)}}
+.w article{position:relative;isolation:isolate}
+.w article::before{content:"";position:absolute;z-index:-1;left:-18px;right:-18px;top:-10px;height:560px;background:var(--poster,none) center 30%/cover no-repeat;opacity:.085;-webkit-mask-image:linear-gradient(#000 0,transparent 75%);mask-image:linear-gradient(#000 0,transparent 75%);pointer-events:none}
+.ha-stars{display:flex;gap:6px;margin:-8px 0 18px}
+.ha-stars i{width:20px;height:20px;background:linear-gradient(90deg,#e0525d var(--f),#38232c var(--f));clip-path:polygon(50% 0,62% 36%,100% 38%,70% 60%,80% 98%,50% 76%,20% 98%,30% 60%,0 38%,38% 36%)}
+.body.l-ru>p:first-child::first-letter,.body.l-en>p:first-child::first-letter{float:left;font:900 3.1em/.86 Impact,"Arial Black",sans-serif;color:#e0525d;padding:6px 8px 0 0;text-shadow:0 0 18px rgba(224,82,93,.45)}
+.body p+p{position:relative}
+.ha-editorial-cover img{animation:haKen 24s ease-in-out infinite alternate}
+@keyframes haKen{from{transform:scale(1)}to{transform:scale(1.06) translate(-1%,-1%)}}
+.ha-editorial-cover .ha-flame{position:absolute;left:91%;top:56%;width:28%;height:42%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,150,70,.34),transparent 62%);mix-blend-mode:screen;pointer-events:none;animation:haFlame 2.6s ease-in-out infinite}
+@keyframes haFlame{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}30%{opacity:1;transform:translate(-50%,-52%) scale(1.07)}60%{opacity:.7;transform:translate(-50%,-49%) scale(.96)}}
+.shell .entry{transition:border-color .3s,box-shadow .3s}.shell .entry:hover{border-color:#8b3340;box-shadow:0 0 0 1px #8b334055,0 10px 40px #0007}
+@supports(animation-timeline:view()){.shell .entry{animation:haRise linear both;animation-timeline:view();animation-range:entry 0% entry 45%}}
+html.ha-calm body.ha-fx::after,html.ha-calm .ha-fog i,html.ha-calm .ha-editorial-cover img,html.ha-calm .ha-flame{animation:none}
+html.ha-calm .ha-fog{display:none}
+@media(prefers-reduced-motion:reduce){body.ha-fx::after,.ha-fog i,.ha-editorial-cover img,.ha-flame,.shell .entry{animation:none!important}.ha-fog{display:none}}
+
+/* ===== visual layer 3: reading progress, poster strip ===== */
+.ha-prog{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#8b1f2b,#ff6a74);box-shadow:0 0 10px #e0525d;z-index:99990;pointer-events:none}
+.ha-strip{margin:40px 0 0;border-top:1px solid #38232c;padding-top:16px}
+.ha-strip h4{margin:0 0 12px}
+.ha-strip ul{display:flex;gap:12px;list-style:none;margin:0;padding:0 0 10px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.ha-strip li{flex:0 0 118px;scroll-snap-align:start}
+.ha-strip a{display:block;position:relative;border:1px solid #51232c;line-height:0;color:#eee4dc;text-decoration:none;transition:transform .3s,border-color .3s}
+.ha-strip a:hover,.ha-strip a:focus-visible{transform:translateY(-3px);border-color:#e0525d}
+.ha-strip img{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover}
+.ha-strip a span{display:block;padding:8px 6px;line-height:1.25;background:#10090e;font:600 10px/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+@media(prefers-reduced-motion:reduce){.ha-prog{display:none}}
