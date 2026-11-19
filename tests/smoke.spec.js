@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test('homepage loads with a document title and main heading', async ({ page }) => {
+test('homepage renders its masthead and document title', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveTitle(/Horror Aesthetic/i);
-  await expect(page.locator('h1').first()).toBeVisible();
+  // The h1 is intentionally visually hidden for assistive technology.
+  await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('.mast')).toBeVisible();
+  await expect(page.locator('.mast .hero')).toBeVisible();
 });
 
 test('document declares a language and mobile viewport', async ({ page }) => {
@@ -12,11 +15,13 @@ test('document declares a language and mobile viewport', async ({ page }) => {
   await expect(page.locator('meta[name="viewport"]')).toHaveCount(1);
 });
 
-test('primary navigation contains working local destinations', async ({ page }) => {
+test('section navigation and language controls are present', async ({ page }) => {
   await page.goto('/');
-  const links = page.locator('nav a[href]');
-  await expect(links.first()).toBeVisible();
-  expect(await links.count()).toBeGreaterThan(0);
-  const hrefs = await links.evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
-  expect(hrefs.every(href => href && href.trim().length > 0)).toBeTruthy();
+  const navigation = page.locator('nav[aria-label="Sections"]');
+  await expect(navigation).toBeVisible();
+  await expect(navigation.locator('#filters')).toHaveCount(1);
+  const languageButtons = navigation.locator('button[data-l]');
+  await expect(languageButtons).toHaveCount(2);
+  await expect(languageButtons.first()).toBeVisible();
+  await expect(languageButtons.last()).toBeVisible();
 });
