@@ -1,0 +1,25 @@
+/* Interactive flashlight spotlight — controlled by the existing #flb button */
+#ha-flashlight-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle 190px at var(--ha-flash-x, 50vw) var(--ha-flash-y, 48vh),
+    rgba(0,0,0,0) 0 58px,
+    rgba(0,0,0,.22) 105px,
+    rgba(0,0,0,.72) 165px,
+    rgba(0,0,0,.88) 230px
+  );
+  transition: opacity .22s ease;
+}
+html.ha-flashlight-on #ha-flashlight-overlay { opacity: 1; }
+html.ha-flashlight-on #flb {
+  color: var(--bone, #eee4dc);
+  border-color: var(--blood, #c62a38);
+  box-shadow: 0 0 16px rgba(198,42,56,.28), inset 0 0 12px rgba(198,42,56,.12);
+}
+@media (prefers-reduced-motion: reduce) {
+  #ha-flashlight-overlay { transition: none; }
+}
