@@ -21,3 +21,49 @@ html.ha-cinema-mode body:after{content:"";position:fixed;inset:0;z-index:9990;po
 @keyframes haShard{to{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(180deg) scale(.1)}}
 @media(max-width:640px){.ha-cinema-toggle,.ha-command-trigger{bottom:10px;font-size:9px;padding:10px}.ha-cinema-toggle{left:10px}.ha-command-trigger{right:10px}}
 @media(prefers-reduced-motion:reduce){.ha-fx-reveal{opacity:1;transform:none;transition:none}.ha-fx-shard{display:none}html.ha-cinema-mode body:after{display:none}}
+
+/* MOBILE CINEMA CONTROLS — compact, isolated controls; prevent global button rules
+   from stretching the toggle into a full-width bordered strip. */
+.ha-cinema-toggle,
+.ha-command-trigger {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 32px) !important;
+  height: auto !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.38) !important;
+}
+.ha-cinema-toggle::before,
+.ha-cinema-toggle::after,
+.ha-command-trigger::before,
+.ha-command-trigger::after {
+  content: none !important;
+  display: none !important;
+}
+@media (max-width: 640px) {
+  .ha-cinema-toggle {
+    left: max(12px, env(safe-area-inset-left)) !important;
+    right: auto !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    padding: 11px 14px !important;
+    font-size: 9px !important;
+    letter-spacing: .13em !important;
+  }
+  .ha-command-trigger {
+    right: max(12px, env(safe-area-inset-right)) !important;
+    left: auto !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    padding: 11px 12px !important;
+    font-size: 9px !important;
+    letter-spacing: .1em !important;
+  }
+}
