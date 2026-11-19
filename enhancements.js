@@ -8,9 +8,8 @@
 
   // Target only a real content landmark. Never use broad layout wrappers (.w/.wrap/body):
   // focusing those containers creates the page-sized outline reported on mobile.
-  const main = document.querySelector('main') ||
-               document.querySelector('article') ||
-               document.querySelector('#spot, .body, .entry-content');
+  const main = document.querySelector('main, [role="main"]') ||
+               document.querySelector('article');
   if (main) {
     if (!main.id || main.id === 'ha-main-content') main.id = 'ha-main-content';
     main.style.scrollMarginTop = '18px';
