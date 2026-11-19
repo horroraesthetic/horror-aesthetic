@@ -84,3 +84,24 @@ html.ha-cinema-mode body:after{content:"";position:fixed;inset:0;z-index:9990;po
 @keyframes haRecPulse{50%{opacity:.25}}
 @media(max-width:640px){.ha-rec-clock{top:auto!important;bottom:max(92px, calc(env(safe-area-inset-bottom) + 84px))!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;padding:6px 8px!important;gap:6px!important;font-size:9px!important}}
 @media(prefers-reduced-motion:reduce){.ha-rec-clock i{animation:none}}
+
+/* Pin the MY ARCHIVE shortcut to the bottom centre on mobile and desktop. */
+a[href="#mylist"],
+a[href$="#mylist"],
+button[data-target="#mylist"],
+button[data-href="#mylist"]{
+ position:fixed!important;
+ left:50%!important;
+ right:auto!important;
+ bottom:max(14px,env(safe-area-inset-bottom))!important;
+ top:auto!important;
+ transform:translateX(-50%)!important;
+ z-index:9996!important;
+ margin:0!important;
+}
+@media(max-width:640px){
+ a[href="#mylist"],a[href$="#mylist"],button[data-target="#mylist"],button[data-href="#mylist"]{
+  max-width:calc(100vw - 28px)!important;
+  white-space:nowrap!important;
+ }
+}
