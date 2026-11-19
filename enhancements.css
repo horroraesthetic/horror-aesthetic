@@ -1308,3 +1308,60 @@ html.ha-calm .ha-fog{display:none}
     white-space: nowrap;
   }
 }
+
+
+/* MOBILE FIX 30 — one compact, non-overlapping utility dock */
+@media (max-width: 640px) {
+  .ha-command-trigger,
+  .ha-cinema-toggle,
+  .ha-shelf-trigger {
+    position: fixed !important;
+    z-index: 10020 !important;
+    top: auto !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
+    min-width: 0 !important;
+    width: calc((100vw - 32px) / 3) !important;
+    max-width: calc((100vw - 32px) / 3) !important;
+    min-height: 48px !important;
+    height: 52px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 5px 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    transform: none !important;
+    white-space: normal !important;
+    text-align: center !important;
+    font-size: 7px !important;
+    line-height: 1.25 !important;
+    letter-spacing: .07em !important;
+    overflow: hidden !important;
+  }
+  .ha-cinema-toggle {
+    left: 8px !important;
+    right: auto !important;
+    transform: none !important;
+  }
+  .ha-shelf-trigger {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+  .ha-command-trigger {
+    left: auto !important;
+    right: 8px !important;
+  }
+  .ha-command-trigger kbd { display: none !important; }
+  .ha-command-trigger > span:first-child { font-size: 17px !important; }
+  .ha-cinema-orb { flex: 0 0 7px; }
+  .ha-shelf-trigger > span:first-child { font-size: 15px !important; }
+  .ha-shelf-trigger-label { font-size: 7px !important; }
+  .ha-shelf-panel {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 68px) !important;
+  }
+  body {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 82px) !important;
+  }
+}
