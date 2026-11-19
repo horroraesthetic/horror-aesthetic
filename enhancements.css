@@ -1365,3 +1365,49 @@ html.ha-calm .ha-fog{display:none}
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 82px) !important;
   }
 }
+
+
+/* MOBILE DOCK FIX 31 — hard-separated equal slots */
+@media (max-width: 640px) {
+  .ha-cinema-toggle,
+  .ha-shelf-trigger,
+  .ha-command-trigger {
+    left: auto !important;
+    right: auto !important;
+    width: calc((100vw - 32px) / 3) !important;
+    min-width: 0 !important;
+    max-width: calc((100vw - 32px) / 3) !important;
+    box-sizing: border-box !important;
+    padding-inline: 2px !important;
+    overflow: hidden !important;
+  }
+  .ha-cinema-toggle {
+    left: 8px !important;
+    transform: none !important;
+  }
+  .ha-shelf-trigger {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  .ha-command-trigger {
+    right: 8px !important;
+    transform: none !important;
+  }
+  .ha-cinema-toggle,
+  .ha-shelf-trigger,
+  .ha-command-trigger {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: clamp(6px, 1.65vw, 7px) !important;
+    letter-spacing: .045em !important;
+  }
+  .ha-cinema-toggle *,
+  .ha-shelf-trigger *,
+  .ha-command-trigger * {
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+  }
+  .ha-shelf-trigger-label { font-size: inherit !important; }
+}
