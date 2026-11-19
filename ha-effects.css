@@ -70,7 +70,7 @@ html.ha-cinema-mode body:after{content:"";position:fixed;inset:0;z-index:9990;po
 
 /* Persistent surveillance REC readout */
 .ha-rec-clock{
- position:fixed!important;top:max(10px,env(safe-area-inset-top))!important;right:max(12px,env(safe-area-inset-right))!important;
+ position:fixed!important;top:auto!important;bottom: max(92px, calc(env(safe-area-inset-bottom) + 84px))!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;
  z-index:9994!important;display:inline-flex!important;align-items:center!important;gap:8px!important;
  box-sizing:border-box!important;padding:7px 10px!important;min-height:30px!important;
  border:1px solid rgba(196,22,31,.62)!important;background:rgba(5,4,6,.88)!important;
@@ -82,5 +82,5 @@ html.ha-cinema-mode body:after{content:"";position:fixed;inset:0;z-index:9990;po
 .ha-rec-clock b{font:inherit!important;color:#f06a75!important}
 .ha-rec-clock span{font:inherit!important;color:#c8c0bd!important;letter-spacing:.08em!important;font-variant-numeric:tabular-nums}
 @keyframes haRecPulse{50%{opacity:.25}}
-@media(max-width:640px){.ha-rec-clock{top:8px!important;right:8px!important;padding:6px 8px!important;gap:6px!important;font-size:9px!important}}
+@media(max-width:640px){.ha-rec-clock{top:auto!important;bottom:max(92px, calc(env(safe-area-inset-bottom) + 84px))!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;padding:6px 8px!important;gap:6px!important;font-size:9px!important}}
 @media(prefers-reduced-motion:reduce){.ha-rec-clock i{animation:none}}
