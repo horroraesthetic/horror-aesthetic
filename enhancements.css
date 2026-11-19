@@ -1413,27 +1413,21 @@ html.ha-calm .ha-fog{display:none}
 }
 
 
-/* SKIP LINK FIX — focus stays on the small link, never the page container */
-#ha-main-content:focus,
-[id="ha-main-content"]:focus {
-  outline: none !important;
-}
-.ha-skip-link:focus-visible {
-  outline: 2px solid rgba(220,91,103,.85);
-  outline-offset: 3px;
-}
 
 
-/* LANGUAGE SWITCH FIX — show exactly one language, including date/meta lines */
-html[data-l="ru"] .l-en,
-html[data-l="ru"] [lang="en"],
-html[data-l="ru"] .body.l-en,
-html[data-l="en"] .l-ru,
-html[data-l="en"] [lang="ru"],
-html[data-l="en"] .body.l-ru {
+/* FINAL LANGUAGE + SKIP NAVIGATION FIX */
+body[data-lang="ru"] .l-en,
+body[data-lang="en"] .l-ru {
   display: none !important;
 }
-html[data-l="ru"] .l-ru,
-html[data-l="en"] .l-en {
-  visibility: visible;
+body[data-lang="ru"] .l-ru,
+body[data-lang="en"] .l-en {
+  display: initial;
+}
+#ha-main-content:focus,
+#ha-main-content:focus-visible,
+[id="ha-main-content"]:focus,
+[id="ha-main-content"]:focus-visible {
+  outline: 0 !important;
+  box-shadow: none !important;
 }
