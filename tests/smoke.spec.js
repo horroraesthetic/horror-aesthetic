@@ -25,3 +25,21 @@ test('section navigation and language controls are present', async ({ page }) =>
   await expect(languageButtons.first()).toBeVisible();
   await expect(languageButtons.last()).toBeVisible();
 });
+
+test('homepage starts without uncaught JavaScript errors', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.goto('/', { waitUntil: 'load' });
+  await expect(page.locator('.mast .hero')).toBeVisible();
+  expect(pageErrors, pageErrors.join('\\n')).toEqual([]);
+});
+
+test('mobile homepage does not introduce horizontal page overflow', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'Mobile viewport check only');
+  await page.goto('/');
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 4);
+});
