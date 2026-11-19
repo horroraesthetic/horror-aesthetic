@@ -27,7 +27,7 @@ body{
 :where(h1,h2,h3){text-wrap:balance}
 :where(p,li){text-wrap:pretty}
 @media(prefers-reduced-motion:no-preference){
-  :where(a,button){transition-color:color .2s ease,border-color .2s ease,background-color .2s ease}
+  :where(a,button){transition:color .2s ease,border-color .2s ease,background-color .2s ease}
 }
 /* Bring the two editorial indexes back into the journal's blood-and-bone palette. */
 body:has(.archive-tools),
