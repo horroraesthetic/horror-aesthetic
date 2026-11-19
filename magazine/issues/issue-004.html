@@ -7,6 +7,25 @@
 @keyframes rise{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}@keyframes presence{0%,100%{opacity:.22;transform:translateY(4px) skewY(-5deg)}50%{opacity:.66;transform:translateY(-9px) skewY(-2deg)}}
 @media(max-width:600px){.w{padding-left:15px;padding-right:15px}.cover{min-height:470px;padding:24px}.cover:before{right:-5%;width:58%;opacity:.65}.contents a{grid-template-columns:30px 1fr}.contents small{grid-column:2}.related{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cover,.cover:before{animation:none!important}}
+
+/* HA ISSUE CINEMA LAYER — editorial depth and reading rhythm */
+.ha-reading-line{position:fixed;z-index:90;left:0;top:0;width:100%;height:2px;background:#ffffff12;pointer-events:none}
+.ha-reading-line i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#661322,#e45c6c,#f0c7b9);transform:scaleX(0);transform-origin:left;box-shadow:0 0 14px #d83d58}
+.cover{transform-style:preserve-3d;will-change:transform}
+.cover:after{background:linear-gradient(110deg,transparent 20%,#f3d5d00a 48%,transparent 68%);animation:ha-cover-sheen 11s ease-in-out infinite}
+.cover h1{text-shadow:0 8px 35px #000,0 0 32px #a72b4050}
+[data-ha-reveal]{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+[data-ha-reveal].ha-in{opacity:1;transform:none}
+.contents a{position:relative;overflow:hidden}
+.contents a:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#d44d60;transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
+.contents a:hover:before{transform:scaleY(1)}
+.related a{transition:transform .3s,border-color .3s,background .3s}
+.related a:hover{transform:translateY(-4px);border-color:#b34b5b;background:#1c1018}
+.ha-issue-kicker{display:flex;align-items:center;gap:12px;margin:0 0 18px;font:10px ui-monospace,monospace;letter-spacing:.18em;color:#d98a90;text-transform:uppercase}
+.ha-issue-kicker:before{content:"";width:30px;height:1px;background:#df5363;box-shadow:0 0 12px #df5363}
+@keyframes ha-cover-sheen{0%,55%{transform:translateX(-110%)}85%,100%{transform:translateX(110%)}}
+@media(prefers-reduced-motion:reduce){[data-ha-reveal]{opacity:1;transform:none;transition:none}.cover:after{animation:none}.contents a,.related a{transition:none}}
+
 </style>
 <script>(()=>{let l='en';try{l=localStorage.getItem('ha-lang')||'en'}catch(e){}if(!['en','ru'].includes(l))l='en';document.documentElement.dataset.l=l;document.addEventListener('DOMContentLoaded',()=>{const set=x=>{document.documentElement.dataset.l=x;document.documentElement.lang=x;document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.l===x)));try{localStorage.setItem('ha-lang',x)}catch(e){}};document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>set(b.dataset.l)));set(l)})})();</script></head>
 <body><div class="w"><header><a href="https://horroraesthetic.github.io/horror-aesthetic/magazine/">HORROR AESTHETIC / THE JOURNAL</a><span class="lang"><button data-l="en">EN</button> <button data-l="ru">RU</button></span></header>
@@ -23,4 +42,20 @@
 <a href="https://horroraesthetic.github.io/horror-aesthetic/reviews/ringu.html">RINGU (1998)<small>CURSED IMAGE / THE GAZE</small></a>
 <a href="https://horroraesthetic.github.io/horror-aesthetic/reviews/hellraiser.html">HELLRAISER (1987)<small>MASK / FLESH / TRANSFORMATION</small></a>
 <a href="https://horroraesthetic.github.io/horror-aesthetic/reviews/fly.html">THE FLY (1986)<small>THE HUMAN BODY / THE OTHER</small></a>
-</div></section></main><footer><a href="https://horroraesthetic.github.io/horror-aesthetic/magazine/issues/">← ISSUE ARCHIVE</a> · <a href="https://horroraesthetic.github.io/horror-aesthetic/magazine/">JOURNAL HOME</a> · ISSUE 004 / 2026</footer></div></body></html>
+</div></section></main><footer><a href="https://horroraesthetic.github.io/horror-aesthetic/magazine/issues/">← ISSUE ARCHIVE</a> · <a href="https://horroraesthetic.github.io/horror-aesthetic/magazine/">JOURNAL HOME</a> · ISSUE 004 / 2026</footer></div>
+<script>
+(()=>{'use strict';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,body=document.body;
+const line=document.createElement('div');line.className='ha-reading-line';line.setAttribute('aria-hidden','true');line.innerHTML='<i></i>';body.appendChild(line);
+const fill=line.firstElementChild;let busy=false;
+const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;fill.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')';busy=false};
+addEventListener('scroll',()=>{if(!busy){busy=true;requestAnimationFrame(update)}},{passive:true});update();
+const targets=[...document.querySelectorAll('.cover,.intro,.contents,main>section,footer')];targets.forEach(el=>el.setAttribute('data-ha-reveal',''));
+if(reduce||!('IntersectionObserver'in window))targets.forEach(el=>el.classList.add('ha-in'));
+else{const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('ha-in');observer.unobserve(entry.target)}}),{threshold:.1,rootMargin:'0px 0px -30px'});targets.forEach(el=>observer.observe(el))}
+const cover=document.querySelector('.cover');
+if(cover&&!reduce&&matchMedia('(hover:hover) and (pointer:fine)').matches){cover.addEventListener('pointermove',e=>{const r=cover.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cover.style.transform='perspective(1200px) rotateY('+(x*2.2).toFixed(2)+'deg) rotateX('+(-y*1.8).toFixed(2)+'deg)'});cover.addEventListener('pointerleave',()=>{cover.style.transform=''})}
+const kicker=document.createElement('div');kicker.className='ha-issue-kicker';kicker.textContent='THE UNCANNY IMAGE / EDITION 004';cover?.prepend(kicker);
+})();
+</script>
+</body></html>
