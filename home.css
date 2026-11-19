@@ -2107,3 +2107,7 @@ footer .ft-legal a:hover{opacity:1}
     overflow-y: visible !important;
   }
 }
+
+
+/* FIX — keep the homepage recording timer in its archive panel; remove the duplicate REC in the footer strip */
+.strip .rec{display:none!important}
