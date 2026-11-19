@@ -4,7 +4,7 @@ const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
 const SHELL = [
-  BASE, BASE + 'index.html', OFFLINE_URL,
+  BASE, BASE + 'index.html', OFFLINE_URL, BASE + 'posters/',
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
   BASE + 'home.css?v=196', BASE + 'enhancements.css?v=188', BASE + 'visual-refresh.css?v=1', BASE + 'enhancements.js?v=189', BASE + 'home.js?v=189',
   BASE + 'reference.css', BASE + 'reference.js',
@@ -13,7 +13,7 @@ const SHELL = [
   ...[
     'archives/','directors/','timeline/','library/','folklore/','reviews/','articles/',
     'culture/','j-horror/','games/','visual-archive/','database/',
-    'bestiarum/','journal/','screening-room/','field-notes/','glossary/','nightmare-archive/','posters/'
+    'bestiarum/','journal/','screening-room/','field-notes/','glossary/','nightmare-archive/'
   ].map(path => BASE + path),
   ...[
     'img/ha-home-hero-v2.jpg','img/ha-folklore-hero-v2.jpg',
