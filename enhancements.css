@@ -1411,3 +1411,14 @@ html.ha-calm .ha-fog{display:none}
   }
   .ha-shelf-trigger-label { font-size: inherit !important; }
 }
+
+
+/* SKIP LINK FIX — focus stays on the small link, never the page container */
+#ha-main-content:focus,
+[id="ha-main-content"]:focus {
+  outline: none !important;
+}
+.ha-skip-link:focus-visible {
+  outline: 2px solid rgba(220,91,103,.85);
+  outline-offset: 3px;
+}
