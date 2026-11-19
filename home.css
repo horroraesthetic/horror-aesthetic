@@ -2082,3 +2082,28 @@ footer .ft-legal a:hover{opacity:1}
 @media (max-width:760px) and (prefers-reduced-motion:reduce){
   .sp,.card,.btn,.snd,button,summary,.gal img{transition:none!important}
 }
+
+/* ANDROID MOBILE SCROLL RECOVERY — keep the document as the vertical scroll owner. */
+@media (max-width: 760px), (pointer: coarse) {
+  html,
+  body {
+    height: auto !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y pinch-zoom;
+  }
+  body {
+    position: relative !important;
+  }
+  #app,
+  main,
+  .wrap,
+  #shelves-host {
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+}
