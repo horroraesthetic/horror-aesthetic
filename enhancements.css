@@ -1011,6 +1011,7 @@ body.ha-archive-page .ha-decade-chip:focus-visible{outline:2px solid #f0b4ad;out
 .ha-command-trigger:focus-visible,.ha-command-close:focus-visible,.ha-command-result:focus-visible{outline:2px solid #f0b4ad;outline-offset:3px}
 .ha-command-overlay{position:fixed;z-index:10000;inset:0;display:grid;place-items:start center;padding:clamp(16px,8vh,90px) 14px 20px;background:rgba(3,2,5,.78);backdrop-filter:blur(12px)}
 .ha-command-overlay[hidden]{display:none}
+body.ha-command-open > .ha-command-overlay{z-index:10100}
 .ha-command-panel{width:min(620px,100%);max-height:min(720px,84vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(196,91,103,.52);background:radial-gradient(ellipse at 0 0,rgba(106,23,39,.22),transparent 52%),#100b11;color:#eee4dc;box-shadow:0 30px 100px #000b,0 0 60px rgba(133,24,44,.14)}
 .ha-command-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:22px 22px 15px;border-bottom:1px solid rgba(198,113,117,.2)}
 .ha-command-kicker{color:#d36a73;font:700 9px/1.4 ui-monospace,monospace;letter-spacing:.2em}

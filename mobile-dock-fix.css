@@ -28,7 +28,7 @@
     white-space: normal !important;
     text-align: center !important;
     line-height: 1.15 !important;
-    font-size: 8px !important;
+    font-size: 12px !important;
     letter-spacing: .035em !important;
     transform: none !important;
     border-width: 1px !important;
@@ -65,10 +65,11 @@
   .ha-shelf-trigger-label {
     display: block !important;
     overflow-wrap: anywhere !important;
-    font-size: 7.5px !important;
+    font-size: inherit !important;
     line-height: 1.1 !important;
   }
   .ha-command-trigger kbd { display: none !important; }
+  #totop.totop { bottom: calc(env(safe-area-inset-bottom, 0px) + 68px) !important; }
   .ha-shelf-panel {
     bottom: calc(env(safe-area-inset-bottom, 0px) + 68px) !important;
     max-height: calc(100dvh - 100px) !important;
@@ -79,8 +80,9 @@
   .ha-shelf-trigger,
   .ha-command-trigger {
     gap: 3px !important;
-    font-size: 7px !important;
     letter-spacing: 0 !important;
   }
-  .ha-shelf-trigger-label { font-size: 6.5px !important; }
+  .ha-cinema-toggle .ha-cinema-orb,
+  .ha-shelf-trigger > span[aria-hidden],
+  .ha-command-trigger > span[aria-hidden] { display:none !important; }
 }

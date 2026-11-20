@@ -20,8 +20,10 @@ const open=()=>{
  input.addEventListener('input',render);back.addEventListener('click',e=>{if(e.target===back)close()});back.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close()}if(e.key==='Enter'){const first=list.querySelector('a');if(first)location.href=first.href}});
  document.body.appendChild(back);panel=back;render();input.focus();
 };
-if(!document.querySelector('.ha-command-trigger')){const b=document.createElement('button');b.type='button';b.className='ha-command-trigger';b.textContent=t('⌕ MENU','⌕ МЕНЮ');b.addEventListener('click',open);document.body.appendChild(b)}
-addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}if(e.key==='Escape')close()});
+if(!document.querySelector('.ha-command-trigger')){
+ const b=document.createElement('button');b.type='button';b.className='ha-command-trigger';b.textContent=t('⌕ MENU','⌕ МЕНЮ');b.addEventListener('click',open);document.body.appendChild(b);
+ addEventListener('keydown',e=>{if(!e.defaultPrevented&&!e.repeat&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}if(e.key==='Escape')close()});
+}
 if(!reduce&&'IntersectionObserver'in window){const targets=document.querySelectorAll('main h2,article h2,.card,.feature,.section,.archive-lead,.rel');const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('ha-fx-visible');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});targets.forEach(el=>{el.classList.add('ha-fx-reveal');io.observe(el)})}
 if(!reduce&&matchMedia('(pointer: fine)').matches){let raf=0;addEventListener('pointermove',e=>{if(raf)return;raf=requestAnimationFrame(()=>{html.style.setProperty('--ha-pointer-x',e.clientX+'px');html.style.setProperty('--ha-pointer-y',e.clientY+'px');raf=0})},{passive:true})}
 if(!reduce&&matchMedia('(pointer: coarse)').matches){addEventListener('pointerdown',e=>{if(e.target.closest('a,button,input,textarea,select'))return;for(let i=0;i<7;i++){const s=document.createElement('i');s.className='ha-fx-shard';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';const a=(Math.PI*2*i/7)+Math.random()*.3,d=24+Math.random()*34;s.style.setProperty('--dx',Math.cos(a)*d+'px');s.style.setProperty('--dy',Math.sin(a)*d+'px');document.body.appendChild(s);s.addEventListener('animationend',()=>s.remove(),{once:true})}},{passive:true})}
