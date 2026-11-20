@@ -35,3 +35,5 @@ jobs:
         run: node --check scripts/site-audit.mjs
       - name: Validate sitemap, accessibility and HTML basics
         run: node scripts/site-audit.mjs
+      - name: Verify generated film and review content
+        run: node scripts/sync-catalogue-wave.mjs --check

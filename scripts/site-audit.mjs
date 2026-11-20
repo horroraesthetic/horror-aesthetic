@@ -109,7 +109,9 @@ function resolveLocalReference(file, reference) {
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
   const relative = file.slice(root.length + 1);
-  const references = [...html.matchAll(/(?:href|src|poster)=[\"']([^\"']+)[\"']/gi)];
+  // The tag may have a static src, but inline JavaScript can contain dynamic HTML templates.
+  const markup = html.replace(/(<script\b[^>]*>)[\s\S]*?<\/script\s*>/gi, '$1</script>');
+  const references = [...markup.matchAll(/(?:href|src|poster)=[\"']([^\"']+)[\"']/gi)];
   for (const match of references) {
     const raw = match[1].trim();
     if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw) || raw.startsWith('#')) continue;
