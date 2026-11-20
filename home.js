@@ -3139,10 +3139,13 @@ try {
 
  /* ===== 11. the film that was taken away ===== */
  var goneId=null,goneNews=false;
- function pickGone(){if(!REVIEWS.length)return null;return REVIEWS[hash("gone"+today())%REVIEWS.length].id}
+ function pickGone(){
+  var candidates=REVIEWS.filter(function(r){return !r.page});
+  return candidates.length?candidates[hash("gone"+today())%candidates.length].id:null;
+ }
  function dateDot(){var d=new Date();return two(d.getDate())+"."+two(d.getMonth()+1)+"."+d.getFullYear()}
  function applyGone(){
-  var host=document.getElementById("cards");if(!host||calm())return;
+  var host=document.getElementById("cards");if(!host||calm()||query.trim()||cur||frc)return;
   goneId=goneId||pickGone();if(!goneId||!F[goneId])return;
   var name=T(F[goneId].n),cs=host.querySelectorAll(".card");
   for(var i=0;i<cs.length;i++){
