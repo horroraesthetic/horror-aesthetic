@@ -1,12 +1,12 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v224';
+const CACHE_VERSION = 'ha-v225';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
 const SHELL = [
   BASE, BASE + 'index.html', OFFLINE_URL, BASE + 'posters/',
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
-  BASE + 'home.css?v=200', BASE + 'enhancements.css?v=193', BASE + 'visual-refresh.css?v=1', BASE + 'enhancements.js?v=191', BASE + 'home.js?v=190',
+  BASE + 'home.css?v=200', BASE + 'enhancements.css?v=193', BASE + 'visual-refresh.css?v=2', BASE + 'enhancements.js?v=191', BASE + 'home.js?v=190',
   BASE + 'flashlight.css?v=1', BASE + 'flashlight.js?v=2', BASE + 'ha-effects.css?v=5', BASE + 'ha-effects.js?v=4', BASE + 'mobile-dock-fix.css?v=2',
   BASE + 'reference.css', BASE + 'reference.js',
   BASE + 'data/poster-rights.json', BASE + 'data/film-strip.json',
