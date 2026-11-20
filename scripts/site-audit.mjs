@@ -47,6 +47,16 @@ function walk(directory) {
 }
 
 const htmlFiles = walk(root);
+const reviewPages = readdirSync(resolve(root, 'reviews'))
+  .filter(name => name !== 'index.html' && name.endsWith('.html'));
+const reviewIndex = readFileSync(resolve(root, 'reviews/index.html'), 'utf8');
+const reviewLinks = new Set([...reviewIndex.matchAll(/href="\/horror-aesthetic\/reviews\/([^/"?#]+\.html)"/g)]
+  .map(match => match[1]));
+for (const name of reviewPages) {
+  const url = base + 'reviews/' + name;
+  if (!seen.has(url)) errors.push(`Review missing from sitemap: ${name}`);
+  if (!reviewLinks.has(name)) errors.push(`Review missing from the review directory: ${name}`);
+}
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
   const relative = file.slice(root.length + 1);
@@ -152,8 +162,14 @@ const serviceWorker = readFileSync(serviceWorkerPath, 'utf8');
 const assetBudget = [
   ['index.html', homepagePath, 100 * 1024],
   ['home.css', homeCssPath, 250 * 1024],
-  ['home.js', homeJsPath, 1200 * 1024]
+  ['home.js', homeJsPath, 950 * 1024]
 ];
+const themeData = JSON.parse(readFileSync(resolve(root, 'data/home-themes.json'), 'utf8'));
+if (!Array.isArray(themeData) || !themeData.length || themeData.some(theme =>
+  !theme.id || !theme.en || !theme.ru || !Array.isArray(theme.f)) ||
+  new Set(themeData.map(theme => theme.id)).size !== themeData.length) {
+  errors.push('Deferred homepage theme data is invalid.');
+}
 
 for (const [name, path, limit] of assetBudget) {
   try {
@@ -185,12 +201,17 @@ const homepageAssetRefs = [...homepage.matchAll(/(?:href|src)=["']([^"']+\.(?:cs
   .map(match => match[1].split('/').pop());
 const workerAssetRefs = [...serviceWorker.matchAll(/BASE\s*\+\s*["']([^"']+\.(?:css|js)(?:\?[^"']*)?)["']/gi)]
   .map(match => match[1].split('/').pop());
-for (const asset of ['home.css', 'enhancements.css', 'visual-refresh.css', 'enhancements.js', 'home.js']) {
+for (const asset of ['home.css', 'enhancements.css', 'visual-refresh.css', 'enhancements.js', 'home.js',
+  'flashlight.css', 'flashlight.js', 'mobile-dock-fix.css', 'ha-effects.css', 'ha-effects.js']) {
   const htmlRef = homepageAssetRefs.find(reference => reference.startsWith(asset));
   const workerRef = workerAssetRefs.find(reference => reference.startsWith(asset));
   if (!htmlRef || !workerRef || htmlRef !== workerRef) {
     errors.push('Homepage and service worker asset versions must match: ' + asset + '.');
   }
+}
+const skipTarget = homepage.match(/<a\b[^>]*class="ha-skip-link"[^>]*href="#([^"]+)"/)?.[1];
+if (!skipTarget || !homepage.includes(`<main id="${skipTarget}" tabindex="-1">`)) {
+  errors.push('The homepage skip link must target a focusable main landmark.');
 }
 if (!homeJs.includes('var cur=null,query="",secFilter="home",picked=null;') || !homeJs.includes('if (event.persisted || secFilter !== "home") return;')) {
   errors.push('Homepage must render the home view by default and prevent stale mobile scroll restoration.');

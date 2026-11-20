@@ -19,9 +19,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Oswald:wght@500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Rubik+Wet+Paint&family=Playfair+Display:wght@700;900&family=Shippori+Mincho+B1:wght@600;800&display=swap">
-<link rel="stylesheet" href="home.css?v=199"><link rel="stylesheet" href="flashlight.css?v=1"><link rel="stylesheet" href="enhancements.css?v=192"><link rel="stylesheet" href="visual-refresh.css?v=1"><link rel="stylesheet" href="main-site-upgrade.css?v=1"><link rel="stylesheet" href="/horror-aesthetic/cinema-system.css?v=2"><script>
+<link rel="stylesheet" href="home.css?v=200"><link rel="stylesheet" href="flashlight.css?v=1"><link rel="stylesheet" href="enhancements.css?v=193"><link rel="stylesheet" href="visual-refresh.css?v=1"><link rel="stylesheet" href="main-site-upgrade.css?v=1"><link rel="stylesheet" href="/horror-aesthetic/cinema-system.css?v=2"><script>
 try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.getItem("ha-calm")===null)localStorage.setItem("ha-calm","true")}catch(e){}
-</script><script defer src="enhancements.js?v=190"></script><script defer src="home.js?v=189"></script><script defer src="flashlight.js?v=1"></script><link rel="stylesheet" href="/horror-aesthetic/ha-effects.css?v=5"><link rel="stylesheet" href="mobile-dock-fix.css?v=1"><script defer src="/horror-aesthetic/ha-effects.js?v=3"></script></head><body data-lang="en">
+</script><script defer src="enhancements.js?v=191"></script><script defer src="home.js?v=190"></script><script defer src="flashlight.js?v=2"></script><link rel="stylesheet" href="/horror-aesthetic/ha-effects.css?v=5"><link rel="stylesheet" href="mobile-dock-fix.css?v=2"><script defer src="/horror-aesthetic/ha-effects.js?v=4"></script></head><body data-lang="en">
+<a class="ha-skip-link" href="#ha-main-content">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
@@ -75,6 +76,7 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
     <h1 class="sr">Horror Aesthetic</h1>
     <div class="hero"><span class="trk" aria-hidden="true"></span><canvas id="stat" width="200" height="75" aria-hidden="true"></canvas><div class="hslides"><img class="on" data-img="jh2" alt="Horror Aesthetic" width="1500" height="562"><img data-img="jh3" alt="" width="1500" height="562"><img data-img="jh4" alt="" width="1500" height="562"><img data-img="jh5" alt="" width="1500" height="562"><img data-img="jh13" alt="" width="1500" height="562"><img data-img="jh15" alt="" width="1500" height="562"><img data-img="jh16" alt="" width="1500" height="562"><img data-img="jh19" alt="" width="1500" height="562"></div></div>
     <p data-t="mast_p"></p>
+    <a class="btn ha-watch-cta" id="ha-watch-cta" href="#first-watch"><span class="l-en" lang="en">Find a film for tonight</span><span class="l-ru" lang="ru">Подобрать фильм на вечер</span></a>
     <button type="button" class="bigs" id="bigs"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" fill="none"/></svg><span class="bt" id="bigs-t"></span><kbd>/</kbd></button>
     <p class="streak" id="streak"></p>
     <div class="ticker" id="ticker"></div>
@@ -87,6 +89,22 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
     <div id="filters"></div>
     <div class="lang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="ru" aria-pressed="false">RU</button></div>
   </nav>
+
+  <main id="ha-main-content" tabindex="-1">
+  <section class="ha-first-watch" data-cat="start" data-home="1" id="first-watch" tabindex="-1" aria-labelledby="first-watch-title">
+    <h2 id="first-watch-title"><span class="l-en" lang="en">Horror: what to watch and how it frightens</span><span class="l-ru" lang="ru">Хоррор: что посмотреть и почему это пугает</span></h2>
+    <div class="ha-watch-paths">
+      <a href="reviews/ringu.html"><strong><span class="l-en" lang="en">Quiet dread</span><span class="l-ru" lang="ru">Тихий ужас</span></strong><span class="l-en" lang="en">Ringu (1998) · Gore 1/5</span><span class="l-ru" lang="ru">Звонок (1998) · Графическое насилие: 1/5</span></a>
+      <a href="reviews/tetsuo.html"><strong><span class="l-en" lang="en">Practical effects</span><span class="l-ru" lang="ru">Практические эффекты</span></strong><span class="l-en" lang="en">Tetsuo: The Iron Man (1989)</span><span class="l-ru" lang="ru">Тэцуо, железный человек (1989)</span></a>
+      <a href="reviews/halloween.html"><strong><span class="l-en" lang="en">Slasher essentials</span><span class="l-ru" lang="ru">Классика слэшеров</span></strong><span class="l-en" lang="en">Halloween (1978)</span><span class="l-ru" lang="ru">Хэллоуин (1978)</span></a>
+    </div>
+    <nav class="ha-watch-links" aria-label="Explore the archive" data-en-label="Explore the archive" data-ru-label="Разделы архива">
+      <a href="reviews/"><span class="l-en" lang="en">Reviews</span><span class="l-ru" lang="ru">Рецензии</span></a>
+      <a href="articles/"><span class="l-en" lang="en">Essays</span><span class="l-ru" lang="ru">Статьи</span></a>
+      <a href="database/"><span class="l-en" lang="en">Film index</span><span class="l-ru" lang="ru">Указатель фильмов</span></a>
+      <a href="visual-archive/"><span class="l-en" lang="en">Original art</span><span class="l-ru" lang="ru">Авторские иллюстрации</span></a>
+    </nav>
+  </section>
 
   <section data-cat="spot" data-home="1" data-kj="特" id="spot">
     <div class="sec-h"><h2><svg class="ic" viewBox="0 0 24 24"><use href="#i-pent"/></svg><span data-t="h_spot"></span></h2><p class="sp-sub" data-t="s_spot"></p></div>
@@ -369,6 +387,7 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
       <div class="tools"><input id="q" type="search" aria-label="Search"><button type="button" class="clear" id="clear" hidden></button></div>
     </div>
     <div class="cards" id="cards"></div>
+    <button type="button" class="btn o ha-load-more" id="review-more" hidden></button>
   </section>
 
   <section data-cat="stats" data-kj="数" id="stats">
@@ -414,6 +433,9 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
     <div class="cat-tools" id="cat-st"></div>
     <div class="cat-tools" id="cat-dec"></div>
     <div class="catg" id="catg"></div>
+    <button type="button" class="btn o ha-load-more" id="cat-more" hidden></button>
+    <p class="ha-theme-status" role="status"></p>
+    <button type="button" class="btn o ha-theme-retry" hidden></button>
   </section>
 
   <section data-cat="wiki" data-kj="典" id="wiki">
@@ -425,6 +447,8 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
     <div class="sec-h"><h2><svg class="ic" viewBox="0 0 24 24"><use href="#i-list"/></svg><span data-t="h_themes"></span></h2><small data-t="s_themes"></small></div>
     <p class="hint" data-t="th_hint"></p>
     <div class="th-grid" id="th-grid"></div>
+    <p class="ha-theme-status" role="status"></p>
+    <button type="button" class="btn o ha-theme-retry" hidden></button>
     <div class="th-box" id="th-box" hidden></div>
   </section>
 
@@ -567,6 +591,7 @@ try{if(matchMedia("(max-width:760px), (pointer:coarse)").matches&&localStorage.g
     <div class="gal" id="gal"></div>
   </section>
 
+  </main>
   <footer>
     <img data-img="logo_ha" alt="Horror Aesthetic" width="120" height="120">
     <div class="t"><span class="soc"><a class="btn o" href="https://vk.ru/horrorofaesthetic" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24"><use href="#i-vk"/></svg>VK</a><a class="btn o" href="https://dzen.ru/horroraesthetic" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24"><use href="#i-dzen"/></svg><span data-t="dzen"></span></a><a class="btn o" href="https://letterboxd.com/horroraesthetic/" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24"><use href="#i-link"/></svg>Letterboxd</a></span><span data-t="foot1"></span><span data-t="foot2"></span><span data-t="foot3"></span></div>

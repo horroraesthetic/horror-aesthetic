@@ -31,6 +31,7 @@
     root.classList.toggle('ha-flashlight-on', active);
     button.setAttribute('aria-pressed', String(active));
     button.classList.toggle('is-active', active);
+    if (typeof window.renderFl === 'function') window.renderFl();
     if (active) paint();
   };
 

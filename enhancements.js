@@ -12,7 +12,8 @@
   const main = document.querySelector('main, [role="main"]') ||
                document.querySelector('article');
   if (main) {
-    if (!main.id || main.id === 'ha-main-content') main.id = 'ha-main-content';
+    if (!main.id) main.id = 'ha-main-content';
+    if (!main.hasAttribute('tabindex')) main.tabIndex = -1;
     main.style.scrollMarginTop = '18px';
   }
 
@@ -22,7 +23,12 @@
     skip.className = 'ha-skip-link';
     document.body.prepend(skip);
   }
-  skip.textContent = ru ? 'Перейти к содержимому' : 'Skip to content';
+  const labelSkip = () => {
+    skip.textContent = document.documentElement.lang.toLowerCase().startsWith('ru') ?
+      'Перейти к содержимому' : 'Skip to content';
+  };
+  labelSkip();
+  new MutationObserver(labelSkip).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   if (main) skip.href = '#' + main.id;
   else skip.removeAttribute('href');
   if (!skip.dataset.haSkipFixed) {
@@ -30,9 +36,9 @@
       const target = main;
       if (!target) return;
       event.preventDefault();
+      target.focus({ preventScroll: true });
       target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-      // Deliberately do not focus the container: this prevents a giant focus outline.
-      if (window.location.hash !== '#' + main.id) history.replaceState(null, '', '#' + main.id);
+      // Section hashes (for example #catalog) are navigation state, not scroll positions.
     });
     skip.dataset.haSkipFixed = '1';
   }
@@ -590,6 +596,10 @@
   const entries=[
    ['/horror-aesthetic/','Home','Главная','home'],
    ['/horror-aesthetic/reviews/','All reviews','Все рецензии','films cinema'],
+   ['/horror-aesthetic/reviews/ringu.html','Ringu (1998)','Звонок (1998)','hideo nakata j-horror'],
+   ['/horror-aesthetic/magazine/','The Horror Journal','Журнал Horror Aesthetic','issues'],
+   ['/horror-aesthetic/magazine/visual-department.html','Midnight Gallery','Полночная галерея','original art'],
+   ['/horror-aesthetic/posters/','Posters','Постеры','illustrations'],
    ['/horror-aesthetic/archives/','The Dark Archive','Тёмный архив','films catalogue dossiers'],
    ['/horror-aesthetic/j-horror/','J-Horror Master Archive','Архив японского хоррора','japan kaidan ringu ju-on'],
    ['/horror-aesthetic/directors/','Director Archives','Архив режиссёров','filmmakers'],
@@ -614,11 +624,12 @@
   trigger.innerHTML='<span aria-hidden="true">⌕</span><span class="ha-command-trigger-label"></span><kbd>⌘ K</kbd>';
   trigger.querySelector('.ha-command-trigger-label').textContent=ru()?'БЫСТРЫЙ ПЕРЕХОД':'QUICK JUMP';
   trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-expanded','false');
-  const overlay=document.createElement('div');overlay.className='ha-command-overlay';overlay.hidden=true;
+  const overlay=document.createElement('div');overlay.className='ha-command-overlay';overlay.id='ha-command-dialog';overlay.hidden=true;
+  trigger.setAttribute('aria-controls',overlay.id);
   overlay.innerHTML='<section class="ha-command-panel" role="dialog" aria-modal="true" aria-labelledby="ha-command-title"><header class="ha-command-head"><div><span class="ha-command-kicker">HORROR AESTHETIC / INDEX</span><h2 id="ha-command-title"></h2></div><button type="button" class="ha-command-close" aria-label="Close">×</button></header><label class="ha-command-search-label" for="ha-command-search"></label><input id="ha-command-search" class="ha-command-search" type="search" autocomplete="off" spellcheck="false"><div class="ha-command-hint"></div><nav class="ha-command-results" aria-label="Site sections"></nav><footer class="ha-command-foot"><span>ESC <i></i></span><span>↑ ↓ <i></i></span><span>ENTER <i></i></span></footer></section>';
   document.body.append(trigger,overlay);
   const input=overlay.querySelector('input'),results=overlay.querySelector('.ha-command-results'),close=overlay.querySelector('.ha-command-close');
-  let active=0,visible=[];
+  let active=0,visible=[],opener=null,inerted=[];
   const text=(en,ruText)=>ru()?ruText:en;
   const render=()=>{
    const q=input.value.trim().toLocaleLowerCase();
@@ -629,7 +640,8 @@
     const link=document.createElement('a');link.className='ha-command-result';link.href=item[0];link.setAttribute('aria-current',String(index===active?'true':'false'));
     const name=document.createElement('span');name.textContent=text(item[1],item[2]);
     const path=document.createElement('small');path.textContent=item[0].replace('/horror-aesthetic/','/');link.append(name,path);
-    link.addEventListener('mouseenter',()=>setActive(index));results.appendChild(link);
+    link.addEventListener('mouseenter',()=>setActive(index));
+    link.addEventListener('focus',()=>setActive(index));results.appendChild(link);
    });
   };
   const setActive=index=>{
@@ -638,35 +650,41 @@
    [...results.querySelectorAll('a')].forEach((link,i)=>{link.setAttribute('aria-current',String(i===active));if(i===active)link.scrollIntoView({block:'nearest'})});
   };
   const open=()=>{
+   opener=document.activeElement;
+   inerted=[...document.body.children].filter(el=>el!==overlay&&!el.inert);
+   inerted.forEach(el=>{el.inert=true});
    overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';render();
    document.body.classList.add('ha-command-open');input.focus();
   };
   const shut=()=>{
-   overlay.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ha-command-open');trigger.focus();
+   overlay.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ha-command-open');
+   inerted.forEach(el=>{el.inert=false});inerted=[];
+   if(opener&&opener!==document.body&&opener.isConnected)opener.focus({preventScroll:true});
+   if(document.activeElement!==opener||opener===document.body)trigger.focus({preventScroll:true});
   };
   trigger.addEventListener('click',open);close.addEventListener('click',shut);
   overlay.addEventListener('click',event=>{if(event.target===overlay)shut()});
   input.addEventListener('input',render);
   overlay.addEventListener('keydown',event=>{
    if(event.key==='Escape'){event.preventDefault();shut()}
-   else if(event.key==='ArrowDown'){event.preventDefault();setActive(active+1)}
-   else if(event.key==='ArrowUp'){event.preventDefault();setActive(active-1)}
-   else if(event.key==='Enter'&&visible[active]){event.preventDefault();location.href=visible[active][0]}
+   else if(event.target===input&&event.key==='ArrowDown'){event.preventDefault();setActive(active+1)}
+   else if(event.target===input&&event.key==='ArrowUp'){event.preventDefault();setActive(active-1)}
+   else if(event.target===input&&event.key==='Enter'&&!event.isComposing&&visible[active]){event.preventDefault();location.href=visible[active][0]}
    else if(event.key==='Tab'){
-    const focusable=[input,close,...results.querySelectorAll('a')].filter(el=>el.offsetParent!==null);
+    const focusable=[close,input,...results.querySelectorAll('a')].filter(el=>el.offsetParent!==null);
     if(event.shiftKey&&document.activeElement===focusable[0]){event.preventDefault();focusable.at(-1).focus()}
     else if(!event.shiftKey&&document.activeElement===focusable.at(-1)){event.preventDefault();focusable[0].focus()}
    }
   });
   document.addEventListener('keydown',event=>{
-   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();overlay.hidden?open():shut()}
+   if(!event.defaultPrevented&&!event.repeat&&(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();overlay.hidden?open():shut()}
   });
   const localize=()=>{
    trigger.querySelector('.ha-command-trigger-label').textContent=text('QUICK JUMP','БЫСТРЫЙ ПЕРЕХОД');
-   trigger.querySelector('kbd').textContent='⌘ K';
+   trigger.querySelector('kbd').textContent=/Mac|iPhone|iPad/i.test(navigator.platform)?'⌘ K':'Ctrl K';
    overlay.querySelector('#ha-command-title').textContent=text('Find your way through the archive','Найти нужный раздел архива');
    overlay.querySelector('.ha-command-search-label').textContent=text('SEARCH THE SITE','ПОИСК ПО САЙТУ');
-   input.placeholder=text('Search films, archives, essays…','Поиск фильмов, архивов, статей…');
+   input.placeholder=text('Search site sections…','Поиск по разделам сайта…');
    overlay.querySelector('.ha-command-hint').textContent=text('Type to filter every section','Начните вводить название раздела');
    overlay.querySelector('.ha-command-foot').innerHTML='<span>ESC '+text('CLOSE','ЗАКРЫТЬ')+'</span><span>↑ ↓ '+text('MOVE','ВЫБРАТЬ')+'</span><span>ENTER '+text('OPEN','ОТКРЫТЬ')+'</span>';
    close.setAttribute('aria-label',text('Close','Закрыть'));
