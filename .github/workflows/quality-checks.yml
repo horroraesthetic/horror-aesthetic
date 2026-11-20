@@ -1,0 +1,70 @@
+name: Site quality checks
+
+on:
+  push:
+    branches: [main, tooling/quality-checks]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-and-lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install temporary test tools
+        run: |
+          npm init -y
+          npm install --no-save @playwright/test lighthouse
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ha-http.log 2>&1 &
+          for attempt in {1..20}; do
+            if curl --silent --fail http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/ha-http.log
+          exit 1
+
+      - name: Run browser tests (desktop and mobile)
+        run: npx playwright test
+
+      - name: Run Lighthouse audit
+        run: |
+          mkdir -p artifacts
+          npx lighthouse http://127.0.0.1:4173/ \
+            --output=html \
+            --output-path=artifacts/lighthouse.html \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless --no-sandbox"
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: horror-aesthetic-quality-reports
+          path: |
+            playwright-report/
+            test-results/
+            artifacts/
+          if-no-files-found: ignore
+          retention-days: 14
