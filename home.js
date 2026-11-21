@@ -2872,7 +2872,7 @@ try {
   if(callBusy)return;callBusy=true;ss("ha-call",today());
   if(!callEl){callEl=mk("div","call");callEl.setAttribute("role","dialog");callEl.setAttribute("aria-modal","true")}
   callEl.className="rg";callEl.hidden=false;
-  callEl.innerHTML='<canvas width="160" height="90" aria-hidden="true"></canvas><div><div class="cn">'+TM("Неизвестный номер","Unknown number")+'</div><div class="cs">'+TM("входящий звонок · 03:00","incoming call · 03:00")+'</div><div class="ce"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32Q32 6 60 32Q32 58 4 32Z" fill="#e8dbcf"/><circle cx="32" cy="32" r="12" fill="#9c0f18"/><circle cx="32" cy="32" r="5" fill="#050203"/></svg></div></div><div class="cw" aria-live="polite"></div><div><div class="cb"><div><button type="button" class="no" aria-label="'+TM("Отклонить","Decline")+'">✕</button><div class="cl">'+TM("Отклонить","Decline")+'</div></div><div><button type="button" class="ok" aria-label="'+TM("Ответить","Answer")+'">☎</button><div class="cl">'+TM("Ответить","Answer")+'</div></div></div></div>';
+  callEl.innerHTML='<canvas width="160" height="90" aria-hidden="true"></canvas><div><div class="cn">'+TM("Неизвестный номер","Unknown number")+'</div><div class="cs">'+TM("входящий звонок · ","incoming call · ")+(function(){var d=new Date();return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)})()+'</div><div class="ce"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32Q32 6 60 32Q32 58 4 32Z" fill="#e8dbcf"/><circle cx="32" cy="32" r="12" fill="#9c0f18"/><circle cx="32" cy="32" r="5" fill="#050203"/></svg></div></div><div class="cw" aria-live="polite"></div><div><div class="cb"><div><button type="button" class="no" aria-label="'+TM("Отклонить","Decline")+'">✕</button><div class="cl">'+TM("Отклонить","Decline")+'</div></div><div><button type="button" class="ok" aria-label="'+TM("Ответить","Answer")+'">☎</button><div class="cl">'+TM("Ответить","Answer")+'</div></div></div></div>';
   var cv=callEl.querySelector("canvas"),cw=callEl.querySelector(".cw"),n=0,done=false,iv=0;
   function rg(){if(done)return;try{if(sndOn&&actx&&window.phoneRing)window.phoneRing()}catch(e){}try{navigator.vibrate&&navigator.vibrate([500,250,500])}catch(e){}if(++n<7)setTimeout(rg,2600);else miss()}
   function miss(){if(done)return;done=true;callOff();toast(TM("Пропущенный вызов (1)","Missed call (1)"),TM("Неизвестный номер. Перезвонить нельзя.","Unknown number. You cannot call back."))}
@@ -2883,6 +2883,9 @@ try {
    var s=setInterval(function(){if(i>=L.length){clearInterval(s);setTimeout(function(){clearInterval(iv);callOff();toast(TM("Соединение прервано","Call dropped"),"…");ach("phone")},1600);return}cw.textContent=TM(L[i][0],L[i][1]);if(i>0)whisper();i++},1500)}}
  function chk(){var h=new Date().getHours();if(h===3&&st("ha-call","")!==today()&&!document.hidden&&!callBusy&&!document.getElementById("c7"))call()}
  setTimeout(chk,9000);setInterval(chk,30000);window.__call=call;
+ /* the phone also rings by itself after a while on the page, like the fog: about 2.5 min in, then at most once per 20 min, only when you are not touching the screen */
+ var t0=Date.now(),lastRing=0;
+ setInterval(function(){if(document.hidden||callBusy||fogOn||document.documentElement.classList.contains("ha-calm")||document.getElementById("c7")||document.getElementById("cu"))return;var now=Date.now();if(now-t0>150000&&now-lastRing>1200000&&idle>=6){lastRing=now;call()}},4000);
 })();
 (function(){
  var TM=function(a,b){return LANG==="ru"?a:b};
