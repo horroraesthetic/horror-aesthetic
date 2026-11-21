@@ -1,8 +1,17 @@
 /* HORROR AESTHETIC — Guide helper */
-#ga-fab{position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);z-index:10010;display:flex;align-items:center;gap:7px;height:42px;padding:0 14px 0 10px;border-radius:21px;border:1px solid var(--line,#35514f);background:rgba(7,12,12,.92);color:var(--bone,#f1f6f2);font:600 12px/1 var(--f-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-#ga-fab i{font:normal 800 18px/1 var(--ja,serif);color:var(--bile,#9fd6c8)}
-#ga-fab.on{border-color:var(--bile,#9fd6c8)}
-@media(min-width:641px){#ga-fab{bottom:22px;right:22px}}
+#ga-fab{position:fixed;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 188px);z-index:10010;display:flex;flex-direction:column;align-items:center;width:56px;padding:0;border:0;background:none;color:var(--bile,#9fd6c8);cursor:pointer;-webkit-tap-highlight-color:transparent;transform-origin:50% 0;animation:gasway 7s ease-in-out infinite alternate}
+#ga-fab::before{content:"";position:absolute;left:-6px;right:-6px;top:6px;bottom:14px;border-radius:50%;background:radial-gradient(closest-side,rgba(159,214,200,.38),rgba(159,214,200,.1) 55%,transparent 72%);animation:gaglow 4.5s ease-in-out infinite alternate;pointer-events:none}
+#ga-fab svg{position:relative;width:46px;height:auto;display:block;overflow:visible}
+#ga-fab span{position:relative;margin-top:3px;font:700 9px/1 var(--f-mono,ui-monospace,monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--bile,#9fd6c8);text-shadow:0 1px 3px #000}
+#ga-fab .ga-eye{transform-box:fill-box;transform-origin:50% 50%;animation:gablink 6s infinite}
+#ga-fab:active svg{transform:scale(.94)}
+html.ga-open #ga-fab{display:none}
+@keyframes gasway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@keyframes gaglow{from{opacity:.55}to{opacity:1}}
+@keyframes gablink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@media(min-width:641px){#ga-fab{bottom:24px;right:22px}}
+@media(prefers-reduced-motion:reduce){#ga-fab,#ga-fab::before,#ga-fab .ga-eye{animation:none}}
+html.ha-calm #ga-fab,html.ha-calm #ga-fab::before,html.ha-calm #ga-fab .ga-eye{animation:none}
 #ga-box[hidden]{display:none}
 #ga-box{padding:0!important;margin:0!important;max-width:none;position:fixed;z-index:10030;right:0;bottom:0;left:0;height:min(74vh,620px);display:flex;flex-direction:column;background:#070c0c;color:var(--bone,#f1f6f2);border:1px solid var(--line,#35514f);border-bottom:0;border-radius:14px 14px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.7);font:15px/1.5 var(--f-body,Georgia,serif)}
 @media(min-width:641px){#ga-box{left:auto;right:22px;bottom:22px;width:400px;height:min(70vh,600px);border-bottom:1px solid var(--line,#35514f);border-radius:12px}}
