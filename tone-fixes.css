@@ -1,0 +1,27 @@
+/* TONE FIXES — the Tomie tone is a light "paper" theme; later dark layers must not override it */
+:root[data-tone="tomie"] body:not(:has(.w)) { background-color: #e6e1d3 !important; }
+:root[data-tone="tomie"] body:not(:has(.w))::before,
+:root[data-tone="tomie"] body:not(:has(.w))::after { display: none !important; }
+:root[data-tone="tomie"] #rec,
+:root[data-tone="tomie"] #rec b { color: #1c1a18 !important; text-shadow: none !important; }
+:root[data-tone="tomie"] #ga-fab span { color: #1c1a18; text-shadow: none; }
+:root[data-tone="tomie"] #ga-fab::before { background: radial-gradient(closest-side, rgba(163,19,27,.22), rgba(163,19,27,.07) 55%, transparent 72%); }
+/* dark "world" cards keep light text */
+:root[data-tone="tomie"] .sp h3 { color: #f1e8df !important; text-shadow: none !important; }
+:root[data-tone="tomie"] .sp p { color: #b9aea4 !important; }
+/* "what we have" list sits on paper: dark headings */
+:root[data-tone="tomie"] #offer h4 { color: #1c1a18 !important; }
+
+/* Tomie: light page, so dark text for editorial blocks */
+:root[data-tone="tomie"] body:not(:has(.w)) :where(.lead,.intro,.description),
+:root[data-tone="tomie"] body:not(:has(.w)) :where(.lead,.intro,.description) :where(p,dd,dt,span,b,li){
+  color:#2a2624!important;
+}
+:root[data-tone="tomie"] body:not(:has(.w)) :where(.kicker,.eyebrow,.section-kicker,.ha-cover-stamp){
+  color:#8a1119!important;
+}
+:root[data-tone="tomie"] #streak, :root[data-tone="tomie"] .tr-cap { color:#4a433f!important; }
+:root[data-tone="tomie"] body:not(:has(.w)) small { color:#8a1119; }
+:root[data-tone="tomie"] a[href*="folklore"] { color:#8a1119!important; }
+:root[data-tone="tomie"] button[class*="lang"], :root[data-tone="tomie"] #lang button { color:#f1e8df!important; }
+:root[data-tone="tomie"] .ha-skip-link { color:#f1e8df!important; }

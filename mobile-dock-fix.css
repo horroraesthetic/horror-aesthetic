@@ -96,3 +96,27 @@
     z-index: 10015 !important;
   }
 }
+
+/* DESKTOP DOCK: every floating control gets its own slot, nothing overlaps.
+   left row:  [Cinema mode] [Quick jump]
+   right row: [My archive] [back to top]; REC above them; Guide lantern above REC */
+@media (min-width: 761px) {
+  #totop { display: none !important; }
+  .ha-cinema-toggle {
+    left: clamp(14px, 2vw, 30px) !important; right: auto !important;
+    bottom: 24px !important; top: auto !important; transform: none !important;
+  }
+  .ha-command-trigger {
+    left: calc(clamp(14px, 2vw, 30px) + 158px) !important; right: auto !important;
+    bottom: 24px !important; top: auto !important;
+  }
+  .ha-shelf-trigger {
+    left: auto !important; right: 82px !important;
+    bottom: 24px !important; top: auto !important; transform: none !important;
+  }
+  .ha-back-top {
+    right: 22px !important; bottom: 24px !important; z-index: 10015 !important;
+  }
+  #rec { right: 22px !important; bottom: 76px !important; }
+  #ga-fab { right: 22px !important; bottom: 104px !important; }
+}
