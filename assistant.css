@@ -25,3 +25,6 @@
 .ga-f input{flex:1;min-width:0;background:#0b1313;border:1px solid var(--line,#35514f);border-radius:8px;color:var(--bone,#f1f6f2);padding:10px 12px;font:16px/1.2 var(--f-body,Georgia,serif)}
 .ga-f button{background:#1d4a40;border:1px solid var(--bile,#9fd6c8);color:var(--bone,#f1f6f2);border-radius:8px;padding:0 16px;font-size:18px;cursor:pointer}
 html.ga-open .ha-cinema-toggle,html.ga-open .ha-shelf-trigger,html.ga-open .ha-command-trigger{visibility:hidden}
+.ga-ai{display:block;margin-top:6px;font:11px/1.3 var(--f-mono,ui-monospace,monospace);letter-spacing:.06em;color:var(--dim,#b5c8c3);opacity:.8}
+.ga-dots{letter-spacing:.3em;animation:gadots 1s steps(3) infinite}@keyframes gadots{50%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.ga-dots{animation:none}}
