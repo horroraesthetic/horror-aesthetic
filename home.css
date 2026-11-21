@@ -1928,12 +1928,14 @@ footer .ft-legal a:hover{opacity:1}
 
 /* MOBILE REPAIR — remove fixed atmospheric overlays that obscure lower viewport tiles */
 @media (max-width: 760px) {
-  #fog, #kfog, .vig {
+  /* "lite" effects on phones: wisps (#hit), dust, ink, vignette and the fogged glass (#fog) are back;
+     only the heavy kaidan mist and the blood/ripple layers stay off. */
+  #kfog {
     display: none !important;
     animation: none !important;
     filter: none !important;
   }
-  #hit, #dust, #tink, #bld, #gsl, #rst, #rip {
+  #bld, #rst, #rip {
     display: none !important;
     animation: none !important;
   }

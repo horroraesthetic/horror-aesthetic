@@ -215,3 +215,17 @@ footer{
   #hdtools .hb .hi{display:none}
   #hdtools .hb,#tpb.hb,#pf-open.hb,#tnb.hb{padding:8px 2px;font-size:10px;letter-spacing:.02em}
 }
+
+/* PHONE "LITE" EFFECTS — effects are on by default; only the heavy full-screen layers stay off on phones.
+   Touch shards, dust, eyes, shadows, fireflies, fogged glass and the hero slideshow keep running.
+   Turn "Calm mode" on in the dossier to stop everything. */
+html.ha-lite #cast,
+html.ha-lite #jbeam,
+html.ha-lite #jbulb,
+html.ha-lite #bld,
+html.ha-lite #bbeat,
+html.ha-lite #rip,
+html.ha-lite #rst,
+html.ha-lite #rbar,
+html.ha-lite #r7,
+html.ha-lite .cursor-glow{display:none!important}
