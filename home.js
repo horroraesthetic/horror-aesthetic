@@ -1476,7 +1476,10 @@ function setImgs(){
 function renderMarquee(){
   var ids=Object.keys(F).slice(0,40);
   var one=ids.map(function(id){return '<span>'+esc(T(F[id].n))+ic("x")+'</span>'}).join("");
-  var tr=document.getElementById("marquee");tr.innerHTML=one+one;tr.style.animationDuration=Math.max(120,Math.round(tr.scrollWidth/2/40))+"s";
+  var tr=document.getElementById("marquee");tr.innerHTML=one+one;
+  /* no forced layout while the page is still being built: estimate now, measure once things have settled */
+  var est=one.replace(/<[^>]*>/g,"").length*9+ids.length*48;tr.style.animationDuration=Math.max(120,Math.round(est/40))+"s";
+  clearTimeout(renderMarquee.t);renderMarquee.t=setTimeout(function(){var d=Math.max(120,Math.round(tr.scrollWidth/2/40));tr.style.animationDuration=d+"s"},3000);
 }
 
 function renderKpis(){
@@ -1970,8 +1973,9 @@ function applySections(){
 
 function setLang(l){
   LANG=l;
-  document.documentElement.lang=l;
-  document.body.dataset.lang=l;
+  /* only write when changed: writing html[lang] invalidates :lang() styles for the whole page */
+  if(document.documentElement.lang!==l)document.documentElement.lang=l;
+  if(document.body.dataset.lang!==l)document.body.dataset.lang=l;
   document.querySelectorAll("[data-en-label][data-ru-label]").forEach(function(el){el.setAttribute("aria-label",l==="ru"?el.dataset.ruLabel:el.dataset.enLabel)});
   var searchLabel=l==="ru"?"Поиск":"Search";
   ["q","cq","bigs","sbtn"].forEach(function(id){var el=document.getElementById(id);if(el)el.setAttribute("aria-label",searchLabel)});

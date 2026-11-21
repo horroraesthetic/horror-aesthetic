@@ -90,7 +90,7 @@
     const observer = new ResizeObserver(onScroll);
     observer.observe(document.body);
   }
-  update();
+  setTimeout(update, 1500);
 
   // Improve search ergonomics without changing the site's existing search logic.
   [['q', 'Search reviews / Поиск рецензий'],
