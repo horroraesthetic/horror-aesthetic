@@ -86,3 +86,13 @@
   .ha-shelf-trigger > span[aria-hidden],
   .ha-command-trigger > span[aria-hidden] { display:none !important; }
 }
+
+/* one back-to-top button only, kept clear of the REC counter and the Guide lantern */
+@media (max-width: 640px) {
+  #totop { display: none !important; }
+  .ha-back-top {
+    right: 12px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 104px) !important;
+    z-index: 10015 !important;
+  }
+}
