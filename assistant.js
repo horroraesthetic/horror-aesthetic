@@ -89,7 +89,7 @@ var CHIPS=function(){return ru()?["Что посмотреть сегодня","
 function chips(){var c=el("div","ga-chips",list);CHIPS().forEach(function(t){var b=el("button","",c);b.type="button";b.textContent=t;b.setAttribute("data-q",t)});list.scrollTop=list.scrollHeight}
 function help(){say(T("Я ищу по базе сайта: "+build().length+" рецензий и "+Object.keys(F).length+" фильмов. Попробуй: <i>«без крови»</i>, <i>«джалло 70-х»</i>, <i>«похоже на Хэллоуин»</i>, <i>«Кроненберг»</i>, <i>«про вампиров»</i>.","I search the site's own data: "+build().length+" reviews and "+Object.keys(F).length+" films. Try: <i>“no gore”</i>, <i>“giallo 70s”</i>, <i>“like Halloween”</i>, <i>“Cronenberg”</i>, <i>“about vampires”</i>."))}
 
-function ctxOf(items){return items.slice(0,5).map(function(x){var r=x.r;return (x.te||x.tr)+(x.tr&&x.te&&x.tr!==x.te?" / "+x.tr:"")+" ("+x.y+"), dir. "+(r.d.en||r.d.ru)+", rating "+r.r+"/5, gore "+r.g+"/5. "+r.s.en}).join("\n")}
+function ctxOf(items){var R=ru();return items.slice(0,5).map(function(x){var r=x.r,t=R?(x.tr||x.te):x.te;return t+" ("+x.y+"), "+(R?"реж. ":"dir. ")+(R?(r.d.ru||r.d.en):(r.d.en||r.d.ru))+", "+(R?"оценка ":"rating ")+r.r+"/5, gore "+r.g+"/5. "+(R?r.s.ru:r.s.en)}).join("\n")}
 function ai(q,items,fallback,done){
  if(!AI_URL){done(fallback);return}
  var m=say('<span class="ga-dots">…</span>'),ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},14000);
