@@ -2841,7 +2841,6 @@ try {
  function hand(x,y,sc,rot){fx.save();fx.translate(x,y);fx.rotate(rot);fx.scale(sc,sc);fx.globalCompositeOperation="destination-out";fx.shadowColor="#000";fx.shadowBlur=7;fx.fillStyle="#000";fx.beginPath();fx.ellipse(0,0,24,30,0,0,7);fx.fill();var fa=[[-32,-26,-.5,36],[-14,-48,-.18,40],[6,-54,.04,42],[24,-46,.26,38],[38,-6,1.1,30]];fa.forEach(function(f){fx.save();fx.translate(f[0],f[1]);fx.rotate(f[2]);fx.beginPath();fx.roundRect?fx.roundRect(-6,-f[3],12,f[3]+6,6):fx.rect(-6,-f[3],12,f[3]+6);fx.fill();fx.restore()});fx.restore()}
  function writeTxt(x,y){fx.save();fx.globalCompositeOperation="destination-out";fx.shadowColor="#000";fx.shadowBlur=5;fx.fillStyle="#000";fx.strokeStyle="#000";fx.lineWidth=3;fx.font="700 "+Math.min(96,innerWidth/6)+"px 'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif";fx.textAlign="center";var s="助けて";fx.fillText(s,x,y);var w=fx.measureText(s).width;for(var i=0;i<6;i++){var dx=x-w/2+w*(.1+Math.random()*.8),L=40+Math.random()*90;fx.lineWidth=2+Math.random()*2;fx.beginPath();fx.moveTo(dx,y+6);fx.lineTo(dx,y+6+L);fx.stroke()}fx.restore()}
  function startFog(){
-  if(window.matchMedia&&window.matchMedia("(max-width:760px), (pointer:coarse)").matches)return;
   if(fogOn||RM||document.hidden)return;fogOn=true;lastFog=Date.now();wiped=0;lastPt=null;
   fog=mk("canvas","fog");fog.setAttribute("aria-hidden","true");fog.width=Math.ceil(innerWidth/FS);fog.height=Math.ceil(innerHeight/FS);fx=fog.getContext("2d");fx.scale(1/FS,1/FS);
   fx.fillStyle="rgba(176,196,198,.34)";fx.fillRect(0,0,innerWidth,innerHeight);
@@ -2859,7 +2858,7 @@ try {
  addEventListener("touchmove",function(e){var t=e.touches[0];if(t)wipe(t.clientX,t.clientY)},{passive:true});
  addEventListener("touchend",function(){lastPt=null});
  setInterval(function(){idle++;if(idle>=25&&!fogOn&&Date.now()-lastFog>360000&&!document.hidden&&!document.getElementById("c7")&&!(document.getElementById("forb")&&!document.getElementById("forb").hidden))startFog()},1000);
- window.__fog=startFog;
+ window.__fog=startFog;if(/[?&]fog=1/.test(location.search))setTimeout(startFog,1200);
 
  // ================= 5. call at 3 a.m. =================
  var callEl=null,callBusy=false;
@@ -3818,6 +3817,7 @@ try {
  function frame(now){
   requestAnimationFrame(frame);
   var dt=Math.min(.05,(now-last)/1000);last=now;
+  if(document.documentElement.classList.contains("ha-ff")){x.clearRect(0,0,W,Hh);return}
   if(document.documentElement.dataset.tone!=="kaidan"||document.hidden||document.documentElement.classList.contains("ha-calm"))return;
   t+=dt;x.clearRect(0,0,W,Hh);
   O.forEach(function(o,k){
@@ -4655,16 +4655,16 @@ try {
  function L(a,b){return LANG==="ru"?a:b}
  function allTiles(){var have={},out=[],ab=GRID[GRID.length-1];GRID.forEach(function(g){have[g[0]]=1});var ks={};document.querySelectorAll("section[data-kj]").forEach(function(x){if(!ks[x.dataset.cat])ks[x.dataset.cat]=x.dataset.kj});
   document.querySelectorAll("#filters button[data-f]").forEach(function(b){var id=b.dataset.f;if(id==="home"||id==="all"||have[id])return;var t=b.textContent.trim();if(id==="shelves")t=L("Полки","Shelves");out.push([id,ks[id]||"・",t,t])});
-  return GRID.slice(0,GRID.length-1).concat(out,[ab])}
+  return GRID.slice(0,GRID.length-1).concat(out,[["database/","映","База фильмов","Film database"],["posters/","絵","Стена постеров","Poster wall"]],[ab])}
  function mark(){["pod","trailer","whatsnew","releases"].forEach(function(id){var e=document.getElementById(id);if(e)e.dataset.home="1"});
   var n=document.getElementById("homenav");if(!n)return;
   var key=JSON.stringify([LANG,allTiles()]);
   if(n.dataset.renderKey===key)return;
   n.dataset.renderKey=key;
-  n.innerHTML='<div class="hn-in"><h2 class="hn-h">'+L("Куда пойдём?","Where to?")+'</h2><p class="hn-p">'+L("Выберите раздел — всё остальное спрятано, чтобы не пугать сразу.","Pick a section — the rest stays hidden so it doesn't spook you all at once.")+'</p><div class="hn-g">'+allTiles().map(function(g){return '<button type="button" data-go="'+g[0]+'"><i aria-hidden="true">'+g[1]+'</i><span>'+L(g[2],g[3])+'</span></button>'}).join("")+'</div><button type="button" class="hn-all" data-go="all">'+L("Показать всё сразу","Show everything")+'</button></div>'}
+  n.innerHTML='<div class="hn-in"><h2 class="hn-h">'+L("Куда пойдём?","Where to?")+'</h2><p class="hn-p">'+L("Выберите раздел — всё остальное спрятано, чтобы не пугать сразу.","Pick a section — the rest stays hidden so it doesn't spook you all at once.")+'</p><div class="hn-g">'+allTiles().map(function(g){return '<button type="button" data-go="'+g[0]+'"'+(/\/$/.test(g[0])?' data-href="'+g[0]+'"':'')+'><i aria-hidden="true">'+g[1]+'</i><span>'+L(g[2],g[3])+'</span></button>'}).join("")+'</div><button type="button" class="hn-all" data-go="all">'+L("Показать всё сразу","Show everything")+'</button></div>'}
  var s=document.createElement("section");s.id="homenav";s.dataset.cat="home";s.dataset.home="1";
  document.getElementById("first-watch").after(s);
- s.addEventListener("click",function(e){var b=e.target.closest("button[data-go]");if(!b)return;var f=document.querySelector('#filters button[data-f="'+b.dataset.go+'"]');if(f)f.click()});
+ s.addEventListener("click",function(e){var b=e.target.closest("button[data-go]");if(!b)return;if(b.dataset.href){location.href=b.dataset.href;return}var f=document.querySelector('#filters button[data-f="'+b.dataset.go+'"]');if(f)f.click()});
  function mk2(){mark();applySections()}mk2();setTimeout(mk2,600);setTimeout(mk2,2500);setTimeout(mk2,5000);
  var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);mk2();return r};
  applySections();

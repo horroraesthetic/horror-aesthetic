@@ -830,3 +830,128 @@
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
 })();
+
+/* HORROR AESTHETIC — kaidan fireflies (phones and subpages; desktop home keeps its own canvas) */
+(() => {
+  'use strict';
+  const html = document.documentElement;
+  const isHome = !!document.querySelector('script[src*="home.js"]');
+  const mq = q => window.matchMedia && window.matchMedia(q).matches;
+  if (mq('(prefers-reduced-motion: reduce)')) return;
+  let cv, ctx, raf = 0, flies = [], sprite, last = 0, W = 0, H = 0, tt = 0;
+  const tone = () => html.dataset.tone || (() => { try { return localStorage.getItem('ha-tone') || 'kaidan'; } catch (e) { return 'kaidan'; } })();
+  const want = () => tone() === 'kaidan' && !html.classList.contains('ha-calm') && !document.hidden;
+  const makeSprite = () => {
+    const s = document.createElement('canvas'); s.width = s.height = 48;
+    const c = s.getContext('2d'), g = c.createRadialGradient(24, 24, 0, 24, 24, 24);
+    g.addColorStop(0, 'rgba(255,255,225,1)'); g.addColorStop(.1, 'rgba(236,255,150,.95)');
+    g.addColorStop(.28, 'rgba(190,245,110,.42)'); g.addColorStop(.6, 'rgba(120,205,95,.12)'); g.addColorStop(1, 'rgba(90,170,80,0)');
+    c.fillStyle = g; c.fillRect(0, 0, 48, 48); return s;
+  };
+  const size = () => { W = innerWidth; H = innerHeight; cv.width = W; cv.height = H; };
+  const init = () => {
+    const n = W < 760 ? 22 : 34;
+    flies = Array.from({ length: n }, (_, k) => {
+      const z = k % 5 === 0 ? 1 : (k % 3 === 0 ? .72 : .45 + Math.random() * .2); /* depth: 1 = near, large and soft */
+      return {
+        x: Math.random() * W, y: H * (.2 + Math.random() * .8), a: Math.random() * 6.28, v: (7 + Math.random() * 14) * (.5 + z * .6),
+        t: Math.random() * 6.28, f: .35 + Math.random() * .8, s: .5 + z * 1.15, z, w: Math.random() * 6.28, p: Math.random() * 100
+      };
+    });
+  };
+  const frame = ts => {
+    raf = requestAnimationFrame(frame);
+    if (ts - last < 33) return;
+    const dt = Math.min(.08, (ts - last) / 1000); last = ts; tt += dt;
+    ctx.clearRect(0, 0, W, H);
+    for (const f of flies) {
+      f.w += dt * .5; f.a += (Math.sin(f.w) * 1.3 + Math.sin(f.w * .37 + f.p) * .8) * dt; f.t += dt * f.f;
+      f.x += Math.cos(f.a) * f.v * dt; f.y += Math.sin(f.a) * f.v * dt * .65 - 1.6 * dt * f.z;
+      const m = 40 * f.s;
+      if (f.x < -m) f.x = W + m * .5; else if (f.x > W + m) f.x = -m * .5;
+      if (f.y < -m) f.y = H + m * .5; else if (f.y > H + m) f.y = -m * .5;
+      /* slow swell with an occasional quick double flash, like a real firefly */
+      const sw = Math.max(0, Math.sin(f.t)), fl = Math.max(0, Math.sin(f.t * 5.3 + f.p)) * (Math.sin(f.t * .5) > .6 ? 1 : 0);
+      const al = (.05 + .95 * Math.pow(sw, 2.2) + .5 * fl * fl) * (.45 + .55 * f.z);
+      const d = 46 * f.s;
+      ctx.globalAlpha = Math.min(1, al); ctx.drawImage(sprite, f.x - d / 2, f.y - d / 2, d, d);
+      if (f.z > .7 && al > .5) { ctx.globalAlpha = Math.min(1, al) * .35; ctx.drawImage(sprite, f.x - d, f.y - d, d * 2, d * 2); }
+    }
+    ctx.globalAlpha = 1;
+  };
+  const start = () => {
+    if (cv) return;
+    cv = document.createElement('canvas'); cv.className = 'ha-flies'; cv.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(cv); ctx = cv.getContext('2d'); sprite = sprite || makeSprite();
+    size(); init(); html.classList.add('ha-ff'); last = 0; raf = requestAnimationFrame(frame);
+  };
+  const stop = () => { if (!cv) return; cancelAnimationFrame(raf); cv.remove(); cv = null; html.classList.remove('ha-ff'); };
+  const sync = () => (want() ? start() : stop());
+  addEventListener('resize', () => { if (cv) { size(); init(); } });
+  document.addEventListener('visibilitychange', sync);
+  new MutationObserver(sync).observe(html, { attributes: true, attributeFilter: ['data-tone', 'class'] });
+  const boot = () => sync();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true }); else boot();
+})();
+
+/* HORROR AESTHETIC — fogged glass on subpages (home.js has its own). Idle 25 s, wipe with a finger or mouse. ?fog=1 shows it at once. */
+(() => {
+  'use strict';
+  if (document.querySelector('script[src*="home.js"]')) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const html = document.documentElement, FS = 3;
+  let idle = 0, on = false, cv, fx, last = null, timers = [];
+  const calm = () => html.classList.contains('ha-calm');
+  const lastFog = () => { try { return +localStorage.getItem('ha-fog-last') || 0; } catch (e) { return 0; } };
+  const bump = () => { idle = 0; };
+  ['pointermove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(e => addEventListener(e, bump, { passive: true }));
+  const hand = (x, y, sc, rot) => {
+    fx.save(); fx.translate(x, y); fx.rotate(rot); fx.scale(sc, sc); fx.globalCompositeOperation = 'destination-out';
+    fx.shadowColor = '#000'; fx.shadowBlur = 7; fx.fillStyle = '#000'; fx.beginPath(); fx.ellipse(0, 0, 24, 30, 0, 0, 7); fx.fill();
+    [[-32, -26, -.5, 36], [-14, -48, -.18, 40], [6, -54, .04, 42], [24, -46, .26, 38], [38, -6, 1.1, 30]].forEach(f => {
+      fx.save(); fx.translate(f[0], f[1]); fx.rotate(f[2]); fx.beginPath();
+      fx.roundRect ? fx.roundRect(-6, -f[3], 12, f[3] + 6, 6) : fx.rect(-6, -f[3], 12, f[3] + 6); fx.fill(); fx.restore();
+    });
+    fx.restore();
+  };
+  const writeTxt = (x, y) => {
+    fx.save(); fx.globalCompositeOperation = 'destination-out'; fx.shadowColor = '#000'; fx.shadowBlur = 5; fx.fillStyle = '#000'; fx.strokeStyle = '#000';
+    fx.font = '700 ' + Math.min(96, innerWidth / 6) + "px 'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif"; fx.textAlign = 'center';
+    const s = '助けて'; fx.fillText(s, x, y); const w = fx.measureText(s).width;
+    for (let i = 0; i < 6; i++) {
+      const dx = x - w / 2 + w * (.1 + Math.random() * .8), L = 40 + Math.random() * 90;
+      fx.lineWidth = 2 + Math.random() * 2; fx.beginPath(); fx.moveTo(dx, y + 6); fx.lineTo(dx, y + 6 + L); fx.stroke();
+    }
+    fx.restore();
+  };
+  const end = () => { timers.forEach(clearTimeout); timers = []; if (cv) { cv.remove(); cv = null; } on = false; };
+  const start = () => {
+    if (on || document.hidden) return; on = true; last = null;
+    try { localStorage.setItem('ha-fog-last', String(Date.now())); } catch (e) {}
+    cv = document.createElement('canvas'); cv.className = 'ha-fogglass'; cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.ceil(innerWidth / FS); cv.height = Math.ceil(innerHeight / FS);
+    document.body.appendChild(cv); fx = cv.getContext('2d'); fx.scale(1 / FS, 1 / FS);
+    fx.fillStyle = 'rgba(176,196,198,.34)'; fx.fillRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < 1800; i++) {
+      fx.fillStyle = 'rgba(' + (190 + Math.random() * 50 | 0) + ',215,215,' + (Math.random() * .12).toFixed(3) + ')';
+      fx.fillRect(Math.random() * innerWidth, Math.random() * innerHeight, 3 + Math.random() * 9, 3 + Math.random() * 9);
+    }
+    requestAnimationFrame(() => cv && cv.classList.add('on'));
+    const W = innerWidth, H = innerHeight, sd = Math.random() < .5 ? .25 : .72, t = (f, ms) => timers.push(setTimeout(f, ms));
+    t(() => on && hand(W * sd, H * .56, 1.2, (Math.random() - .5) * .5), 6500);
+    t(() => on && hand(W * (sd + .1), H * .4, 1.05, (Math.random() - .5) * .6), 9500);
+    t(() => on && writeTxt(W * (.35 + Math.random() * .3), H * .26), 13500);
+    t(() => cv && cv.classList.add('out'), 30000);
+    t(end, 35500);
+  };
+  const wipe = (x, y) => {
+    if (!on || !fx) return;
+    fx.save(); fx.globalCompositeOperation = 'destination-out'; fx.shadowColor = '#000'; fx.shadowBlur = 14; fx.strokeStyle = '#000'; fx.lineCap = 'round'; fx.lineWidth = 46;
+    fx.beginPath(); if (last) fx.moveTo(last[0], last[1]); else fx.moveTo(x, y); fx.lineTo(x + .1, y); fx.stroke(); fx.restore(); last = [x, y];
+  };
+  addEventListener('pointermove', e => wipe(e.clientX, e.clientY), { passive: true });
+  addEventListener('touchmove', e => { const p = e.touches[0]; if (p) wipe(p.clientX, p.clientY); }, { passive: true });
+  ['pointerup', 'touchend'].forEach(e => addEventListener(e, () => { last = null; }));
+  setInterval(() => { idle++; if (idle >= 25 && !on && !calm() && !document.hidden && Date.now() - lastFog() > 360000) start(); }, 1000);
+  if (/[?&]fog=1/.test(location.search)) setTimeout(start, 1200);
+})();
