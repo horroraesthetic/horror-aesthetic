@@ -3,6 +3,9 @@
 (function(){
 "use strict";
 if(typeof F==="undefined"||typeof REVIEWS==="undefined")return;
+/* Free AI: URL of the Cloudflare Worker (see worker/horror-guide.js). Empty = local helper only. */
+var AI_URL="";
+var hist=[];
 var ru=function(){return typeof LANG!=="undefined"&&LANG==="ru"};
 var T=function(a,b){return ru()?a:b};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
@@ -85,6 +88,19 @@ function showList(items,intro,more){
 var CHIPS=function(){return ru()?["Что посмотреть сегодня","Без крови","Похоже на Звонок","Классика до 1970","Фильмы 80-х","Самое жёсткое","Японский хоррор","Случайный фильм"]:["What to watch tonight","No gore","Like Ringu","Classics before 1970","80s films","Harshest picks","J-Horror","Random film"]};
 function chips(){var c=el("div","ga-chips",list);CHIPS().forEach(function(t){var b=el("button","",c);b.type="button";b.textContent=t;b.setAttribute("data-q",t)});list.scrollTop=list.scrollHeight}
 function help(){say(T("Я ищу по базе сайта: "+build().length+" рецензий и "+Object.keys(F).length+" фильмов. Попробуй: <i>«без крови»</i>, <i>«джалло 70-х»</i>, <i>«похоже на Хэллоуин»</i>, <i>«Кроненберг»</i>, <i>«про вампиров»</i>.","I search the site's own data: "+build().length+" reviews and "+Object.keys(F).length+" films. Try: <i>“no gore”</i>, <i>“giallo 70s”</i>, <i>“like Halloween”</i>, <i>“Cronenberg”</i>, <i>“about vampires”</i>."))}
+
+function ctxOf(items){return items.slice(0,5).map(function(x){var r=x.r;return (x.te||x.tr)+(x.tr&&x.te&&x.tr!==x.te?" / "+x.tr:"")+" ("+x.y+"), dir. "+(r.d.en||r.d.ru)+", rating "+r.r+"/5, gore "+r.g+"/5. "+r.s.en}).join("\n")}
+function ai(q,items,fallback,done){
+ if(!AI_URL){done(fallback);return}
+ var m=say('<span class="ga-dots">…</span>'),ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},14000);
+ fetch(AI_URL,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q:q,lang:ru()?"ru":"en",ctx:ctxOf(items||[]),h:hist.slice(-4)}),signal:ctl?ctl.signal:undefined})
+ .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){clearTimeout(tm);var t=(j&&j.reply||"").trim();if(!t)throw 0;
+  m.innerHTML=esc(t).replace(/\n+/g,"<br>")+'<small class="ga-ai">'+T("ответ ИИ, возможны неточности","AI reply, may be inaccurate")+'</small>';hist.push({r:"me",t:q},{r:"bot",t:t});done(null)})
+ .catch(function(){clearTimeout(tm);m.innerHTML=fallback||T("ИИ сейчас не отвечает. Попробуй позже.","The AI is not answering right now. Try later.");done(null)})}
+function deliver(items,intro,q){
+ last={items:items,off:0};
+ if(!AI_URL){showList(items,intro);return}
+ ai(q,items,intro,function(fb){var page=items.slice(0,4);var h=(fb?'<p>'+fb+'</p>':'')+page.map(card).join("");if(items.length>4)h+='<button type="button" class="ga-more" data-q="'+T("ещё","more")+'">'+T("Показать ещё","Show more")+' ('+(items.length-4)+')</button>';say(h)})}
 function answer(q){
  var o=parse(q),n=o.n;
  if(!n)return;
@@ -92,18 +108,18 @@ function answer(q){
  if(/^(привет|здравств|добрый|хай|hello|hi|hey)/.test(n)&&n.split(" ").length<=3){say(T("Привет. Я Проводник. Скажи, что хочется: настроение, год, жанр или фильм, на который это должно быть похоже.","Hello. I am the Guide. Tell me what you feel like: a mood, a year, a genre or a film it should resemble."));return}
  if(/спасиб|благодар|thanks|thank you/.test(n)){say(T("Приятного страха.","Sweet screams."));return}
  if(/что (ты )?умеешь|помощь|помоги|help|как (тобой )?пользоваться|what can you/.test(n)){help();return}
- if(/^что посмотреть|what to watch|tonight|на вечер|на сегодня|на ночь/.test(n)){var t=pickSeed(build().filter(function(x){return x.r.r>=4}),3);last={items:t,off:0};showList(t,T("На сегодня я бы взял вот это:","For tonight I would pick these:"));return}
+ if(/^что посмотреть|what to watch|tonight|на вечер|на сегодня|на ночь/.test(n)){var t=pickSeed(build().filter(function(x){return x.r.r>=4}),3);deliver(t,T("На сегодня я бы взял вот это:","For tonight I would pick these:"),q);return}
  if(o.rnd){var a=build();var x=a[Math.floor(Math.random()*a.length)];last={items:[x],off:0};showList([x],T("Случайный выбор:","Random pick:"));return}
  var tt=findTitle(n);
- if(tt&&(o.like||/похож|вроде|like|similar/.test(n))){var sim=similar(tt);if(sim.length){last={items:sim,off:0};showList(sim,T("Если понравилось «"+(tt.tr||tt.te)+"», загляни сюда:","If you liked “"+tt.te+"”, look here:"));return}}
- if(tt&&!o.like){var rel=similar(tt).slice(0,3);last={items:[tt].concat(rel),off:0};showList(last.items,T("Нашёл. И ещё несколько похожих:","Found it. And a few similar ones:"));return}
- o.dirIds=findDir(n);if(o.dirIds&&!tt){var items=build().filter(function(x){return o.dirIds.indexOf(x.id)>-1}).sort(function(a,b){return b.r.r-a.r.r});last={items:items,off:0};showList(items,T("Режиссёр найден. Его фильмы на сайте:","Director found. Their films on the site:"));return}
+ if(tt&&(o.like||/похож|вроде|like|similar/.test(n))){var sim=similar(tt);if(sim.length){deliver(sim,T("Если понравилось «"+(tt.tr||tt.te)+"», загляни сюда:","If you liked “"+tt.te+"”, look here:"),q);return}}
+ if(tt&&!o.like){var rel=similar(tt).slice(0,3);deliver([tt].concat(rel),T("Нашёл. И ещё несколько похожих:","Found it. And a few similar ones:"),q);return}
+ o.dirIds=findDir(n);if(o.dirIds&&!tt){var items=build().filter(function(x){return o.dirIds.indexOf(x.id)>-1}).sort(function(a,b){return b.r.r-a.r.r});deliver(items,T("Режиссёр найден. Его фильмы на сайте:","Director found. Their films on the site:"),q);return}
  var res=search(o);
- if(res.length){last={items:res,off:0};var d=describe(o);showList(res,T("Подобрал"+(d?" ("+d+")":"")+": всего "+res.length+".","Picked"+(d?" ("+d+")":"")+": "+res.length+" in total."));return}
+ if(res.length){var d=describe(o);deliver(res,T("Подобрал"+(d?" ("+d+")":"")+": всего "+res.length+".","Picked"+(d?" ("+d+")":"")+": "+res.length+" in total."),q);return}
  /* nothing in reviews: try the bare film list */
  var kw=keywords(n),extra=[];Object.keys(F).forEach(function(id){var f=F[id],nm=norm((f.n.ru||"")+" "+(f.n.en||""));for(var i=0;i<kw.length;i++)if(nm.indexOf(kw[i])>-1){extra.push(id);break}});
  if(extra.length){var h='<p>'+T("Рецензии пока нет, но такие фильмы есть в базе:","No review yet, but these films are in the database:")+'</p><ul class="ga-l">'+extra.slice(0,8).map(function(id){var f=F[id];return '<li>'+esc(ru()?(f.n.ru||f.n.en):f.n.en)+' ('+f.y+')</li>'}).join("")+'</ul>';say(h);return}
- say(T("Ничего не нашёл. Попробуй назвать жанр, десятилетие, режиссёра или фильм, на который это должно быть похоже.","Nothing found. Try naming a genre, a decade, a director or a film it should resemble."));chips()}
+ var nf=T("Ничего не нашёл. Попробуй назвать жанр, десятилетие, режиссёра или фильм, на который это должно быть похоже.","Nothing found. Try naming a genre, a decade, a director or a film it should resemble.");if(AI_URL){ai(q,[],nf,function(fb){if(fb){say(fb);chips()}});return}say(nf);chips()}
 function send(q){q=(q||inp.value).trim();if(!q)return;inp.value="";say(esc(q),"me");setTimeout(function(){try{answer(q)}catch(e){say(T("Что-то пошло не так. Попробуй иначе.","Something went wrong. Try again."))}},250)}
 function init(){
  if(box)return;
