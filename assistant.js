@@ -4,7 +4,7 @@
 "use strict";
 if(typeof F==="undefined"||typeof REVIEWS==="undefined")return;
 /* Free AI: URL of the Cloudflare Worker (see worker/horror-guide.js). Empty = local helper only. */
-var AI_URL="";
+var AI_URL="https://horror-guide.phenomenonevil.workers.dev/";
 var hist=[];
 var ru=function(){return typeof LANG!=="undefined"&&LANG==="ru"};
 var T=function(a,b){return ru()?a:b};
