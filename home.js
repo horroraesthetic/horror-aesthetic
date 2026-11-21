@@ -1463,8 +1463,9 @@ function filmWord(n){return plural(n,T(UI.n_films))}
 var cur=null,query="",secFilter="home",picked=null;
 var CAT_BATCH=48,CAT_LIMIT=CAT_BATCH,REVIEW_BATCH=12,REVIEW_LIMIT=REVIEW_BATCH;
 var heroMotionOff=function(){
-  return document.hidden||document.documentElement.classList.contains("ha-calm")||
-    matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* The hero slideshow is a cheap opacity change every 6 s, so it keeps running in calm mode (the phone default).
+     It only stops for a hidden tab or the system "reduce motion" setting. */
+  return document.hidden||matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
 function setImgs(){
