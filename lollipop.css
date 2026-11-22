@@ -1,0 +1,43 @@
+/* Lollipop animations, J-Horror style. transform/opacity only; off for reduced motion and calm mode */
+.lf{display:block;width:100%;height:auto;aspect-ratio:5/2}
+.lf *{transform-box:fill-box}
+.lf-sway{transform-origin:50% 96%;animation:lfsway 4.6s ease-in-out infinite}
+.lf4 .lf-sway{animation-duration:6s}.lf3 .lf-sway{animation:lfflick 5s steps(1) infinite,lfsway 7s ease-in-out infinite}
+.lf2 .lf-sway{animation:none;transform:rotate(7deg)}
+.lf-spin{transform-origin:50% 50%;animation:lfspin 22s linear infinite}
+.lf5 .lf-spin{animation-duration:11s}.lf2 .lf-spin{animation:none}
+.lf-glow{transform-origin:50% 50%;animation:lfpulse 3.2s ease-in-out infinite;opacity:.45}
+.lf-glow2{animation-delay:-1.4s;opacity:.35}
+.lf3 .lf-glow,.lf2 .lf-glow{animation:none;opacity:.3}
+.lf-lid{transform-origin:50% 0;animation:lfblink 6.5s infinite}
+.lf4 .lf-lid{animation-duration:9s;animation-delay:-3s}
+.lf-pup{animation:lfpup 8s ease-in-out infinite}
+.lf-drip{transform-origin:50% 0;animation:lfdrip 3.8s ease-in infinite}
+.lf-hair{transform-origin:50% 0;animation:lfhair 7s ease-in-out infinite}
+.lf-hair2{animation-delay:-2s;animation-duration:9s}
+.lf-sp{animation:lffall 9s linear infinite}.lf-sp1{animation-delay:-3s;animation-duration:12s}.lf-sp2{animation-delay:-6s;animation-duration:7s}
+.lf5 .lf-sp,.lf4 .lf-sp{animation-name:lfrise}
+.lf-scan{animation:lfscan 5.5s linear infinite}
+@keyframes lfsway{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+@keyframes lfflick{0%,100%{opacity:1}46%{opacity:1}47%{opacity:.35}49%{opacity:1}52%{opacity:.5}53%{opacity:1}}
+@keyframes lfspin{to{transform:rotate(360deg)}}
+@keyframes lfpulse{0%,100%{opacity:.25;transform:scale(.92)}50%{opacity:.62;transform:scale(1.06)}}
+@keyframes lfblink{0%,92%,100%{transform:scaleY(.05)}93%,96%{transform:scaleY(1.7)}}
+@keyframes lfpup{0%,100%{transform:translateX(0)}30%{transform:translateX(-1.6px)}65%{transform:translateX(1.6px)}}
+@keyframes lfdrip{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1;transform:translateY(0) scale(1)}100%{transform:translateY(15px) scale(1);opacity:0}}
+@keyframes lfhair{0%,100%{transform:skewX(-2deg)}50%{transform:skewX(3deg)}}
+@keyframes lffall{from{transform:translateY(-4px);opacity:0}15%{opacity:.6}to{transform:translateY(60px);opacity:0}}
+@keyframes lfrise{from{transform:translateY(0);opacity:0}20%{opacity:.7}to{transform:translateY(-32px);opacity:0}}
+@keyframes lfscan{from{transform:translateY(-3px)}to{transform:translateY(66px)}}
+/* rows: reveal in the open review, hover wiggle, flicker for pale ones */
+.in .scores .rate i.lp{animation:lpon .55s cubic-bezier(.2,.9,.3,1.3) both}
+.in .scores .rate i.lp:nth-child(2){animation-delay:.09s}.in .scores .rate i.lp:nth-child(3){animation-delay:.18s}.in .scores .rate i.lp:nth-child(4){animation-delay:.27s}.in .scores .rate i.lp:nth-child(5){animation-delay:.36s}
+@keyframes lpon{from{opacity:0;transform:translateY(8px) rotate(-24deg) scale(.55)}to{opacity:1;transform:none}}
+.rate:hover i.lp svg,.rate:focus-within i.lp svg{animation:lpwig .7s ease-in-out}
+@keyframes lpwig{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}60%{transform:rotate(8deg)}}
+.rate i.lp.e5 svg{animation:none}
+.in .rate i.lp.e5 svg{animation:lpsway 4.2s ease-in-out infinite}
+.in .rate i.lp.e3 svg{animation:lpdim 6s steps(1) infinite}
+@keyframes lpdim{0%,100%{opacity:1}62%{opacity:1}63%{opacity:.55}65%{opacity:1}68%{opacity:.7}69%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lf *,.rate i.lp,.rate i.lp svg{animation:none!important}}
+html.ha-calm .lf *,html.ha-calm .rate i.lp,html.ha-calm .rate i.lp svg{animation:none!important}
