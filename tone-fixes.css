@@ -43,3 +43,8 @@
 :root[data-tone="tomie"] .ha-mag-teaser p{color:#cdbfb7!important}
 :root[data-tone="tomie"] .ha-mag-teaser .mt-k{color:#e2767d!important}
 :root[data-tone="tomie"] .rail{background:rgba(230,225,211,.96)!important;border-color:#1c1a18!important}
+/* dark inline-styled panels on the home page keep light text in Tomie */
+:root[data-tone="tomie"] section[class*="ha-update"] h2,:root[data-tone="tomie"] section[style*="#1c1014"] h2,:root[data-tone="tomie"] section[style*="#170d0f"] h2,:root[data-tone="tomie"] section[class*="ha-update"] h3,:root[data-tone="tomie"] section[style*="#1c1014"] h3,:root[data-tone="tomie"] section[style*="#170d0f"] h3,:root[data-tone="tomie"] section[class*="ha-update"] h4,:root[data-tone="tomie"] section[style*="#1c1014"] h4,:root[data-tone="tomie"] section[style*="#170d0f"] h4{color:#f1e8df!important;text-shadow:none!important}
+:root[data-tone="tomie"] section[class*="ha-update"] small,:root[data-tone="tomie"] section[style*="#1c1014"] small,:root[data-tone="tomie"] section[style*="#170d0f"] small{color:#e2767d!important}
+:root[data-tone="tomie"] section[class*="ha-update"] p,:root[data-tone="tomie"] section[style*="#1c1014"] p,:root[data-tone="tomie"] section[style*="#170d0f"] p{color:#cdbfb7!important}
+:root[data-tone="tomie"] section[class*="ha-update"] a,:root[data-tone="tomie"] section[style*="#1c1014"] a,:root[data-tone="tomie"] section[style*="#170d0f"] a{color:#ff8a92!important}
