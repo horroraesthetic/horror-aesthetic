@@ -44,3 +44,11 @@ window.lpUse=function(t,half){build();if(t==="E")return '<svg viewBox="0 0 48 48
  if(half)return '<svg viewBox="0 0 48 48" aria-hidden="true"><use href="#lpE"/><svg x="0" y="0" width="24" height="48" viewBox="0 0 24 48"><use href="#lp'+t+'" width="48" height="48"/></svg></svg>';
  return '<svg viewBox="0 0 48 48" aria-hidden="true"><use href="#lp'+t+'"/></svg>'};
 })();
+
+/* Static dossier ratings in index.html (<i class="on">) become lollipops too */
+(function(){
+function conv(){var L=document.querySelectorAll('.rate');for(var k=0;k<L.length;k++){var el=L[k];if(el.querySelector('.lp,.mn')||!el.querySelector('i.on,i.half'))continue;var on=el.querySelectorAll('i.on').length,half=el.querySelector('i.half')?1:0,n=on+(half?.5:0),t=n>=4.5?5:n>=3.5?4:n>=2.5?3:2,s="",i;
+for(i=1;i<=5;i++){if(n>=i)s+='<i class="ey lp e'+t+'">'+window.lpUse(t,0)+'</i>';else if(n>=i-.5)s+='<i class="ey lp e'+t+'">'+window.lpUse(t,1)+'</i>';else s+='<i class="ey lp e0">'+window.lpUse("E")+'</i>'}
+el.innerHTML=s}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",conv);else conv();
+})();
