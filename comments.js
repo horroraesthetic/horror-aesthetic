@@ -1,7 +1,7 @@
 /* Comments via giscus (GitHub Discussions). Loads nothing until the reader taps the button.
    Stays invisible until HA_GISCUS.categoryId is filled in. */
 (function(){
- var C=window.HA_GISCUS={repo:"horroraesthetic/horror-aesthetic",repoId:"R_kgDOVrlz_w",category:"Comments",categoryId:""};
+ var C=window.HA_GISCUS={repo:"horroraesthetic/horror-aesthetic",repoId:"R_kgDOVrlz_w",category:"Announcements",categoryId:"DIC_kwDOVrlz_84DLvwW"};
  if(!C.categoryId)return;
  function lang(){return document.documentElement.dataset.l==="ru"?"ru":"en"}
  function init(){

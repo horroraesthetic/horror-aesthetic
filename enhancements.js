@@ -973,4 +973,4 @@
 })();
 
 /* comments (giscus) on review and creepypasta pages */
-(function(){try{if(!/\/(reviews|creepypasta)\/[^\/]+\.html$/.test(location.pathname)||/\/index\.html$/.test(location.pathname))return;var l=document.createElement("link");l.rel="stylesheet";l.href="/horror-aesthetic/comments.css?v=1";document.head.appendChild(l);var s=document.createElement("script");s.src="/horror-aesthetic/comments.js?v=1";s.defer=true;document.head.appendChild(s)}catch(e){}})();
+(function(){try{if(!/\/(reviews|creepypasta)\/[^\/]+\.html$/.test(location.pathname)||/\/index\.html$/.test(location.pathname))return;var l=document.createElement("link");l.rel="stylesheet";l.href="/horror-aesthetic/comments.css?v=2";document.head.appendChild(l);var s=document.createElement("script");s.src="/horror-aesthetic/comments.js?v=2";s.defer=true;document.head.appendChild(s)}catch(e){}})();
