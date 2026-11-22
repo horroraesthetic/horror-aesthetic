@@ -1,18 +1,8 @@
-/* Night sound (synthesized, no files) + VHS mode. Both opt-in; sound starts only on a tap. */
+/* Night sound (synthesized, no files). Opt-in: starts only on a tap. */
 (function(){
- var root=document.documentElement,K="ha-vhs";
+ var root=document.documentElement;
  function st(k){try{return localStorage.getItem(k)}catch(e){return null}}
  function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
- /* ---------- VHS ---------- */
- var ov=null;
- function vhs(on){
-  root.classList.toggle("ha-vhs",on);sv(K,on?"1":"0");
-  if(on&&!ov){ov=document.createElement("div");ov.className="vhs-ov";ov.setAttribute("aria-hidden","true");
-   ov.innerHTML='<i class="vhs-sc"></i><i class="vhs-nz"></i><i class="vhs-tr"></i><b class="vhs-pl">PLAY ▶ SP</b><b class="vhs-dt"></b>';document.body.appendChild(ov)}
-  if(ov)ov.style.display=on?"":"none";
-  if(on){var d=new Date(),m=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][d.getMonth()];ov.querySelector(".vhs-dt").textContent=m+" "+("0"+d.getDate()).slice(-2)+" 1998"}
-  sync();
- }
  /* ---------- sound ---------- */
  var ac=null,master=null,nodes=[],timers=[],playing=false;
  function noiseBuf(sec){var n=ac.sampleRate*sec,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return b}
@@ -38,19 +28,18 @@
  document.addEventListener("visibilitychange",function(){if(!ac)return;if(document.hidden)ac.suspend();else if(playing)ac.resume()});
  /* ---------- buttons ---------- */
  var bs,bv;
- function sync(){if(bs)bs.setAttribute("aria-pressed",playing?"true":"false");if(bv)bv.setAttribute("aria-pressed",root.classList.contains("ha-vhs")?"true":"false")}
+ function sync(){if(bs)bs.setAttribute("aria-pressed",playing?"true":"false");}
  function init(){
   var nav=document.getElementById("ft-legal");if(!nav||document.getElementById("amb-row"))return;
   var row=document.createElement("div");row.id="amb-row";row.className="amb-row";
   row.innerHTML='<button type="button" id="amb-s" aria-pressed="false"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path class="w" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span class="l-ru">Звук ночи</span><span class="l-en">Night sound</span></button>'
-  +'<button type="button" id="amb-v" aria-pressed="false"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="8" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="12" r="1.8" fill="currentColor"/></svg><span class="l-ru">Проклятая плёнка</span><span class="l-en">Cursed tape</span></button>';
+  ;
   nav.parentNode.insertBefore(row,nav.nextSibling);
-  bs=row.querySelector("#amb-s");bv=row.querySelector("#amb-v");
+  bs=row.querySelector("#amb-s");
   bs.addEventListener("click",function(){if(playing)stop();else start();sync()});
-  bv.addEventListener("click",function(){vhs(!root.classList.contains("ha-vhs"))});
-  if(st(K)==="1")vhs(true);sync();
+    sync();
  }
  function t(){setTimeout(init,700);setTimeout(init,2600)}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",t);else t();
- window.haAmbient={sound:function(on){if(on)start();else stop();sync()},vhs:vhs};
+ window.haAmbient={sound:function(on){if(on)start();else stop();sync()}};
 })();
