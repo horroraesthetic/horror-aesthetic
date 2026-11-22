@@ -2137,3 +2137,4 @@ footer .ft-legal a:hover{opacity:1}
 @media (prefers-reduced-motion:reduce){.rate i.lp svg{animation:none!important}}
 html.ha-calm .rate i.lp svg{animation:none!important}
 .rate i.lp svg svg{overflow:hidden;filter:none;animation:none}
+.mplate svg{display:block;width:100%;height:auto;aspect-ratio:5/2}
