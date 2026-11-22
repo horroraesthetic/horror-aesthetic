@@ -634,9 +634,22 @@
   const input=overlay.querySelector('input'),results=overlay.querySelector('.ha-command-results'),close=overlay.querySelector('.ha-command-close');
   let active=0,visible=[],opener=null,inerted=[];
   const text=(en,ruText)=>ru()?ruText:en;
+  const SYN=[[/призрак|привиден|дух|yurei|ghost|spirit|haunt|онрё|onryo/,'ghost spirit haunt yurei onryo supernatural призрак дух привиден'],[/кров|gore|жестк|blood|gory/,'gore'],[/слэшер|slasher|маньяк/,'slasher маньяк'],[/монстр|monster|creature|тварь/,'monster creature монстр'],[/вампир|vampire/,'vampire вампир'],[/зомби|zombie|заражен|infect/,'zombie infection зомби заражен'],[/найден|found.?footage|vhs/,'found footage vhs найден'],[/психолог|psycholog/,'psychological психолог'],[/фольклор|folk|легенд/,'folk folklore фольклор легенд'],[/тело|body|боди/,'body horror боди'],[/проклят|curse|cursed/,'curse проклят'],[/дом|house|haunted house/,'house дом'],[/демон|possess|одержим|exorc/,'demon possession одержим демон'],[/тихо|медлен|slow|атмосфер|atmospher/,'atmospheric slow атмосфер медлен'],[/анимац|anime|animation/,'animation анимац']];
+  const stem=w=>w.length>5?w.slice(0,w.length-2):w;
+  const smart=q=>{
+   if(!q)return entries.slice();
+   const plain=entries.filter(i=>(i[1]+' '+i[2]+' '+i[3]).toLocaleLowerCase().includes(q));
+   if(plain.length)return plain;
+   const parts=q.split(/\s+(?:но\s+)?(?:без|не|without|no|but not)\s+/);
+   const pos=parts[0],neg=parts.slice(1).join(' ');
+   const groups=s=>s.split(/[\s,]+/).filter(w=>w.length>2&&!/^(что|про|это|как|для|and|the|with|film|movie|фильм|фильмы|страшн\S*|хочу|нужен|about|scary|horror|хоррор)$/.test(w)).map(w=>{const h=SYN.find(r=>r[0].test(w));return h?{syn:h[1],gore:/кров|gore|blood/.test(w)}:{syn:stem(w),gore:false}});
+   const pg=groups(pos),ng=groups(neg);if(!pg.length&&!ng.length)return[];
+   const hit=(item,g)=>{if(g.gore)return item[5]>=3;const hay=(item[1]+' '+item[2]+' '+(item[4]||'')).toLocaleLowerCase();return g.syn.split(' ').some(k=>k&&hay.includes(k))};
+   return entries.filter(i=>(i[3]==='review'||i[3]==='story'||i[3]==='essay')&&pg.every(g=>hit(i,g))&&!ng.some(g=>hit(i,g)));
+  };
   const render=()=>{
    const q=input.value.trim().toLocaleLowerCase();
-   visible=entries.filter(item=>(item[1]+' '+item[2]+' '+item[3]).toLocaleLowerCase().includes(q)).slice(0,40);
+   visible=smart(q).slice(0,40);
    results.replaceChildren();active=0;
    if(!visible.length){const empty=document.createElement('p');empty.className='ha-command-empty';empty.textContent=text('No matching sections. Try another search.','Ничего не найдено. Попробуйте другой запрос.');results.appendChild(empty);return}
    visible.forEach((item,index)=>{
@@ -688,7 +701,7 @@
    overlay.querySelector('#ha-command-title').textContent=text('Find your way through the archive','Найти нужный раздел архива');
    overlay.querySelector('.ha-command-search-label').textContent=text('SEARCH THE SITE','ПОИСК ПО САЙТУ');
    input.placeholder=text('Search site sections…','Поиск по разделам сайта…');
-   overlay.querySelector('.ha-command-hint').textContent=text('Search sections, reviews and essays','Раздел, рецензия или статья');
+   overlay.querySelector('.ha-command-hint').textContent=text('Search by name, director or idea: “ghosts without gore”, “vampire films”','Название, режиссёр или идея: «призраки без крови», «фильмы про вампиров»');
    overlay.querySelector('.ha-command-foot').innerHTML='<span>ESC '+text('CLOSE','ЗАКРЫТЬ')+'</span><span>↑ ↓ '+text('MOVE','ВЫБРАТЬ')+'</span><span>ENTER '+text('OPEN','ОТКРЫТЬ')+'</span>';
    close.setAttribute('aria-label',text('Close','Закрыть'));
    render();
@@ -958,3 +971,6 @@
   setInterval(() => { idle++; if (idle >= 25 && !on && !calm() && !document.hidden && Date.now() - lastFog() > 360000) start(); }, 1000);
   if (/[?&]fog=1/.test(location.search)) setTimeout(start, 1200);
 })();
+
+/* comments (giscus) on review and creepypasta pages */
+(function(){try{if(!/\/(reviews|creepypasta)\/[^\/]+\.html$/.test(location.pathname)||/\/index\.html$/.test(location.pathname))return;var l=document.createElement("link");l.rel="stylesheet";l.href="/horror-aesthetic/comments.css?v=1";document.head.appendChild(l);var s=document.createElement("script");s.src="/horror-aesthetic/comments.js?v=1";s.defer=true;document.head.appendChild(s)}catch(e){}})();

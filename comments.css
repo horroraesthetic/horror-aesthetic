@@ -1,0 +1,6 @@
+.ha-cm{max-width:760px;margin:40px auto 20px;padding:20px 0 0;border-top:1px solid #5a3035}
+.ha-cm h2{font:900 20px/1.1 Impact,"Arial Black",sans-serif;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+.ha-cm .cm-n{font:14px/1.5 Georgia,serif;opacity:.8;margin:0 0 14px}
+.ha-cm .cm-b{padding:12px 16px;font:700 12px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#a50f1b;border:1px solid #ff3a48;border-radius:2px;cursor:pointer}
+.ha-cm .cm-b:hover{box-shadow:0 0 16px rgba(255,58,72,.5)}
+.ha-cm .l-ru,.ha-cm .l-en{display:none}html[data-l="en"] .ha-cm .l-en,html[data-l="ru"] .ha-cm .l-ru{display:inline}

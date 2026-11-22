@@ -16,7 +16,7 @@ for p in sorted(glob.glob('reviews/*.html')):
     h=h.group(1)
     en=re.search(r'<span class="l-en">(.*?)</span>',h,re.S);ru=re.search(r'<span class="l-ru">(.*?)</span>',h,re.S);y=re.search(r'\((\d{4})\)',h)
     d=re.search(r'<span class="l-en">Director: (.*?) ·',s)
-    r=re.search(r'<b>([\d.]+) / 5</b>',s)
+    r=re.search(r'<b>([\d.]+) / 5</b>',s) or re.search(r'★ ([\d.]+) / 5',s)
     f=prev.get(slug,{})
     out.append({"slug":slug,"title":html.unescape(en.group(1)) if en else f.get('title',slug),"ru":html.unescape(ru.group(1)) if ru else f.get('ru',''),"year":y.group(1) if y else f.get('year',''),"director":html.unescape(d.group(1)) if d else f.get('director',''),"rating":num(r.group(1)) if r else f.get('rating',''),"url":"../reviews/%s.html"%slug})
 out.sort(key=lambda f:f['title'].lower())
