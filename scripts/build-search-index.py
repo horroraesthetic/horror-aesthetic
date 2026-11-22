@@ -5,7 +5,7 @@ out=[]
 def t(h,cls):
     m=re.search(r'<span (?:class="l-%s"|lang="%s")[^>]*>(.*?)</span>'%(cls,cls),h,re.S)
     return re.sub(r'<[^>]+>','',m.group(1)).strip() if m else ''
-for folder,kind in (('reviews','review'),('articles','essay')):
+for folder,kind in (('reviews','review'),('articles','essay'),('creepypasta','story')):
     for p in sorted(glob.glob(folder+'/*.html')):
         if p.endswith('index.html'):continue
         s=open(p,encoding='utf8').read()

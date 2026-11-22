@@ -1,0 +1,176 @@
+{
+ "stories": [
+  {
+   "slug": "review-we-never-wrote",
+   "ru_t": "Рецензия, которую мы не писали",
+   "en_t": "The Review We Never Wrote",
+   "ru_m": "Читать ночью, по желанию · 2 минуты",
+   "en_m": "Best read at night, if you dare · 2 min",
+   "img": "lamp-cup",
+   "w": 1200,
+   "h": 800,
+   "alt": "Настольная лампа и чашка в тёмной комнате, на стене чья-то тень",
+   "cap": "03:14 / HORROR AESTHETIC",
+   "og": "og-creepy.jpg",
+   "d_ru": "В репозитории появился файл, который никто из нас не создавал.",
+   "d_en": "A file appeared in the repository that none of us created.",
+   "ru": [
+    "Журнал команды HORROR AESTHETIC. Запись от 03:14.",
+    "Мы всегда вычитываем архив перед публикацией. Три человека, три монитора, один чайник. Поэтому, когда в репозитории появился файл <code>reviews/no-title.html</code>, мы сначала решили, что это чья-то шутка.",
+    "Рецензия была на фильм без названия. Год: «ещё не вышел». Режиссёр: «вы его знаете». Оценка: пять леденцов из пяти, и все пять горели красным, хотя в тот месяц мы такой оценки не ставили никому.",
+    "Текст был написан нашим слогом. Тот же вздох в начале абзаца, те же длинные тире. Редактор поклялся бы, что писал Верстальщик. Верстальщик поклялся, что не писал. Потом он дочитал до конца и перестал клясться.",
+    "<blockquote>«Комната с тремя мониторами и одним чайником. Трое людей, и один из них прямо сейчас читает эту строчку. Он посмотрит на соседа. Не смотрите. Сосед тоже читает».</blockquote>",
+    "Мы, конечно, посмотрели.",
+    "Дальше было про четвёртого. «В вашей комнате всегда было четверо, поэтому чайник всегда тёплый к вашему приходу. Он очень любит хорошее кино. Он просто хотел, чтобы и о нём написали».",
+    "Мы удалили файл. Он вернулся через минуту с коммитом «fix typo». Автор: пустое имя. Время: 03:14.",
+    "Последний абзац мы перепечатываем целиком. Он единственный, который меняется: у каждого читателя там своё число.",
+    "<blockquote class=\"last\">«Вы читаете это на телефоне, ночью, наверное, под одеялом. Экран светит вам в лицо, а из-за плеча падает свет второго экрана. Нет, не оглядывайтесь. Просто сосчитайте открытые вкладки. Теперь вычтите ту, которую открыли вы».</blockquote>",
+    "Если получился ноль, спокойной ночи.",
+    "Если нет, не закрывайте нас. Ему так нравится компания."
+   ],
+   "en": [
+    "Log of the HORROR AESTHETIC team. Entry at 03:14.",
+    "We always proofread the archive before publishing. Three people, three monitors, one kettle. So when a file called <code>reviews/no-title.html</code> appeared in the repository, we assumed it was somebody's joke.",
+    "It was a review of a film with no title. Year: “not released yet.” Director: “you know him.” Rating: five lollipops out of five, all five lit red, though we had given that score to nobody that month.",
+    "The text was written in our voice. The same sigh at the start of a paragraph, the same long dashes. The Editor would have sworn the Layout Guy wrote it. The Layout Guy swore he didn’t. Then he read to the end and stopped swearing.",
+    "<blockquote>“A room with three monitors and one kettle. Three people, and one of them is reading this line right now. He will look at his neighbour. Don’t. The neighbour is reading too.”</blockquote>",
+    "We looked, of course.",
+    "Then it was about the fourth one. “There have always been four of you in that room, which is why the kettle is always warm when you arrive. He loves good cinema. He only wanted to be written about too.”",
+    "We deleted the file. It came back a minute later with the commit message “fix typo.” Author: an empty name. Time: 03:14.",
+    "We are reprinting the last paragraph in full. It is the only one that changes: every reader gets a different number there.",
+    "<blockquote class=\"last\">“You are reading this on your phone, at night, probably under a blanket. The screen lights your face, and over your shoulder falls the light of a second screen. No, don’t turn around. Just count your open tabs. Now subtract the one you opened.”</blockquote>",
+    "If you got zero, good night.",
+    "If not, don’t close us. He enjoys the company so much."
+   ]
+  },
+  {
+   "slug": "track-0314",
+   "ru_t": "Дорожка 03:14",
+   "en_t": "Track 03:14",
+   "ru_m": "Лучше в наушниках · 2 минуты",
+   "en_m": "Best with headphones · 2 min",
+   "img": "radio-stairs",
+   "w": 1200,
+   "h": 800,
+   "alt": "Радиоприёмник на мокрой лестнице у ржавой двери",
+   "cap": "AUDIO LOG / 03:14",
+   "og": "og-creepy.jpg",
+   "d_ru": "В тишине между кадрами кто-то дышал. А потом начал дышать вместе с нами.",
+   "d_en": "Someone was breathing in the silence between frames. Then they started breathing with us.",
+   "ru": [
+    "Запись Звукача. Того, кто сводит звук для наших видео.",
+    "Он сдал дорожку для тизера и ушёл спать. Утром мы открыли файл и услышали то, чего не заказывали: в тишине между кадрами кто-то дышал.",
+    "Не громко. Ровно на грани. В наушниках кажется, что это дышишь ты сам.",
+    "Звукач вывел спектр. Дыхание было записано поверх, одной дорожкой, без склеек. Метка времени: 03:14.",
+    "Мы убрали дорожку и выгрузили заново. Дыхание осталось. Тогда мы заметили странное: вдох в записи совпадал с нашим. Мы задержали дыхание. Запись продолжала.",
+    "Звукач сказал: «Он учится». Больше он ничего не говорил. К тому моменту вдох в записи уже шёл на полсекунды раньше его настоящего.",
+    "<blockquote class=\"last\">«Если вы слушали наши ролики в наушниках, прислушайтесь. Если вдох чуть опережает ваш, не торопитесь выдыхать».</blockquote>"
+   ],
+   "en": [
+    "The Sound Guy’s log. The one who mixes audio for our videos.",
+    "He delivered the teaser track and went to sleep. In the morning we opened the file and heard something we never ordered: someone was breathing in the silence between frames.",
+    "Not loud. Right on the edge. In headphones it feels like you are the one breathing.",
+    "The Sound Guy pulled up the spectrum. The breath was recorded on top, as a single take, with no edits. Timestamp: 03:14.",
+    "We removed the track and exported again. The breathing stayed. Then we noticed something odd: the inhale on the recording matched ours. We held our breath. The recording kept going.",
+    "The Sound Guy said: “He is learning.” He said nothing more. By then the inhale on the recording was half a second ahead of his real one.",
+    "<blockquote class=\"last\">“If you have listened to our videos in headphones, listen closely. If the breath comes slightly before yours, do not hurry to exhale.”</blockquote>"
+   ]
+  },
+  {
+   "slug": "sixth-lollipop",
+   "ru_t": "Шестой леденец",
+   "en_t": "The Sixth Lollipop",
+   "ru_m": "Про рейтинг · 2 минуты",
+   "en_m": "About the rating · 2 min",
+   "img": "vhs-ribbon",
+   "w": 900,
+   "h": 900,
+   "alt": "Старая видеокассета, перевязанная красной лентой",
+   "cap": "RATING FILE / 6 OF 5",
+   "og": "og-creepy.jpg",
+   "d_ru": "Мы ставим пять леденцов. Шестой появляется сам.",
+   "d_en": "We give out five lollipops. The sixth shows up on its own.",
+   "ru": [
+    "Рейтинг у нас ставится вручную. Пять леденцов, и больше нет.",
+    "Однажды Редактор открыл рецензию на старый фильм и увидел шесть. Шестой стоял справа, тусклый, как пустая ячейка, но с палочкой.",
+    "Мы проверили код: там было пять. Обновили страницу: шесть.",
+    "Шестой появлялся только в рецензиях, которые читали после полуночи. Потом мы заметили закономерность: он загорался красным, если рецензию дочитывали до конца.",
+    "Верстальщик попробовал убрать его стилем. Стиль применился, леденец остался. Он сказал: «Он не в вёрстке. Он в читателе».",
+    "С тех пор мы не удаляем шестой и не ставим пять с половиной. Мало ли кому он предназначен.",
+    "<blockquote class=\"last\">«Если вы видите шесть, не считайте их вслух. Он любит, когда его считают».</blockquote>"
+   ],
+   "en": [
+    "Our ratings are set by hand. Five lollipops, and no more.",
+    "One day the Editor opened a review of an old film and saw six. The sixth sat on the right, dim like an empty slot, but with a stick.",
+    "We checked the code: five. We refreshed the page: six.",
+    "The sixth appeared only in reviews read after midnight. Then we noticed a pattern: it lit up red if the review was read to the end.",
+    "The Layout Guy tried to hide it with a style. The style applied, the lollipop stayed. He said: “It is not in the layout. It is in the reader.”",
+    "Since then we do not delete the sixth and we do not give four and a half. Who knows whom it is meant for.",
+    "<blockquote class=\"last\">“If you see six, do not count them out loud. He likes being counted.”</blockquote>"
+   ]
+  },
+  {
+   "slug": "rec-counts-backwards",
+   "ru_t": "REC идёт назад",
+   "en_t": "REC Counts Backwards",
+   "ru_m": "Про счётчик в углу · 2 минуты",
+   "en_m": "About the counter in the corner · 2 min",
+   "img": "tv-vcr",
+   "w": 1200,
+   "h": 800,
+   "alt": "Старый телевизор и видеомагнитофон с красной лампочкой",
+   "cap": "REC / 00:00:00",
+   "og": "og-creepy.jpg",
+   "d_ru": "В углу сайта есть счётчик REC. Однажды он пошёл в обратную сторону.",
+   "d_en": "There is a REC counter in the corner of the site. One night it started to run backwards.",
+   "ru": [
+    "В углу сайта есть счётчик REC. Он показывает, сколько вы здесь. Мы придумали его для атмосферы.",
+    "Журнал посещений у нас не ведётся, поэтому мы не знаем, кто первым прислал скриншот. Счётчик показывал 00:00:00 и шёл назад: 23:59:59, 23:59:58.",
+    "Через день прислали ещё. Потом ещё. Всегда ночью. Всегда так, что отсчёт упирался в 03:14.",
+    "Мы проверили код. Счётчик считает вперёд. Мы записали экран: вперёд. На телефонах, с которых пришли скриншоты, тоже вперёд.",
+    "Один читатель написал: «Он считает, сколько мне осталось смотреть». Мы ответили, что это шутка дизайнера. Он не ответил.",
+    "<blockquote class=\"last\">«Если однажды увидите, что REC идёт назад, не закрывайте вкладку. Мы не знаем, что будет в конце отсчёта, и честно не хотим выяснять первыми».</blockquote>"
+   ],
+   "en": [
+    "There is a REC counter in the corner of the site. It shows how long you have been here. We made it for atmosphere.",
+    "We keep no visitor log, so we do not know who sent the first screenshot. The counter read 00:00:00 and was running backwards: 23:59:59, 23:59:58.",
+    "A day later, another one arrived. Then another. Always at night. Always timed so the countdown ended at 03:14.",
+    "We checked the code. The counter counts forward. We recorded the screen: forward. On the phones the screenshots came from, also forward.",
+    "One reader wrote: “It counts how long I have left to watch.” We replied that it was a designer’s joke. He did not answer.",
+    "<blockquote class=\"last\">“If you ever see REC counting backwards, do not close the tab. We do not know what happens at the end of the countdown, and honestly we would rather not be the first to find out.”</blockquote>"
+   ]
+  }
+ ],
+ "team": {
+  "ru_t": "Команда HORROR AESTHETIC",
+  "en_t": "The HORROR AESTHETIC team",
+  "ru_d": "Мы небольшая команда, которая любит кино ужасов. Здесь мы называем себя по ролям, а не по именам: в нашем деле так спокойнее.",
+  "en_d": "We are a small team who love horror cinema. Here we go by roles, not names. In our line of work it is safer.",
+  "roles": [
+   [
+    "Редактор",
+    "The Editor",
+    "Читает всё дважды: днём и ночью. Утверждает, что ночью текст другой. Ставит рейтинг леденцами и никогда не ставит шестой.",
+    "Reads everything twice: by day and by night. Claims the text is different at night. Hands out the lollipop ratings and never gives a sixth."
+   ],
+   [
+    "Верстальщик",
+    "The Layout Guy",
+    "Собирает сайт, чинит, что ломается, и знает, что чайник не в ту розетку лучше не включать. Не спит перед релизом.",
+    "Builds the site, fixes what breaks, and knows better than to plug the kettle into that outlet. Does not sleep before a release."
+   ],
+   [
+    "Звукач",
+    "The Sound Guy",
+    "Слушает тишину между кадрами. В наушниках проводит больше времени, чем без них. Говорит, что научился различать, когда запись смотрит на него.",
+    "Listens to the silence between frames. Spends more time in headphones than out of them. Says he can tell when a recording is looking back."
+   ],
+   [
+    "Четвёртый",
+    "The Fourth",
+    "В штате его нет. Чайник к нашему приходу всегда тёплый. Любит хорошее кино и хочет, чтобы о нём тоже написали. Мы пишем.",
+    "He is not on the payroll. The kettle is always warm when we arrive. Loves good cinema and wants to be written about too. We are writing."
+   ]
+  ]
+ }
+}
