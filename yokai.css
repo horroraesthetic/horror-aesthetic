@@ -1,0 +1,49 @@
+/* yokai artifacts: animation. Light: transform/opacity only. */
+.yk-hop{transform-box:fill-box;transform-origin:50% 100%;animation:ykHop 1.8s ease-in-out infinite}
+.yk-tail,.yk-tail2{transform-box:fill-box;transform-origin:0% 100%;animation:ykTail 2.6s ease-in-out infinite}.yk-tail2{animation-duration:3.3s;animation-delay:-.8s}
+.yk-sway{transform-box:fill-box;transform-origin:50% 0;animation:ykSway 4.4s ease-in-out infinite}
+.yk-rain{animation:ykRain 1.3s linear infinite;animation-delay:var(--d,0s);opacity:0}
+.yk-seep{animation:ykSeep 6s ease-in-out infinite;opacity:.0}
+.yk-halo{transform-box:fill-box;transform-origin:center;animation:ykHalo 4s ease-in-out infinite}
+.yk-bib{transform-box:fill-box;transform-origin:50% 0;animation:ykBib 3.6s ease-in-out infinite}
+.yk-rock{transform-box:fill-box;transform-origin:50% 100%;animation:ykRock 3.4s ease-in-out infinite}
+.yk-iris{animation:ykIris 7s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.yk-hair{transform-box:fill-box;transform-origin:50% 0;animation:ykHair 5s ease-in-out infinite}
+.yk-rip{transform-box:fill-box;transform-origin:center;animation:ykRip 3.6s ease-out infinite;animation-delay:var(--d,0s);opacity:0}
+.yk-tear{stroke-dasharray:6;animation:ykTear 9s ease-in infinite;opacity:0}
+.sec-h>.yk-m{bottom:5px;top:auto}
+.sec-h>.jx-karakasa svg,.sec-h>.jx-bakeneko svg,.sec-h>.jx-daruma svg{transform-origin:50% 100%}
+@keyframes ykHop{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-4px) rotate(4deg)}}
+@keyframes ykTail{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+@keyframes ykSway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes ykRain{0%{opacity:0;transform:translateY(-4px)}20%{opacity:.8}100%{opacity:0;transform:translateY(22px)}}
+@keyframes ykSeep{0%,60%,100%{opacity:0}75%,90%{opacity:.9}}
+@keyframes ykHalo{0%,100%{opacity:.08;transform:scale(.9)}50%{opacity:.28;transform:scale(1.1)}}
+@keyframes ykBib{0%,100%{transform:skewX(-3deg)}50%{transform:skewX(4deg)}}
+@keyframes ykRock{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@keyframes ykIris{0%,40%,100%{transform:scale(1)}48%{transform:scale(.4)}56%{transform:scale(1.15)}}
+@keyframes ykHair{0%,100%{transform:skewX(-2deg)}50%{transform:skewX(3deg)}}
+@keyframes ykRip{0%{opacity:0;transform:scale(.4)}25%{opacity:.7}100%{opacity:0;transform:scale(1.5)}}
+@keyframes ykTear{0%,70%{opacity:0;stroke-dashoffset:6}78%{opacity:1;stroke-dashoffset:0}95%{opacity:0;transform:translateY(8px)}100%{opacity:0}}
+/* gallery */
+#yokai-gallery{max-width:980px;margin:42px auto 20px;padding:0 16px;color:var(--bone,#eee4dc)}
+.yk-h{font:900 24px/1.1 Impact,"Arial Black",sans-serif;letter-spacing:.05em;text-transform:uppercase;margin:0 0 16px;border-top:1px solid #5a3035;padding-top:18px}
+.yk-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:760px){.yk-g{grid-template-columns:repeat(3,1fr)}}
+.yk-c{margin:0;padding:14px 12px 16px;border:1px solid #38232c;background:linear-gradient(180deg,rgba(60,8,14,.35),rgba(10,4,6,.6));border-radius:2px;position:relative}
+.yk-c::before,.yk-c::after{content:"";position:absolute;width:8px;height:8px;border:1px solid #ff3a48;opacity:.7}.yk-c::before{left:-1px;top:-1px;border-right:0;border-bottom:0}.yk-c::after{right:-1px;bottom:-1px;border-left:0;border-top:0}
+.yk-art{width:96px;height:96px;margin:0 auto 10px;color:var(--bile,#ff8d93);filter:drop-shadow(0 0 8px rgba(216,35,43,.45))}
+.yk-art svg{width:100%;height:100%;display:block;overflow:visible}
+.yk-art .jx-a{fill:var(--blood,#d8232b)}.yk-art .jx-as{stroke:var(--blood,#d8232b)}.yk-art .jx-d{fill:#1a0709}
+.yk-c b{display:block;font:700 15px/1.2 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:#e2767d;margin-bottom:5px}
+.yk-c span{display:block;font:14px/1.5 Georgia,serif;opacity:.88}
+@media(prefers-reduced-motion:reduce){.yk-hop,.yk-tail,.yk-tail2,.yk-sway,.yk-rain,.yk-seep,.yk-halo,.yk-bib,.yk-rock,.yk-iris,.yk-hair,.yk-rip,.yk-tear{animation:none!important}.yk-rain,.yk-rip,.yk-tear{opacity:0!important}}
+html.ha-calm .yk-hop,html.ha-calm .yk-tail,html.ha-calm .yk-tail2,html.ha-calm .yk-sway,html.ha-calm .yk-bib,html.ha-calm .yk-rock,html.ha-calm .yk-hair{animation:none!important}
+/* shared helpers for pages that do not load home.css */
+#yokai-gallery .jx-flk{transform-box:fill-box;transform-origin:50% 100%;animation:ykFlk 2.4s ease-in-out infinite}
+#yokai-gallery .jx-blk{transform-box:fill-box;transform-origin:50% 50%;animation:ykBlk 6.5s infinite}
+#yokai-gallery .jx-wag{transform-box:fill-box;transform-origin:50% 0;animation:ykWag 2.6s ease-in-out infinite}
+@keyframes ykFlk{0%,100%{transform:scale(1,1) skewX(0)}25%{transform:scale(.95,1.06) skewX(2.5deg)}50%{transform:scale(1.04,.96) skewX(-2.5deg)}75%{transform:scale(.98,1.04) skewX(1.5deg)}}
+@keyframes ykBlk{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}}
+@keyframes ykWag{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@media(prefers-reduced-motion:reduce){#yokai-gallery .jx-flk,#yokai-gallery .jx-blk,#yokai-gallery .jx-wag{animation:none!important}}
