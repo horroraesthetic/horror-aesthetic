@@ -616,6 +616,8 @@
    ['/horror-aesthetic/journal/','The Dark Journal','Тёмный журнал','essays'],
    ['/horror-aesthetic/articles/','Essays & Features','Статьи и эссе','long reads'],
    ['/horror-aesthetic/field-notes/','Field Notes','Полевые заметки','research'],
+   ['/horror-aesthetic/team/','The Team','Команда','about creepypasta'],
+   ['/horror-aesthetic/creepypasta/','Team Creepypastas','Крипипасты команды','stories scary'],
    ['/horror-aesthetic/about.html','About the Project','О проекте','about'],
    ['/horror-aesthetic/privacy.html','Privacy Policy','Политика конфиденциальности','privacy']
   ];
