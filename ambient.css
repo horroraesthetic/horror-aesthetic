@@ -1,0 +1,20 @@
+.amb-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.amb-row button{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;font:700 11px/1 var(--f-mono,monospace);letter-spacing:.14em;text-transform:uppercase;color:inherit;background:linear-gradient(180deg,rgba(60,8,14,.45),rgba(14,4,6,.6));border:1px solid rgba(255,58,72,.4);border-radius:2px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.amb-row button:hover,.amb-row button:focus-visible{border-color:#ff3a48;box-shadow:0 0 14px rgba(196,22,35,.45)}
+.amb-row button[aria-pressed="true"]{background:#a50f1b;color:#fff;border-color:#ff6a74}
+#amb-s .w{opacity:.35}#amb-s[aria-pressed="true"] .w{animation:ambW 1.2s ease-in-out infinite}
+@keyframes ambW{0%,100%{opacity:.25}50%{opacity:1}}
+/* VHS mode */
+.vhs-ov{position:fixed;inset:0;z-index:2147482000;pointer-events:none;overflow:hidden}
+.vhs-sc{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0,rgba(0,0,0,.22) 1px,transparent 1px,transparent 3px);mix-blend-mode:multiply}
+.vhs-nz{position:absolute;inset:-50%;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");animation:vhsN .5s steps(4) infinite}
+.vhs-tr{position:absolute;left:0;right:0;height:46px;top:-60px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.07) 40%,rgba(255,255,255,.14) 50%,rgba(255,255,255,.05) 70%,transparent);animation:vhsT 7s linear infinite}
+.vhs-pl,.vhs-dt{position:absolute;right:12px;text-align:right;font:700 15px/1 ui-monospace,monospace;letter-spacing:.12em;color:#eaffea;text-shadow:2px 0 rgba(255,0,60,.6),-2px 0 rgba(0,220,255,.5)}
+.vhs-pl{top:8px;font-size:12px}.vhs-dt{top:26px;font-size:10px;opacity:.85}
+html.ha-vhs h1,html.ha-vhs h2,html.ha-vhs .logo{text-shadow:1.5px 0 rgba(255,0,60,.5),-1.5px 0 rgba(0,200,255,.4)}
+html.ha-vhs body{animation:vhsJ 5s steps(1) infinite}
+@keyframes vhsN{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(3%,3%)}}
+@keyframes vhsT{0%{transform:translateY(0)}100%{transform:translateY(calc(100vh + 120px))}}
+@keyframes vhsJ{0%,94%,100%{transform:none}95%{transform:translateX(3px) skewX(-.6deg)}97%{transform:translateX(-2px)}}
+@media (prefers-reduced-motion:reduce){.vhs-nz,.vhs-tr,html.ha-vhs body{animation:none}}
+html.ha-calm .vhs-nz,html.ha-calm .vhs-tr,html.ha-calm.ha-vhs body{animation:none}
