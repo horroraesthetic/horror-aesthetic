@@ -92,7 +92,14 @@ var GENRES=[
  ["gore",a("Гор","Gore"),a("Акцент на ранах и практических эффектах.","Focus on wounds and practical effects.")],
  ["shock",a("Шок","Shock"),a("Скандал, нарушенные табу и репутация «запрещённого».","Scandal, broken taboos and a “banned” reputation.")],
  ["trash",a("Трэш","Trash"),a("Дёшево, нелепо и от этого любимо.","Cheap, absurd and loved for it.")],
- ["exploit",a("Эксплуатация","Exploitation"),a("Грайндхаус и видеопрокат: продаём то, что запрещено.","Grindhouse and the video store: selling what is forbidden.")]
+ ["exploit",a("Эксплуатация","Exploitation"),a("Грайндхаус и видеопрокат: продаём то, что запрещено.","Grindhouse and the video store: selling what is forbidden.")],
+ ["supernatural",a("Сверхъестественное","Supernatural"),a("Призраки, одержимость и дома, которые помнят.","Ghosts, possession and houses that remember.")],
+ ["vampire",a("Вампиры","Vampires"),a("Бессмертные хищники: от аристократов до уличных стай.","Immortal predators: from aristocrats to street packs.")],
+ ["creature",a("Монстры","Creature feature"),a("Чудовища, пауки и всё, что вылезает из тьмы.","Monsters, spiders and whatever crawls out of the dark.")],
+ ["comedy",a("Хоррор-комедия","Horror comedy"),a("Смех в темноте: страшно ровно настолько, чтобы было весело.","Laughter in the dark: scary just enough to be fun.")],
+ ["thriller",a("Триллер","Thriller"),a("Напряжение без монстров: подозрение, ловушка, доверие.","Tension without monsters: suspicion, trap, trust.")],
+ ["foundfootage",a("Найденная плёнка","Found footage"),a("Снято на камеру, которую кто-то оставил.","Shot on a camera someone left behind.")],
+ ["scifi",a("Научный ужас","Sci-fi horror"),a("Вирусы, лаборатории и технологии, вышедшие из-под контроля.","Viruses, laboratories and technology out of control.")]
 ];
 var GN={},GI={};GENRES.forEach(function(g){GN[g[0]]=g[1]});
 
