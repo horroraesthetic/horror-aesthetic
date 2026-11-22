@@ -1,0 +1,20 @@
+/* Magazine teaser + frames strips (shared) */
+.ha-mag-teaser{max-width:1080px;margin:34px auto;padding:0 16px}
+.ha-mag-teaser .mt-in{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:22px;align-items:center;border:1px solid #49303a;background:linear-gradient(135deg,#120a0d,#0a0709);padding:18px}
+.ha-mag-teaser .mt-cover img{display:block;width:100%;height:auto;border-radius:3px;box-shadow:0 10px 34px rgba(0,0,0,.7),0 0 24px rgba(200,20,35,.22)}
+.ha-mag-teaser .mt-k{font:600 12px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.2em;text-transform:uppercase;color:#e2767d}
+.ha-mag-teaser h2{margin:.25em 0 .2em;font:900 clamp(26px,6vw,44px)/1.05 Impact,"Arial Black",sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#f1e8df}
+.ha-mag-teaser h2 small{display:block;font:400 .5em/1.2 Georgia,serif;color:#c9b7ae;letter-spacing:.06em;text-transform:none;margin-top:6px}
+.ha-mag-teaser p{margin:0 0 14px;color:#cdbfb7;font:16px/1.6 Georgia,serif}
+.ha-mag-teaser .mt-fr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+.ha-mag-teaser .mt-fr img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid #3a2128}
+.ha-mag-teaser a.mt-go{display:inline-block;padding:11px 16px;border:1px solid #c4161f;color:#f1e8df;text-decoration:none;font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;background:rgba(196,22,31,.14)}
+.ha-mag-teaser a.mt-go:hover,.ha-mag-teaser a.mt-go:focus-visible{background:#c4161f}
+@media(max-width:620px){.ha-mag-teaser .mt-in{grid-template-columns:1fr}.ha-mag-teaser .mt-cover{max-width:230px;margin:0 auto}}
+.ha-frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:22px 0}
+.ha-frames figure{margin:0}
+.ha-frames img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border:1px solid #2c3a3a}
+.ha-frames figcaption{font:600 11px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#93a9b4;margin-top:6px}
+.ha-frames.wide img{aspect-ratio:3/2}
+.ha-hero-fig{margin:0 0 24px}.ha-hero-fig img{display:block;width:100%;height:auto;border:1px solid #243f5a}
+.ha-hero-fig figcaption{font:600 11px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:#93a9b4;margin-top:6px}
