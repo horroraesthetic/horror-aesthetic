@@ -25,3 +25,21 @@
 :root[data-tone="tomie"] a[href*="folklore"] { color:#8a1119!important; }
 :root[data-tone="tomie"] button[class*="lang"], :root[data-tone="tomie"] #lang button { color:#f1e8df!important; }
 :root[data-tone="tomie"] .ha-skip-link { color:#f1e8df!important; }
+
+/* Tomie on the home page: enhancements.css forces a dark body on every page with .w, which made dark Tomie text invisible. Keep the paper look. */
+:root[data-tone="tomie"] html, html:has(body .w):root[data-tone="tomie"]{background:#e6e1d3}
+:root[data-tone="tomie"] body:has(.w){background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(60,45,25,.22) 100%),#e6e1d3!important;color:#1c1a18!important}
+:root[data-tone="tomie"] body:has(.w)::before,:root[data-tone="tomie"] body:has(.w)::after{opacity:.25}
+:root[data-tone="tomie"] footer::after{color:#7a0a12;opacity:.1}
+:root[data-tone="tomie"] footer .soc .btn{background:#efeade;color:#1c1a18;border-color:#a3131b}
+:root[data-tone="tomie"] footer .soc .btn .ic{color:#a3131b}
+:root[data-tone="tomie"] footer .ft-addr a,:root[data-tone="tomie"] footer .ft-legal a{color:#7a0a12}
+:root[data-tone="tomie"] .amb-row button{background:#efeade;color:#1c1a18;border-color:#a3131b}
+:root[data-tone="tomie"] .amb-row button[aria-pressed="true"]{background:#a3131b;color:#fff}
+:root[data-tone="tomie"] .mast p,:root[data-tone="tomie"] .mast .sub{color:#2a2724!important}
+:root[data-tone="tomie"] .lang button[aria-pressed="true"],:root[data-tone="tomie"] .lang button.on,:root[data-tone="tomie"] button[aria-pressed="true"][data-l]{color:#fff!important}
+:root[data-tone="tomie"] .ha-mag-teaser h2,:root[data-tone="tomie"] .ha-mag-teaser h2 small{color:#f1e8df!important}
+:root[data-tone="tomie"] .ha-mag-teaser h2 small{color:#c9b7ae!important}
+:root[data-tone="tomie"] .ha-mag-teaser p{color:#cdbfb7!important}
+:root[data-tone="tomie"] .ha-mag-teaser .mt-k{color:#e2767d!important}
+:root[data-tone="tomie"] .rail{background:rgba(230,225,211,.96)!important;border-color:#1c1a18!important}
