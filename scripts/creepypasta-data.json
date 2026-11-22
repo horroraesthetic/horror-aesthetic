@@ -41,7 +41,14 @@
     "<blockquote class=\"last\">“You are reading this on your phone, at night, probably under a blanket. The screen lights your face, and over your shoulder falls the light of a second screen. No, don’t turn around. Just count your open tabs. Now subtract the one you opened.”</blockquote>",
     "If you got zero, good night.",
     "If not, don’t close us. He enjoys the company so much."
-   ]
+   ],
+   "img2": {
+    "img": "family-photo",
+    "w": 1400,
+    "h": 700,
+    "alt": "Семейная фотография, на краю которой стоит лишний силуэт",
+    "cap": "Фото, которое мы не снимали"
+   }
   },
   {
    "slug": "track-0314",
@@ -74,7 +81,14 @@
     "We removed the track and exported again. The breathing stayed. Then we noticed something odd: the inhale on the recording matched ours. We held our breath. The recording kept going.",
     "The Sound Guy said: “He is learning.” He said nothing more. By then the inhale on the recording was half a second ahead of his real one.",
     "<blockquote class=\"last\">“If you have listened to our videos in headphones, listen closely. If the breath comes slightly before yours, do not hurry to exhale.”</blockquote>"
-   ]
+   ],
+   "img2": {
+    "img": "train-rain",
+    "w": 1400,
+    "h": 933,
+    "alt": "Ночная платформа под дождём и женщина в белом у поезда",
+    "cap": "Платформа 03:14"
+   }
   },
   {
    "slug": "sixth-lollipop",
@@ -107,7 +121,14 @@
     "The Layout Guy tried to hide it with a style. The style applied, the lollipop stayed. He said: “It is not in the layout. It is in the reader.”",
     "Since then we do not delete the sixth and we do not give four and a half. Who knows whom it is meant for.",
     "<blockquote class=\"last\">“If you see six, do not count them out loud. He likes being counted.”</blockquote>"
-   ]
+   ],
+   "img2": {
+    "img": "class-photo",
+    "w": 1400,
+    "h": 933,
+    "alt": "Классное фото: за плечом ученика чья-то рука",
+    "cap": "Шестой в ряду"
+   }
   },
   {
    "slug": "rec-counts-backwards",
@@ -138,7 +159,14 @@
     "We checked the code. The counter counts forward. We recorded the screen: forward. On the phones the screenshots came from, also forward.",
     "One reader wrote: “It counts how long I have left to watch.” We replied that it was a designer’s joke. He did not answer.",
     "<blockquote class=\"last\">“If you ever see REC counting backwards, do not close the tab. We do not know what happens at the end of the countdown, and honestly we would rather not be the first to find out.”</blockquote>"
-   ]
+   ],
+   "img2": {
+    "img": "elevator-bow",
+    "w": 1400,
+    "h": 700,
+    "alt": "Фигура на четвереньках в коридоре у лифта",
+    "cap": "Лифт на этаж 0"
+   }
   }
  ],
  "team": {
