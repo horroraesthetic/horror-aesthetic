@@ -1,0 +1,53 @@
+/* Footer scene v2 + footer design */
+.jx-foot{position:relative}
+.jx-foot svg.fs2{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.fs2 *{transform-box:fill-box}
+.fs-st{animation:fsTw 3.4s ease-in-out infinite;animation-delay:var(--d,0s);opacity:.2}
+.fs-aura{transform-origin:center;animation:fsAura 4.2s ease-in-out infinite}
+.fs-eye{transform-origin:center;opacity:0;animation:fsEye 11s ease-in-out infinite}
+.fs-pup{transform-origin:center;animation:fsPup 11s ease-in-out infinite}
+.fs-tear{stroke-dasharray:10;stroke-dashoffset:10;opacity:0;animation:fsTear 11s ease-in infinite}
+.fs-ghost{opacity:0;animation:fsGh 17s ease-in-out infinite}
+.fs-gsw{transform-origin:50% 100%;animation:fsGs 5s ease-in-out infinite}
+.fs-gey{animation:fsEy 3s steps(1) infinite}
+.fs-lh{transform-origin:center;animation:fsLh 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.fs-hit{opacity:0;animation:fsHit 12s ease-in-out infinite;animation-delay:var(--d,0s)}
+.fs-rn{animation:fsRn var(--t,1.5s) linear infinite;animation-delay:var(--d,0s);opacity:0}
+.fs-mi{animation:fsMi 14s ease-in-out infinite alternate}.fs-mi2{animation-duration:19s;animation-direction:alternate-reverse}
+.fs-pt{animation:fsPt 9s linear infinite;animation-delay:var(--d,0s);opacity:0}
+@keyframes fsTw{0%,100%{opacity:.15}50%{opacity:.9}}
+@keyframes fsAura{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+@keyframes fsEye{0%,58%,100%{opacity:0;transform:scaleY(.1)}62%,74%{opacity:1;transform:scaleY(1)}78%{opacity:0;transform:scaleY(.1)}}
+@keyframes fsPup{0%,62%{transform:scaleX(1)}68%{transform:scaleX(3.2)}74%,100%{transform:scaleX(1)}}
+@keyframes fsTear{0%,70%{opacity:0;stroke-dashoffset:10;transform:translateY(0)}74%{opacity:1;stroke-dashoffset:0;transform:translateY(0)}92%{opacity:0;stroke-dashoffset:0;transform:translateY(60px)}100%{opacity:0}}
+@keyframes fsGh{0%,34%{opacity:0}42%{opacity:.14}48%{opacity:.5}50%{opacity:.08}53%{opacity:.62}66%{opacity:.5}72%,100%{opacity:0}}
+@keyframes fsGs{0%,100%{transform:translateX(-1px) skewX(-.8deg)}50%{transform:translateX(1.5px) skewX(.8deg)}}
+@keyframes fsEy{0%,100%{opacity:0}45%,55%{opacity:1}}
+@keyframes fsLh{0%,100%{transform:scale(.9);opacity:.5}40%{opacity:1}55%{opacity:.35}70%{transform:scale(1.1);opacity:.9}}
+@keyframes fsHit{0%{opacity:0;transform:translate(0,0)}15%{opacity:.95}50%{opacity:.7;transform:translate(var(--x),-12px)}85%{opacity:.9}100%{opacity:0;transform:translate(calc(var(--x)*-.6),-26px)}}
+@keyframes fsRn{0%{opacity:0;transform:translate(0,-10px)}15%{opacity:.8}100%{opacity:0;transform:translate(-14px,200px)}}
+@keyframes fsMi{from{transform:translateX(-24px)}to{transform:translateX(24px)}}
+@keyframes fsPt{0%{opacity:0;transform:translate(0,0) rotate(0)}12%{opacity:.9}100%{opacity:0;transform:translate(var(--x),190px) rotate(240deg)}}
+/* footer design */
+footer{position:relative;border-top:0;margin-top:0;padding-top:34px;overflow:hidden}
+footer::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,58,72,.15) 20%,#ff3a48 50%,rgba(255,58,72,.15) 80%,transparent);background-size:200% 100%;animation:fsLine 6s linear infinite}
+footer::after{content:"恐怖美学";position:absolute;right:-4px;top:10px;writing-mode:vertical-rl;font:900 54px/1 serif;letter-spacing:.1em;color:var(--blood,#c41623);opacity:.07;pointer-events:none;animation:fsKan 7s ease-in-out infinite}
+footer img{box-shadow:0 0 0 2px rgba(255,58,72,.35),0 0 26px rgba(196,22,35,.45);animation:fsLogo 4.6s ease-in-out infinite}
+footer .soc .btn{position:relative;border-radius:2px;border-color:rgba(255,58,72,.45);background:linear-gradient(180deg,rgba(60,8,14,.55),rgba(14,4,6,.7));transition:transform .25s,box-shadow .25s,border-color .25s}
+footer .soc .btn::before,footer .soc .btn::after{content:"";position:absolute;width:6px;height:6px;border:1px solid #ff3a48;opacity:.8}
+footer .soc .btn::before{left:-1px;top:-1px;border-right:0;border-bottom:0}
+footer .soc .btn::after{right:-1px;bottom:-1px;border-left:0;border-top:0}
+footer .soc .btn:hover,footer .soc .btn:focus-visible{transform:translateY(-2px);border-color:#ff3a48;box-shadow:0 6px 18px rgba(196,22,35,.45),inset 0 0 12px rgba(255,58,72,.25)}
+footer .ft-addr{position:relative;padding-left:22px}
+footer .ft-addr::before{content:"封";position:absolute;left:0;top:0;width:16px;height:16px;display:grid;place-items:center;font:700 11px/1 serif;color:#fff;background:#b9121e;border-radius:2px;transform:rotate(-6deg);animation:fsSeal 5s ease-in-out infinite}
+footer .ft-legal a{transition:color .2s,opacity .2s,text-shadow .2s}
+footer .ft-legal a:hover{color:#ff6a74;text-shadow:0 0 8px rgba(255,58,72,.7)}
+@keyframes fsLine{to{background-position:200% 0}}
+@keyframes fsKan{0%,100%{opacity:.05}50%{opacity:.12}}
+@keyframes fsLogo{0%,100%{box-shadow:0 0 0 2px rgba(255,58,72,.3),0 0 18px rgba(196,22,35,.3)}50%{box-shadow:0 0 0 3px rgba(255,58,72,.6),0 0 34px rgba(196,22,35,.65)}}
+@keyframes fsSeal{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-3deg) scale(1.08)}}
+:root[data-tone="tomie"] footer::after{color:#7a0a12}
+@media (max-width:520px){.fs-st:nth-child(n+10){display:none}.fs-pt:nth-child(n+5){display:none}footer::after{font-size:40px}}
+@media (prefers-reduced-motion:reduce){.fs2 *,footer::before,footer::after,footer img,footer .ft-addr::before{animation:none!important}.fs-ghost,.fs-hit,.fs-eye,.fs-rn,.fs-pt{display:none}}
+html.ha-calm .fs2 *,html.ha-calm footer::before,html.ha-calm footer::after,html.ha-calm footer img{animation:none!important}
+html.ha-calm .fs-ghost,html.ha-calm .fs-hit,html.ha-calm .fs-eye,html.ha-calm .fs-rn,html.ha-calm .fs-pt{display:none}
