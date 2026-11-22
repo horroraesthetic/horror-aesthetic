@@ -1,0 +1,22 @@
+#psy-ph{display:none}
+:root[data-tone="psy"] #psy-ph{display:block;position:absolute;inset:0;overflow:hidden;background:#020303}
+:root[data-tone="psy"] #psy-hero{display:none!important}
+#psy-ph .pp-z{position:absolute;inset:0;animation:ppDolly 24s ease-in-out infinite;transform-origin:50% 62%}
+#psy-ph .pp-i{position:absolute;inset:0;background-size:cover;background-position:50% 60%;filter:grayscale(.35) contrast(1.12) brightness(.9);opacity:0}
+#psy-ph .pp-a{opacity:1;animation:ppA 24s linear infinite}
+#psy-ph .pp-b{animation:ppB 24s linear infinite}
+#psy-ph .pp-c{animation:ppC 24s linear infinite}
+#psy-ph .pp-fl{position:absolute;inset:0;background:#000;opacity:0;animation:ppFl 24s linear infinite}
+#psy-ph .pp-vg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 55%,transparent 30%,rgba(0,0,0,.78) 100%)}
+#psy-ph .pp-sc{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0,rgba(0,0,0,.25) 1px,transparent 1px,transparent 3px);mix-blend-mode:multiply}
+#psy-ph .pp-t{position:absolute;right:8px;bottom:6px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#d9e6cf;text-shadow:1px 0 rgba(255,0,60,.6),-1px 0 rgba(0,220,255,.5);animation:ppT 1.6s steps(1) infinite}
+@keyframes ppDolly{0%{transform:scale(1)}50%{transform:scale(1.16)}100%{transform:scale(1)}}
+/* far figure -> blackout -> closer figure -> blackout -> back; one rare scare flash */
+@keyframes ppA{0%,34%{opacity:1}35%,92%{opacity:0}93%,100%{opacity:1}}
+@keyframes ppB{0%,36%{opacity:0}37%,64%{opacity:1}65%,100%{opacity:0}}
+@keyframes ppC{0%,80%{opacity:0}81%,83.5%{opacity:.95}85%,100%{opacity:0}}
+@keyframes ppFl{0%,30%{opacity:0}31%{opacity:.9}32%{opacity:0}33%{opacity:.7}34.5%{opacity:1}36%{opacity:0}62%{opacity:0}63%{opacity:.85}64.5%{opacity:1}66%{opacity:0}78%{opacity:0}79.5%{opacity:.8}80%{opacity:0}85%{opacity:0}86%{opacity:.6}88%{opacity:0}100%{opacity:0}}
+@keyframes ppT{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){#psy-ph .pp-z,#psy-ph .pp-b,#psy-ph .pp-c,#psy-ph .pp-fl,#psy-ph .pp-t{animation:none}#psy-ph .pp-a{animation:none;opacity:1}}
+html.ha-calm #psy-ph .pp-z,html.ha-calm #psy-ph .pp-b,html.ha-calm #psy-ph .pp-c,html.ha-calm #psy-ph .pp-fl{animation:none}
+html.ha-calm #psy-ph .pp-a{animation:none;opacity:1}
