@@ -23,6 +23,10 @@ def page(path,title_en,title_ru,desc_en,desc_ru,og,body,canon):
 {body}</div></body></html>'''
 def L(ru,en,tag='span'):return f'<{tag} class="l-ru">{ru}</{tag}><{tag} class="l-en">{en}</{tag}>'
 def paras(a):return ''.join(x if x.startswith('<') else '<p>'+x+'</p>' for x in a)
+def img2_html(s):
+    i=s.get("img2")
+    if not i:return ""
+    return f'<figure class="ha-hero-fig"><img src="../img/mag/{i["img"]}.webp" width="{i["w"]}" height="{i["h"]}" loading="lazy" decoding="async" alt="{i["alt"]}"><figcaption>{i["cap"]}</figcaption></figure>'
 def story_body(s,idx,total):
     nav=[]
     return f'''<div class="k">{L("Крипипаста от команды","Creepypasta from the team")} · {idx:02d}/{total:02d}</div>
@@ -30,7 +34,7 @@ def story_body(s,idx,total):
 <p class="m">{L(s["ru_m"],s["en_m"])}</p>
 <figure class="ha-hero-fig"><img src="../img/mag/{s["img"]}.webp" width="{s["w"]}" height="{s["h"]}" decoding="async" fetchpriority="high" alt="{s["alt"]}"><figcaption>{s["cap"]}</figcaption></figure>
 <div class="ch body l-ru" lang="ru">{paras(s["ru"])}</div><div class="ch body l-en" lang="en">{paras(s["en"])}</div>
-<p class="stamp">HORROR AESTHETIC / 03:14</p>
+{img2_html(s)}<p class="stamp">HORROR AESTHETIC / 03:14</p>
 <div class="rel"><a href="./">{L("← Все истории","← All stories")}</a> · <a href="/horror-aesthetic/team/">{L("Команда","The team")}</a> · <a href="/horror-aesthetic/">{L("На главную","Back to the site")}</a></div>'''
 S=__import__('json').load(open('scripts/creepypasta-data.json',encoding='utf8'))
 os.makedirs('creepypasta',exist_ok=True);os.makedirs('team',exist_ok=True)
