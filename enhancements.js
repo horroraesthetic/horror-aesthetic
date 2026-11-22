@@ -619,6 +619,7 @@
    ['/horror-aesthetic/about.html','About the Project','О проекте','about'],
    ['/horror-aesthetic/privacy.html','Privacy Policy','Политика конфиденциальности','privacy']
   ];
+  let indexed=false;const loadIndex=()=>{if(indexed)return;indexed=true;fetch('/horror-aesthetic/data/search-index.json').then(r=>r.ok?r.json():[]).then(list=>{list.forEach(i=>entries.push(i));if(!overlay.hidden)render()}).catch(()=>{})};
   const trigger=document.createElement('button');
   trigger.type='button';trigger.className='ha-command-trigger';
   trigger.innerHTML='<span aria-hidden="true">⌕</span><span class="ha-command-trigger-label"></span><kbd>⌘ K</kbd>';
@@ -633,7 +634,7 @@
   const text=(en,ruText)=>ru()?ruText:en;
   const render=()=>{
    const q=input.value.trim().toLocaleLowerCase();
-   visible=entries.filter(item=>(item[1]+' '+item[2]+' '+item[3]).toLocaleLowerCase().includes(q));
+   visible=entries.filter(item=>(item[1]+' '+item[2]+' '+item[3]).toLocaleLowerCase().includes(q)).slice(0,40);
    results.replaceChildren();active=0;
    if(!visible.length){const empty=document.createElement('p');empty.className='ha-command-empty';empty.textContent=text('No matching sections. Try another search.','Ничего не найдено. Попробуйте другой запрос.');results.appendChild(empty);return}
    visible.forEach((item,index)=>{
@@ -653,7 +654,7 @@
    opener=document.activeElement;
    inerted=[...document.body.children].filter(el=>el!==overlay&&!el.inert);
    inerted.forEach(el=>{el.inert=true});
-   overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';render();
+   overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';loadIndex();render();
    document.body.classList.add('ha-command-open');input.focus();
   };
   const shut=()=>{
@@ -685,7 +686,7 @@
    overlay.querySelector('#ha-command-title').textContent=text('Find your way through the archive','Найти нужный раздел архива');
    overlay.querySelector('.ha-command-search-label').textContent=text('SEARCH THE SITE','ПОИСК ПО САЙТУ');
    input.placeholder=text('Search site sections…','Поиск по разделам сайта…');
-   overlay.querySelector('.ha-command-hint').textContent=text('Type to filter every section','Начните вводить название раздела');
+   overlay.querySelector('.ha-command-hint').textContent=text('Search sections, reviews and essays','Раздел, рецензия или статья');
    overlay.querySelector('.ha-command-foot').innerHTML='<span>ESC '+text('CLOSE','ЗАКРЫТЬ')+'</span><span>↑ ↓ '+text('MOVE','ВЫБРАТЬ')+'</span><span>ENTER '+text('OPEN','ОТКРЫТЬ')+'</span>';
    close.setAttribute('aria-label',text('Close','Закрыть'));
    render();
