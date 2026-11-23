@@ -64,4 +64,5 @@ sm=open('sitemap.xml',encoding='utf8').read()
 for u in urls:
     if u not in sm:sm=sm.replace('</urlset>',f'<url><loc>{u}</loc></url>\n</urlset>')
 open('sitemap.xml','w',encoding='utf8').write(sm)
+json.dump({t[0]:[h[0][:-5] for h in t[6]] for t in out},open('data/collections.json','w'),separators=(',',':'))
 print({t[0]:len(t[6]) for t in out})
