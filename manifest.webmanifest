@@ -9,7 +9,60 @@
   "theme_color": "#0a0606",
   "lang": "ru",
   "icons": [
-    {"src": "/horror-aesthetic/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "/horror-aesthetic/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+    {
+      "src": "/horror-aesthetic/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/horror-aesthetic/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/horror-aesthetic/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "/horror-aesthetic/",
+  "categories": [
+    "entertainment",
+    "magazines"
+  ],
+  "shortcuts": [
+    {
+      "name": "Reviews / Рецензии",
+      "url": "/horror-aesthetic/reviews/",
+      "icons": [
+        {
+          "src": "/horror-aesthetic/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Creepypasta / Крипипасты",
+      "url": "/horror-aesthetic/creepypasta/",
+      "icons": [
+        {
+          "src": "/horror-aesthetic/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Folklore / Фольклор",
+      "url": "/horror-aesthetic/folklore/",
+      "icons": [
+        {
+          "src": "/horror-aesthetic/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }
