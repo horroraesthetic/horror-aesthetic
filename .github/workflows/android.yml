@@ -54,7 +54,7 @@ jobs:
           echo "KS_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
       - name: Build
         working-directory: android
-        run: gradle assembleRelease -Pvc=${{ github.run_number }} --no-daemon
+        run: gradle assembleRelease -Pvc=${{ github.run_number }} --no-daemon --stacktrace
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
