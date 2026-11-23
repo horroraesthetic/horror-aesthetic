@@ -42,7 +42,7 @@ tot=len(S['stories'])
 for i,s in enumerate(S['stories'],1):
     p=f'creepypasta/{s["slug"]}.html'
     open(p,'w',encoding='utf8').write(page(p,s['en_t'],s['ru_t'],s['d_en'],s['d_ru'],s['og'],story_body(s,i,tot),p))
-hub=f'''<div class="k">{L("Раздел","Section")}</div><h1>{L("Крипипасты команды","Team creepypastas")}</h1>
+hub=f'''<figure style="margin:0 auto 22px;max-width:340px"><img src="/horror-aesthetic/img/mag/creepy-cover.webp" width="800" height="1200" alt="Обложка раздела: тёмный коридор, телевизор со снегом и силуэт в конце" decoding="async" style="display:block;width:100%;height:auto;border:1px solid #243f5a;box-shadow:0 12px 40px rgba(0,0,0,.7)"></figure><div class="k">{L("Раздел","Section")}</div><h1>{L("Крипипасты команды","Team creepypastas")}</h1>
 <p class="dek">{L("Истории, которые случились с нами при работе над сайтом. Читать лучше ночью. Иногда в 03:14.","Stories that happened to us while building the site. Best read at night. Sometimes at 03:14.")}</p>
 <ul class="hub">'''+''.join(f'<li><a href="{s["slug"]}.html"><span class="n">{i:02d}</span><b>{L(s["ru_t"],s["en_t"])}</b><small>{L(s["d_ru"],s["d_en"])}</small></a></li>' for i,s in enumerate(S['stories'],1))+f'''</ul>
 <div class="rel"><a href="/horror-aesthetic/team/">{L("Кто мы такие","Who we are")}</a> · <a href="/horror-aesthetic/">{L("← На главную","← Back to the site")}</a></div>'''
