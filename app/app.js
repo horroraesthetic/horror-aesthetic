@@ -1,7 +1,7 @@
 /* Horror Aesthetic app shell: Home / Films / Diary / Lists / Me. Data: ../data/daily.json, ../feed-reviews.xml, local diary. */
 (function(){
  var root=document.documentElement,$=function(s){return document.querySelector(s)},A=$("#app"),D=window.HA_DIARY;
- var FD=null,COLS=null,FILMS=[],BY={},recent=[],shown=60,filt={q:"",dec:"",set:"",sort:"rating"};
+ var PO={},FD=null,COLS=null,FILMS=[],BY={},recent=[],shown=60,filt={q:"",dec:"",set:"",sort:"rating"};
  function lang(){return root.dataset.l==="ru"?"ru":"en"}
  function T(ru,en){return lang()==="ru"?ru:en}
  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
@@ -9,7 +9,8 @@
  function hue(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return HUES[h%HUES.length]}
  function name(f){return lang()==="ru"&&f[2]?f[2]:f[1]}
  function card(f){var e=D.get(f[0]),m="";if(e.w)m+="<u>👁</u>";if(e.l)m+="<u>♥</u>";if(e.wl)m+="<u>⏱</u>";
-  return '<a class="pc" href="#film/'+esc(f[0])+'" style="--h:'+hue(f[0])+'"><span class="pt">'+esc(name(f).replace(/\s*\(\d{4}\)\s*$/,""))+'</span><span class="pm">'+m+'</span><span class="py">'+esc(f[3])+'</span>'+(f[5]?'<span class="pr">★'+esc(f[5])+'</span>':'')+'</a>'}
+  var po=PO[f[0]],mv=0;for(var i=0;i<f[0].length;i++)mv=(mv*7+f[0].charCodeAt(i))%5;
+  return '<a class="pc'+(po?' has':' m'+mv)+'" href="#film/'+esc(f[0])+'" style="--h:'+hue(f[0])+'">'+(po?'<img src="../img/posters/'+encodeURI(po)+'" alt="'+esc(name(f))+'" loading="lazy" decoding="async">':'<span class="pt">'+esc(name(f).replace(/\s*\(\d{4}\)\s*$/,""))+'</span>')+'<span class="pm">'+m+'</span><span class="py">'+esc(f[3])+'</span>'+(f[5]?'<span class="pr">★'+esc(f[5])+'</span>':'')+'</a>'}
  function cards(list){return list.map(card).join("")}
  var HOME_TITLES={home:["Главная","Home"],films:["Фильмы","Films"],diary:["Дневник","Diary"],lists:["Списки","Lists"],me:["Я","Me"]};
  var COLL=[["haunted-houses","家","Проклятые дома","Haunted houses"],["cursed-objects","呪","Проклятые вещи","Cursed objects"],["forests-wilderness","森","Леса и глушь","Forests and wilderness"],["ghost-children","子","Дети и призраки","Children and ghosts"],["screens-and-tapes","画","Экраны и плёнки","Screens and tapes"],["folk-horror","村","Фолк-хоррор","Folk horror"],["water","水","Вода и глубина","Water and depth"],["mirrors-and-doubles","鏡","Зеркала и двойники","Mirrors and doubles"],["possession","憑","Одержимость","Possession"],["j-horror","日本","Японский хоррор","J-Horror and Japan"]];
@@ -79,7 +80,7 @@
   return '<div class="fh" style="--h:'+hue(sl)+'"><div class="fp" id="fp"><span class="pt">'+esc(title)+'</span></div><div class="ft"><small>'+esc(f[3])+(f[4]?" · "+esc(f[4]):"")+'</small><h1>'+esc(title)+'</h1>'+(lang()==="ru"&&f[1]!==title?'<small>'+esc(f[1])+'</small>':"")+(f[5]?'<div class="rt">★ '+esc(f[5])+' / 5</div>':"")+'</div></div><div id="fact">'+actHTML(sl)+'</div><div id="fd"></div>'}
  function fillFilm(sl){
   loadFD().then(function(J){var x=J[sl],f=BY[sl],el=$("#fd");if(!x||!el||!f)return;
-   var fp=$("#fp");if(fp&&x[5]){fp.innerHTML='<img src="../img/posters/'+esc(sl)+'.webp" alt="" decoding="async">'}
+   var fp=$("#fp");if(fp&&PO[sl]){fp.classList.add("has");fp.innerHTML='<img src="../img/posters/'+encodeURI(PO[sl])+'" alt="" decoding="async">'}
    var same=FILMS.filter(function(o){return o[0]!==sl&&o[4]&&o[4]===f[4]}).slice(0,12);
    if(same.length<6){var dc=Math.floor(f[3]/10);same=same.concat(FILMS.filter(function(o){return o[0]!==sl&&Math.floor(o[3]/10)===dc&&same.indexOf(o)<0}).sort(function(a,b){return b[5]-a[5]}).slice(0,12-same.length))}
    el.innerHTML='<p class="syn">'+esc(T(x[1],x[0]))+'</p>'+(x[2]?'<h2 class="sh">'+T("Из рецензии","From the review")+'</h2><p class="ex">'+esc(T(x[3],x[2]))+'</p>':'')+(x[4]>=0?'<p class="gore">'+T("Жестокость","Gore")+': '+x[4]+' / 5</p>':'')+
@@ -118,8 +119,8 @@
  addEventListener("hashchange",route);document.addEventListener("ha-diary",function(){var v=(location.hash||"#home").slice(1).split("/")[0];if(v!=="film"&&!A.querySelector("input"))route()});$("#ab-b").addEventListener("click",function(){if(history.length>1)history.back();else location.hash="#home"});
  /* ---------- data ---------- */
  A.innerHTML='<div class="empty">…</div>';
- Promise.all([fetch("../data/daily.json").then(function(r){return r.json()}),fetch("../feed-reviews.xml").then(function(r){return r.text()}).catch(function(){return""})]).then(function(r){
-  FILMS=r[0];FILMS.forEach(function(f){BY[f[0]]=f});
+ Promise.all([fetch("../data/daily.json").then(function(r){return r.json()}),fetch("../feed-reviews.xml").then(function(r){return r.text()}).catch(function(){return""}),fetch("../data/posters.json").then(function(r){return r.json()}).catch(function(){return{}})]).then(function(r){
+  PO=r[2]||{};FILMS=r[0];FILMS.forEach(function(f){BY[f[0]]=f});
   var m,re=/reviews\/([a-z0-9_-]+)\.html<\/link>/gi;while((m=re.exec(r[1])))recent.push(m[1]);
   route()}).catch(function(){A.innerHTML='<div class="empty">'+T("Нет соединения. Откройте приложение с интернетом хотя бы раз.","No connection. Open the app online at least once.")+'</div>'});
 })();
