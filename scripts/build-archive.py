@@ -11,6 +11,7 @@ for p in sorted(glob.glob('reviews/*.html')):
     slug=os.path.basename(p)[:-5]
     if slug=='index':continue
     s=open(p,encoding='utf8').read()
+    if 'http-equiv="refresh"' in s:continue
     h=re.search(r'<h1>(.*?)</h1>',s,re.S)
     if not h:continue
     h=h.group(1)

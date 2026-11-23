@@ -48,7 +48,8 @@ function walk(directory) {
 
 const htmlFiles = walk(root);
 const reviewPages = readdirSync(resolve(root, 'reviews'))
-  .filter(name => name !== 'index.html' && name.endsWith('.html'));
+  .filter(name => name !== 'index.html' && name.endsWith('.html'))
+  .filter(name => !readFileSync(resolve(root, 'reviews', name), 'utf8').includes('http-equiv="refresh"'));
 const reviewIndex = readFileSync(resolve(root, 'reviews/index.html'), 'utf8');
 const reviewLinks = new Set([...reviewIndex.matchAll(/href="\/horror-aesthetic\/reviews\/([^/"?#]+\.html)"/g)]
   .map(match => match[1]));
