@@ -1,0 +1,29 @@
+name: announce-new-reviews
+# Optional. Posts new review pages to a Telegram channel. Does nothing until the repository secrets
+# TG_BOT_TOKEN and TG_CHAT_ID are set (Settings > Secrets and variables > Actions).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reviews/*.html'
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - name: Post new reviews
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: |
+          if [ -z "$TG_BOT_TOKEN" ] || [ -z "$TG_CHAT_ID" ]; then echo "Telegram secrets not set, skipping"; exit 0; fi
+          git diff --diff-filter=A --name-only HEAD~1 HEAD -- 'reviews/*.html' | grep -v 'reviews/index.html' | while read -r f; do
+            grep -q 'http-equiv="refresh"' "$f" && continue
+            t=$(grep -o '<title>[^<]*' "$f" | head -1 | sed 's/<title>//; s/ | Horror Aesthetic//')
+            u="https://horroraesthetic.github.io/horror-aesthetic/$f"
+            msg=$(printf 'Новая рецензия: %s\n%s' "$t" "$u")
+            curl -s "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" --data-urlencode "chat_id=${TG_CHAT_ID}" --data-urlencode "text=${msg}" > /dev/null
+          done

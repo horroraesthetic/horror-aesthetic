@@ -1,0 +1,41 @@
+name: weekly-check
+# Every Monday: run the site audit and check that the live site answers. Opens an issue if something is wrong.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Site audit
+        id: audit
+        run: node scripts/site-audit.mjs 2>&1 | tee audit.log; exit ${PIPESTATUS[0]}
+        continue-on-error: true
+      - name: Live site answers
+        id: live
+        run: |
+          B=https://horroraesthetic.github.io/horror-aesthetic
+          : > live.log
+          for p in / /reviews/ /folklore/ /magazine/ /creepypasta/ /sitemap.xml /feed-reviews.xml /data/daily.json; do
+            c=$(curl -s -o /dev/null -w '%{http_code}' -L "$B$p")
+            echo "$c $p" | tee -a live.log
+            [ "$c" = "200" ] || echo failed=1 >> "$GITHUB_OUTPUT"
+          done
+        continue-on-error: true
+      - name: Open an issue on problems
+        if: steps.audit.outcome == 'failure' || steps.live.outputs.failed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "Weekly check found problems."; echo; echo '```'; tail -n 40 audit.log; echo; cat live.log; echo '```'; } > body.md
+          gh issue create --title "Weekly site check: problems found" --body-file body.md

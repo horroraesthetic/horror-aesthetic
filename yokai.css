@@ -138,3 +138,21 @@ html.ha-calm .yk-hd svg *{animation:none!important}
 .yd-glint{animation:ydGl 4s ease-in-out infinite}
 .yd-mask{animation:ydMask 7s ease-in-out infinite}
 .yk-hd svg g[transform]{transform-box:view-box;transform-origin:0 0}
+
+@keyframes ydSnow{0%{transform:translate(0,-6px);opacity:0}10%{opacity:.9}100%{transform:translate(var(--x,8px),160px);opacity:.2}}
+@keyframes ydLeg1{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(7deg)}}
+@keyframes ydLeg2{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+@keyframes ydBr{0%,60%{opacity:0;transform:translateY(0) scale(.7)}75%{opacity:.8}100%{opacity:0;transform:translateY(8px) scale(1.4)}}
+@keyframes ydHop2{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes ydSw2{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes ydPaper{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(3deg)}}
+@keyframes ydPlate{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-5px) rotate(5deg)}}
+.yd-snow{animation:ydSnow var(--t,4s) linear infinite;animation-delay:var(--d,0s)}
+.yd-leg1{animation:ydLeg1 1.6s ease-in-out infinite;transform-origin:0 0!important;transform-box:view-box!important}
+.yd-leg2{animation:ydLeg2 1.6s ease-in-out infinite;transform-origin:0 0!important;transform-box:view-box!important}
+.yd-breath{animation:ydBr 4.5s ease-out infinite}
+.yd-hop2{animation:ydHop2 2.4s ease-in-out infinite}
+.yd-sway2{animation:ydSw2 4s ease-in-out infinite;transform-origin:80px 150px;transform-box:view-box}
+.yd-paper{animation:ydPaper 3s ease-in-out infinite}
+.yd-plate{animation:ydPlate 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.yd-lj1{animation:ydLeg1 1.8s ease-in-out infinite;transform-origin:80px 108px;transform-box:view-box}.yd-lj2{animation:ydLeg2 1.8s ease-in-out infinite;transform-origin:80px 108px;transform-box:view-box}

@@ -20,7 +20,13 @@
   kappa:['Каппа','Kappa','Речной ёкай с водой в чаше на голове. Пока вода не пролилась, он силён. Любит огурцы и вежливость: поклонись ему, и он поклонится в ответ.','A river yōkai with water in a dish on its head. While it holds, he is strong. He loves cucumbers and courtesy: bow to him and he bows back.'],
   rokurokubi:['Рокурокуби','Rokurokubi','Днём обычная женщина. Ночью её шея вытягивается, и голова скользит по тёмным комнатам.','An ordinary woman by day. At night her neck stretches and her head glides through dark rooms.'],
   kuchisake:['Кутисакэ-онна','Kuchisake-onna','Городская легенда: женщина в маске спрашивает «Я красивая?». Что бы ты ни ответил, в её руке ножницы.','An urban legend: a masked woman asks "Am I pretty?". Whatever you answer, she holds a pair of scissors.'],
+  yukionna:['Юки-онна','Yuki-onna','Снежная женщина. Она приходит в метель, дышит холодом и спрашивает путника, не страшно ли ему.','The snow woman. She comes in a blizzard, breathes cold and asks the traveller whether he is afraid.'],
+  tsuchigumo:['Цутигумо','Tsuchigumo','Земляной паук из пещер и древних легенд. Огромный, голодный и старше любой дороги.','The earth spider of caves and old legends. Huge, hungry and older than any road.'],
+  jorogumo:['Дзёрогумо','Jorōgumo','Паучиха в обличье красавицы. Пока ты слушаешь её музыку, нити уже обвивают тебя.','A spider in the shape of a beauty. While you listen to her music, the threads are already around you.'],
+  akamanto:['Аката-мандо','Aka Manto','Школьная легенда о красном плаще в туалете: «Тебе красную бумагу или синюю?» Правильного ответа нет.','A school legend of a red cloak in the restroom: "Red paper or blue paper?" There is no right answer.'],
+  okiku:['Окику','Okiku','Служанка, пересчитывающая тарелки у колодца: «Одна, две… девять… и не хватает одной». Классика «Банте Сараяшики».','The maid who counts plates beside a well: "One, two… nine… and one is missing." From the Banchō Sarayashiki tale.'],
   nopperabo:['Нопперабо','Nopperabō','Безликий призрак. Он выглядит как обычный человек, пока не повернётся: на лице нет ничего.','The faceless ghost. It looks like any person until it turns around: there is nothing on its face.']};
+ window.YK_NAME=NAME;
  var css=document.createElement("style");css.textContent='';
  function SV(id,c){return '<svg viewBox="0 0 48 48" class="'+(c||'')+'" aria-hidden="true">'+Y[id]+'</svg>'}
  /* 1) home section marks */

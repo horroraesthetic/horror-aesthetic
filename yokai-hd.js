@@ -176,5 +176,82 @@
  '<path d="M54 76Q80 106 106 76" fill="none" stroke="#c4181f" stroke-width="5" stroke-linecap="round"/><path d="M60 82l3 4 3-3.4 3 5 3-4 3 5 3-4.4 3 5 3-4.4 3 4 3-3.6 3 3.4 3-3.6" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" opacity=".9"/>'+
  '<g class="yd-mask"><path d="M56 66Q80 60 104 66 106 90 80 99 54 90 56 66Z" fill="#f4f6f8" stroke="#a9b2bc" stroke-width="1"/><g stroke="#cdd4dc" stroke-width="1" fill="none"><path d="M58 74Q80 80 102 74M58 82Q80 89 102 82"/></g><path d="M56 68Q46 62 44 54M104 68Q114 62 116 54" fill="none" stroke="#e8edf2" stroke-width="1.2"/></g>'+
  '<g transform="translate(124 104)"><g class="yd-snip1"><path d="M0 0L-6 -62 6 -62Z" fill="url(#kcS)" stroke="#59616b" stroke-width=".8"/><path d="M-2 -6L-3 -50" stroke="#fff" stroke-width="1" opacity=".7"/><path d="M0 0C-12 12 -22 30 -12 40" fill="none" stroke="#3a3f47" stroke-width="5" stroke-linecap="round"/><ellipse cx="-12" cy="46" rx="8" ry="10" fill="none" stroke="#c4181f" stroke-width="3.4"/></g><g class="yd-snip2"><path d="M0 0L6 -62 -6 -62Z" fill="url(#kcS)" stroke="#59616b" stroke-width=".8" opacity=".95"/><path d="M0 0C12 12 22 30 12 40" fill="none" stroke="#3a3f47" stroke-width="5" stroke-linecap="round"/><ellipse cx="12" cy="46" rx="8" ry="10" fill="none" stroke="#c4181f" stroke-width="3.4"/></g><circle r="3.4" fill="#8f99a6" stroke="#3a3f47" stroke-width="1"/><path class="yd-glint" d="M-1 -10L0 -60" stroke="#fff" stroke-width="1.6" opacity="0"/></g>';
+ /* ---------- 11. Yuki-onna ---------- */
+ H.yukionna=(function(){var sn='',i;for(i=0;i<22;i++){sn+='<circle class="yd-snow" style="--d:-'+(i*.43).toFixed(2)+'s;--t:'+(3.4+(i%5)*.5).toFixed(1)+'s;--x:'+((i%2?1:-1)*(6+i%4*4))+'px" cx="'+(8+i*7)+'" cy="4" r="'+(1+i%3*.6).toFixed(1)+'" fill="#e8f6ff"/>'}
+ return '<defs><radialGradient id="ynM" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#cfe8ff" stop-opacity=".5"/><stop offset="1" stop-color="#cfe8ff" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="ynK" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b8cfe6"/></linearGradient>'+
+ '<radialGradient id="ynP" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#f4fbff"/><stop offset=".8" stop-color="#cfe2f2"/><stop offset="1" stop-color="#93aecb"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="56" r="60" fill="url(#ynM)"/><circle cx="80" cy="56" r="34" fill="#eaf6ff" opacity=".12"/>'+
+ '<g class="yd-hairL"><path d="M54 40C34 80 46 130 28 160H56L62 70Z" fill="#05070d"/></g><g class="yd-hairR"><path d="M106 40C126 80 114 130 132 160H104L98 70Z" fill="#05070d"/></g>'+
+ '<path d="M30 160Q34 122 64 108L80 130 96 108Q126 122 130 160Z" fill="url(#ynK)"/><path d="M64 108L80 140 96 108" fill="none" stroke="#7fa4cc" stroke-width="3"/><path d="M44 148H116" stroke="#9db8d6" stroke-width="1.4"/><g fill="#9fd0f4" opacity=".7"><path d="M52 132l4 4-4 4-4-4ZM108 136l4 4-4 4-4-4ZM80 148l3 3-3 3-3-3Z"/></g>'+
+ '<rect x="71" y="92" width="18" height="18" fill="#c4d8ea"/>'+
+ '<g class="yd-head"><path d="M80 24C62 24 54 40 54 56 54 80 64 92 80 92 96 92 106 80 106 56 106 40 98 24 80 24Z" fill="url(#ynP)" stroke="#86a4c2" stroke-width="1"/>'+
+ '<path d="M52 58C46 22 62 10 80 10 98 10 114 22 108 58 106 38 98 28 80 28 62 28 54 38 52 58Z" fill="#05070d"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 56px"><path d="M60 56Q68 49 76 56Q68 61 60 56Z" fill="#fff" stroke="#14202e" stroke-width="1"/><path d="M84 56Q92 49 100 56Q92 61 84 56Z" fill="#fff" stroke="#14202e" stroke-width="1"/><circle cx="68" cy="55.6" r="3" fill="#7fd0ff"/><circle cx="92" cy="55.6" r="3" fill="#7fd0ff"/><circle cx="68" cy="55.6" r="1.3" fill="#050a12"/><circle cx="92" cy="55.6" r="1.3" fill="#050a12"/></g>'+
+ '<path d="M60 48Q68 44 76 49M84 49Q92 44 100 48" fill="none" stroke="#14202e" stroke-width="1.2" stroke-linecap="round"/><path d="M80 58v8" stroke="#86a4c2" stroke-width="1"/><path d="M71 76Q80 82 89 76" fill="none" stroke="#3f6ea8" stroke-width="3" stroke-linecap="round"/>'+
+ '<path class="yd-breath" d="M80 82Q74 96 84 104Q96 112 90 124" fill="none" stroke="#dff2ff" stroke-width="5" stroke-linecap="round" opacity="0"/></g>'+
+ '<g>'+sn+'</g>'})();
+ /* ---------- 12. Tsuchigumo ---------- */
+ H.tsuchigumo=(function(){var L='',i,ys=[52,70,88,106];
+ for(i=0;i<4;i++){var y=ys[i],c=(i%2?'yd-leg1':'yd-leg2');
+  L+='<g transform="translate(60 '+(y+8)+')"><g class="'+c+'"><path d="M0 0C-26 '+(-18+i*4)+' -44 '+(-8+i*6)+' -50 '+(24+i*6)+'" fill="none" stroke="#1a0c10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0C-26 '+(-18+i*4)+' -44 '+(-8+i*6)+' -50 '+(24+i*6)+'" fill="none" stroke="#6a3a46" stroke-width="1" opacity=".6"/></g></g>';
+  L+='<g transform="translate(100 '+(y+8)+') scale(-1 1)"><g class="'+(i%2?'yd-leg2':'yd-leg1')+'"><path d="M0 0C-26 '+(-18+i*4)+' -44 '+(-8+i*6)+' -50 '+(24+i*6)+'" fill="none" stroke="#1a0c10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0C-26 '+(-18+i*4)+' -44 '+(-8+i*6)+' -50 '+(24+i*6)+'" fill="none" stroke="#6a3a46" stroke-width="1" opacity=".6"/></g></g>'}
+ return '<defs><radialGradient id="tgA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#a01028" stop-opacity=".4"/><stop offset="1" stop-color="#a01028" stop-opacity="0"/></radialGradient>'+
+ '<radialGradient id="tgB" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#4a3038"/><stop offset=".6" stop-color="#1c0e14"/><stop offset="1" stop-color="#07030a"/></radialGradient>'+
+ '<radialGradient id="tgE" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#ff9a8a"/><stop offset=".5" stop-color="#e5182e"/><stop offset="1" stop-color="#5a0510"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="76" fill="url(#tgA)"/>'+
+ '<g stroke="#cfc8d8" stroke-width=".8" opacity=".5" fill="none"><path d="M80 0V30M80 0L30 40M80 0L130 40M10 20L150 20"/><path d="M30 40Q80 52 130 40"/></g>'+
+ '<g class="yd-hop2">'+L+
+ '<ellipse cx="80" cy="112" rx="26" ry="32" fill="url(#tgB)" stroke="#4a2a34" stroke-width="1"/><g stroke="#e5182e" stroke-width="1.6" fill="none" opacity=".75"><path d="M80 90V134M68 100Q80 108 92 100M66 116Q80 124 94 116"/></g>'+
+ '<ellipse cx="80" cy="74" rx="22" ry="20" fill="url(#tgB)" stroke="#4a2a34" stroke-width="1"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 70px"><circle cx="72" cy="68" r="5" fill="url(#tgE)"/><circle cx="88" cy="68" r="5" fill="url(#tgE)"/><circle cx="80" cy="62" r="3.2" fill="url(#tgE)"/><circle cx="66" cy="76" r="2.4" fill="url(#tgE)"/><circle cx="94" cy="76" r="2.4" fill="url(#tgE)"/><circle cx="70.6" cy="66.6" r="1.2" fill="#fff"/><circle cx="86.6" cy="66.6" r="1.2" fill="#fff"/></g>'+
+ '<path d="M72 84Q80 90 88 84" fill="none" stroke="#e8e0d8" stroke-width="1.4"/><path d="M73 83L70 96 76 85M87 83L90 96 84 85" fill="#efe6d8" stroke="#a89c88" stroke-width=".6"/>'+
+ '<path d="M64 52L60 40M96 52L100 40" stroke="#2a1218" stroke-width="3" stroke-linecap="round"/></g>'})();
+ /* ---------- 13. Jorogumo ---------- */
+ H.jorogumo=(function(){var L='',i;
+ for(i=0;i<4;i++){var a=-70+i*22;
+  L+='<g transform="rotate('+a+' 80 108)"><g class="'+(i%2?'yd-lj1':'yd-lj2')+'" style="transform-origin:80px 108px"><path d="M80 108C84 80 92 52 96 22" fill="none" stroke="#150a18" stroke-width="5" stroke-linecap="round"/><path d="M96 22L102 8" fill="none" stroke="#150a18" stroke-width="3.2" stroke-linecap="round"/></g></g>';
+  L+='<g transform="rotate('+(-a)+' 80 108)"><g class="'+(i%2?'yd-lj2':'yd-lj1')+'" style="transform-origin:80px 108px"><path d="M80 108C76 80 68 52 64 22" fill="none" stroke="#150a18" stroke-width="5" stroke-linecap="round"/><path d="M64 22L58 8" fill="none" stroke="#150a18" stroke-width="3.2" stroke-linecap="round"/></g></g>'}
+ return '<defs><radialGradient id="jgA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#9a3cff" stop-opacity=".34"/><stop offset="1" stop-color="#9a3cff" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="jgK" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#6a2a78"/><stop offset=".6" stop-color="#2a0e3a"/><stop offset="1" stop-color="#0c0414"/></linearGradient>'+
+ '<radialGradient id="jgP" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#fff6ee"/><stop offset=".8" stop-color="#ecd9ca"/><stop offset="1" stop-color="#b8a090"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="80" r="78" fill="url(#jgA)"/>'+
+ '<g stroke="#d8d0e8" stroke-width=".8" opacity=".55" fill="none"><path d="M0 20Q40 40 80 30 120 40 160 20M20 0Q40 60 80 56M140 0Q120 60 80 56M0 70Q40 80 60 96M160 70Q120 80 100 96"/></g>'+
+ L+
+ '<path d="M36 160Q42 126 66 112L80 132 94 112Q118 126 124 160Z" fill="url(#jgK)"/><path d="M66 112L80 142 94 112" fill="none" stroke="#f1ece4" stroke-width="4"/><path d="M42 146Q80 158 118 146" stroke="#c4181f" stroke-width="8" fill="none" opacity=".9"/><g fill="#e8a8d0" opacity=".55"><circle cx="54" cy="136" r="2.6"/><circle cx="106" cy="138" r="2.6"/></g>'+
+ '<rect x="72" y="92" width="16" height="22" fill="#e6d4c4"/>'+
+ '<g class="yd-head"><path d="M80 22C64 22 56 38 56 54 56 76 66 90 80 90 94 90 104 76 104 54 104 38 96 22 80 22Z" fill="url(#jgP)" stroke="#a8967c" stroke-width="1"/>'+
+ '<path d="M54 56C48 22 62 10 80 10 98 10 112 22 106 56 104 36 96 26 80 26 64 26 56 36 54 56Z" fill="#0a050c"/><circle cx="80" cy="8" r="7" fill="#0a050c"/><path d="M92 8L112 2" stroke="#c9a14a" stroke-width="1.6"/><circle cx="113" cy="2" r="3" fill="#c4181f"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 54px"><path d="M60 54Q68 47 76 54Q68 59 60 54Z" fill="#fff" stroke="#14070a" stroke-width="1"/><path d="M84 54Q92 47 100 54Q92 59 84 54Z" fill="#fff" stroke="#14070a" stroke-width="1"/><ellipse cx="68" cy="53.4" rx="1.8" ry="4.6" fill="#a60fc4"/><ellipse cx="92" cy="53.4" rx="1.8" ry="4.6" fill="#a60fc4"/></g>'+
+ '<path d="M60 46Q68 42 77 47M84 47Q92 42 100 46" fill="none" stroke="#14070a" stroke-width="1.2" stroke-linecap="round"/><path d="M64 72Q80 84 96 72" fill="none" stroke="#a5101f" stroke-width="2.6" stroke-linecap="round"/><path d="M68 74l2 3 2-2.6M88 75l2 2.6 2-3.2" fill="#fff"/></g>'})();
+ /* ---------- 14. Aka Manto ---------- */
+ H.akamanto='<defs><radialGradient id="amA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e5182e" stop-opacity=".4"/><stop offset="1" stop-color="#e5182e" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="amC" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ff3a4a"/><stop offset=".5" stop-color="#b3101f"/><stop offset="1" stop-color="#4a0610"/></linearGradient>'+
+ '<linearGradient id="amD" x1="0" x2="1"><stop offset="0" stop-color="#5a6a62"/><stop offset="1" stop-color="#26302c"/></linearGradient>'+
+ '<radialGradient id="amM" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d4cdc0"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="76" fill="url(#amA)"/>'+
+ '<rect x="16" y="6" width="128" height="152" rx="3" fill="url(#amD)" stroke="#161d1a" stroke-width="3"/><path d="M80 6V158M16 40H144" stroke="#161d1a" stroke-width="2" opacity=".7"/><circle cx="30" cy="84" r="3.4" fill="#c4b8a0"/><rect x="22" y="12" width="116" height="24" fill="#0a0f0d" opacity=".8"/>'+
+ '<g class="yd-sway2"><path d="M80 30C46 30 28 60 24 160H136C132 60 114 30 80 30Z" fill="url(#amC)"/><path d="M80 34C70 70 70 120 76 160M80 34C90 70 90 120 84 160" stroke="#4a0610" stroke-width="1.4" fill="none" opacity=".6"/>'+
+ '<path d="M44 46L36 24Q60 38 80 46 100 38 124 24L116 46Q98 58 80 58 62 58 44 46Z" fill="#7a0b18" stroke="#3a0408" stroke-width="1"/>'+
+ '<path d="M80 52C62 52 56 66 56 78 56 96 66 108 80 108 94 108 104 96 104 78 104 66 98 52 80 52Z" fill="url(#amM)" stroke="#8c8272" stroke-width="1"/>'+
+ '<path d="M54 74C50 48 66 36 80 36 94 36 110 48 106 74 104 56 96 48 80 48 64 48 56 56 54 74Z" fill="#14070a"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 76px"><ellipse cx="69" cy="76" rx="6" ry="3.4" fill="#050203"/><ellipse cx="91" cy="76" rx="6" ry="3.4" fill="#050203"/><circle cx="69" cy="76" r="1.4" fill="#e5182e"/><circle cx="91" cy="76" r="1.4" fill="#e5182e"/></g>'+
+ '<path d="M66 92Q80 100 94 92" fill="none" stroke="#050203" stroke-width="2.2" stroke-linecap="round"/><path d="M72 94v3M78 96v3M84 96v3M90 94v3" stroke="#050203" stroke-width="1.2"/></g>'+
+ '<g class="yd-paper"><rect x="100" y="112" width="22" height="30" rx="1" fill="#d8232b" transform="rotate(8 111 127)"/><text x="111" y="132" font-size="12" text-anchor="middle" fill="#fff" transform="rotate(8 111 127)" style="font-family:var(--ja,serif)">赤</text></g><g class="yd-paper" style="animation-delay:-1.4s"><rect x="40" y="114" width="22" height="30" rx="1" fill="#2a6ad8" transform="rotate(-8 51 129)"/><text x="51" y="134" font-size="12" text-anchor="middle" fill="#fff" transform="rotate(-8 51 129)" style="font-family:var(--ja,serif)">青</text></g>';
+ /* ---------- 15. Okiku ---------- */
+ H.okiku=(function(){var P='',i;for(i=0;i<5;i++){var x=22+i*29,y=28+(i%2)*12;P+='<g transform="translate('+x+' '+y+')"><g class="yd-plate" style="--d:-'+(i*.8).toFixed(1)+'s"><ellipse rx="12" ry="4.4" fill="#e6f0ee" stroke="#7fa8a0" stroke-width="1"/><ellipse rx="8" ry="2.4" fill="none" stroke="#3a6a8a" stroke-width=".9"/>'+(i==2?'<path d="M-6 -2L2 2 6 -3" stroke="#222" stroke-width="1.2" fill="none"/>':'')+'</g></g>'}
+ return '<defs><radialGradient id="okA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7fe8d0" stop-opacity=".32"/><stop offset="1" stop-color="#7fe8d0" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="okW" x1="0" x2="1"><stop offset="0" stop-color="#6a645c"/><stop offset=".5" stop-color="#8a847a"/><stop offset="1" stop-color="#3a3630"/></linearGradient>'+
+ '<linearGradient id="okK" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bcc8c4"/></linearGradient>'+
+ '<radialGradient id="okP" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#f6f4ee"/><stop offset="1" stop-color="#b8b0a2"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="80" r="76" fill="url(#okA)"/>'+P+
+ '<g class="yd-sway2" style="transform-origin:80px 150px">'+
+ '<path d="M50 150Q54 104 80 96 106 104 110 150Z" fill="url(#okK)"/><path d="M64 98L80 126 96 98" fill="none" stroke="#98a8a4" stroke-width="3"/>'+
+ '<g class="yd-head"><path d="M80 52C66 52 60 64 60 76 60 94 68 102 80 102 92 102 100 94 100 76 100 64 94 52 80 52Z" fill="url(#okP)" stroke="#9a9284" stroke-width="1"/>'+
+ '<path d="M58 78C50 46 64 38 80 38 96 38 110 46 102 78 100 62 94 56 82 56 64 58 60 64 58 78Z" fill="#050307"/><path d="M62 70C58 96 64 124 56 150M98 70C102 96 96 124 104 150" fill="none" stroke="#050307" stroke-width="9" stroke-linecap="round"/>'+
+ '<path d="M84 60C78 70 82 82 76 88" stroke="#050307" stroke-width="12" stroke-linecap="round" fill="none"/>'+
+ '<circle cx="88" cy="76" r="3.2" fill="#fff" stroke="#14070a" stroke-width="1"/><circle cx="88" cy="76" r="1.5" fill="#050203"/><path d="M82 70Q88 67 94 70" stroke="#14070a" stroke-width="1.2" fill="none"/><path d="M80 92Q86 96 92 92" stroke="#7a1a22" stroke-width="1.6" fill="none" stroke-linecap="round"/></g></g>'+
+ '<path d="M24 160Q24 132 40 128H120Q136 132 136 160Z" fill="url(#okW)"/><g stroke="#2a2824" stroke-width="1.2" opacity=".7" fill="none"><path d="M24 148H136M52 128V160M80 128V160M108 128V160"/></g><ellipse cx="80" cy="128" rx="40" ry="6" fill="#050a0c"/>'+
+ '<g transform="translate(130 100)"><g class="yd-fl"><circle r="12" fill="#7fe8d0" opacity=".24"/><path d="M0 -10Q5 -3 3.4 2 2 5 0 5-2 5-3.4 2-5-3 0 -10Z" fill="#d0fff4"/></g></g>'})();
  window.YK_HD=H;
 })();
