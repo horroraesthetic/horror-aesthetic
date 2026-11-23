@@ -16,6 +16,10 @@
   teruteru:['Тэру-тэру-бодзу','Teru-teru-bōzu','Куколка из ткани, которую вешают за окно, чтобы прогнать дождь. В страшных историях её ждёт совсем другой повод.','A cloth doll hung at the window to chase away rain. In ghost stories it is hung for other reasons.'],
   jizo:['Дзидзо','Jizō','Каменный хранитель детей и путников. Ему повязывают красные нагрудники и приносят цветы и сладости.','A stone guardian of children and travellers, dressed in red bibs and left with flowers and sweets.'],
   daruma:['Дарума','Daruma','Кукла желаний: загадывая желание, рисуют один глаз, а второй рисуют, когда оно сбылось.','A wishing doll. One eye is painted when a wish is made, the other when it comes true.'],
+  kitsune:['Кицунэ','Kitsune','Лиса-оборотень. С возрастом у неё прибавляется хвостов, а в тёмных рассказах она ведёт путников огнями кицунэ-би.','A shape-shifting fox. With age she gains more tails, and in dark tales she leads travellers astray with fox-fire.'],
+  kappa:['Каппа','Kappa','Речной ёкай с водой в чаше на голове. Пока вода не пролилась, он силён. Любит огурцы и вежливость: поклонись ему, и он поклонится в ответ.','A river yōkai with water in a dish on its head. While it holds, he is strong. He loves cucumbers and courtesy: bow to him and he bows back.'],
+  rokurokubi:['Рокурокуби','Rokurokubi','Днём обычная женщина. Ночью её шея вытягивается, и голова скользит по тёмным комнатам.','An ordinary woman by day. At night her neck stretches and her head glides through dark rooms.'],
+  kuchisake:['Кутисакэ-онна','Kuchisake-onna','Городская легенда: женщина в маске спрашивает «Я красивая?». Что бы ты ни ответил, в её руке ножницы.','An urban legend: a masked woman asks "Am I pretty?". Whatever you answer, she holds a pair of scissors.'],
   nopperabo:['Нопперабо','Nopperabō','Безликий призрак. Он выглядит как обычный человек, пока не повернётся: на лице нет ничего.','The faceless ghost. It looks like any person until it turns around: there is nothing on its face.']};
  var css=document.createElement("style");css.textContent='';
  function SV(id,c){return '<svg viewBox="0 0 48 48" class="'+(c||'')+'" aria-hidden="true">'+Y[id]+'</svg>'}
