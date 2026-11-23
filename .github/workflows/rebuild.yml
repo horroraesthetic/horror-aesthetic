@@ -30,6 +30,7 @@ jobs:
           python3 scripts/build-archive.py
           python3 scripts/build-search-index.py
           python3 scripts/build-daily.py
+          python3 scripts/build-collections.py
           python3 scripts/build-feed.py
       - name: Commit changes if any
         run: |

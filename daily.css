@@ -17,3 +17,4 @@ html[data-l=en] .dl .l-ru,html[data-l=ru] .dl .l-en{display:none}
 @media(max-width:640px){.dl-g{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.dl .yk-hd svg *{animation:none!important}}
 :root[data-tone="tomie"] .dl-h{color:#2a0f14}
+.dl-more{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.dl-more a{display:inline-block;padding:11px 14px;border:1px solid #c4161f;background:rgba(196,22,31,.14);color:#f1e8df;text-decoration:none;font:600 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}.dl-more a:hover{box-shadow:0 0 18px rgba(200,20,35,.35)}

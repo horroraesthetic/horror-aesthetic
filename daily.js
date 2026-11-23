@@ -5,7 +5,7 @@
  function pick(n,salt){return(Math.imul(day+salt,2654435761)>>>0)%n}
  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
  var sec=document.createElement("section");sec.id="daily";sec.className="dl";sec.setAttribute("aria-label","Tonight");
- sec.innerHTML='<div class="dl-h"><span class="l-ru">Сегодня ночью</span><span class="l-en">Tonight</span><i lang="ja">今夜</i></div><div class="dl-g"><div class="dl-c dl-f" id="dl-f"></div><a class="dl-c dl-y" id="dl-y" href="folklore/"></a></div>';
+ sec.innerHTML='<div class="dl-h"><span class="l-ru">Сегодня ночью</span><span class="l-en">Tonight</span><i lang="ja">今夜</i></div><div class="dl-g"><div class="dl-c dl-f" id="dl-f"></div><a class="dl-c dl-y" id="dl-y" href="folklore/"></a></div><div class="dl-more"><a href="collections/"><span class="l-ru">Подборки по темам →</span><span class="l-en">Collections by theme →</span></a> <a href="creepypasta/"><span class="l-ru">Крипипасты →</span><span class="l-en">Creepypastas →</span></a></div>';
  anchor.parentNode.insertBefore(sec,anchor);
  /* film */
  fetch("data/daily.json").then(function(r){return r.json()}).then(function(F){
