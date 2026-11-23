@@ -22,11 +22,22 @@
  function loadCols(){return COLS?Promise.resolve(COLS):fetch("../data/collections.json").then(function(r){return r.json()}).then(function(j){COLS=j;return j})}
  function stars(r){var f=Math.floor((r||0)/2),h=(r||0)%2,o="";for(var i=1;i<=5;i++)o+='<span class="s'+(r>=i*2?" f":r===i*2-1?" h":"")+'" data-n="'+i+'">★<i>★</i></span>';return o}
  function actHTML(sl){var e=D.get(sl),I=window.HA_ICONS;return '<div class="fa"><button type="button" data-fa="w" aria-pressed="'+!!e.w+'">'+I.eye+'<span>'+(e.w?T("Просмотрено","Watched"):T("Смотрел","Watched"))+'</span></button><button type="button" data-fa="l" aria-pressed="'+!!e.l+'">'+I.heart+'<span>'+T("Нравится","Like")+'</span></button><button type="button" data-fa="wl" aria-pressed="'+!!e.wl+'">'+I.clock+'<span>'+T("Хочу","Watchlist")+'</span></button></div><div class="fr" data-sl="'+esc(sl)+'">'+stars(e.r||0)+'</div>'}
+
+ var MOODS=[["classic","🎞","Классика до 1980","Classics before 1980"],["new","🆕","Новее 2015","Newer than 2015"],["top","★","Лучшее (4.5+)","Top rated (4.5+)"],["j-horror","日","Японское","Japanese"],["haunted-houses","家","Дома с призраками","Haunted houses"],["folk-horror","村","Фолк-хоррор","Folk horror"],["ghost-children","子","Дети и призраки","Ghost children"],["wl","⏱","Из «Хочу»","From my watchlist"]];
+ function pick(key){
+  var d=D.all(),seen=function(f){return d[f[0]]&&d[f[0]].w};
+  function go(pool){var u=pool.filter(function(f){return !seen(f)});if(!u.length)u=pool;if(!u.length){location.replace("#home");alert(T("Тут пока пусто","Nothing here yet"));return}var r=u[Math.floor(Math.random()*u.length)];location.replace("#film/"+r[0])}
+  if(key==="classic")go(FILMS.filter(function(f){return +f[3]<1980}));
+  else if(key==="new")go(FILMS.filter(function(f){return +f[3]>=2015}));
+  else if(key==="top")go(FILMS.filter(function(f){return +f[5]>=4.5}));
+  else if(key==="wl")go(FILMS.filter(function(f){return d[f[0]]&&d[f[0]].wl}));
+  else loadCols().then(function(J){go((J[key]||[]).map(function(x){return BY[x]}).filter(Boolean))})}
  /* ---------- views ---------- */
  function vHome(){
   var f=pickTonight(),d=D.all(),wl=FILMS.filter(function(x){return d[x[0]]&&d[x[0]].wl}),top=FILMS.filter(function(x){return +x[5]>=4.5}).sort(function(a,b){return b[5]-a[5]||a[3]-b[3]}).slice(0,14);
   var rec=recent.map(function(s){return BY[s]}).filter(Boolean).slice(0,14);
   return '<div class="hero"><i>今夜</i><small>'+T("Фильм ночи","Film of the night")+'</small><b>'+esc(name(f).replace(/\s*\(\d{4}\)\s*$/,""))+'</b><span>'+esc(f[3])+(f[4]?" · "+esc(f[4]):"")+(f[5]?" · ★ "+esc(f[5]):"")+'</span><a class="go" href="#film/'+esc(f[0])+'">'+T("Открыть →","Open →")+'</a> <a class="go" href="#random">'+T("Случайный ↻","Random ↻")+'</a></div>'+
+  '<h2 class="sh">'+T("Что посмотреть сегодня?","What to watch tonight?")+'</h2><div class="chips">'+MOODS.map(function(m){return '<button type="button" onclick="location.hash=\'#pick/'+m[0]+'\'">'+m[1]+' '+esc(T(m[2],m[3]))+'</button>'}).join("")+'</div>'+
   (rec.length?'<h2 class="sh">'+T("Новые рецензии","New reviews")+'<a href="#films">'+T("все","all")+'</a></h2><div class="row">'+cards(rec)+'</div>':'')+
   (wl.length?'<h2 class="sh">'+T("Хочу посмотреть","Your watchlist")+'<a href="#lists">'+T("все","all")+'</a></h2><div class="row">'+cards(wl.slice(0,14))+'</div>':'')+
   (function(){var h=hist().map(function(x){return BY[x]}).filter(Boolean);return h.length?'<h2 class="sh">'+T("Недавно открывали","Recently opened")+'</h2><div class="row">'+cards(h.slice(0,14))+'</div>':''})()+
@@ -57,7 +68,7 @@
   return out}
  function vLists(){
   var d=D.all(),wl=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].wl}),lk=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].l});
-  return '<h2 class="sh">'+T("Хочу посмотреть","Watchlist")+' · '+wl.length+'</h2>'+(wl.length?'<div class="grid">'+cards(wl)+'</div>':'<div class="empty">'+T("Нажмите «Хочу» на странице фильма.","Tap Watchlist on a film page.")+'</div>')+
+  return '<h2 class="sh">'+T("Хочу посмотреть","Watchlist")+' · '+wl.length+(wl.length>1?'<a href="#pick/wl">'+T("выбрать за меня ↻","pick for me ↻")+'</a>':'')+'</h2>'+(wl.length?'<div class="grid">'+cards(wl)+'</div>':'<div class="empty">'+T("Нажмите «Хочу» на странице фильма.","Tap Watchlist on a film page.")+'</div>')+
   '<h2 class="sh">'+T("Нравится","Liked")+' · '+lk.length+'</h2>'+(lk.length?'<div class="grid">'+cards(lk)+'</div>':'<div class="empty">'+T("Нажмите ♥ на странице фильма.","Tap ♥ on a film page.")+'</div>')+
   '<h2 class="sh">'+T("Подборки","Collections")+'</h2><div class="lst">'+COLL.map(function(c){return '<a href="#collection/'+c[0]+'"><span>'+c[1]+'</span><b>'+esc(T(c[2],c[3]))+'</b></a>'}).join("")+'</div>'}
  function vMe(){
@@ -94,6 +105,7 @@
  function route(){
   var parts=(location.hash||"#home").slice(1).split("/"),v=parts[0],arg=parts[1]||"";
   if(v==="random"){var r=FILMS[Math.floor(Math.random()*FILMS.length)];location.replace("#film/"+r[0]);return}
+  if(v==="pick"){pick(arg);return}
   var main={home:1,films:1,diary:1,lists:1,me:1};var sub=(v==="film"||v==="collection");if(!main[v]&&!sub)v="home";
   $("#ab-b").hidden=!sub;
   $("#ab-t").textContent=sub?"":(v==="home"?"HORROR AESTHETIC":T(HOME_TITLES[v][0],HOME_TITLES[v][1]).toUpperCase());$("#ab-l").textContent=lang()==="ru"?"EN":"RU";
