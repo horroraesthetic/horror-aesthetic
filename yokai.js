@@ -23,9 +23,9 @@
  var MAP2={library:"jizo",subs:"karakasa",shelves:"bakeneko",dirs:"nopperabo",badges:"daruma",quiz:"teruteru",lists:"karakasa",play:"bakeneko",catalog:"jizo"};
  document.querySelectorAll("section[data-cat]").forEach(function(s){var c=s.getAttribute("data-cat"),m=MAP2[c];if(!m)return;var mk=s.querySelector(".sec-h>.jx-m");if(!mk)return;mk.className="jx-m jx-"+m+" yk-m";mk.innerHTML=SV(m)});
  /* 2) gallery */
- var g=document.getElementById("yokai-gallery");
+ var HD=window.YK_HD;var g=document.getElementById("yokai-gallery");
  if(g){var ru=function(){return document.documentElement.dataset.l==="ru"||document.documentElement.lang==="ru"};
-  var draw=function(){g.innerHTML='<h2 class="yk-h">'+(ru()?'Живые ёкаи':'Living yōkai')+'</h2><div class="yk-g">'+Object.keys(NAME).map(function(k){var n=NAME[k];return '<figure class="yk-c"><div class="yk-art yk-art-'+k+'">'+SV(k)+'</div><figcaption><b>'+(ru()?n[0]:n[1])+'</b><span>'+(ru()?n[2]:n[3])+'</span></figcaption></figure>'}).join('')+'</div>'};
+  var draw=function(){g.innerHTML='<h2 class="yk-h">'+(ru()?'Живые ёкаи':'Living yōkai')+'</h2><div class="yk-g">'+Object.keys(NAME).map(function(k){var n=NAME[k];return '<figure class="yk-c"><div class="yk-art yk-art-'+k+(HD&&HD[k]?' yk-hd':'')+'">'+(HD&&HD[k]?'<svg viewBox="0 0 160 160" aria-hidden="true">'+HD[k]+'</svg>':SV(k))+'</div><figcaption><b>'+(ru()?n[0]:n[1])+'</b><span>'+(ru()?n[2]:n[3])+'</span></figcaption></figure>'}).join('')+'</div>'};
   draw();new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:["data-l","lang"]});
  }
 })();

@@ -47,3 +47,68 @@ html.ha-calm .yk-hop,html.ha-calm .yk-tail,html.ha-calm .yk-tail2,html.ha-calm .
 @keyframes ykBlk{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}}
 @keyframes ykWag{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
 @media(prefers-reduced-motion:reduce){#yokai-gallery .jx-flk,#yokai-gallery .jx-blk,#yokai-gallery .jx-wag{animation:none!important}}
+
+/* HD yokai */
+.yk-art.yk-hd{width:148px;height:148px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.55))}
+.yk-hd svg *{transform-box:fill-box;transform-origin:center}
+@keyframes ydP{0%,100%{opacity:.55;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes ydOrb{to{transform:rotate(360deg)}}
+@keyframes ydHop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-7px) rotate(-2deg)}60%{transform:translateY(0) rotate(1.5deg)}}
+@keyframes ydSh{0%,100%{transform:scale(1);opacity:.4}30%{transform:scale(.8);opacity:.25}}
+@keyframes ydTg{0%,100%{transform:scaleY(1) skewX(0)}50%{transform:scaleY(1.1) skewX(5deg)}}
+@keyframes ydLook{0%,20%{transform:translateX(0)}35%,55%{transform:translateX(-5px)}70%,90%{transform:translateX(5px)}100%{transform:translateX(0)}}
+@keyframes ydLid{0%,88%,100%{transform:scaleY(0)}92%{transform:scaleY(1.5)}}
+@keyframes ydFl{0%,100%{transform:scale(1,1)}25%{transform:scale(.9,1.12)}60%{transform:scale(1.08,.94)}}
+@keyframes ydTail{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+@keyframes ydWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-12deg)}}
+@keyframes ydBl{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}
+@keyframes ydWh{0%,100%{transform:translateY(0)}50%{transform:translateY(1.5px)}}
+@keyframes ydFlash{0%,86%,100%{opacity:0}88%{opacity:.7}90%{opacity:.1}92%{opacity:.55}96%{opacity:0}}
+@keyframes ydRain{0%{transform:translateY(-4px);opacity:0}15%{opacity:1}100%{transform:translateY(150px);opacity:0}}
+@keyframes ydSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes ydDr{0%{transform:scaleY(0);opacity:0}30%{opacity:1}100%{transform:scaleY(1.4) translateY(8px);opacity:0}}
+@keyframes ydSeep{0%,70%{opacity:0}85%{opacity:.9}100%{opacity:0}}
+@keyframes ydSm{0%{transform:translateY(8px);opacity:0}30%{opacity:.5}100%{transform:translateY(-22px);opacity:0}}
+@keyframes ydBib{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+@keyframes ydRing{0%,80%,100%{transform:rotate(0)}84%{transform:rotate(-6deg)}88%{transform:rotate(5deg)}92%{transform:rotate(-3deg)}}
+@keyframes ydRock{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes ydIris{0%,100%{transform:scale(0);opacity:0}45%,75%{transform:scale(1);opacity:1}}
+@keyframes ydHL{0%,100%{transform:rotate(1.5deg)}50%{transform:rotate(-2deg)}}
+@keyframes ydHR{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(2deg)}}
+@keyframes ydHead{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+@keyframes ydBead{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes ydFeat{0%,40%,100%{opacity:0}55%,75%{opacity:.8}}
+@keyframes ydRip{0%{transform:scale(.4);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+@keyframes ydTear{0%,50%{transform:scaleY(0);opacity:0}60%{opacity:1}100%{transform:scaleY(1);opacity:0}}
+.yd-pulse{animation:ydP 4s ease-in-out infinite}.yd-pulse2{animation:ydP 2.6s ease-in-out infinite}
+.yd-orbit{animation:ydOrb 7s linear infinite;transform-origin:80px 76px!important;transform-box:view-box!important}
+.yd-hop{animation:ydHop 2.8s ease-in-out infinite;transform-origin:80px 150px!important}
+.yd-shadow{animation:ydSh 2.8s ease-in-out infinite}
+.yd-tongue{animation:ydTg 2.2s ease-in-out infinite;transform-origin:top center}
+.yd-look{animation:ydLook 6s ease-in-out infinite}
+.yd-lid{animation:ydLid 5s ease-in-out infinite;transform-origin:top center}
+.yd-fl{animation:ydFl 1.2s ease-in-out infinite}
+.yd-tail{animation:ydTail 3.4s ease-in-out infinite;transform-origin:50px 146px!important;transform-box:view-box!important}
+.yd-tail2{animation:ydTail 4.2s ease-in-out infinite reverse;transform-origin:54px 150px!important;transform-box:view-box!important}
+.yd-wave{animation:ydWave 1.6s ease-in-out infinite;transform-origin:112px 124px!important;transform-box:view-box!important}
+.yd-blink{animation:ydBl 6s ease-in-out infinite;transform-origin:80px 70px!important;transform-box:view-box!important}
+.yd-whisk{animation:ydWh 3s ease-in-out infinite}
+.yd-flash{animation:ydFlash 7s linear infinite}
+.yd-rain{animation:ydRain var(--t,1.3s) linear infinite;animation-delay:var(--d,0s)}
+.yd-sway{animation:ydSway 4s ease-in-out infinite;transform-origin:80px 4px!important;transform-box:view-box!important}
+.yd-drip{animation:ydDr 3.6s ease-in infinite;animation-delay:var(--d,0s);transform-origin:top center}
+.yd-seep{animation:ydSeep 9s ease-in-out infinite}
+.yd-smoke{animation:ydSm 5s ease-out infinite;animation-delay:var(--d,0s)}
+.yd-bib{animation:ydBib 3.2s ease-in-out infinite}
+.yd-ring{animation:ydRing 6s ease-in-out infinite;transform-origin:118px 134px!important;transform-box:view-box!important}
+.yd-rock{animation:ydRock 3.6s ease-in-out infinite;transform-origin:80px 148px!important;transform-box:view-box!important}
+.yd-iris{animation:ydIris 7s ease-in-out infinite}
+.yd-hairL{animation:ydHL 5s ease-in-out infinite;transform-origin:54px 60px!important;transform-box:view-box!important}
+.yd-hairR{animation:ydHR 5s ease-in-out infinite;transform-origin:106px 60px!important;transform-box:view-box!important}
+.yd-head{animation:ydHead 6s ease-in-out infinite;transform-origin:80px 110px!important;transform-box:view-box!important}
+.yd-kan{animation:none}.yd-bead{animation:ydBead 2.4s ease-in-out infinite;transform-origin:118px 18px!important;transform-box:view-box!important}
+.yd-feat{animation:ydFeat 9s ease-in-out infinite;animation-delay:var(--d,0s)}
+.yd-rip{animation:ydRip 3.6s ease-out infinite;animation-delay:var(--d,0s)}
+.yd-tear{animation:ydTear 6s ease-in infinite;transform-origin:top center}
+@media(prefers-reduced-motion:reduce){.yk-hd svg *{animation:none!important}}
+html.ha-calm .yk-hd svg *{animation:none!important}
