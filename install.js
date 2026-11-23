@@ -3,7 +3,7 @@
  var root=document.documentElement,dp=null;
  function lang(){return String(root.dataset.l||root.lang||"en").toLowerCase().indexOf("ru")===0?"ru":"en"}
  var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
- if(standalone){return}
+ if(standalone||/HorrorAestheticApp/.test(navigator.userAgent)){return}
  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;show()});
  addEventListener("appinstalled",function(){var b=document.getElementById("ha-inst");if(b)b.remove()});

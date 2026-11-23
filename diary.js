@@ -55,7 +55,7 @@
   var inApp=/\/app\/$|\/app\/index\.html$/.test(location.pathname);
   var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
   try{if(inApp||/[?&]app=1/.test(location.search))sessionStorage.setItem("ha-app","1")}catch(e){}
-  var on=inApp||standalone;try{on=on||sessionStorage.getItem("ha-app")==="1"}catch(e){}
+  var on=inApp||standalone||/HorrorAestheticApp/.test(navigator.userAgent);try{on=on||sessionStorage.getItem("ha-app")==="1"}catch(e){}
   if(!on||document.querySelector(".ha-tabs"))return;css();
   var items=[["home","home","Главная","Home"],["films","film","Фильмы","Films"],["diary","book","Дневник","Diary"],["lists","list","Списки","Lists"],["me","user","Я","Me"]];
   var nav=document.createElement("nav");nav.className="ha-tabs";nav.setAttribute("aria-label","App");
