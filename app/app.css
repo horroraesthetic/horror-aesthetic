@@ -52,3 +52,14 @@ h2.sh a{color:var(--dim);font-weight:600}
 .fr{display:flex;justify-content:center;gap:2px;margin:10px 0 4px}.fr .s{position:relative;width:44px;height:44px;font-size:42px;line-height:44px;color:#4a3a40;text-align:center;user-select:none}.fr .s i{position:absolute;left:0;top:0;overflow:hidden;width:0;color:var(--red);font-style:normal;white-space:nowrap;text-align:left}.fr .s.f i{width:100%}.fr .s.h i{width:50%}
 .syn{font-size:18px;line-height:1.55}.ex{color:#cdbfb7;line-height:1.65}.gore{font:600 12px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .ft{min-width:0;flex:1}.ft h1{font-size:22px;overflow-wrap:anywhere;hyphens:auto}.fp .pt{font-size:14px;overflow-wrap:anywhere}
+
+.pc img,.fp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pc.has::after{content:"";position:absolute;inset:auto 0 0;height:38%;background:linear-gradient(transparent,rgba(0,0,0,.82));pointer-events:none}
+.pc.has .py,.pc.has .pr,.pc.has .pm{z-index:1}
+.pc:not(.has)::before{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none}
+.pc.m0::before{background:radial-gradient(circle at 68% 58%,hsl(var(--h) 70% 70%/.55) 0 16%,transparent 17%),radial-gradient(circle at 68% 58%,hsl(var(--h) 60% 50%/.25) 0 34%,transparent 35%)}
+.pc.m1::before{background:repeating-linear-gradient(90deg,transparent 0 11px,rgba(0,0,0,.45) 11px 14px)}
+.pc.m2::before{background:repeating-radial-gradient(circle at 50% 70%,transparent 0 9px,hsl(var(--h) 60% 55%/.22) 9px 11px)}
+.pc.m3::before{background:repeating-linear-gradient(115deg,transparent 0 14px,hsl(var(--h) 60% 60%/.16) 14px 16px)}
+.pc.m4::before{background:radial-gradient(ellipse 60% 24% at 50% 62%,hsl(var(--h) 70% 65%/.5) 0 60%,transparent 62%),radial-gradient(circle at 50% 62%,rgba(0,0,0,.8) 0 9%,transparent 10%)}
+.fp.has{padding:0}
