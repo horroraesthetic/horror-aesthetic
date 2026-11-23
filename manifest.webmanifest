@@ -1,8 +1,8 @@
 {
   "name": "Horror Aesthetic",
   "short_name": "Horror",
-  "description": "Horror reviews, lists, shelves and a catalogue. Рецензии, подборки и каталог хоррора.",
-  "start_url": "/horror-aesthetic/",
+  "description": "Horror films, diary, watchlist and lists. Фильмы ужасов, дневник и списки.",
+  "start_url": "/horror-aesthetic/app/",
   "scope": "/horror-aesthetic/",
   "display": "standalone",
   "background_color": "#0a0606",
@@ -35,8 +35,18 @@
   ],
   "shortcuts": [
     {
-      "name": "Reviews / Рецензии",
-      "url": "/horror-aesthetic/reviews/",
+      "name": "Films / Фильмы",
+      "url": "/horror-aesthetic/app/#films",
+      "icons": [
+        {
+          "src": "/horror-aesthetic/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Diary / Дневник",
+      "url": "/horror-aesthetic/app/#diary",
       "icons": [
         {
           "src": "/horror-aesthetic/icon-192.png",
@@ -47,16 +57,6 @@
     {
       "name": "Creepypasta / Крипипасты",
       "url": "/horror-aesthetic/creepypasta/",
-      "icons": [
-        {
-          "src": "/horror-aesthetic/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Folklore / Фольклор",
-      "url": "/horror-aesthetic/folklore/",
       "icons": [
         {
           "src": "/horror-aesthetic/icon-192.png",
