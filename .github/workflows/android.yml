@@ -2,6 +2,8 @@ name: build-android-apk
 # Builds the Horror Aesthetic Android app (a full-screen wrapper around the /app/ page) and publishes it as a GitHub release asset.
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 1'
   push:
     branches: [main]
     paths:
@@ -33,25 +35,36 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Signing key (stable if the secret exists, otherwise a one-off key)
+      - name: Restore the stable signing key from the private cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/ks
+          key: android-keystore-v1
+      - name: Signing key (repository secret if set, else the private cached key, else a new one that gets cached)
         env:
           KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
           KS_PASS_SECRET: ${{ secrets.ANDROID_KEYSTORE_PASS }}
           KS_ALIAS_SECRET: ${{ secrets.ANDROID_KEY_ALIAS }}
         run: |
+          D="$RUNNER_TEMP/ks"; mkdir -p "$D"
           if [ -n "$KS_B64" ] && [ -n "$KS_PASS_SECRET" ] && [ -n "$KS_ALIAS_SECRET" ]; then
-            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "$KS_B64" | base64 -d > "$D/release.jks"
             echo "KS_PASS=$KS_PASS_SECRET" >> "$GITHUB_ENV"
             echo "KS_ALIAS=$KS_ALIAS_SECRET" >> "$GITHUB_ENV"
-            echo "Using the stable signing key"
+            echo "Using the secret signing key"
+          elif [ -f "$D/release.jks" ] && [ -f "$D/pass" ]; then
+            echo "KS_PASS=$(cat "$D/pass")" >> "$GITHUB_ENV"
+            echo "KS_ALIAS=ha" >> "$GITHUB_ENV"
+            echo "Using the cached signing key"
           else
             P=$(head -c 24 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 20)
-            keytool -genkeypair -v -keystore "$RUNNER_TEMP/release.jks" -storepass "$P" -keypass "$P" -alias ha -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Horror Aesthetic"
+            keytool -genkeypair -keystore "$D/release.jks" -storepass "$P" -keypass "$P" -alias ha -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Horror Aesthetic"
+            echo "$P" > "$D/pass"
             echo "KS_PASS=$P" >> "$GITHUB_ENV"
             echo "KS_ALIAS=ha" >> "$GITHUB_ENV"
-            echo "Using a one-off signing key (updates need the old app uninstalled first)"
+            echo "Created a new signing key (cached for next builds)"
           fi
-          echo "KS_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          echo "KS_FILE=$D/release.jks" >> "$GITHUB_ENV"
       - name: Build
         working-directory: android
         run: gradle assembleRelease -Pvc=${{ github.run_number }} --no-daemon --stacktrace
