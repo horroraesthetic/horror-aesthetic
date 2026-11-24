@@ -2,6 +2,7 @@
 (function(){
  var root=document.documentElement,$=function(s){return document.querySelector(s)},A=$("#app"),D=window.HA_DIARY;
  var GR={},PO={},FD=null,COLS=null,FILMS=[],BY={},recent=[],shown=60,filt={g:"",q:"",dec:"",set:"",sort:"rating"};
+ try{if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register("/horror-aesthetic/sw.js").catch(function(){})}catch(e){}
  function lang(){return root.dataset.l==="ru"?"ru":"en"}
  function T(ru,en){return lang()==="ru"?ru:en}
  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
@@ -38,6 +39,49 @@
   function add(src,cb){var e=document.createElement("script");e.src=src;e.onload=cb;document.head.appendChild(e)}
   function run(){add("../yokai.js?v=4")}
   if(window.YK_HD)run();else add("../yokai-hd.js?v=4",run)}
+
+ function offStatus(){var t="";try{t=localStorage.getItem("ha-off")||""}catch(e){}return t?T("Скачано: ","Downloaded: ")+t:T("Рецензии, постеры и подборки будут открываться без сети.","Reviews, posters and collections will open without a network.")}
+ function downloadOffline(btn){
+  if(!window.caches){alert(T("Браузер не поддерживает","Not supported"));return}
+  var urls=["../app/","../folklore/","../creepypasta/","../data/daily.json","../data/films.json","../data/collections.json","../data/posters.json","../data/gore.json"];
+  FILMS.forEach(function(f){urls.push("../reviews/"+f[0]+".html")});Object.keys(PO).forEach(function(k){urls.push("../img/posters/"+encodeURI(PO[k]))});
+  urls=urls.map(function(u){return new URL(u,location.href).href});
+  var i=0,done=0,fail=0,st=$("#offs");btn.disabled=true;
+  caches.open("ha-offline").then(function(c){
+   function next(){if(i>=urls.length)return Promise.resolve();var u=urls[i++];return c.match(u).then(function(h){return h||c.add(u)}).catch(function(){fail++}).then(function(){done++;if(st)st.textContent=T("Скачано ","Saved ")+done+" / "+urls.length;return next()})}
+   var w=[];for(var k=0;k<6;k++)w.push(next());return Promise.all(w)}).then(function(){
+   var d=new Date().toLocaleDateString(lang()==="ru"?"ru-RU":"en-GB");try{localStorage.setItem("ha-off",d)}catch(e){}
+   btn.disabled=false;if(st)st.textContent=(fail?T("Готово, не скачалось: ","Done, failed: ")+fail+" · ":"")+offStatus()})}
+ function wrapped(){
+  var d=D.all(),yr=String(new Date().getFullYear()),seen=FILMS.filter(function(f){var e=d[f[0]];return e&&e.w&&String(e.w).slice(0,4)===yr}),label=yr;
+  if(!seen.length){seen=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].w});label=T("ВСЁ ВРЕМЯ","ALL TIME")}
+  if(!seen.length){alert(T("Отметьте хотя бы один просмотренный фильм","Mark at least one film as watched"));return}
+  var rated=seen.filter(function(f){return d[f[0]].r}),avg=rated.length?rated.reduce(function(a,f){return a+d[f[0]].r},0)/rated.length/2:0;
+  var dir={},dec={};seen.forEach(function(f){if(f[4])dir[f[4]]=(dir[f[4]]||0)+1;var k=Math.floor(f[3]/10)*10+"s";dec[k]=(dec[k]||0)+1});
+  function top(o){var k=Object.keys(o).sort(function(a,b){return o[b]-o[a]})[0];return k||"—"}
+  var best=seen.slice().sort(function(a,b){return (d[b[0]].r||0)-(d[a[0]].r||0)||(b[5]-a[5])}).slice(0,3);
+  var W=1080,H=1920,cv=document.createElement("canvas");cv.width=W;cv.height=H;var x=cv.getContext("2d");
+  var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#1a0508");g.addColorStop(.55,"#07090d");g.addColorStop(1,"#000");x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle="rgba(255,60,70,.10)";x.beginPath();x.arc(820,330,260,0,7);x.fill();
+  function tx(t,px,py,sz,col,al,wt){x.font=(wt||"900")+" "+sz+"px Impact,'Arial Black',Arial,sans-serif";x.fillStyle=col;x.textAlign=al||"left";x.fillText(t,px,py)}
+  function fit(t,max){return t.length>max?t.slice(0,max-1)+"…":t}
+  tx("HORROR AESTHETIC",80,120,40,"#ff5a64");tx(T("МОИ ИТОГИ","MY WRAPPED"),80,260,120,"#f1e7df");tx(label,80,360,96,"#ff5a64");
+  tx(String(seen.length),80,640,300,"#f1e7df");tx(T("фильмов просмотрено","films watched"),80,720,52,"#b9a8a2","left","700");
+  tx(avg?avg.toFixed(1)+" ★":"—",80,880,110,"#ff8d93");tx(T("средняя оценка","average rating"),80,940,44,"#b9a8a2","left","700");
+  tx(fit(top(dir),22),80,1090,64,"#f1e7df");tx(T("любимый режиссёр","favourite director"),80,1145,40,"#b9a8a2","left","700");
+  tx(top(dec),80,1280,64,"#f1e7df");tx(T("любимое десятилетие","favourite decade"),80,1335,40,"#b9a8a2","left","700");
+  tx(T("ТОП-3","TOP 3"),80,1450,48,"#ff5a64");
+  var jobs=best.map(function(f,i){return new Promise(function(res){var px=80+i*320,py=1480,w=290,h=330;
+   x.fillStyle="hsl("+hue(f[0])+",45%,18%)";x.fillRect(px,py,w,h);
+   function lbl(){x.fillStyle="rgba(0,0,0,.6)";x.fillRect(px,py+h-70,w,70);tx(fit(name(f).replace(/\s*\(\d{4}\)\s*$/,""),16),px+w/2,py+h-26,28,"#f1e7df","center");res()}
+   if(PO[f[0]]){var im=new Image();im.onload=function(){var r=Math.max(w/im.width,h/im.height),dw=im.width*r,dh=im.height*r;x.save();x.beginPath();x.rect(px,py,w,h);x.clip();x.drawImage(im,px+(w-dw)/2,py+(h-dh)/2,dw,dh);x.restore();lbl()};im.onerror=lbl;im.src="../img/posters/"+encodeURI(PO[f[0]])}else lbl()})});
+  Promise.all(jobs).then(function(){
+   tx("horroraesthetic.github.io/horror-aesthetic",W/2,1880,34,"#8a7b76","center","700");
+   var url=cv.toDataURL("image/png");
+   var o=document.createElement("div");o.id="wrapview";o.innerHTML='<img alt="" src="'+url+'"><div><button class="btn" id="wshare">'+T("Поделиться","Share")+'</button><button class="btn" id="wclose">'+T("Закрыть","Close")+'</button></div><p>'+T("Или зажмите картинку, чтобы сохранить","Or press and hold the image to save")+'</p>';
+   document.body.appendChild(o);
+   o.querySelector("#wclose").onclick=function(){o.remove()};
+   o.querySelector("#wshare").onclick=function(){cv.toBlob(function(b){var fl=new File([b],"horror-aesthetic-wrapped.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[fl]}))navigator.share({files:[fl],title:"Horror Aesthetic"}).catch(function(){});else{var a=document.createElement("a");a.href=url;a.download="horror-aesthetic-wrapped.png";a.click()}})}})}
  /* ---------- views ---------- */
  function vHome(){
   var f=pickTonight(),d=D.all(),wl=FILMS.filter(function(x){return d[x[0]]&&d[x[0]].wl}),top=FILMS.filter(function(x){return +x[5]>=4.5}).sort(function(a,b){return b[5]-a[5]||a[3]-b[3]}).slice(0,14);
@@ -91,7 +135,9 @@
   '<div class="stats"><div class="stat"><b>'+n+'</b><small>'+T("Просмотрено","Watched")+'</small></div><div class="stat"><b>'+(avg?avg.toFixed(1):"—")+'</b><small>'+T("Средняя оценка","Average rating")+'</small></div><div class="stat"><b>'+likes+'</b><small>'+T("Нравится","Liked")+'</small></div><div class="stat"><b>'+wl+'</b><small>'+T("Хочу","Watchlist")+'</small></div></div>'+
   '<h2 class="sh">'+T("Оценки","Ratings")+'</h2><div class="hist" style="margin-bottom:26px">'+hist.map(function(c,i){return '<div style="height:'+Math.round(c/mx*100)+'%"><span>'+((i+1)/2)+'</span></div>'}).join("")+'</div>'+
   '<div class="stats"><div class="stat"><b style="font-size:22px">'+esc(top(dec))+'</b><small>'+T("Любимое десятилетие","Favourite decade")+'</small></div><div class="stat"><b style="font-size:22px">'+esc(top(dir))+'</b><small>'+T("Любимый режиссёр","Favourite director")+'</small></div></div>'+
-  (/HorrorAestheticApp/.test(navigator.userAgent)?'':'<h2 class="sh">'+T("Приложение","App")+'</h2><a class="btn" href="https://github.com/horroraesthetic/horror-aesthetic/releases/download/app-latest/horror-aesthetic.apk">'+T("Скачать для Android (APK)","Download for Android (APK)")+'</a><p style="color:var(--dim);font-size:14px">'+T("Откройте файл, разрешите установку из этого источника. Можно отправлять друзьям.","Open the file and allow installing from this source. You can share it with friends.")+'</p>')+'<h2 class="sh">'+T("Данные","Data")+'</h2><button class="btn" id="exp">'+T("Скопировать резервную копию","Copy a backup")+'</button><button class="btn" id="imp">'+T("Восстановить из копии","Restore from a backup")+'</button><p style="color:var(--dim);font-size:14px">'+T("Дневник хранится только на этом телефоне. Копия нужна, чтобы перенести его на другое устройство.","The diary lives only on this phone. A backup lets you move it to another device.")+'</p>'}
+  (/HorrorAestheticApp/.test(navigator.userAgent)?'':'<h2 class="sh">'+T("Приложение","App")+'</h2><a class="btn" href="https://github.com/horroraesthetic/horror-aesthetic/releases/download/app-latest/horror-aesthetic.apk">'+T("Скачать для Android (APK)","Download for Android (APK)")+'</a><p style="color:var(--dim);font-size:14px">'+T("Откройте файл, разрешите установку из этого источника. Можно отправлять друзьям.","Open the file and allow installing from this source. You can share it with friends.")+'</p>')+'<h2 class="sh">'+T("Итоги","Wrapped")+'</h2><button class="btn" id="wrap">'+T("Создать мои итоги (картинка)","Create my wrapped (image)")+'</button>'+
+  '<h2 class="sh">'+T("Без интернета","Offline")+'</h2><button class="btn" id="off">'+T("Скачать каталог для офлайна (~9 МБ)","Download the catalogue for offline (~9 MB)")+'</button><p id="offs" style="color:var(--dim);font-size:14px">'+offStatus()+'</p>'+
+  '<h2 class="sh">'+T("Данные","Data")+'</h2><button class="btn" id="exp">'+T("Скопировать резервную копию","Copy a backup")+'</button><button class="btn" id="imp">'+T("Восстановить из копии","Restore from a backup")+'</button><p style="color:var(--dim);font-size:14px">'+T("Дневник хранится только на этом телефоне. Копия нужна, чтобы перенести его на другое устройство.","The diary lives only on this phone. A backup lets you move it to another device.")+'</p>'}
 
  function vFilm(sl){
   var f=BY[sl];if(!f)return '<div class="empty">'+T("Фильм не найден","Film not found")+'</div>';pushHist(sl);
@@ -129,6 +175,8 @@
   if(st){var fr=st.parentNode,sl=fr.dataset.sl,en=D.get(sl),n=+st.dataset.n,rc=st.getBoundingClientRect(),v=n*2-((e.clientX-rc.left)<rc.width/2?1:0);D.set(sl,{r:en.r===v?0:v,w:en.w||D.today(),wl:0});$("#fact").innerHTML=actHTML(sl);return}
   var b=e.target.closest("button");if(!b)return;
   if(b.dataset.fa){var sl2=location.hash.split("/")[1],e2=D.get(sl2),a=b.dataset.fa;if(a==="w")D.set(sl2,{w:e2.w?0:D.today(),wl:e2.w?e2.wl:0});else if(a==="l")D.set(sl2,{l:e2.l?0:1});else D.set(sl2,{wl:e2.wl?0:1,w:e2.w});$("#fact").innerHTML=actHTML(sl2);return}
+  if(b.id==="wrap"){wrapped();return}
+  if(b.id==="off"){downloadOffline(b);return}
   if(b.id==="share"){var sl3=b.dataset.sl,url="https://horroraesthetic.github.io/horror-aesthetic/reviews/"+sl3+".html",ttl=(BY[sl3]||[])[1]||"Horror Aesthetic";if(navigator.share)navigator.share({title:ttl,url:url}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(url).then(function(){alert(T("Ссылка скопирована","Link copied"))});return}
   if(b.dataset.set!==undefined){filt.set=b.dataset.set;shown=60;route()}
   else if(b.dataset.g!==undefined){filt.g=b.dataset.g;shown=60;route()}

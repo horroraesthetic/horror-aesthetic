@@ -64,3 +64,5 @@ h2.sh a{color:var(--dim);font-weight:600}
 .pc.m4::before{background:radial-gradient(ellipse 60% 24% at 50% 62%,hsl(var(--h) 70% 65%/.5) 0 60%,transparent 62%),radial-gradient(circle at 50% 62%,rgba(0,0,0,.8) 0 9%,transparent 10%)}
 .fp.has{padding:0}
 #yokai-gallery{margin:18px 0;padding:0;max-width:100%}#yokai-gallery .yk-h{font-size:22px}.yk-g{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}.yk-c{min-width:0}.yk-c figcaption span{font-size:14px;line-height:1.5}.yk-art.yk-hd{width:100%;max-width:148px;height:auto;aspect-ratio:1}
+
+#wrapview{position:fixed;inset:0;z-index:99999;background:#05070b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;overflow:auto}#wrapview img{max-height:68vh;max-width:100%;border:1px solid var(--line)}#wrapview div{display:flex;gap:10px;width:100%;max-width:420px}#wrapview .btn{flex:1;margin:0}#wrapview p{color:var(--dim);font-size:13px;margin:0}
