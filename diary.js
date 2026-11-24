@@ -61,7 +61,7 @@
   var nav=document.createElement("nav");nav.className="ha-tabs";nav.setAttribute("aria-label","App");
   nav.innerHTML=items.map(function(t){return '<a href="'+BASE+'app/#'+t[0]+'" data-v="'+t[0]+'">'+IC[t[1]]+'<span data-ru="'+t[2]+'" data-en="'+t[3]+'"></span></a>'}).join("");
   document.body.appendChild(nav);document.body.classList.add("ha-has-tabs");
-  function lab(){[].forEach.call(nav.querySelectorAll("span"),function(s){s.textContent=s.dataset[lang()]});var v=(inApp?(location.hash||"#home").slice(1):"").split("/")[0];v=({film:"films",collection:"lists"})[v]||v;[].forEach.call(nav.querySelectorAll("a"),function(a){if(inApp&&a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
+  function lab(){[].forEach.call(nav.querySelectorAll("span"),function(s){s.textContent=s.dataset[lang()]});var v=(inApp?(location.hash||"#home").slice(1):"").split("/")[0];v=({film:"films",collection:"lists",yokai:"home"})[v]||v;[].forEach.call(nav.querySelectorAll("a"),function(a){if(inApp&&a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
   lab();addEventListener("hashchange",lab);new MutationObserver(lab).observe(root,{attributes:true,attributeFilter:["data-l","lang"]})}
  function init(){actions();tabs()}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();

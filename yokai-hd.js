@@ -15,7 +15,7 @@
  '<g class="yd-hop"><path d="M79 126V150" stroke="url(#kkL)" stroke-width="5" stroke-linecap="round"/><path d="M79 126V150" stroke="#fff" stroke-width="1" opacity=".35" stroke-linecap="round" transform="translate(-1 0)"/>'+
   '<path d="M66 148Q66 143 74 143H92Q98 143 98 148Z" fill="#6b3d1c"/><rect x="69" y="148" width="5" height="6" rx="1" fill="#4a2a12"/><rect x="88" y="148" width="5" height="6" rx="1" fill="#4a2a12"/><path d="M80 143L72 140M80 143L88 140" stroke="#d8232b" stroke-width="1.4" stroke-linecap="round"/>'+
   '<g class="yd-tongue"><path d="M88 88C86 108 106 110 102 128 99 138 89 138 89 128 89 116 82 112 84 88Z" fill="url(#kkT)" stroke="#7a0e1c" stroke-width=".8"/><path d="M92 96Q96 112 96 126" stroke="#8d1426" stroke-width=".8" fill="none" opacity=".7"/></g>'+
-  '<path d="M80 18C46 22 18 48 14 88Q30 78 38 88 48 78 58 88 68 78 80 88 92 78 102 88 112 78 122 88 130 78 146 88 142 48 114 22 80 18Z" fill="url(#kkP)"/>'+
+  '<path d="M80 18C46 22 18 48 14 88Q30 78 38 88 48 78 58 88 68 78 80 88 92 78 102 88 112 78 122 88 130 78 146 88C142 48 114 22 80 18Z" fill="url(#kkP)"/>'+
   '<path d="M80 18C46 22 18 48 14 88Q30 78 38 88 48 78 58 88 68 78 80 88Z" fill="url(#kkH)"/>'+
   '<g stroke="#e0b88a" stroke-width="1.1" opacity=".7" fill="none"><path d="M80 18Q50 50 38 86M80 18Q66 50 58 86M80 18V86M80 18Q94 50 102 86M80 18Q110 50 122 86M80 18Q40 36 14 86M80 18Q120 36 146 86"/></g>'+
   '<path d="M104 36l8 10-6 4 6 8-10 2z" fill="#14040a" opacity=".55"/><path d="M40 56l12 2-3 6z" fill="#14040a" opacity=".4"/>'+

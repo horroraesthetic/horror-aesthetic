@@ -3,6 +3,9 @@
 import re,json,html,os,glob
 idx=json.load(open('data/search-index.json',encoding='utf8'))
 gore={os.path.basename(e[0]):e[5] for e in idx if e[3]=='review'}
+manual=json.load(open('data/gore.json'))
+for k,v in manual.items():
+    if gore.get(k+'.html',-1)<0:gore[k+'.html']=v
 def strip(t):return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',t))).strip()
 ALIAS={'ring':'ringu','pulse':'kairo','dark-water':'darkwater','perfect-blue':'perfectblue'}
 posters={}
