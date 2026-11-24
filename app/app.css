@@ -63,3 +63,4 @@ h2.sh a{color:var(--dim);font-weight:600}
 .pc.m3::before{background:repeating-linear-gradient(115deg,transparent 0 14px,hsl(var(--h) 60% 60%/.16) 14px 16px)}
 .pc.m4::before{background:radial-gradient(ellipse 60% 24% at 50% 62%,hsl(var(--h) 70% 65%/.5) 0 60%,transparent 62%),radial-gradient(circle at 50% 62%,rgba(0,0,0,.8) 0 9%,transparent 10%)}
 .fp.has{padding:0}
+#yokai-gallery{margin:18px 0;padding:0;max-width:100%}#yokai-gallery .yk-h{font-size:22px}.yk-g{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}.yk-c{min-width:0}.yk-c figcaption span{font-size:14px;line-height:1.5}.yk-art.yk-hd{width:100%;max-width:148px;height:auto;aspect-ratio:1}

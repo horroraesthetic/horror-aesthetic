@@ -1,7 +1,7 @@
 /* HORROR AESTHETIC — review and essay editorial helpers */
 (() => {
   'use strict';
-  if (!document.querySelector('script[src*="diary.js"]')) { const d = document.createElement('script'); d.defer = true; d.src = '/horror-aesthetic/diary.js?v=4'; document.head.appendChild(d); }
+  if (!document.querySelector('script[src*="diary.js"]')) { const d = document.createElement('script'); d.defer = true; d.src = '/horror-aesthetic/diary.js?v=5'; document.head.appendChild(d); }
   if (!document.querySelector('script[src*="listen.js"]')) { const s = document.createElement('script'); s.defer = true; s.src = '/horror-aesthetic/listen.js?v=1'; document.head.appendChild(s); }
   const ready = () => {
     const wrap = document.querySelector('.w');
