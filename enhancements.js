@@ -354,7 +354,7 @@
   const button = document.getElementById('tnb');
   if (!button || button.dataset.haToneSwitchReady) return;
   button.dataset.haToneSwitchReady = '1';
-  const tones = ['kaidan','ringu','blue','green','juon','tomie','blood','psy','clean'];
+  const tones = ['kaidan','ringu','blue','green','juon','tomie','blood','psy','clean','techno'];
   const labels = {
     kaidan:['🎞 Тон: Кайдан','🎞 Tone: Kaidan'],
     ringu:['🎞 Тон: Звонок','🎞 Tone: Ringu'],
@@ -364,7 +364,8 @@
     tomie:['🎞 Тон: Томие','🎞 Tone: Tomie'],
     blood:['🎞 Тон: Кровь','🎞 Tone: Blood'],
     psy:['🎞 Тон: Психологический','🎞 Tone: Psychological'],
-    clean:['🎞 Тон: Ясный','🎞 Tone: Clear']
+    clean:['🎞 Тон: Ясный','🎞 Tone: Clear'],
+    techno:['🎞 Тон: Техно','🎞 Tone: Techno']
   };
   const ru = () => (document.documentElement.lang || document.documentElement.dataset.l || 'en').toLowerCase().startsWith('ru');
   let current = document.documentElement.dataset.tone || 'kaidan';
