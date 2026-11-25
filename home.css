@@ -2138,3 +2138,17 @@ footer .ft-legal a:hover{opacity:1}
 html.ha-calm .rate i.lp svg{animation:none!important}
 .rate i.lp svg svg{overflow:hidden;filter:none;animation:none}
 .mplate svg{display:block;width:100%;height:auto;aspect-ratio:5/2}
+
+/* ===== v204: tone TECHNO (analog / techno J-horror) ===== */
+:root[data-tone="techno"]{--bg:#04090c;--panel:#09151a;--line:#1c3b45;--bone:#e8f3f4;--dim:#8eaeb4;--blood:#ff2a3a;--bile:#6fe3ee;--ico:#7ee8f0;--tint:rgba(40,210,230,.09)}
+html[data-tone="techno"] .hslides img.nt.t-techno{display:block}
+html[data-tone="techno"] .hslides img:not(.nt){display:none}
+html[data-tone="techno"] .hslides{background:#000}
+html[data-tone="techno"] .hero{box-shadow:0 0 60px rgba(60,220,235,.22),inset 0 0 80px rgba(0,30,40,.5)}
+html[data-tone="techno"] .hslides::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+html[data-tone="techno"] .hslides img.nt.t-techno.glitch{transform:translateX(5px);filter:contrast(1.45) saturate(1.7) hue-rotate(-14deg)!important}
+html[data-tone="techno"] .hslides img.nt.t-techno{animation:tcFlick 7s steps(1) infinite}
+@keyframes tcFlick{0%,92%,100%{opacity:1}93%{opacity:.82}94%{opacity:1}96%{opacity:.7}97%{opacity:1}}
+@media (prefers-reduced-motion:reduce){html[data-tone="techno"] .hslides img.nt.t-techno{animation:none}}
+html.ha-calm[data-tone="techno"] .hslides img.nt.t-techno{animation:none}
+html[data-tone="techno"] body{background-image:radial-gradient(70% 38% at 18% 0%,rgba(60,220,235,.11),transparent 70%),radial-gradient(55% 40% at 92% 58%,rgba(255,40,60,.06),transparent 70%),radial-gradient(70% 30% at 50% 100%,rgba(60,220,235,.08),transparent 80%);background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed}
