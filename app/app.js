@@ -122,7 +122,7 @@
   var d=D.all(),wl=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].wl}),lk=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].l});
   return '<h2 class="sh">'+T("Хочу посмотреть","Watchlist")+' · '+wl.length+(wl.length>1?'<a href="#pick/wl">'+T("выбрать за меня ↻","pick for me ↻")+'</a>':'')+'</h2>'+(wl.length?'<div class="grid">'+cards(wl)+'</div>':'<div class="empty">'+T("Нажмите «Хочу» на странице фильма.","Tap Watchlist on a film page.")+'</div>')+
   '<h2 class="sh">'+T("Нравится","Liked")+' · '+lk.length+'</h2>'+(lk.length?'<div class="grid">'+cards(lk)+'</div>':'<div class="empty">'+T("Нажмите ♥ на странице фильма.","Tap ♥ on a film page.")+'</div>')+
-  '<h2 class="sh">'+T("Подборки","Collections")+'</h2><div class="lst">'+COLL.map(function(c){return '<a href="#collection/'+c[0]+'"><span>'+c[1]+'</span><b>'+esc(T(c[2],c[3]))+'</b></a>'}).join("")+'</div>'}
+  '<h2 class="sh">'+T("Подборки","Collections")+'</h2><div class="lst">'+COLL.map(function(c){return '<a class="cv" style="--cv:url(cov/'+c[0]+'.webp)" href="#collection/'+c[0]+'"><span>'+c[1]+'</span><b>'+esc(T(c[2],c[3]))+'</b></a>'}).join("")+'</div>'}
  function vMe(){
   var d=D.all(),seen=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].w}),n=seen.length,rated=seen.filter(function(f){return d[f[0]].r}),avg=rated.length?rated.reduce(function(s,f){return s+d[f[0]].r},0)/rated.length/2:0;
   var likes=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].l}).length,wl=FILMS.filter(function(f){return d[f[0]]&&d[f[0]].wl}).length;
@@ -153,7 +153,7 @@
    (same.length?'<h2 class="sh">'+(f[4]?T("Ещё это","More from this"):T("Похожие","Similar"))+'</h2><div class="row">'+cards(same)+'</div>':'')})}
  function vCollection(id){
   var c=COLL.filter(function(x){return x[0]===id})[0];if(!c)return '<div class="empty">…</div>';
-  return '<div class="lvl"><small>'+c[1]+'</small><b>'+esc(T(c[2],c[3]))+'</b></div><div id="cg"><div class="empty">…</div></div>'}
+  return '<div class="lvl cv" style="--cv:url(cov/'+c[0]+'.webp)"><small>'+c[1]+'</small><b>'+esc(T(c[2],c[3]))+'</b></div><div id="cg"><div class="empty">…</div></div>'}
  function fillCollection(id){loadCols().then(function(J){var g=$("#cg");if(!g)return;var L=(J[id]||[]).map(function(s){return BY[s]}).filter(Boolean);g.innerHTML=L.length?'<div class="grid">'+cards(L)+'</div>':'<div class="empty">'+T("Пока пусто","Empty for now")+'</div>'})}
  /* ---------- router ---------- */
  function route(){

@@ -66,3 +66,7 @@ h2.sh a{color:var(--dim);font-weight:600}
 #yokai-gallery{margin:18px 0;padding:0;max-width:100%}#yokai-gallery .yk-h{font-size:22px}.yk-g{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}.yk-c{min-width:0}.yk-c figcaption span{font-size:14px;line-height:1.5}.yk-art.yk-hd{width:100%;max-width:148px;height:auto;aspect-ratio:1}
 
 #wrapview{position:fixed;inset:0;z-index:99999;background:#05070b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;overflow:auto}#wrapview img{max-height:68vh;max-width:100%;border:1px solid var(--line)}#wrapview div{display:flex;gap:10px;width:100%;max-width:420px}#wrapview .btn{flex:1;margin:0}#wrapview p{color:var(--dim);font-size:13px;margin:0}
+
+/* v9: collection covers */
+.lst a.cv{padding:22px 14px;margin-bottom:8px;border:1px solid var(--line);background:linear-gradient(90deg,rgba(6,6,8,.92),rgba(6,6,8,.35)),var(--cv) center/cover}
+.lvl.cv{padding:34px 16px 20px;background:linear-gradient(180deg,rgba(6,6,8,.25),rgba(6,6,8,.9)),var(--cv) center/cover}
