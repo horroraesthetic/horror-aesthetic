@@ -512,7 +512,7 @@
   fields.forEach(([key,el])=>{
    const value=params.get(key);
    if(value===null)return;
-   if([...el.options].some(option=>option.value===value))el.value=value;
+   if(el===search||[...el.options].some(option=>option.value===value))el.value=value;
   });
   search.dispatchEvent(new Event('input',{bubbles:true}));
   [decade,rating,sort].forEach(el=>el.dispatchEvent(new Event('change',{bubbles:true})));
@@ -520,7 +520,7 @@
  const syncUrl=()=>{
   const url=new URL(location.href);
   fields.forEach(([key,el])=>{if(el.value&&!(key==='sort'&&el.value==='title'))url.searchParams.set(key,el.value);else url.searchParams.delete(key)});
-  history.replaceState(null,'',url.pathname+url.search+url.hash);
+  history.replaceState(history.state,'',url.pathname+url.search+url.hash);
  };
  applyFromUrl();
  fields.forEach(([key,el])=>el.addEventListener(key==='q'?'input':'change',syncUrl));
@@ -585,6 +585,95 @@
  decade.addEventListener('change',sync);
  controls.parentElement.insertBefore(nav,controls);
  sync();
+})();
+
+
+/* HORROR AESTHETIC — return from a review to its search results */
+(() => {
+ 'use strict';
+ const listSelectors=['.ha-command-results','.ha-review-index','#cards','#films','#grid'];
+ const filterIds={
+  '.ha-review-index':['ha-review-search','ha-review-decade'],
+  '#films':['search','decade','rating','sort'],
+  '#grid':['search','genre-filter','year-filter','sort-order']
+ };
+ const savedView=()=>{
+  const saved=history.state?.haReviewReturn;
+  return saved?.source===location.href?saved:null;
+ };
+ const pending=()=>Boolean(savedView())&&performance.getEntriesByType('navigation')[0]?.type==='back_forward';
+ window.HA_REVIEW_RETURN={pending};
+ document.addEventListener('click',event=>{
+  if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||event.defaultPrevented)return;
+  const link=event.target.closest?.('a[href]');
+  if(!(link instanceof HTMLAnchorElement)||link.hasAttribute('download')||(link.target&&link.target.toLowerCase()!=='_self'))return;
+  const url=new URL(link.href);
+  const selector=listSelectors.find(candidate=>link.closest(candidate));
+  const review=url.origin===location.origin&&/^\/horror-aesthetic\/reviews\/(?!index\.html$)[^/]+\.html$/.test(url.pathname);
+  if(!review||!selector){
+   if(savedView()&&link.href!==location.href){
+    const state={...history.state};
+    delete state.haReviewReturn;
+    history.replaceState(state,'');
+   }
+   return;
+  }
+  const list=link.closest(selector);
+  const offset=link.getBoundingClientRect().top;
+  const saved={source:location.href,target:link.href,selector,offset,y:window.scrollY,
+   home:window.HA_HOME_REVIEW_STATE?.capture()};
+  if(selector==='.ha-command-results'){
+   saved.dialog={query:document.getElementById('ha-command-search').value,scroll:list.scrollTop,
+    offset:offset-list.getBoundingClientRect().top,index:[...list.querySelectorAll('a')].indexOf(link),
+    openerId:list.closest('#ha-command-dialog').dataset.openerId};
+  }
+  const filterSelector=selector==='.ha-command-results'
+   ? Object.keys(filterIds).find(candidate=>document.querySelector(candidate)) : selector;
+  saved.filters=(filterIds[filterSelector]||[]).map(id=>{
+   const field=document.getElementById(id);
+   return field&&[id,field.value];
+  }).filter(Boolean);
+  history.replaceState({...history.state,haReviewReturn:saved},'');
+ },true);
+ window.addEventListener('pageshow',event=>{
+  const saved=savedView();
+  if(!saved||(!event.persisted&&!pending()))return;
+  if(saved.home)window.HA_HOME_REVIEW_STATE?.restore(saved.home);
+  const changed=[];
+  for(const [id,value] of saved.filters){
+   const field=document.getElementById(id);
+   if(!field||(event.persisted&&field.value===value))continue;
+   field.value=value;
+   changed.push(field);
+  }
+  for(const field of changed)field.dispatchEvent(new Event(field.tagName==='SELECT'?'change':'input',{bubbles:true}));
+  // Editorial updates and poster data can rebuild these lists after pageshow.
+  const ready={
+   '#cards':window.HA_HOME_REVIEW_STATE?.updates,
+   '#grid':window.HA_DATABASE_POSTERS_READY
+  }[saved.selector];
+  const restore=new AbortController();
+  for(const type of ['pointerdown','keydown','wheel']){
+   window.addEventListener(type,()=>restore.abort(),{signal:restore.signal});
+  }
+  Promise.resolve(ready).then(()=>{
+   // Apply the offset after layout and the browser's own history restoration.
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(restore.signal.aborted)return;
+    restore.abort();
+    if(saved.dialog){
+     window.scrollTo({top:saved.y,behavior:'instant'});
+     document.dispatchEvent(new CustomEvent('ha-review-return',{detail:saved}));
+     return;
+    }
+    const list=document.querySelector(saved.selector);
+    const link=list&&[...list.querySelectorAll('a[href]')].find(a=>a.href===saved.target&&a.getClientRects().length);
+    const top=link?window.scrollY+link.getBoundingClientRect().top-saved.offset:saved.y;
+    window.scrollTo({top,behavior:'instant'});
+    link?.focus({preventScroll:true});
+   }));
+  });
+ });
 })();
 
 
@@ -706,20 +795,36 @@
     link.append(name,path);
     link.addEventListener('click',event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey)shut()});
     link.addEventListener('mouseenter',()=>setActive(index));
-    link.addEventListener('focus',()=>setActive(index));results.appendChild(link);
+    link.addEventListener('focus',()=>setActive(index,false));results.appendChild(link);
    });
   };
-  const setActive=index=>{
+  const setActive=(index,scroll=true)=>{
    if(!visible.length)return;
    active=(index+visible.length)%visible.length;
-   [...results.querySelectorAll('a')].forEach((link,i)=>{link.setAttribute('aria-current',String(i===active));if(i===active)link.scrollIntoView({block:'nearest'})});
+   [...results.querySelectorAll('a')].forEach((link,i)=>{link.setAttribute('aria-current',String(i===active));if(i===active&&scroll)link.scrollIntoView({block:'nearest'})});
   };
-  const open=()=>{
-   opener=document.activeElement;
+  const open=(source=document.activeElement,saved)=>{
+   opener=source;
+   overlay.dataset.openerId=opener?.id||'';
    inerted=[...document.body.children].filter(el=>el!==overlay&&!el.inert);
    inerted.forEach(el=>{el.inert=true});
-   overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';loadIndex();render();
-   document.body.classList.add('ha-command-open');input.focus();
+   overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value=saved?.dialog.query||'';
+   const ready=loadIndex();render();
+   document.body.classList.add('ha-command-open');
+   if(saved){
+    close.focus({preventScroll:true});
+    ready.then(()=>{
+     if(overlay.hidden||input.value!==saved.dialog.query||document.activeElement!==close)return;
+     const links=[...results.querySelectorAll('a[href]')];
+     const sameRow=links[saved.dialog.index];
+     const link=sameRow?.href===saved.target?sameRow:links.find(row=>row.href===saved.target);
+     results.scrollTop=saved.dialog.scroll;
+     if(link){
+      results.scrollTop+=link.getBoundingClientRect().top-results.getBoundingClientRect().top-saved.dialog.offset;
+      link.focus({preventScroll:true});
+     }
+    });
+   }else input.focus();
    document.dispatchEvent(new Event('ha-search-open'));
   };
   const shut=()=>{
@@ -728,13 +833,19 @@
    if(opener&&opener!==document.body&&opener.isConnected)opener.focus({preventScroll:true});
    if(document.activeElement!==opener||opener===document.body)trigger.focus({preventScroll:true});
   };
-  trigger.addEventListener('click',open);close.addEventListener('click',shut);
+  trigger.addEventListener('click',()=>open(trigger));close.addEventListener('click',shut);
+  document.addEventListener('ha-review-return',event=>{
+   if(overlay.hidden)open(document.getElementById(event.detail.dialog.openerId)||trigger,event.detail);
+  });
   overlay.addEventListener('click',event=>{if(event.target===overlay)shut()});
   input.addEventListener('input',render);
   overlay.addEventListener('keydown',event=>{
+   const focusedResult=event.target.closest('.ha-command-result');
    if(event.key==='Escape'){event.preventDefault();shut()}
-   else if(event.target===input&&event.key==='ArrowDown'){event.preventDefault();setActive(active+1)}
-   else if(event.target===input&&event.key==='ArrowUp'){event.preventDefault();setActive(active-1)}
+   else if((event.target===input||focusedResult)&&(event.key==='ArrowDown'||event.key==='ArrowUp')){
+    event.preventDefault();setActive(active+(event.key==='ArrowDown'?1:-1));
+    if(focusedResult)results.children[active]?.focus({preventScroll:true});
+   }
    else if(event.target===input&&event.key==='Enter'&&!event.isComposing&&visible[active]){event.preventDefault();results.querySelectorAll('a')[active]?.click()}
    else if(event.key==='Tab'){
     const focusable=[close,input,...results.querySelectorAll('a')].filter(el=>el.offsetParent!==null);
@@ -748,7 +859,10 @@
    const slash=event.key==='/'&&overlay.hidden&&!event.target.closest?.('input,textarea,select,[contenteditable]');
    if(shortcut||slash){event.preventDefault();overlay.hidden?open():shut()}
   });
-  document.addEventListener('click',event=>{if(event.target.closest?.('#sbtn,#bigs')&&overlay.hidden)open()});
+  document.addEventListener('click',event=>{
+   const source=event.target.closest?.('#sbtn,#bigs');
+   if(source&&overlay.hidden)open(source);
+  });
   const localize=()=>{
    trigger.querySelector('.ha-command-trigger-label').textContent=text('QUICK JUMP','БЫСТРЫЙ ПЕРЕХОД');
    trigger.querySelector('kbd').textContent=/Mac|iPhone|iPad/i.test(navigator.platform)?'⌘ K':'Ctrl K';
