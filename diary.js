@@ -20,6 +20,7 @@
  function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
  function safeId(id){return typeof id==="string"&&/^[a-z0-9_-]+$/i.test(id)}
  function key(id){return catalogue.get(id)?.review||id}
+ function status(entry){return entry?.w?"seen":entry?.wl?"want":""}
  function merge(current,incoming){
   const rated = r => Number.isInteger(r)&&r>0&&r<=10?r:0;
   const rating=rated(current.r)||rated(incoming.r);
@@ -112,6 +113,17 @@
    store[id]=entry;
   }else delete store[id];
  }
+ function validBackupEntry(entry){
+  if(!entry||typeof entry!=="object"||Array.isArray(entry))return false;
+  const flag=value=>value===undefined||typeof value==="boolean"||value===0||value===1;
+  const rating=value=>Number.isInteger(value)&&value>=0&&value<=10;
+  return ["w","wl","l","r","note","priorRatings"].some(field=>Object.hasOwn(entry,field))&&
+   (flag(entry.w)||(typeof entry.w==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(entry.w)))&&
+   flag(entry.wl)&&flag(entry.l)&&(entry.r===undefined||rating(entry.r))&&
+   (entry.note===undefined||typeof entry.note==="string")&&
+   (entry.title===undefined||typeof entry.title==="string")&&
+   (entry.priorRatings===undefined||(Array.isArray(entry.priorRatings)&&entry.priorRatings.every(rating)));
+ }
  const D=window.HA_DIARY={
   ready:prepare,
   all:load,
@@ -126,11 +138,17 @@
    notify(canonical);
    return data[canonical]||{};
   },
+  status,
+  toggleStatus(id,next){
+   if(next!=="seen"&&next!=="want")return false;
+   const nextStatus=status(D.get(id))===next?"":next;
+   return D.set(id,{w:nextStatus==="seen"?today():0,wl:nextStatus==="want"?1:0});
+  },
   statuses(){
    const statuses=Object.create(null);
    for(const [id,entry] of Object.entries(load())){
-    const status=entry?.w?"seen":entry?.wl?"want":"";
-    if(status)statuses[catalogue.get(id)?.id||id]=status;
+    const value=status(entry);
+    if(value)statuses[catalogue.get(id)?.id||id]=value;
    }
    return statuses;
   },
@@ -156,7 +174,9 @@
    if(!value||typeof value!=="object"||Array.isArray(value))return false;
    const data=Object.create(null);
    for(const [id,entry] of Object.entries(value)){
-    if(safeId(id)&&entry&&typeof entry==="object"&&!Array.isArray(entry))data[key(id)]=merge(data[key(id)]||{},entry);
+    if(!safeId(id)||!validBackupEntry(entry))return false;
+    const canonical=key(id);
+    data[canonical]=merge(data[canonical]||{},entry);
    }
    if(!save(data))return false;
    notify();
@@ -189,15 +209,14 @@
    bar.querySelector('[data-a=wl] span').textContent=T("Хочу","Watchlist");
    bar.querySelector('[data-a=w]').setAttribute("aria-pressed",e.w?"true":"false");
    bar.querySelector('[data-a=l]').setAttribute("aria-pressed",e.l?"true":"false");
-   bar.querySelector('[data-a=wl]').setAttribute("aria-pressed",e.wl?"true":"false");
+   bar.querySelector('[data-a=wl]').setAttribute("aria-pressed",String(status(e)==="want"));
    [].forEach.call(rate.children,function(s){var n=+s.dataset.n,r=e.r||0;s.className="s"+(r>=n*2?" f":r===n*2-1?" h":"")});
   }
   bar.addEventListener("click",function(ev){
    var b=ev.target.closest("button"),s=ev.target.closest(".s"),e=D.get(slug);
    if(b){var a=b.dataset.a;
-    if(a==="w")D.set(slug,{w:e.w?0:D.today(),wl:e.w?e.wl:0});
-    else if(a==="l")D.set(slug,{l:e.l?0:1});
-    else if(a==="wl")D.set(slug,{wl:e.wl?0:1,w:e.w})}
+    if(a==="l")D.set(slug,{l:e.l?0:1});
+    else D.toggleStatus(slug,a==="w"?"seen":"want")}
    else if(s){var n=+s.dataset.n,rect=s.getBoundingClientRect(),half=(ev.clientX-rect.left)<rect.width/2,v=n*2-(half?1:0);
     D.set(slug,{r:e.r===v?0:v,w:e.w||D.today(),wl:0})}
    paint()});
