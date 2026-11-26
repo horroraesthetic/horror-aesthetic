@@ -1,0 +1,57 @@
+.ha-cover-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(80px, 30%, 152px);
+  align-items: center;
+  gap: clamp(10px, 2vw, 18px);
+}
+
+#archive-list li[hidden] {
+  display: none;
+}
+
+.ha-cover-thumb,
+.ha-dossier-cover,
+.ha-content-cover img {
+  display: block;
+  box-sizing: border-box;
+  border: 1px solid rgba(163, 84, 100, .4);
+  background: #130d11;
+}
+
+.ha-cover-thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.ha-content-cover {
+  width: min(100%, 740px);
+  margin: 18px 0 24px;
+}
+
+.ha-content-cover img {
+  width: 100%;
+  height: auto;
+}
+
+.ha-dossier-cover {
+  float: right;
+  width: clamp(80px, 32%, 150px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin: 12px 0 8px 14px;
+}
+
+.cover.ha-cover-backdrop {
+  background-image: linear-gradient(112deg, rgba(8, 5, 8, .89), rgba(8, 5, 8, .45) 70%),
+    linear-gradient(0deg, rgba(8, 5, 8, .83), transparent 64%), var(--ha-cover-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cover.ha-cover-backdrop :is(h1, strong) {
+  text-shadow: 0 3px 28px #080508;
+}
