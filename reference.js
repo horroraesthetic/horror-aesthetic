@@ -125,7 +125,19 @@
       const roman=document.createElement('p');roman.className='ha-ref-detail';roman.textContent=item.roman;
       const summary=document.createElement('p');summary.textContent=language==='ru'?item.ruShort:item.enShort;
       const detail=document.createElement('p');detail.className='ha-ref-detail';detail.textContent=language==='ru'?item.ruDetail:item.enDetail;
-      card.append(top,title,roman,summary,detail);entries.appendChild(card);
+      card.append(top);
+      if (kind === 'nightmares') {
+        const image = document.createElement('img');
+        image.className = 'ha-dossier-cover';
+        image.src = '../img/editorial/folklore/' + item.id + '.webp';
+        image.alt = '';
+        image.width = 512;
+        image.height = 512;
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        card.append(image);
+      }
+      card.append(title,roman,summary,detail);entries.appendChild(card);
     });
     count.textContent=t(ui.count)+' '+visible.length+' '+t(ui.of)+' '+data.length;
     savedCount.textContent=String(saved.size);

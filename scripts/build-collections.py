@@ -51,15 +51,22 @@ for tid,kj,en,ru,den,dru,ren,rru in T:
 urls=[]
 for tid,kj,en,ru,den,dru,hits in out:
     items=''.join('<li><a href="../reviews/%s"><b>%s</b><small>%s%s</small></a></li>'%(s,html.escape(e[1]),(html.escape(meta[s]['director'])+' · ') if s in meta and meta[s]['director'] else '',(str(rating[s]).rstrip('0').rstrip('.')+' / 5 · ' if rating.get(s) else '')+'<span class="l-en">'+html.escape(d[0])+'</span><span class="l-ru">'+html.escape(d[1])+'</span>') for s,e,d in hits)
-    body=f'''<div class="k">{L("Подборка","Collection")} · {kj}</div><h1>{L(ru,en)}</h1><p class="dek">{L(dru,den)}</p><p class="m">{len(hits)} {L("фильмов","films")}</p>
+    body=f'''<div class="k">{L("Подборка","Collection")} · {kj}</div><h1>{L(ru,en)}</h1><p class="dek">{L(dru,den)}</p>
+<figure class="ha-content-cover"><img src="../app/cov/{tid}.webp" width="800" height="300" alt="" decoding="async"></figure>
+<p class="m">{len(hits)} {L("фильмов","films")}</p>
 <ul class="hub">{items}</ul>
 <div class="rel"><a href="./">{L("← Все подборки","← All collections")}</a> · <a href="/horror-aesthetic/">{L("На главную","Back to the site")}</a></div>'''
-    open(f'collections/{tid}.html','w',encoding='utf8').write(page(f'collections/{tid}.html',en+' (collection)',ru+' (подборка)',den,dru,'og-creepy.jpg',body,f'collections/{tid}.html'));urls.append(BASE+f'collections/{tid}.html')
-cards=''.join('<li><a href="%s.html"><span class="n">%s · %d</span><b>%s</b><small>%s</small></a></li>'%(tid,kj,len(h),L(ru,en),L(dru,den)) for tid,kj,en,ru,den,dru,h in out)
+    open(f'collections/{tid}.html','w',encoding='utf8').write(page(f'collections/{tid}.html',en+' (collection)',ru+' (подборка)',den,dru,'og-creepy.jpg',body,f'collections/{tid}.html',covers=True));urls.append(BASE+f'collections/{tid}.html')
+cards=[]
+for tid,kj,en,ru,den,dru,hits in out:
+    copy=f'<span class="n">{kj} · {len(hits)}</span><b>{L(ru,en)}</b><small>{L(dru,den)}</small>'
+    art=cover_card(copy,f'../app/cov/{tid}.webp',800,300)
+    cards.append(f'<li><a href="{tid}.html">{art}</a></li>')
+cards=''.join(cards)
 hub=f'''<div class="k">{L("Раздел","Section")}</div><h1>{L("Подборки по темам","Collections")}</h1><p class="dek">{L("Фильмы из архива, собранные по темам: дома, леса, плёнки, зеркала, вода.","Films from the archive gathered by theme: houses, forests, tapes, mirrors, water.")}</p>
 <ul class="hub">{cards}</ul>
 <div class="rel"><a href="/horror-aesthetic/reviews/">{L("Все рецензии","All reviews")}</a> · <a href="/horror-aesthetic/">{L("На главную","Back to the site")}</a></div>'''
-open('collections/index.html','w',encoding='utf8').write(page('collections/index.html','Collections','Подборки по темам','Film collections by theme from the Horror Aesthetic archive.','Подборки фильмов по темам из архива Horror Aesthetic.','og-creepy.jpg',hub,'collections/index.html'));urls.append(BASE+'collections/')
+open('collections/index.html','w',encoding='utf8').write(page('collections/index.html','Collections','Подборки по темам','Film collections by theme from the Horror Aesthetic archive.','Подборки фильмов по темам из архива Horror Aesthetic.','og-creepy.jpg',hub,'collections/index.html',covers=True));urls.append(BASE+'collections/')
 sm=open('sitemap.xml',encoding='utf8').read()
 for u in urls:
     if u not in sm:sm=sm.replace('</urlset>',f'<url><loc>{u}</loc></url>\n</urlset>')

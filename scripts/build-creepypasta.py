@@ -13,15 +13,22 @@ blockquote.last{animation:crawl 5s ease-in 1.2s both}@keyframes crawl{from{opaci
 .role{border-top:1px solid var(--line);padding:14px 0}.role b{font:700 15px/1.3 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#e2767d}'''
 BASE='https://horroraesthetic.github.io/horror-aesthetic/'
 def esc(s):return s
-def page(path,title_en,title_ru,desc_en,desc_ru,og,body,canon):
+def page(path,title_en,title_ru,desc_en,desc_ru,og,body,canon,covers=False):
     depth=path.count('/')
     up='../'*depth
+    cover_css=f'<link rel="stylesheet" href="{up}editorial-covers.css?v=1">' if covers else ''
+
     return f'''<!doctype html><html lang="en" data-l="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title_en} / {title_ru} | Horror Aesthetic</title><meta name="description" content="{desc_en} / {desc_ru}"><link rel="canonical" href="{BASE}{canon}"><meta name="theme-color" content="#050a14">
 <meta property="og:type" content="article"><meta property="og:site_name" content="Horror Aesthetic"><meta property="og:title" content="{title_en} / {title_ru}"><meta property="og:description" content="{desc_en} / {desc_ru}"><meta property="og:url" content="{BASE}{canon}"><meta property="og:image" content="{BASE}img/mag/{og}"><meta name="twitter:card" content="summary_large_image">
-<style>{CSS}{EXTRA}</style><link rel="stylesheet" href="{up}mag-gallery.css?v=1">{SCRIPT}{'' if path.endswith('index.html') else '<link rel="stylesheet" href="/horror-aesthetic/comments.css?v=2"><script defer src="/horror-aesthetic/comments.js?v=2"></script>'}{'<script defer src="/horror-aesthetic/listen.js?v=1"></script><script defer src="/horror-aesthetic/story-sound.js?v=1"></script>' if path.startswith('creepypasta/') and not path.endswith('index.html') else ''}<script defer src="/horror-aesthetic/diary.js?v=5"></script></head><body><div class="w"><div class="top"><a href="/horror-aesthetic/"><b>&#9733;</b> Horror Aesthetic</a><span class="lg"><button type="button" data-l="en" aria-pressed="true">EN</button> <button type="button" data-l="ru" aria-pressed="false">RU</button></span></div>
+<style>{CSS}{EXTRA}</style>{cover_css}<link rel="stylesheet" href="{up}mag-gallery.css?v=1">{SCRIPT}{'' if path.endswith('index.html') else '<link rel="stylesheet" href="/horror-aesthetic/comments.css?v=2"><script defer src="/horror-aesthetic/comments.js?v=2"></script>'}{'<script defer src="/horror-aesthetic/listen.js?v=1"></script><script defer src="/horror-aesthetic/story-sound.js?v=1"></script>' if path.startswith('creepypasta/') and not path.endswith('index.html') else ''}<script defer src="/horror-aesthetic/diary.js?v=5"></script></head><body><div class="w"><div class="top"><a href="/horror-aesthetic/"><b>&#9733;</b> Horror Aesthetic</a><span class="lg"><button type="button" data-l="en" aria-pressed="true">EN</button> <button type="button" data-l="ru" aria-pressed="false">RU</button></span></div>
 {body}</div></body></html>'''
 def L(ru,en,tag='span'):return f'<{tag} class="l-ru">{ru}</{tag}><{tag} class="l-en">{en}</{tag}>'
+def cover_card(copy,src,width,height):
+    return (f'<span class="ha-cover-card"><span>{copy}</span>'
+            f'<img class="ha-cover-thumb" src="{src}" width="{width}" height="{height}" '
+            'alt="" loading="lazy" decoding="async"></span>')
+
 def paras(a):return ''.join(x if x.startswith('<') else '<p>'+x+'</p>' for x in a)
 def img2_html(s):
     i=s.get("img2")
@@ -42,11 +49,17 @@ tot=len(S['stories'])
 for i,s in enumerate(S['stories'],1):
     p=f'creepypasta/{s["slug"]}.html'
     open(p,'w',encoding='utf8').write(page(p,s['en_t'],s['ru_t'],s['d_en'],s['d_ru'],s['og'],story_body(s,i,tot),p))
+story_cards=[]
+for i,s in enumerate(S['stories'],1):
+    copy=f'<span class="n">{i:02d}</span><b>{L(s["ru_t"],s["en_t"])}</b><small>{L(s["d_ru"],s["d_en"])}</small>'
+    art=cover_card(copy,f'../img/mag/{s["img"]}.webp',s["w"],s["h"])
+    story_cards.append(f'<li><a href="{s["slug"]}.html">{art}</a></li>')
+story_cards=''.join(story_cards)
 hub=f'''<figure style="margin:0 auto 22px;max-width:340px"><img src="/horror-aesthetic/img/mag/creepy-cover.webp?v=2" width="800" height="1200" alt="Обложка раздела: тёмный коридор, телевизор со снегом и силуэт в конце" decoding="async" style="display:block;width:100%;height:auto;border:1px solid #243f5a;box-shadow:0 12px 40px rgba(0,0,0,.7)"></figure><div class="k">{L("Раздел","Section")}</div><h1>{L("Крипипасты команды","Team creepypastas")}</h1>
 <p class="dek">{L("Истории, которые случились с нами при работе над сайтом. Читать лучше ночью. Иногда в 03:14.","Stories that happened to us while building the site. Best read at night. Sometimes at 03:14.")}</p>
-<ul class="hub">'''+''.join(f'<li><a href="{s["slug"]}.html"><span class="n">{i:02d}</span><b>{L(s["ru_t"],s["en_t"])}</b><small>{L(s["d_ru"],s["d_en"])}</small></a></li>' for i,s in enumerate(S['stories'],1))+f'''</ul>
+<ul class="hub">{story_cards}</ul>
 <div class="rel"><a href="/horror-aesthetic/team/">{L("Кто мы такие","Who we are")}</a> · <a href="/horror-aesthetic/">{L("← На главную","← Back to the site")}</a></div>'''
-open('creepypasta/index.html','w',encoding='utf8').write(page('creepypasta/index.html','Team creepypastas','Крипипасты команды','Original creepypastas from the Horror Aesthetic team.','Оригинальные крипипасты от команды Horror Aesthetic.','lamp-cup.webp'.replace('lamp-cup.webp','og-creepy.jpg'),hub,'creepypasta/'))
+open('creepypasta/index.html','w',encoding='utf8').write(page('creepypasta/index.html','Team creepypastas','Крипипасты команды','Original creepypastas from the Horror Aesthetic team.','Оригинальные крипипасты от команды Horror Aesthetic.','lamp-cup.webp'.replace('lamp-cup.webp','og-creepy.jpg'),hub,'creepypasta/',covers=True))
 T=S['team']
 tb=f'''<div class="k">{L("О нас","About us")}</div><h1>{L(T["ru_t"],T["en_t"])}</h1>
 <figure class="ha-hero-fig"><img src="../img/mag/triptych.webp" width="1400" height="467" decoding="async" fetchpriority="high" alt="Видеокассета, лестница и телефон"><figcaption>HORROR AESTHETIC / TEAM FILE</figcaption></figure>
