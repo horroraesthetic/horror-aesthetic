@@ -225,7 +225,6 @@
  });
  $("#ab-b").addEventListener("click",function(){if(history.length>1)history.back();else location.hash="#home"});
  /* ---------- data ---------- */
- A.innerHTML='<div class="empty">…</div>';
  Promise.all([fetch("../data/daily.json").then(function(r){return r.json()}),fetch("../feed-reviews.xml").then(function(r){return r.text()}).catch(function(){return""}),fetch("../data/posters.json").then(function(r){return r.json()}).catch(function(){return{}}),fetch("../data/gore.json").then(function(r){return r.json()}).catch(function(){return{}}),D.ready()]).then(function(r){
   PO=r[2]||{};GR=r[3]||{};FILMS=r[0];FILMS.forEach(function(f){BY[f[0]]=f});
   var m,re=/reviews\/([a-z0-9_-]+)\.html<\/link>/gi;while((m=re.exec(r[1])))recent.push(m[1]);

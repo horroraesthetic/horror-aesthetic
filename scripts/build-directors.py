@@ -40,12 +40,20 @@ for r in rows:
     avg=('%.1f'%(sum(rs)/len(rs))) if rs else '—'
     span=f"{r['years'][0]}–{r['years'][-1]}" if r['years'] else ''
     items=''.join(f'<li><a href="../reviews/{os.path.basename(f["url"])}"><b>{html.escape(f["title"])} ({f["year"]})</b><small>{html.escape(f["ru"]) if f["ru"] and f["ru"]!=f["title"] else ""}{" · " if f["rating"] and f["ru"] and f["ru"]!=f["title"] else ""}{f["rating"]+" / 5" if f["rating"] else ""}</small></a></li>' for f in r['films'])
-    body=f'''<div class="k">{L("Режиссёр","Director")} · {span}</div><h1>{html.escape(n)}</h1>
-<p class="m">{r["count"]} {L("фильмов в архиве","films in the archive")} · {L("средняя оценка","average rating")} {avg} / 5</p>
+    intro=f'''<div class="k">{L("Режиссёр","Director")} · {span}</div><h1>{html.escape(n)}</h1>
+<p class="m">{r["count"]} {L("фильмов в архиве","films in the archive")} · {L("средняя оценка","average rating")} {avg} / 5</p>'''
+    art='img/editorial/directors/'+r['page'].removesuffix('.html')+'.webp'
+    has_emblem=os.path.isfile(art)
+    if has_emblem:
+        emblem=f'<img class="ha-profile-emblem" src="../{art}" width="320" height="320" alt="" decoding="async">'
+        intro=f'<header class="ha-director-intro"><div>{intro}</div>{emblem}</header>'
+    body=f'''{intro}
 <ul class="hub">{items}</ul>
 <div class="rel"><a href="./">{L("← Все режиссёры","← All directors")}</a> · <a href="../timeline/">{L("Хронология","Timeline")}</a> · <a href="/horror-aesthetic/">{L("На главную","Back to the site")}</a></div>'''
     out=page('directors/'+r['page'],html.escape(n)+' — films',html.escape(n)+' — фильмы',f'Films by {html.escape(n)} reviewed on Horror Aesthetic.',f'Фильмы режиссёра {html.escape(n)} в архиве Horror Aesthetic.','og-creepy.jpg',body,'directors/'+r['page'])
     out=out.replace('property="og:type" content="article"','property="og:type" content="profile"')
+    if has_emblem:
+        out=out.replace('</head>','<link rel="stylesheet" href="../editorial-covers.css?v=2"></head>',1)
     open('directors/'+r['page'],'w',encoding='utf8').write(out);urls.append(BASE+'directors/'+r['page'])
 sm=open('sitemap.xml',encoding='utf8').read()
 for u in urls:

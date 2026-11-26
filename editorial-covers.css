@@ -55,3 +55,57 @@
 .cover.ha-cover-backdrop :is(h1, strong) {
   text-shadow: 0 3px 28px #080508;
 }
+
+.ha-director-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(72px, 23%, 150px);
+  gap: clamp(12px, 3vw, 26px);
+  align-items: center;
+  margin-block-end: 20px;
+}
+
+.ha-director-intro h1 {
+  overflow-wrap: anywhere;
+}
+
+.ha-section-cover {
+  max-width: 460px;
+}
+
+.ha-profile-emblem,
+.ha-team-avatar {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(163, 84, 100, .45);
+  background: #130d11;
+}
+
+.ha-team-section {
+  margin-block: 32px;
+}
+
+.ha-team-roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 14px;
+}
+
+.ha-team-role {
+  display: grid;
+  grid-template-columns: clamp(66px, 24%, 96px) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #49323a;
+  background: #151014;
+}
+
+.ha-team-role h3 {
+  margin: 0 0 5px;
+}
+
+.ha-team-role p {
+  margin: 0;
+  font-size: .9rem;
+}
