@@ -647,8 +647,11 @@
    changed.push(field);
   }
   for(const field of changed)field.dispatchEvent(new Event(field.tagName==='SELECT'?'change':'input',{bubbles:true}));
-  // Homepage editorial updates can rebuild the cards after pageshow.
-  const ready=saved.selector==='#cards'&&!event.persisted?window.HA_HOME_REVIEW_STATE?.updates:null;
+  // Editorial updates and poster data can rebuild these lists after pageshow.
+  const ready={
+   '#cards':window.HA_HOME_REVIEW_STATE?.updates,
+   '#grid':window.HA_DATABASE_POSTERS_READY
+  }[saved.selector];
   const restore=new AbortController();
   for(const type of ['pointerdown','keydown','wheel']){
    window.addEventListener(type,()=>restore.abort(),{signal:restore.signal});
