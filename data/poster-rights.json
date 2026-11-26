@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Film poster rights and provenance register for the HORROR AESTHETIC film database.",
-  "policy": "The 30 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
+  "policy": "The 36 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
   "films": [
     {
       "title": "Ugetsu",
@@ -422,6 +422,90 @@
       "attribution": "Original artwork · HORROR AESTHETIC",
       "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
       "src": "../img/posters/kisaragi-station-2022-horror-aesthetic.webp"
+    },
+    {
+      "title": "Oddity",
+      "year": 2024,
+      "candidate": "../img/posters/oddity.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/oddity.webp"
+    },
+    {
+      "title": "Host",
+      "year": 2020,
+      "candidate": "../img/posters/host2020.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/host2020.webp"
+    },
+    {
+      "title": "Ghostwatch",
+      "year": 1992,
+      "candidate": "../img/posters/ghostwatch.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/ghostwatch.webp"
+    },
+    {
+      "title": "The Blood on Satan's Claw",
+      "year": 1971,
+      "candidate": "../img/posters/satansclaw.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/satansclaw.webp"
+    },
+    {
+      "title": "Witchfinder General",
+      "year": 1968,
+      "candidate": "../img/posters/witchfinder.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/witchfinder.webp"
+    },
+    {
+      "title": "The Uninvited",
+      "year": 1944,
+      "candidate": "../img/posters/uninvited-1944.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/uninvited-1944.webp"
     }
   ],
   "research_log": {
@@ -512,11 +596,11 @@
         "finding": "No matching licensed film-poster file verified."
       }
     ],
-    "decision": "All 30 registered posters are original archive artworks created for HORROR AESTHETIC; all 30 records are approved for display (approved: true). Earlier title checks document searches for third-party/licensed theatrical poster files only and do not apply to the separately created original archive artworks. Keep future externally sourced images unapproved until matching license/permission and reuse scope are verified.",
+    "decision": "All 36 registered posters are original archive artworks created for HORROR AESTHETIC; all 36 records are approved for display (approved: true). Earlier title checks document searches for third-party/licensed theatrical poster files only and do not apply to the separately created original archive artworks. Keep future externally sourced images unapproved until matching license/permission and reuse scope are verified.",
     "register_summary": {
-      "total_posters": 30,
-      "original_archive_artworks": 30,
-      "approved_for_archive_display": 30,
+      "total_posters": 36,
+      "original_archive_artworks": 36,
+      "approved_for_archive_display": 36,
       "note": "All registered entries are original HORROR AESTHETIC archive artwork; they are not represented as original theatrical posters."
     }
   }
