@@ -25,7 +25,7 @@ for folder,kind in (('reviews','review'),('articles','essay'),('creepypasta','st
             if not tags.strip():
                 md=re.search(r'<meta name="description" content="([^"]*)"',s)
                 if md:tags+=md.group(1)
-            g=re.search(r'GORE (\d) / 5',s)
+            g=re.search(r'data-gore="([0-5])"',s) or re.search(r'GORE (\d) / 5',s)
             if g:gore=int(g.group(1))
         elif kind=='story':
             md=re.search(r'<meta name="description" content="([^"]*)"',s)
