@@ -4345,7 +4345,7 @@ try {
 /* ===== Hero artwork: load the selected tone first, then one slide at a time. ===== */
 (function(){
  var root=document.documentElement,box=document.querySelector(".hslides");if(!box)return;
- var SET={ringu:["hero_ringu","hero_omc","hero_juon2","hero_kairo"],juon:["hero_juon","hero_juon2","hero_ringu"],tomie:["hero_tomie","hero_tomie2","hero_tomie3"],blood:["hero_blood","hero_red2","hero_vamp","hero_scis","hero_tets"],kaidan:["hero_kaidan","hero_red2","hero_thea","hero_onmy","hero_kai2"],psy:["hero_dream","hero_tets"],blue:["hero_ringu","hero_juon","hero_kairo","hero_dream"],green:["hero_juon2","hero_omc","hero_urban"],clean:["hero_red2","hero_blood","hero_kai2","hero_dream"],techno:["hero_t_tv","hero_t_eye","hero_t_sig","hero_t_well","hero_t_desk"]};
+ var SET={ringu:["hero_ringu","hero_omc","hero_juon2","hero_kairo"],juon:["hero_juon","hero_juon2","hero_ringu"],tomie:["hero_tomie","hero_tomie2","hero_tomie3"],blood:["hero_blood","hero_red2","hero_vamp","hero_scis","hero_tets"],kaidan:["hero_kaidan","hero_red2","hero_thea","hero_onmy","hero_kai2"],psy:["hero_dream","hero_tets"],blue:["hero_ringu","hero_juon","hero_kairo","hero_dream"],green:["hero_juon2","hero_omc","hero_urban"],clean:["hero_red2","hero_blood","hero_kai2","hero_dream"],techno:["techno-control","techno-optics","techno-signal","techno-shaft","techno-street"]};
  var made={};
  function mk(tone){
   if(made[tone])return;made[tone]=1;

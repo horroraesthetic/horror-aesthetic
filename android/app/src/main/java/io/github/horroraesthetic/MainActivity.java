@@ -7,10 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity {
     private static final String HOST = "horroraesthetic.github.io";
@@ -22,7 +25,19 @@ public class MainActivity extends Activity {
         super.onCreate(state);
         web = new WebView(this);
         web.setBackgroundColor(Color.parseColor("#0A0606"));
-        setContentView(web);
+        FrameLayout content = new FrameLayout(this);
+        content.addView(web, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        ImageView startup = state == null ? new ImageView(this) : null;
+        if (startup != null) {
+            startup.setBackgroundResource(R.color.bg);
+            startup.setImageResource(R.drawable.startup_illustration);
+            startup.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            startup.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            content.addView(startup, new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        }
+        setContentView(content);
 
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
@@ -35,6 +50,24 @@ public class MainActivity extends Activity {
 
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient() {
+            private void dismissStartup() {
+                if (startup != null && startup.getParent() == content) {
+                    content.removeView(startup);
+                    startup.setImageDrawable(null);
+                }
+            }
+
+            @Override
+            public void onPageCommitVisible(WebView view, String url) {
+                dismissStartup();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                if (request.isForMainFrame()) dismissStartup();
+                super.onReceivedError(view, request, error);
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri u = request.getUrl();
