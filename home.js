@@ -2007,6 +2007,37 @@ function applySections(){
   if(window.loadHomeThemes&&["catalog","themes","all"].includes(secFilter))window.loadHomeThemes();
 }
 
+window.HA_HOME_REVIEW_STATE={
+  capture:function(){
+    return {section:secFilter,genre:cur,franchise:frc,query:query,reviewLimit:REVIEW_LIMIT,
+      reviewsVisible:!document.getElementById("reviews").hidden,
+      catalogueQuery:catQ,decade:catDec,status:catSt,catalogueLimit:CAT_LIMIT};
+  },
+  restore:function(state){
+    var current=this.capture();
+    if(Object.keys(current).every(function(key){return current[key]===state[key]}))return;
+    secFilter=state.section;
+    cur=state.genre;
+    frc=state.franchise;
+    query=state.query;
+    REVIEW_LIMIT=state.reviewLimit;
+    catQ=state.catalogueQuery;
+    catDec=state.decade;
+    catSt=state.status;
+    CAT_LIMIT=state.catalogueLimit;
+    document.getElementById("q").value=query;
+    document.getElementById("cq").value=catQ;
+    document.querySelectorAll("#filters button").forEach(function(button){
+      button.setAttribute("aria-pressed",String(button.dataset.f===secFilter));
+    });
+    applySections();
+    renderSpot();
+    document.getElementById("reviews").hidden=!state.reviewsVisible;
+    if(state.reviewsVisible)renderCards();
+    if(!document.getElementById("catalog").hidden)renderCat();
+  }
+};
+
 function setLang(l){
   LANG=l;
   /* only write when changed: writing html[lang] invalidates :lang() styles for the whole page */
@@ -2442,7 +2473,7 @@ try {
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   window.addEventListener("pageshow", function (event) {
     if (event.persisted || secFilter !== "home") return;
-    if (location.hash === "#first-watch") return;
+    if (location.hash === "#first-watch" || window.HA_REVIEW_RETURN?.pending()) return;
     requestAnimationFrame(function () { window.scrollTo(0, 0); });
   }, { once: true });
 } catch (e) {}
@@ -4410,7 +4441,8 @@ try {
    RELEASES.push({d:r.d,t:r.t,dir:a2(r.dir_ru,r.dir_en),gn:r.gn||[],st:a2("Ожидается","Upcoming"),soon:0,p:a2(r.ru,r.en)});changed=true})}catch(e){}
   if(u.updated){try{UI.upd=a2("Обновлено "+u.updated,"Updated "+u.updated);changed=true}catch(e){}}
   if(changed){try{window.setLang(LANG)}catch(e){}}}
- try{fetch("data/updates.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(u){if(u)apply(u)}).catch(function(){})}catch(e){}
+ window.HA_HOME_REVIEW_STATE.updates=fetch("data/updates.json",{cache:"no-cache"})
+  .then(function(r){return r.ok?r.json():null}).then(function(u){if(u)apply(u)}).catch(function(){});
  window.HA=window.HA||{};window.HA.applyUpdates=apply;
 })();
 

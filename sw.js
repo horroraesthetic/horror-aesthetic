@@ -1,18 +1,18 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v282';
+const CACHE_VERSION = 'ha-v283';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
 const SHELL = [
   BASE, BASE + 'index.html', OFFLINE_URL, BASE + 'posters/',
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
-  BASE + 'home.css?v=205', BASE + 'enhancements.css?v=194', BASE + 'visual-refresh.css?v=3', BASE + 'enhancements.js?v=200', BASE + 'reviews-more.js?v=4', BASE + 'home.js?v=204',
+  BASE + 'home.css?v=205', BASE + 'enhancements.css?v=195', BASE + 'visual-refresh.css?v=3', BASE + 'enhancements.js?v=201', BASE + 'reviews-more.js?v=4', BASE + 'home.js?v=205',
   BASE + 'lollipop.js?v=4', BASE + 'footer-scene.js?v=1', BASE + 'ambient.js?v=2', BASE + 'psy-banner.js?v=1', BASE + 'yokai.js?v=4', BASE + 'yokai-hd.js?v=4', BASE + 'yokai.css?v=4', BASE + 'daily.js?v=2', BASE + 'install.js?v=3', BASE + 'diary.js?v=6', BASE + 'app/', BASE + 'app/app.css?v=9', BASE + 'app/app.js?v=11', BASE + 'data/updates.json', BASE + 'data/daily.json', BASE + 'data/films.json', BASE + 'data/posters.json', BASE + 'data/gore.json', BASE + 'data/collections.json', BASE + 'listen.js?v=1', BASE + 'story-sound.js?v=1', BASE + 'daily.css?v=3', BASE + 'psy-banner.css?v=1', BASE + 'ambient.css?v=2', BASE + 'footer-scene.css?v=1', BASE + 'assistant.js?v=6', BASE + 'assistant.css?v=6', BASE + 'tone-fixes.css?v=3', BASE + 'mag-gallery.css?v=1', BASE + 'lollipop.css?v=1', BASE + 'flashlight.css?v=1', BASE + 'flashlight.js?v=2', BASE + 'ha-effects.css?v=5', BASE + 'ha-effects.js?v=4', BASE + 'mobile-dock-fix.css?v=4',
   BASE + 'reference.css', BASE + 'reference.js',
   BASE + 'film-library.js?v=1', BASE + 'data/catalogue.json', BASE + 'data/search-index.json',
   BASE + 'screening-room/screening-room.js?v=1',
   BASE + 'data/poster-rights.json', BASE + 'data/film-strip.json',
-  BASE + 'review-tools.js', BASE + 'reviews-index.js',
+  BASE + 'review-tools.js', BASE + 'reviews-index.js?v=2',
   ...[
     'archives/','directors/','timeline/','library/','folklore/','reviews/','articles/',
     'culture/','j-horror/','games/','visual-archive/','creepypasta/','team/','database/',
@@ -84,6 +84,10 @@ self.addEventListener('fetch', event => {
         if ((url.pathname === BASE || url.pathname === BASE + 'index.html') && url.searchParams.has('film')) {
           const cataloguePage = await caches.match(BASE);
           if (cataloguePage) return cataloguePage;
+        }
+        if (url.search && [BASE + 'reviews/', BASE + 'archives/'].includes(url.pathname)) {
+          const indexPage = await caches.match(url.pathname);
+          if (indexPage) return indexPage;
         }
         const offlinePage = await caches.match(OFFLINE_URL);
         if (offlinePage) return offlinePage;

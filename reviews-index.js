@@ -35,7 +35,13 @@
     };
     search.addEventListener('input', update);
     decade.addEventListener('change', update);
-    reset.addEventListener('click', () => { search.value=''; decade.value=''; update(); search.focus(); });
+    reset.addEventListener('click', () => {
+      search.value='';
+      decade.value='';
+      search.dispatchEvent(new Event('input',{bubbles:true}));
+      decade.dispatchEvent(new Event('change',{bubbles:true}));
+      search.focus();
+    });
     document.querySelectorAll('.lg button').forEach(button => button.addEventListener('click', () => setTimeout(update, 0)));
     update();
   };
@@ -65,7 +71,7 @@
       const url=new URL(location.href);
       if(search.value.trim())url.searchParams.set('q',search.value.trim());else url.searchParams.delete('q');
       if(decade.value)url.searchParams.set('decade',decade.value);else url.searchParams.delete('decade');
-      history.replaceState(null,'',url.pathname+url.search+url.hash);
+      history.replaceState(history.state,'',url.pathname+url.search+url.hash);
     };
     search.addEventListener('input',sync);
     decade.addEventListener('change',sync);
