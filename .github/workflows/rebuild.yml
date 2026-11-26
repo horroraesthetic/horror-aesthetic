@@ -30,6 +30,7 @@ jobs:
           python3 scripts/build-archive.py
           python3 scripts/build-search-index.py
           python3 scripts/build-daily.py
+          node scripts/build-catalogue.mjs
           python3 scripts/build-collections.py
           python3 scripts/build-films.py
           sudo apt-get install -y -q fonts-liberation fonts-dejavu-core >/dev/null
