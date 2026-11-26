@@ -33,5 +33,7 @@ jobs:
         run: node --check reference.js
       - name: Check audit script syntax
         run: node --check scripts/site-audit.mjs
+      - name: Validate the generated film catalogue
+        run: node scripts/build-catalogue.mjs --check
       - name: Validate sitemap, accessibility and HTML basics
         run: node scripts/site-audit.mjs

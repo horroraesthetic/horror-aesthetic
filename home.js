@@ -1582,6 +1582,8 @@ function renderSubs(){
 }
 function renderCat(){
   var ids=Object.keys(F),decs={},X=window.CATX||[],focused=document.activeElement;
+  var linkedFilm=catFilmID&&(F[catFilmID]||X.find(film=>film.id===catFilmID));
+  if(linkedFilm)document.getElementById("cq").value=T(linkedFilm.n);
   var grid=document.getElementById("catg"),decHost=document.getElementById("cat-dec"),stateHost=document.getElementById("cat-st");
   var focusGroup=[grid,decHost,stateHost].find(function(el){return el.contains(focused)});
   var focusKey=focusGroup===grid?"id":focusGroup===decHost?"d":"s",focusValue=focused?.dataset[focusKey];
@@ -1589,8 +1591,8 @@ function renderCat(){
   var dl=Object.keys(decs).map(Number).sort(function(x,y){return x-y});
   document.getElementById("cat-dec").innerHTML='<button type="button" data-d="all" aria-pressed="'+(catDec==="all")+'">'+esc(T(UI.cat_all))+'</button>'+dl.map(function(y){return '<button type="button" data-d="'+y+'" aria-pressed="'+(String(y)===String(catDec))+'">'+T(UI.decade)(y)+'</button>'}).join("")+(X.length?'<button type="button" data-d="0" aria-pressed="'+(String(catDec)==="0")+'">'+(LANG==="ru"?"Без года":"No year")+'</button>':"");
   var q=catQ.trim().toLowerCase(),rev={};REVIEWS.forEach(function(r){rev[r.id]=1});
-  var list=ids.filter(function(id){var f=F[id];var okD=catDec==="all"||Math.floor(f.y/10)*10===+catDec;var okQ=!q||(f.n.ru+" "+f.n.en+" "+f.y).toLowerCase().indexOf(q)>-1;var okS=catSt==="all"||MY[id]===catSt;return okD&&okQ&&okS}).sort(function(x,y){return F[x].y-F[y].y});
-  var xl=X.filter(function(x){var okD=catDec==="all"||String(catDec)==="0";var okQ=!q||(x.n.ru+" "+x.n.en).toLowerCase().indexOf(q)>-1;var okS=catSt==="all"||MY[x.id]===catSt;return okD&&okQ&&okS}).sort(function(a,b){var A=T(a.n).toLowerCase(),B=T(b.n).toLowerCase();return A<B?-1:A>B?1:0});
+  var list=ids.filter(function(id){var f=F[id];var okD=catDec==="all"||Math.floor(f.y/10)*10===+catDec;var okQ=!q||(f.n.ru+" "+f.n.en+" "+f.y).toLowerCase().indexOf(q)>-1;var okS=catSt==="all"||MY[id]===catSt;return (!catFilmID||id===catFilmID)&&okD&&okQ&&okS}).sort(function(x,y){return F[x].y-F[y].y});
+  var xl=X.filter(function(x){if(catFilmID&&x.id!==catFilmID)return false;var okD=catDec==="all"||String(catDec)==="0";var okQ=!q||(x.n.ru+" "+x.n.en).toLowerCase().indexOf(q)>-1;var okS=catSt==="all"||MY[x.id]===catSt;return okD&&okQ&&okS}).sort(function(a,b){var A=T(a.n).toLowerCase(),B=T(b.n).toLowerCase();return A<B?-1:A>B?1:0});
   if(String(catDec)==="0")list=[];
   document.getElementById("cat-st").innerHTML=[["all",UI.my_all],["want",UI.my_want],["seen",UI.my_seen]].map(function(x){return '<button type="button" data-s="'+x[0]+'" aria-pressed="'+(catSt===x[0])+'">'+esc(T(x[1]))+'</button>'}).join("");
   function catalogueButton(id,film,year,rating){
@@ -1610,9 +1612,27 @@ function renderCat(){
   document.getElementById("cat-count").textContent=(list.length+xl.length)+" / "+(ids.length+X.length)+" "+filmWord(ids.length+X.length)+(seenN?" · "+T(UI.my_seen)+": "+seenN:"");
   document.getElementById("cq").placeholder=T(UI.cat_ph);
 }
-var MY={},catSt="all",quizI=0,quizS={},quizDone=false;
-try{MY=JSON.parse(localStorage.getItem("ha-my")||"{}")||{}}catch(e){MY={}}
-function saveMy(){try{localStorage.setItem("ha-my",JSON.stringify(MY))}catch(e){}}
+var catFilmID=new URLSearchParams(location.search).get("film");
+if(!/^[a-z0-9_-]+$/i.test(catFilmID||""))catFilmID=null;
+var diary=window.HA_DIARY,MY={},catSt="all",quizI=0,quizS={},quizDone=false;
+try{MY=localStorage.getItem("ha-diary-unified-v1")?diary.statuses():JSON.parse(localStorage.getItem("ha-my")||"{}")||{}}catch(e){}
+var priorMy={...MY};
+function saveMy(){
+  if(!diary)return;
+  var changes=Object.create(null);
+  for(var id of new Set([...Object.keys(priorMy),...Object.keys(MY)])){
+    if(priorMy[id]!==MY[id])changes[id]=MY[id]||"";
+  }
+  priorMy={...MY};
+  if(Object.keys(changes).length)diary.ready().then(()=>diary.setStatuses(changes));
+}
+if(diary){
+  document.addEventListener("ha-diary",function(){
+    MY=diary.statuses();priorMy={...MY};
+    if(!document.getElementById("catalog").hidden)renderCat();
+  });
+  diary.ready();
+}
 function renderCal(){
   var out=[],d=new Date();d.setDate(1);
   for(var i=0;i<24&&out.length<4;i++){var x=new Date(d.getFullYear(),d.getMonth()+i,13);if(x.getDay()===5&&x>=new Date(new Date().setHours(0,0,0,0)))out.push(x)}
@@ -2027,67 +2047,34 @@ document.getElementById("ha-watch-cta").addEventListener("click",function(e){
 document.getElementById("genres-host").addEventListener("click",function(e){var b=e.target.closest(".genre");if(b)filterGenre(b.dataset.g,false)});
 document.getElementById("bars").addEventListener("click",function(e){var b=e.target.closest(".bar");if(b){cur=null;filterGenre(b.dataset.g,true)}});
 document.getElementById("clear").addEventListener("click",function(){cur=null;frc=null;renderSpot();renderCards()});
-/* site-wide search */
+/* The site-wide search dialog is shared with Quick Jump. */
 (function(){
- var box=document.createElement("div");box.id="srch";box.hidden=true;box.setAttribute("role","dialog");box.setAttribute("aria-modal","true");
- box.innerHTML='<div class="sp-box"><input type="search" id="sq" autocomplete="off" spellcheck="false"><div class="res" id="sres"></div><div class="hint" id="shint"></div></div>';
- document.body.appendChild(box);
- var inp=box.querySelector("#sq"),res=box.querySelector("#sres"),hint=box.querySelector("#shint"),idx=null,last=null;
- var L=function(ru,en){return LANG==="ru"?ru:en};
- function goSec(name){secFilter=name;document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});applySections();try{history.replaceState(null,"","#"+secFilter)}catch(e){}
-  setTimeout(function(){var t=document.querySelector('section[data-cat="'+name+'"]');if(t)window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+window.scrollY-70),behavior:"smooth"})},30)}
- function build(){
-  var ix=[],hasRev={};REVIEWS.forEach(function(r){hasRev[r.id]=1});
-  Object.keys(F).forEach(function(id){var f=F[id];ix.push({g:hasRev[id]?"rev":"film",t:T(f.n),h:(f.n.ru+" "+f.n.en+" "+f.y).toLowerCase(),r:String(f.y),go:function(){var nm=T(f.n);if(hasRev[id]){cur=null;frc=null;query=nm;document.getElementById("q").value=nm;renderSpot();renderCards();goSec("reviews")}else{catQ=nm;catDec="all";catSt="all";document.getElementById("cq").value=nm;renderCat();goSec("catalog")}}})});
-  REVIEWS.forEach(function(r){var f=F[r.id];ix.push({g:"dir",t:T(r.d),h:(T(r.d)+" "+f.n.ru+" "+f.n.en).toLowerCase(),r:T(f.n),go:function(){cur=null;frc=null;query=T(f.n);document.getElementById("q").value=T(f.n);renderSpot();renderCards();goSec("reviews")}})});
-  RELEASES.forEach(function(r){ix.push({g:"rel",t:r.t,h:(r.t+" "+T(r.dir)+" "+T(r.p)).toLowerCase(),r:r.d,go:function(){goSec("releases")}})});
-  NEWS.forEach(function(n){ix.push({g:"news",t:T(n.t),h:(T(n.t)+" "+T(n.p)).toLowerCase(),r:n.d,go:function(){goSec("news")}})});
-  LISTS.forEach(function(l){ix.push({g:"list",t:T(l.t),h:(T(l.t)+" "+T(l.s)).toLowerCase(),r:"",go:function(){goSec("lists")}})});
-  SHELVES.forEach(function(l){ix.push({g:"list",t:T(l.t),h:(T(l.t)+" "+T(l.p)).toLowerCase(),r:"",go:function(){goSec("shelves")}})});
-  SUBS.forEach(function(l){ix.push({g:"start",t:T(l.t),h:(T(l.t)+" "+T(l.p)).toLowerCase(),r:"",go:function(){goSec("start")}})});
-  DIRS.forEach(function(d){ix.push({g:"dirs",t:d.n,h:(d.n+" "+T(d.s)).toLowerCase(),r:"",go:function(){goSec("dirs")}})});
-  GENRES.forEach(function(g){ix.push({g:"genre",t:T(g[1]),h:(g[1].ru+" "+g[1].en+" "+T(g[2])).toLowerCase(),r:"",go:function(){cur=null;frc=null;query="";document.getElementById("q").value="";filterGenre(g[0],true);goSec("reviews");cur=g[0];renderCards()}})});
-  FRC.forEach(function(f){ix.push({g:"genre",t:T(f.n),h:(f.n.ru+" "+f.n.en+" "+T(f.p)).toLowerCase(),r:f.jp,go:function(){frc=f.k;cur=null;query="";document.getElementById("q").value="";renderSpot();renderCards();goSec("reviews")}})});
-  DIRS.forEach(function(d){(d.f||[]).forEach(function(id){var f=F[id];if(!f)return;ix.push({g:"dir",t:T(f.n),h:(d.n+" "+f.n.ru+" "+f.n.en).toLowerCase(),r:d.n+" · "+f.y,go:function(){catQ=T(f.n);catDec="all";catSt="all";document.getElementById("cq").value=catQ;renderCat();goSec("catalog")}})})});
-  try{(HA.MANGA||[]).forEach(function(r){ix.push({g:"manga",t:r[1],h:(r[1]+" "+r[2]+" "+r[3]+" "+r[4]).toLowerCase(),r:(LANG==="ru"?r[2]:r[3])+" · "+r[4],go:function(){goSec("manga")}})})}catch(e){}
-  return ix}
- var GN2={manga:L("Манга и аниме","Manga & anime"),rev:L("Рецензии","Reviews"),film:L("Каталог","Catalogue"),dir:L("По режиссёру","By director"),rel:L("Новинки","New releases"),news:L("Новости","News"),list:L("Подборки","Lists"),start:L("Новичкам","Start here"),dirs:L("Режиссёры","Directors"),genre:L("Жанры и франшизы","Genres and franchises")};
- function labels(){GN2={rev:L("Рецензии","Reviews"),film:L("Каталог","Catalogue"),dir:L("По режиссёру","By director"),rel:L("Новинки","New releases"),news:L("Новости","News"),list:L("Подборки","Lists"),start:L("Новичкам","Start here"),dirs:L("Режиссёры","Directors"),genre:L("Жанры и франшизы","Genres and franchises"),manga:L("Манга и аниме","Manga & anime")};inp.placeholder=L("Искать по всему сайту: фильм, режиссёр, жанр…","Search the whole site: film, director, genre…");hint.textContent=L("Esc закрыть · / открыть поиск","Esc to close · / to open search")}
-var WORDS=null,KB_EN="qwertyuiop[]asdfghjkl;'zxcvbnm,.",KB_RU="йцукенгшщзхъфывапролджэячсмитьбю";
- function lay(q){var o="",ru=/[а-яё]/.test(q);if(ru)return q;for(var i=0;i<q.length;i++){var k=KB_EN.indexOf(q[i]);o+=k>-1?KB_RU[k]:q[i]}return o}
- function lev(a,b,m){if(Math.abs(a.length-b.length)>m)return m+1;var p=[],i,j;for(j=0;j<=b.length;j++)p[j]=j;for(i=1;i<=a.length;i++){var c=[i],mn=i;for(j=1;j<=b.length;j++){c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));if(c[j]<mn)mn=c[j]}if(mn>m)return m+1;p=c}return p[b.length]}
- function words(){if(WORDS)return WORDS;var m={};idx.forEach(function(it){it.h.split(/[\s,.:;!?()«»"'\/\-–—·]+/).forEach(function(w){if(w.length>2)m[w]=(m[w]||0)+1})});return WORDS=Object.keys(m)}
- function fixTok(t){var ws=words(),best=null,bd=9,max=t.length>=5?2:1;if(t.length<3)return t;ws.forEach(function(w){if(w.indexOf(t)===0){if(bd>0){best=w;bd=0}return}var d=lev(t,w,max);if(d<bd&&d<=max){bd=d;best=w}else if(d===bd&&best&&Math.abs(w.length-t.length)<Math.abs(best.length-t.length))best=w});return best||t}
- function find(q){var toks=q.split(/\s+/),out=[];idx.forEach(function(it){var ok=toks.every(function(t){return it.h.indexOf(t)>-1});if(ok){var tl=it.t.toLowerCase(),sc=tl.indexOf(q)===0?0:tl.indexOf(q)>-1?1:2;out.push({it:it,sc:sc})}});out.sort(function(a,b){return a.sc-b.sc});return out}
- var cur2=-1;
- function render(out,note){
-  var seen={},groups={},order=["rev","film","dir","manga","rel","genre","news","list","start","dirs"],n=0;last=[];
-  out.forEach(function(o){var k=o.it.g+"|"+o.it.t+"|"+o.it.r;if(seen[k])return;seen[k]=1;if((groups[o.it.g]=groups[o.it.g]||[]).length<8&&n<48){groups[o.it.g].push(o.it);n++}});
-  var html=note?'<div class="grp">'+esc(note)+'</div>':"";order.forEach(function(g){if(!groups[g])return;html+='<div class="grp">'+esc(GN2[g]||g)+'</div>'+groups[g].map(function(it){last.push(it);return '<button type="button" class="it" data-i="'+(last.length-1)+'"><b>'+esc(it.t)+'</b><i>'+esc(it.r||"")+'</i></button>'}).join("")});
-  res.innerHTML=html;cur2=-1}
- function run(){
-  var q=inp.value.trim().toLowerCase();if(!idx)idx=build();
-  if(!q){var tr=[["Звонок","Ringu"],["Дзюндзи Ито","Junji Ito"],["Ju-On","Ju-On"],["Hideo Nakata","Hideo Nakata"],["Perfect Blue","Perfect Blue"],["Сияние","The Shining"]];res.innerHTML='<div class="grp">'+esc(L("Попробуйте","Try"))+'</div><div class="sug">'+tr.map(function(x){var w=L(x[0],x[1]);return '<button type="button" class="sg" data-q="'+esc(w)+'">'+esc(w)+'</button>'}).join("")+'</div>';last=[];return}
-  var out=find(q),note="";
-  if(!out.length){var q2=lay(q);if(q2!==q){out=find(q2);if(out.length)note=L("Раскладка исправлена: ","Layout fixed: ")+q2}}
-  if(!out.length){var fx=q.split(/\s+/).map(fixTok).join(" ");if(fx!==q){out=find(fx);if(out.length)note=L("Возможно, вы искали: ","Did you mean: ")+fx}}
-  if(!out.length){res.innerHTML='<div class="nf">'+esc(L("Ничего не найдено. Попробуйте другое слово.","Nothing found. Try another word."))+'</div>';last=[];return}
-  render(out,note)}
- function openS(){labels();idx=null;box.hidden=false;inp.value="";res.innerHTML="";setTimeout(function(){inp.focus()},20);try{ach("search")}catch(e){}}
- function closeS(){box.hidden=true;try{inp.blur()}catch(e){}}
- inp.addEventListener("input",function(){WORDS=null;run()});
- res.addEventListener("click",function(e){var g=e.target.closest(".sg");if(g){inp.value=g.dataset.q;run();inp.focus()}});
- inp.addEventListener("keydown",function(e){if(e.key!=="ArrowDown"&&e.key!=="ArrowUp")return;var its=res.querySelectorAll(".it");if(!its.length)return;e.preventDefault();cur2=(cur2+(e.key==="ArrowDown"?1:-1)+its.length)%its.length;its.forEach(function(b,i){b.classList.toggle("on",i===cur2)});its[cur2].scrollIntoView({block:"nearest"})});
- res.addEventListener("click",function(e){var b=e.target.closest(".it");if(!b)return;var it=last[+b.dataset.i];closeS();if(it)it.go()});
- box.addEventListener("click",function(e){if(e.target===box)closeS()});
- document.addEventListener("keydown",function(e){
-  if(!box.hidden&&e.key==="Escape"){closeS();return}
-  if(box.hidden&&e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"")){e.preventDefault();openS()}
-  if(!box.hidden&&e.key==="Enter"){var f=res.querySelector(".it.on")||res.querySelector(".it");if(f)f.click()}});
- var sb=document.createElement("button");sb.type="button";sb.className="snd";sb.id="sbtn";sb.setAttribute("aria-label","Search");
- var sn=document.getElementById("snd");sn.parentNode.insertBefore(sb,sn);
- function sbl(){sb.textContent="⌕ "+L("Поиск","Search");var bt=document.getElementById("bigs-t");if(bt)bt.textContent=L("Найти фильм, режиссёра, подборку, новинку…","Search films, directors, lists, new releases…")}sbl();document.getElementById("bigs").addEventListener("click",openS);window.renderSearchBtn=sbl;
- sb.addEventListener("click",openS);
+ var search=document.createElement("button");
+ search.type="button";search.className="snd";search.id="sbtn";
+ var sound=document.getElementById("snd");
+ sound.parentNode.insertBefore(search,sound);
+ window.renderSearchBtn=function(){
+  var ru=LANG==="ru";
+  search.textContent="⌕ "+(ru?"Поиск":"Search");
+  search.setAttribute("aria-label",ru?"Поиск":"Search");
+  document.getElementById("bigs-t").textContent=ru?"Найти фильм, режиссёра, подборку, новинку…":"Search films, directors, lists, new releases…";
+ };
+ window.renderSearchBtn();
+ document.addEventListener("ha-search-open",()=>ach("search"));
+ window.HA_HOME_SEARCH=function(){
+  function row(section,en,ru,tags){return ["/horror-aesthetic/#"+section,en,ru,"section",tags]}
+  return [
+   ...RELEASES.map(r=>row("releases",r.t,r.t,r.dir.en+" "+r.dir.ru+" "+r.p.en+" "+r.p.ru)),
+   ...NEWS.map(n=>row("news",n.t.en,n.t.ru,n.p.en+" "+n.p.ru)),
+   ...LISTS.map(l=>row("lists",l.t.en,l.t.ru,l.s.en+" "+l.s.ru)),
+   ...SHELVES.map(l=>row("shelves",l.t.en,l.t.ru,l.p.en+" "+l.p.ru)),
+   ...SUBS.map(l=>row("subs",l.t.en,l.t.ru,l.p.en+" "+l.p.ru)),
+   ...DIRS.map(d=>row("dirs",d.n,d.n,d.s.en+" "+d.s.ru)),
+   ...GENRES.map(g=>row("genres",g[1].en,g[1].ru,g[2].en+" "+g[2].ru)),
+   ...FRC.map(f=>row("spot",f.n.en,f.n.ru,f.p.en+" "+f.p.ru+" "+f.jp)),
+   ...(window.HA?.MANGA||[]).map(m=>row("manga",m[1],m[1],m.slice(2,5).join(" ")))
+  ];
+ };
 })();
 document.getElementById("q").addEventListener("input",function(e){query=e.target.value;REVIEW_LIMIT=REVIEW_BATCH;renderCards()});
 document.getElementById("review-more").addEventListener("click",function(){
@@ -2096,7 +2083,13 @@ document.getElementById("review-more").addEventListener("click",function(){
 });
 document.getElementById("tn-b").addEventListener("click",function(){tnI=Math.floor(Math.random()*Object.keys(F).length);renderTonight()});
 document.getElementById("fc-b").addEventListener("click",function(){factI++;renderTonight()});
-document.getElementById("cq").addEventListener("input",function(e){catQ=e.target.value;CAT_LIMIT=CAT_BATCH;renderCat()});
+document.getElementById("cq").addEventListener("input",function(e){
+ if(catFilmID){
+  catFilmID=null;
+  var url=new URL(location.href);url.searchParams.delete("film");history.replaceState(null,"",url);
+ }
+ catQ=e.target.value;CAT_LIMIT=CAT_BATCH;renderCat();
+});
 document.getElementById("cat-dec").addEventListener("click",function(e){var b=e.target.closest("button");if(b){catDec=b.dataset.d;CAT_LIMIT=CAT_BATCH;renderCat()}});
 document.getElementById("catg").addEventListener("click",function(e){var b=e.target.closest("button[data-id]");if(!b)return;var id=b.dataset.id,c=MY[id];if(!c)MY[id]="want";else if(c==="want")MY[id]="seen";else delete MY[id];saveMy();renderCat()});
 document.getElementById("cat-st").addEventListener("click",function(e){var b=e.target.closest("button");if(b){catSt=b.dataset.s;CAT_LIMIT=CAT_BATCH;renderCat()}});
@@ -4458,7 +4451,7 @@ try {
  function data(kind){
   var d=new Date(),dt=d.toLocaleDateString(LANG==="ru"?"ru-RU":"en-GB",{day:"numeric",month:"long",year:"numeric"});
   if(kind==="top"){
-   var my={};try{my=JSON.parse(localStorage.getItem("ha-my")||"{}")||{}}catch(e){}
+   var my=MY;
    var ids=Object.keys(my).filter(function(k){return my[k]==="seen"&&F[k]}).slice(-5).reverse(),lab=TM("Мой топ просмотренного","My watched list");
    if(!ids.length){ids=Object.keys(my).filter(function(k){return my[k]==="want"&&F[k]}).slice(-5).reverse();lab=TM("Хочу посмотреть","Want to watch")}
    return {tag:lab+" · "+dt,title:ids.length?"":TM("Список пока пуст","The list is empty"),sub:"",body:ids.length?ids.map(function(k,i){return(i+1)+". "+T(F[k].n)+" ("+F[k].y+")"}).join("\n"):TM("Отмечайте фильмы в каталоге: «Видел» или «Хочу».","Mark films in the catalogue: Seen or Want."),list:true}}
@@ -4728,7 +4721,8 @@ try {
   if(x==="json")dl("horror-aesthetic-list.json","application/json",JSON.stringify(MY,null,1));
   if(x==="imp")document.getElementById("ml-file").click();if(x==="share")HA.shareList()});
  sec.addEventListener("change",function(e){if(e.target.id!=="ml-file")return;var fl=e.target.files[0];if(!fl)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);Object.keys(o).forEach(function(k){if(F[k]&&(o[k]==="want"||o[k]==="seen"))MY[k]=o[k]});saveMy();render()}catch(err){}};rd.readAsText(fl)});
- document.addEventListener("click",function(e){if(e.target.closest("#filters,#homenav,#catg,#srch"))setTimeout(render,60)});
+ document.addEventListener("click",function(e){if(e.target.closest("#filters,#homenav,#catg"))setTimeout(render,60)});
+ document.addEventListener("ha-diary",render);
  var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);render();return r};
  render();applySections();
  document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});

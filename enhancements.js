@@ -622,7 +622,41 @@
    ['/horror-aesthetic/about.html','About the Project','О проекте','about'],
    ['/horror-aesthetic/privacy.html','Privacy Policy','Политика конфиденциальности','privacy']
   ];
-  let indexed=false;const loadIndex=()=>{if(indexed)return;indexed=true;fetch('/horror-aesthetic/data/search-index.json').then(r=>r.ok?r.json():[]).then(list=>{list.forEach(i=>entries.push(i));if(!overlay.hidden)render()}).catch(()=>{})};
+  let indexPromise, library, index = [];
+  const loadIndex = () => {
+    if (indexPromise) return indexPromise;
+    const reviews = fetch('/horror-aesthetic/data/search-index.json').then(response => {
+      if (!response.ok) throw new Error('Search index unavailable');
+      return response.json();
+    });
+    const films = import('/horror-aesthetic/film-library.js?v=1').then(module => {
+      library = module;
+      return module.loadCatalogue();
+    });
+    indexPromise = Promise.allSettled([reviews, films]).then(([published, catalogue]) => {
+      const rows = published.status === 'fulfilled' ? published.value : [];
+      const filmsByReview = new Map();
+      const filmRows = [];
+      if (catalogue.status === 'fulfilled') {
+        for (const film of catalogue.value) {
+          if (film.review) {
+            filmsByReview.set('/horror-aesthetic/reviews/' + film.review + '.html', film);
+          } else {
+            const year = ' (' + film.year + ')';
+            filmRows.push([library.catalogueLink(film.id), film.en + year, film.ru + year,
+              'film', film.director, -1, [film.en, film.ru, ...film.aliases]]);
+          }
+        }
+      }
+      index = rows.map(row => {
+        const film = filmsByReview.get(row[0]);
+        return film ? [...row, [film.en, film.ru, ...film.aliases]] : row;
+      }).concat(filmRows);
+      if (published.status === 'rejected' || catalogue.status === 'rejected') indexPromise = null;
+      if (!overlay.hidden) render();
+    });
+    return indexPromise;
+  };
   const trigger=document.createElement('button');
   trigger.type='button';trigger.className='ha-command-trigger';
   trigger.innerHTML='<span aria-hidden="true">⌕</span><span class="ha-command-trigger-label"></span><kbd>⌘ K</kbd>';
@@ -637,26 +671,40 @@
   const text=(en,ruText)=>ru()?ruText:en;
   const SYN=[[/призрак|привиден|дух|yurei|ghost|spirit|haunt|онрё|onryo/,'ghost spirit haunt yurei onryo supernatural призрак дух привиден'],[/кров|gore|жестк|blood|gory/,'gore'],[/слэшер|slasher|маньяк/,'slasher маньяк'],[/монстр|monster|creature|тварь/,'monster creature монстр'],[/вампир|vampire/,'vampire вампир'],[/зомби|zombie|заражен|infect/,'zombie infection зомби заражен'],[/найден|found.?footage|vhs/,'found footage vhs найден'],[/психолог|psycholog/,'psychological психолог'],[/фольклор|folk|легенд/,'folk folklore фольклор легенд'],[/тело|body|боди/,'body horror боди'],[/проклят|curse|cursed/,'curse проклят'],[/дом|house|haunted house/,'house дом'],[/демон|possess|одержим|exorc/,'demon possession одержим демон'],[/тихо|медлен|slow|атмосфер|atmospher/,'atmospheric slow атмосфер медлен'],[/анимац|anime|animation/,'animation анимац']];
   const stem=w=>w.length>5?w.slice(0,w.length-2):w;
-  const smart=q=>{
-   if(!q)return entries.slice();
-   const plain=entries.filter(i=>(i[1]+' '+i[2]+' '+i[3]).toLocaleLowerCase().includes(q));
-   if(plain.length)return plain;
+  const smart = q => {
+   const all = entries.concat(index, window.HA_HOME_SEARCH?.() || []);
+   if (!q) return entries.slice();
+   const thematic = /\s+(?:без|without|but not)\s+/i.test(q);
+   const hits = thematic ? [] : library ? library.matchTitles(all, q) :
+     all.filter(row => (row[1] + ' ' + row[2]).toLocaleLowerCase().includes(q));
+   if (hits.length) return hits;
    const parts=q.split(/\s+(?:но\s+)?(?:без|не|without|no|but not)\s+/);
    const pos=parts[0],neg=parts.slice(1).join(' ');
    const groups=s=>s.split(/[\s,]+/).filter(w=>w.length>2&&!/^(что|про|это|как|для|and|the|with|film|movie|фильм|фильмы|страшн\S*|хочу|нужен|about|scary|horror|хоррор)$/.test(w)).map(w=>{const h=SYN.find(r=>r[0].test(w));return h?{syn:h[1],gore:/кров|gore|blood/.test(w)}:{syn:stem(w),gore:false}});
    const pg=groups(pos),ng=groups(neg);if(!pg.length&&!ng.length)return[];
    const hit=(item,g)=>{if(g.gore)return item[5]>=3;const hay=(item[1]+' '+item[2]+' '+(item[4]||'')).toLocaleLowerCase();return g.syn.split(' ').some(k=>k&&hay.includes(k))};
-   return entries.filter(i=>(i[3]==='review'||i[3]==='story'||i[3]==='essay')&&pg.every(g=>hit(i,g))&&!ng.some(g=>hit(i,g)));
+   return all.filter(i=>(i[3]==='review'||i[3]==='story'||i[3]==='essay')&&pg.every(g=>hit(i,g))&&!ng.some(g=>hit(i,g)));
   };
   const render=()=>{
    const q=input.value.trim().toLocaleLowerCase();
-   visible=smart(q).slice(0,40);
+   const seen = new Set();
+   visible=smart(q).filter(item => {
+    const key = item[0] + '|' + item[1];
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+   }).slice(0,40);
    results.replaceChildren();active=0;
-   if(!visible.length){const empty=document.createElement('p');empty.className='ha-command-empty';empty.textContent=text('No matching sections. Try another search.','Ничего не найдено. Попробуйте другой запрос.');results.appendChild(empty);return}
+   if(!visible.length){const empty=document.createElement('p');empty.className='ha-command-empty';empty.textContent=indexPromise&&!index.length?text('Loading the index…','Загружается указатель…'):text('Nothing found. Try another search.','Ничего не найдено. Попробуйте другой запрос.');results.appendChild(empty);return}
    visible.forEach((item,index)=>{
     const link=document.createElement('a');link.className='ha-command-result';link.href=item[0];link.setAttribute('aria-current',String(index===active?'true':'false'));
     const name=document.createElement('span');name.textContent=text(item[1],item[2]);
-    const path=document.createElement('small');path.textContent=item[0].replace('/horror-aesthetic/','/');link.append(name,path);
+    const path=document.createElement('small');
+    path.textContent=({review:text('Review','Рецензия'),film:text('Catalogue','Каталог'),
+      essay:text('Article','Статья'),story:text('Story','История'),section:text('Section','Раздел')})[item[3]] ||
+      item[0].replace('/horror-aesthetic/','/');
+    link.append(name,path);
+    link.addEventListener('click',event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey)shut()});
     link.addEventListener('mouseenter',()=>setActive(index));
     link.addEventListener('focus',()=>setActive(index));results.appendChild(link);
    });
@@ -672,6 +720,7 @@
    inerted.forEach(el=>{el.inert=true});
    overlay.hidden=false;trigger.setAttribute('aria-expanded','true');input.value='';loadIndex();render();
    document.body.classList.add('ha-command-open');input.focus();
+   document.dispatchEvent(new Event('ha-search-open'));
   };
   const shut=()=>{
    overlay.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ha-command-open');
@@ -686,7 +735,7 @@
    if(event.key==='Escape'){event.preventDefault();shut()}
    else if(event.target===input&&event.key==='ArrowDown'){event.preventDefault();setActive(active+1)}
    else if(event.target===input&&event.key==='ArrowUp'){event.preventDefault();setActive(active-1)}
-   else if(event.target===input&&event.key==='Enter'&&!event.isComposing&&visible[active]){event.preventDefault();location.href=visible[active][0]}
+   else if(event.target===input&&event.key==='Enter'&&!event.isComposing&&visible[active]){event.preventDefault();results.querySelectorAll('a')[active]?.click()}
    else if(event.key==='Tab'){
     const focusable=[close,input,...results.querySelectorAll('a')].filter(el=>el.offsetParent!==null);
     if(event.shiftKey&&document.activeElement===focusable[0]){event.preventDefault();focusable.at(-1).focus()}
@@ -694,8 +743,12 @@
    }
   });
   document.addEventListener('keydown',event=>{
-   if(!event.defaultPrevented&&!event.repeat&&(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();overlay.hidden?open():shut()}
+   if(event.defaultPrevented||event.repeat)return;
+   const shortcut=(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k';
+   const slash=event.key==='/'&&overlay.hidden&&!event.target.closest?.('input,textarea,select,[contenteditable]');
+   if(shortcut||slash){event.preventDefault();overlay.hidden?open():shut()}
   });
+  document.addEventListener('click',event=>{if(event.target.closest?.('#sbtn,#bigs')&&overlay.hidden)open()});
   const localize=()=>{
    trigger.querySelector('.ha-command-trigger-label').textContent=text('QUICK JUMP','БЫСТРЫЙ ПЕРЕХОД');
    trigger.querySelector('kbd').textContent=/Mac|iPhone|iPad/i.test(navigator.platform)?'⌘ K':'Ctrl K';
@@ -707,7 +760,7 @@
    close.setAttribute('aria-label',text('Close','Закрыть'));
    render();
   };
-  document.querySelectorAll('[data-lang],.lg button').forEach(button=>button.addEventListener('click',()=>window.setTimeout(localize,0)));
+  new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang','data-l']});
   localize();
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
