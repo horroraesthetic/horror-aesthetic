@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Film poster rights and provenance register for the HORROR AESTHETIC film database.",
-  "policy": "The 48 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
+  "policy": "The 53 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
   "films": [
     {
       "title": "Ugetsu",
@@ -674,6 +674,76 @@
       "attribution": "Original artwork · HORROR AESTHETIC",
       "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
       "src": "../img/posters/nosferatu1922.webp"
+    },
+    {
+      "title": "Gonjiam: Haunted Asylum",
+      "year": 2018,
+      "candidate": "../img/posters/gonjiam.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/gonjiam.webp"
+    },
+    {
+      "title": "A Field in England",
+      "year": 2013,
+      "candidate": "../img/posters/n2fieldengland13.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/n2fieldengland13.webp"
+    },
+    {
+      "title": "Kill, Baby... Kill!",
+      "year": 1966,
+      "candidate": "../img/posters/killbaby.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/killbaby.webp"
+    },
+    {
+      "title": "Black Sabbath",
+      "year": 1963,
+      "candidate": "../img/posters/blacksabbath.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/blacksabbath.webp"
+    },
+    {
+      "title": "Black Sunday",
+      "year": 1960,
+      "candidate": "../img/posters/blacksunday.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "AI-assisted editorial illustration created for the archive. Approved for display.",
+      "src": "../img/posters/blacksunday.webp"
     }
   ],
   "research_log": {
@@ -764,11 +834,11 @@
         "finding": "No matching licensed film-poster file verified."
       }
     ],
-    "decision": "All 48 registered posters are original archive artworks created for HORROR AESTHETIC; all 48 records are approved for display (approved: true). Earlier title checks document searches for third-party/licensed theatrical poster files only and do not apply to the separately created original archive artworks. Keep future externally sourced images unapproved until matching license/permission and reuse scope are verified.",
+    "decision": "All 53 registered posters are original archive artworks created for HORROR AESTHETIC; all 53 records are approved for display (approved: true). Earlier title checks document searches for third-party/licensed theatrical poster files only and do not apply to the separately created original archive artworks. Keep future externally sourced images unapproved until matching license/permission and reuse scope are verified.",
     "register_summary": {
-      "total_posters": 48,
-      "original_archive_artworks": 48,
-      "approved_for_archive_display": 48,
+      "total_posters": 53,
+      "original_archive_artworks": 53,
+      "approved_for_archive_display": 53,
       "note": "All registered entries are original HORROR AESTHETIC archive artwork; they are not represented as original theatrical posters."
     }
   }
