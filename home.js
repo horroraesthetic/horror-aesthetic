@@ -1884,10 +1884,21 @@ function renderStatic(){
 
   renderGal();
 
-  var fh=document.getElementById("filters");
-  var FILTERS=[["home","eye"],["all","chart"],["trailer","tape"],["spot","jhorror"],["wiki","book"],["about","eye"],["articles","book"],["library","book"],["play","pent"],["calendar","cal"],["quiz","ghost"],["releases","clap"],["news","news"],["start","saw"],["subs","web"],["genres","pent"],["reviews","gore"],["dirs","clap"],["catalog","reel"],["themes","list"],["manga","book"],["mylist","star"],["stats","chart"],["lists","list"],["shelves","tape"],["art","frame"],["badges","star"]];
-  FILTERS[1][1]="chart";
-  fh.innerHTML=FILTERS.map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(f[0]===secFilter)+'">'+ic(f[1])+esc(T(UI["sec_"+f[0]]))+'</button>'}).join("");
+  function filterButton(f){
+    return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(f[0]===secFilter)+'">'+ic(f[1])+esc(T(f[2]||UI["sec_"+f[0]]))+'</button>';
+  }
+  var shortcuts=[["start","saw",a("Что посмотреть","What to watch")],["reviews","gore"],["catalog","reel"],["articles","book",a("Статьи","Articles")]];
+  var groups=[
+    [a("Сайт","Site"),[["home","eye"],["all","chart"],["news","news"],["about","eye"]]],
+    [a("Фильмы и подборки","Films and lists"),[["releases","clap"],["trailer","tape"],["spot","jhorror"],["genres","pent"],["subs","web"],["dirs","clap"],["lists","list"],["shelves","tape"],["calendar","cal"]]],
+    [a("Библиотека и исследования","Library and research"),[["wiki","book"],["library","book"],["themes","list"],["manga","book"],["art","frame"],["stats","chart"]]],
+    [a("Игры и личное","Games and personal"),[["play","pent"],["quiz","ghost"],["mylist","star"],["badges","star"]]]
+  ];
+  document.getElementById("ha-section-shortcuts").innerHTML=shortcuts.map(filterButton).join("");
+  document.getElementById("ha-section-groups").innerHTML=groups.map(function(group,i){
+    var label="ha-section-group-"+i;
+    return '<div class="ha-section-group" role="group" aria-labelledby="'+label+'"><p id="'+label+'">'+esc(T(group[0]))+'</p><div>'+group[1].map(filterButton).join("")+'</div></div>';
+  }).join("");
 
   if(rndId)showRnd();
   renderTonight();renderFresh();renderSubs();renderCal();renderQuiz();renderDuel();renderSnd();renderPlay();
@@ -2000,15 +2011,43 @@ function filterGenre(g,scroll){
   cur=(cur===g&&!scroll)?null:g;
   REVIEW_LIMIT=REVIEW_BATCH;
   renderCards();
-  if(cur){var t=document.getElementById("reviews");t.hidden=false;var top=t.getBoundingClientRect().top+window.scrollY-70;window.scrollTo({top:top,behavior:"smooth"})}
+  if(cur){var t=document.getElementById("reviews");t.hidden=false;t.scrollIntoView({block:"start",behavior:"smooth"})}
 }
 
+var sectionsToggle=document.getElementById("fx"),sectionGroups=document.getElementById("ha-section-groups");
+function findSection(name){
+  if(name==="start")return document.getElementById("first-watch");
+  return document.querySelector('main section[data-cat="'+name+'"][id="'+name+'"]')||
+    document.querySelector('main section[data-cat="'+name+'"]');
+}
+function showSectionGroups(open){
+  sectionGroups.hidden=!open;
+  sectionsToggle.setAttribute("aria-expanded",String(open));
+}
+sectionsToggle.addEventListener("click",function(){showSectionGroups(sectionGroups.hidden)});
+document.getElementById("filters").addEventListener("keydown",function(e){
+  if(e.key!=="Escape"||sectionGroups.hidden)return;
+  showSectionGroups(false);
+  sectionsToggle.focus();
+});
 document.getElementById("filters").addEventListener("click",function(e){
-  var b=e.target.closest("button");if(!b)return;
+  var b=e.target.closest("button[data-f]");if(!b)return;
+  var restoreFocus=sectionGroups.contains(document.activeElement);
   secFilter=b.dataset.f;
-  document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
-  applySections();window.scrollTo({top:0});
+  document.querySelectorAll("#filters button[data-f]").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
+  showSectionGroups(false);
+  applySections();
   try{history.replaceState(null,"","#"+secFilter)}catch(e){}
+  var target=secFilter!=="home"&&findSection(secFilter);
+  if(target){
+    var heading=target.querySelector("h2")||target;
+    heading.tabIndex=-1;
+    heading.focus({preventScroll:true});
+    target.scrollIntoView({block:"start",behavior:"instant"});
+  }else{
+    if(restoreFocus)sectionsToggle.focus({preventScroll:true});
+    window.scrollTo({top:0});
+  }
 });
 document.querySelector(".lang").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setLang(b.dataset.l)});
 document.getElementById("ha-watch-cta").addEventListener("click",function(e){
@@ -2027,8 +2066,8 @@ document.getElementById("clear").addEventListener("click",function(){cur=null;fr
  document.body.appendChild(box);
  var inp=box.querySelector("#sq"),res=box.querySelector("#sres"),hint=box.querySelector("#shint"),idx=null,last=null;
  var L=function(ru,en){return LANG==="ru"?ru:en};
- function goSec(name){secFilter=name;document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});applySections();try{history.replaceState(null,"","#"+secFilter)}catch(e){}
-  setTimeout(function(){var t=document.querySelector('section[data-cat="'+name+'"]');if(t)window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+window.scrollY-70),behavior:"smooth"})},30)}
+ function goSec(name){secFilter=name;document.querySelectorAll("#filters button[data-f]").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});showSectionGroups(false);applySections();try{history.replaceState(null,"","#"+secFilter)}catch(e){}
+  setTimeout(function(){var t=findSection(name);if(t)t.scrollIntoView({block:"start",behavior:"smooth"})},30)}
  function build(){
   var ix=[],hasRev={};REVIEWS.forEach(function(r){hasRev[r.id]=1});
   Object.keys(F).forEach(function(id){var f=F[id];ix.push({g:hasRev[id]?"rev":"film",t:T(f.n),h:(f.n.ru+" "+f.n.en+" "+f.y).toLowerCase(),r:String(f.y),go:function(){var nm=T(f.n);if(hasRev[id]){cur=null;frc=null;query=nm;document.getElementById("q").value=nm;renderSpot();renderCards();goSec("reviews")}else{catQ=nm;catDec="all";catSt="all";document.getElementById("cq").value=nm;renderCat();goSec("catalog")}}})});
@@ -2313,7 +2352,7 @@ window.renderBadges=renderBadges;
   document.getElementById("flb").addEventListener("click",function(){ach("fl")});
   document.getElementById("snd").addEventListener("click",function(){setTimeout(function(){if(sndOn)ach("snd")},50)});
   document.querySelector(".lang").addEventListener("click",function(e){var b=e.target.closest("button");if(b)ach("lang")});
-  document.getElementById("filters").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;ST.tabs[b.dataset.f]=1;saveST();if(Object.keys(ST.tabs).length>=6)ach("tour")});
+  document.getElementById("filters").addEventListener("click",function(e){var b=e.target.closest("button[data-f]");if(!b)return;ST.tabs[b.dataset.f]=1;saveST();if(Object.keys(ST.tabs).length>=6)ach("tour")});
   document.getElementById("gal").addEventListener("click",function(){ach("gal")});
   document.getElementById("catg").addEventListener("click",function(){setTimeout(function(){var w=0,sn=0;for(var k in MY){w++;if(MY[k]==="seen")sn++}if(w>=5)ach("want");if(sn>=10)ach("seen")},0)});
   document.getElementById("play").addEventListener("click",function(e){if(!e.target.closest("button"))return;ST.plays++;saveST();ach("play");if(ST.plays>=60)ach("play60");setTimeout(function(){if(typeof hl!=="undefined"&&hl.best>=5)ach("hl5")},0)});
@@ -2433,7 +2472,7 @@ addEventListener("hashchange",function(){
   });
   if(!valid||secFilter===name)return;
   secFilter=name;applySections();
-  document.querySelectorAll("#filters button").forEach(function(el){el.setAttribute("aria-pressed",String(el.dataset.f===name))});
+  document.querySelectorAll("#filters button[data-f]").forEach(function(el){el.setAttribute("aria-pressed",String(el.dataset.f===name))});
 });
 
 // The hash stores the selected section, not a browser scroll position.
@@ -4664,27 +4703,24 @@ try {
  setTimeout(fix,900);setTimeout(fix,3000);
 })();
 
-/* ===== v108: short Home tab ===== */
+/* ===== Home section shortcuts ===== */
 (function(){
- var H=window.HA||{};
+ var section=document.getElementById("homenav"),tiles=document.getElementById("ha-home-tiles");
  var GRID=[["spot","特","Франшизы","Franchises"],["reviews","怨","Рецензии","Reviews"],["catalog","録","Каталог","Catalogue"],["manga","漫","Манга и аниме","Manga & anime"],["articles","記","Статьи","Features"],["wiki","典","Энциклопедия","Encyclopedia"],["lists","選","Подборки","Lists"],["start","始","Новичкам","Start here"],["dirs","監","Режиссёры","Directors"],["library","蔵","Библиотека","Library"],["play","呪","Игры","Games"],["quiz","問","Тест","Quiz"],["mylist","印","Моё","My list"],["about","序","О нас","About"]];
  function L(a,b){return LANG==="ru"?a:b}
  function allTiles(){var have={},out=[],ab=GRID[GRID.length-1];GRID.forEach(function(g){have[g[0]]=1});var ks={};document.querySelectorAll("section[data-kj]").forEach(function(x){if(!ks[x.dataset.cat])ks[x.dataset.cat]=x.dataset.kj});
   document.querySelectorAll("#filters button[data-f]").forEach(function(b){var id=b.dataset.f;if(id==="home"||id==="all"||have[id])return;var t=b.textContent.trim();if(id==="shelves")t=L("Полки","Shelves");out.push([id,ks[id]||"・",t,t])});
   return GRID.slice(0,GRID.length-1).concat(out,[["database/","映","База фильмов","Film database"],["posters/","絵","Стена постеров","Poster wall"]],[ab])}
  function mark(){["pod","trailer","whatsnew","releases"].forEach(function(id){var e=document.getElementById(id);if(e)e.dataset.home="1"});
-  var n=document.getElementById("homenav");if(!n)return;
-  var key=JSON.stringify([LANG,allTiles()]);
-  if(n.dataset.renderKey===key)return;
-  n.dataset.renderKey=key;
-  n.innerHTML='<div class="hn-in"><h2 class="hn-h">'+L("Куда пойдём?","Where to?")+'</h2><p class="hn-p">'+L("Выберите раздел — всё остальное спрятано, чтобы не пугать сразу.","Pick a section — the rest stays hidden so it doesn't spook you all at once.")+'</p><div class="hn-g">'+allTiles().map(function(g){return '<button type="button" data-go="'+g[0]+'"'+(/\/$/.test(g[0])?' data-href="'+g[0]+'"':'')+'><i aria-hidden="true">'+g[1]+'</i><span>'+L(g[2],g[3])+'</span></button>'}).join("")+'</div><button type="button" class="hn-all" data-go="all">'+L("Показать всё сразу","Show everything")+'</button></div>'}
- var s=document.createElement("section");s.id="homenav";s.dataset.cat="home";s.dataset.home="1";
- document.getElementById("first-watch").after(s);
- s.addEventListener("click",function(e){var b=e.target.closest("button[data-go]");if(!b)return;if(b.dataset.href){location.href=b.dataset.href;return}var f=document.querySelector('#filters button[data-f="'+b.dataset.go+'"]');if(f)f.click()});
+  var entries=allTiles(),key=JSON.stringify([LANG,entries]);
+  if(tiles.dataset.renderKey===key)return;
+  tiles.dataset.renderKey=key;
+  tiles.innerHTML='<div class="hn-g">'+entries.map(function(g){return '<button type="button" data-go="'+g[0]+'"'+(/\/$/.test(g[0])?' data-href="'+g[0]+'"':'')+'><i aria-hidden="true">'+g[1]+'</i><span>'+esc(L(g[2],g[3]))+'</span></button>'}).join("")+'</div><button type="button" class="hn-all" data-go="all">'+L("Показать всё сразу","Show everything")+'</button>'}
+ section.addEventListener("click",function(e){var b=e.target.closest("button[data-go]");if(!b)return;if(b.dataset.href){location.href=b.dataset.href;return}var f=document.querySelector('#filters button[data-f="'+b.dataset.go+'"]');if(f)f.click()});
  function mk2(){mark();applySections()}mk2();setTimeout(mk2,600);setTimeout(mk2,2500);setTimeout(mk2,5000);
  var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);mk2();return r};
  applySections();
- document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
+ document.querySelectorAll("#filters button[data-f]").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
 })();
 
 /* ===== v108: watchlist page ===== */
@@ -4724,7 +4760,7 @@ try {
  document.addEventListener("click",function(e){if(e.target.closest("#filters,#homenav,#catg,#srch"))setTimeout(render,60)});
  var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);render();return r};
  render();applySections();
- document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
+ document.querySelectorAll("#filters button[data-f]").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
 })();
 
 /* ===== v108: short blurbs for new films ===== */
@@ -4752,7 +4788,7 @@ try {
  function render(){var open={};sec.querySelectorAll("details").forEach(function(d){open[d.dataset.id]=d.open});
   sec.innerHTML='<div class="sec-h"><h2><span>'+L("Лонгриды","Long reads")+'</span></h2><small>'+L("для вечернего чтения","for evening reading")+'</small></div>'+A.map(function(x){var ru=LANG==="ru";return '<details class="lr" data-id="'+x.id+'"'+(open[x.id]?' open':'')+'><summary><span class="lr-k">'+(ru?x.k[0]:x.k[1])+'</span><h3>'+(ru?x.t[0]:x.t[1])+'</h3><p>'+(ru?x.dek[0]:x.dek[1])+'</p><span class="lr-m">'+L("Читать · около 3 минут","Read · about 3 min")+'</span></summary><div class="lr-b">'+(ru?x.ru:x.en)+'</div></details>'}).join("")}
  render();var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);render();return r};
- applySections();document.querySelectorAll("#filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
+ applySections();document.querySelectorAll("#filters button[data-f]").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.f===secFilter))});
 })();
 
 /* ===== v109: unified header tool buttons ===== */
@@ -4779,20 +4815,15 @@ try {
  setup();setTimeout(setup,800);setTimeout(setup,2500);setTimeout(setup,5000);
 })();
 
-/* ===== v111: language switch moved to header; sections rail expandable ===== */
+/* ===== Header language switch and section offsets ===== */
 (function(){
- function L(a,b){return LANG==="ru"?a:b}
- var lang=document.querySelector(".lang"),rail=document.querySelector(".rail"),fl=document.getElementById("filters");
- if(!lang||!rail||!fl)return;
+ var lang=document.querySelector(".lang"),rail=document.querySelector(".rail"),bar=document.querySelector(".ha-section-bar");
  var first=document.querySelector(".strip>span:first-child"),rec=first&&first.querySelector(".rec");
  if(first){lang.classList.add("lang-h");first.insertBefore(lang,document.getElementById("hdtools")||null);if(rec)first.insertBefore(lang,rec.nextSibling)}
- var x=document.createElement("button");x.type="button";x.id="fx";x.setAttribute("aria-expanded","false");rail.appendChild(x);
- function lab(){var o=rail.classList.contains("open");x.innerHTML='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="'+(o?'M6 6l12 12M18 6L6 18':'M4 6h16M4 12h16M4 18h16')+'"/></svg><span>'+(o?L("Свернуть","Close"):L("Все разделы","All sections"))+'</span>';x.setAttribute("aria-expanded",String(o))}
- x.addEventListener("click",function(){rail.classList.toggle("open");lab();if(rail.classList.contains("open")){var p=fl.querySelector('[aria-pressed="true"]');if(p)p.scrollIntoView({block:"nearest"})}});
- fl.addEventListener("click",function(e){if(e.target.closest("button")&&rail.classList.contains("open")){rail.classList.remove("open");lab()}});
- lab();var sl=window.setLang;if(sl)window.setLang=function(){var r=sl.apply(this,arguments);lab();return r};
- function fade(){var s=fl.scrollLeft,m=fl.scrollWidth-fl.clientWidth;rail.classList.toggle("fl-l",s>4);rail.classList.toggle("fl-r",s<m-4)}
- fl.addEventListener("scroll",fade,{passive:true});addEventListener("resize",fade);setTimeout(fade,300);setTimeout(fade,1500);
+ rail.hidden=false;
+ function size(){document.documentElement.style.setProperty("--ha-section-offset",(bar.offsetHeight+18)+"px")}
+ size();
+ if(typeof ResizeObserver!=="undefined")new ResizeObserver(size).observe(bar);
 })();
 
 /* ===== v112: J-Horror frames: svg filters + hair on search box ===== */
