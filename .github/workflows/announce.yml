@@ -1,38 +1,85 @@
 name: announce-new-reviews
-# Optional. Posts new review pages to a Telegram channel. Does nothing until the repository secrets
-# TG_BOT_TOKEN and TG_CHAT_ID are set (Settings > Secrets and variables > Actions).
-on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'reviews/*.html'
+run-name: Telegram · выпуск Horror Aesthetic 94
+
+on: workflow_dispatch
+
+permissions: {}
+concurrency:
+  group: telegram-release-94
+  cancel-in-progress: false
 
 jobs:
   announce:
+    if: github.ref == 'refs/heads/codex/telegram-release-94' && github.run_attempt == '1'
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 2
-      - name: Post new reviews
+      - name: Send the published edition to Telegram
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: |
-          if [ -z "$TG_BOT_TOKEN" ] || [ -z "$TG_CHAT_ID" ]; then echo "Telegram secrets not set, skipping"; exit 0; fi
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            for i in 1 2 3 4; do
-              code=$(curl -s -o /tmp/tg.json -w '%{http_code}' "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" --data-urlencode "chat_id=${TG_CHAT_ID}" --data-urlencode "text=Horror Aesthetic: проверка связи. Бот работает.")
-              [ "$code" = 429 ] || break
-              w=$(grep -o '"retry_after":[0-9]*' /tmp/tg.json | grep -o '[0-9]*$'); sleep $(( ${w:-30} + 2 ))
-            done
-            echo "Telegram HTTP $code"; sed -E 's/"first_name":"[^"]*"//' /tmp/tg.json | head -c 300; [ "$code" = 200 ]; exit $?
-          fi
-          git diff --diff-filter=A --name-only HEAD~1 HEAD -- 'reviews/*.html' | grep -v 'reviews/index.html' | while read -r f; do
-            grep -q 'http-equiv="refresh"' "$f" && continue
-            t=$(grep -o '<title>[^<]*' "$f" | head -1 | sed 's/<title>//; s/ | Horror Aesthetic//')
-            u="https://horroraesthetic.github.io/horror-aesthetic/$f"
-            msg=$(printf 'Новая рецензия: %s\n%s' "$t" "$u")
-            curl -s "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" --data-urlencode "chat_id=${TG_CHAT_ID}" --data-urlencode "text=${msg}" > /dev/null
-          done
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import time
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          token = os.environ.get("TG_BOT_TOKEN")
+          chat_id = os.environ.get("TG_CHAT_ID")
+          if not token or not chat_id:
+              raise SystemExit("Telegram credentials for the announcement are not configured.")
+
+          site = "https://horroraesthetic.github.io/horror-aesthetic"
+          message = f"""<b>Новый выпуск Horror Aesthetic</b>
+
+          В каталоге — 233 новых фильма. Вышли 44 рецензии на русском и английском. Всего в архиве уже 309 рецензий.
+
+          Среди новых — <a href="{site}/reviews/cat42.html">«Люди-кошки»</a>, <a href="{site}/reviews/ghostwatch.html">«Призрачный дозор»</a>, <a href="{site}/reviews/wolf-house-2018.html">«Дом волка»</a> и <a href="{site}/reviews/devils-bath-2024.html">«Ванна дьявола»</a>.
+
+          <a href="{site}/reviews/">Все рецензии</a> · <a href="{site}/#catalog">Каталог фильмов</a>"""
+          request = Request(
+              f"https://api.telegram.org/bot{token}/sendMessage",
+              data=urlencode({
+                  "chat_id": chat_id,
+                  "text": message,
+                  "parse_mode": "HTML",
+                  "link_preview_options": '{"is_disabled":true}',
+              }).encode("utf-8"),
+              method="POST",
+          )
+
+          for attempt in range(2):
+              try:
+                  with urlopen(request, timeout=30) as response:
+                      payload = json.load(response)
+              except HTTPError as error:
+                  try:
+                      payload = json.load(error)
+                  except ValueError:
+                      raise SystemExit(f"Telegram returned HTTP {error.code} without an API response.")
+              except (URLError, OSError, ValueError):
+                  raise SystemExit("No reliable delivery receipt. Check Telegram before retrying.")
+
+              if payload.get("ok"):
+                  result = payload.get("result", {})
+                  message_id = result.get("message_id")
+                  if not isinstance(message_id, int) or message_id <= 0:
+                      raise SystemExit("Telegram accepted the request without a visible message ID.")
+                  username = result.get("chat", {}).get("username", "")
+                  print("Telegram confirmed delivery.")
+                  if re.fullmatch(r"[A-Za-z0-9_]+", username):
+                      print(f"Published post: https://t.me/{username}/{message_id}")
+                  break
+
+              code = payload.get("error_code")
+              delay = payload.get("parameters", {}).get("retry_after")
+              if code == 429 and attempt == 0 and isinstance(delay, int) and 0 < delay <= 30:
+                  time.sleep(delay + 1)
+                  continue
+              safe_code = code if isinstance(code, int) else "unknown"
+              raise SystemExit(f"Telegram rejected the announcement with API code {safe_code}.")
+          PY
