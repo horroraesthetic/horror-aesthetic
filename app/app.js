@@ -69,8 +69,8 @@
  function loadYokai(){
   if(!document.getElementById("yk-css")){var l=document.createElement("link");l.id="yk-css";l.rel="stylesheet";l.href="../yokai.css?v=4";document.head.appendChild(l)}
   function add(src,cb){var e=document.createElement("script");e.src=src;e.onload=cb;document.head.appendChild(e)}
-  function run(){add("../yokai.js?v=8")}
-  if(window.YK_HD)run();else add("../yokai-hd.js?v=8",run)}
+  function run(){add("../yokai.js?v=9")}
+  if(window.YK_HD)run();else add("../yokai-hd.js?v=9",run)}
 
  function offStatus(){
   try{
@@ -86,7 +86,7 @@
   if(!window.caches){status.textContent=T("Офлайн недоступен в этом браузере.","Offline is unavailable in this browser.");return}
   var urls=["./","../folklore/","../data/daily.json","../data/films.json","../data/collections.json","../data/posters.json","../data/gore.json",
    "night-data/rituals.json?v=1","night-data/stories.json?v=1","night-data/yokai.webp?v=1","night-data/challenge.webp?v=1",
-   "../yokai.js?v=8","../yokai-hd.js?v=8","../yokai.css?v=4",...(NIGHT?.storyAssets||[])];
+   "../yokai.js?v=9","../yokai-hd.js?v=9","../yokai.css?v=4",...(NIGHT?.storyAssets||[])];
   FILMS.forEach(function(f){urls.push("../reviews/"+f[0]+".html")});
   Object.values(PO).forEach(function(path){urls.push("../img/posters/"+encodeURI(path))});
   urls=[...new Set(urls.map(function(url){return new URL(url,location.href).href}))];
