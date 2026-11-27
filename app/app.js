@@ -178,6 +178,17 @@
   return pageTitle(T("Списки","Lists"))+'<h2 class="sh"><span>'+T("Хочу посмотреть","Watchlist")+' <small>'+wl.length+'</small></span>'+(wl.length>1?'<a href="#pick/wl">'+T("Выбрать за меня ↻","Pick for me ↻")+'</a>':'')+'</h2>'+(wl.length?'<div class="grid">'+cards(wl)+'</div>':'<div class="empty">'+T("Нажмите «Хочу» на странице фильма.","Tap Watchlist on a film page.")+'</div>')+
   '<h2 class="sh"><span>'+T("Нравится","Liked")+' <small>'+lk.length+'</small></span></h2>'+(lk.length?'<div class="grid">'+cards(lk)+'</div>':'<div class="empty">'+T("Нажмите ♥ на странице фильма.","Tap ♥ on a film page.")+'</div>')+
   '<h2 class="sh">'+T("Подборки","Collections")+'</h2><div class="lst collections">'+COLL.map(function(c){return '<a class="cv" style="--cv:url(cov/'+c[0]+'.webp)" href="#collection/'+c[0]+'"><span aria-hidden="true">'+c[1]+'</span><b>'+esc(T(c[2],c[3]))+'</b></a>'}).join("")+'</div>'}
+ function apkCard(){
+  var apkUrl="https://github.com/horroraesthetic/horror-aesthetic/releases/download/app-latest/horror-aesthetic.apk";
+  var nativeApp=/HorrorAestheticApp/.test(navigator.userAgent);
+  var icon='<img src="../img/brand/android-launcher.webp" width="56" height="56" alt="">';
+  var label=nativeApp?'Android':T("Скачать APK","Download APK")+'<span aria-hidden="true">↓</span>';
+  var identity=icon+'<span class="apk-card__copy"><strong>HORROR AESTHETIC</strong><span class="apk-card__action">'+label+'</span></span>';
+  return '<aside class="apk-card" data-apk-url="'+apkUrl+'">'+
+   (nativeApp?'<span class="apk-card__identity">'+identity+'</span>':'<a class="apk-card__identity" href="'+apkUrl+'" data-apk-download>'+identity+'</a>')+
+   '<button class="apk-card__share" type="button" data-apk-share>'+T("Поделиться","Share")+'</button>'+
+   '<div class="apk-card__status" role="status"></div></aside>';
+ }
  function vMe(){
   var d=D.all(),seen=savedFilms(d).filter(function(f){return d[f[0]].w}),n=seen.length,rated=seen.filter(function(f){return d[f[0]].r}),avg=rated.length?rated.reduce(function(s,f){return s+d[f[0]].r},0)/rated.length/2:0;
   var likes=savedFilms(d).filter(function(f){return d[f[0]].l}).length,wl=savedFilms(d).filter(function(f){return D.status(d[f[0]])==="want"}).length;
@@ -187,11 +198,11 @@
   var dir={},dec={};seen.forEach(function(f){if(f[4])dir[f[4]]=(dir[f[4]]||0)+1;var k=Math.floor(f[3]/10)*10+"s";dec[k]=(dec[k]||0)+1});
   function top(o){var k=Object.keys(o).sort(function(a,b){return o[b]-o[a]})[0];return k?k:"—"}
   return pageTitle(T("Профиль","Profile"))+'<div class="lvl viewer-level"><p class="eyebrow">'+T("Ваш уровень","Your level")+'</p><b>'+esc(T(L[lv][1],L[lv][2]))+'</b><small>'+(next?T("До «"+next[1]+"»: ещё "+(next[0]-n),"To "+next[2]+": "+(next[0]-n)+" more"):T("Максимальный уровень","Top level"))+'</small><div class="bar"><i style="width:'+pct+'%"></i></div></div>'+
-  '<a class="profile-link" href="../#badges"><span>'+T("Значки и серия","Badges and streak")+'</span><span class="app-arrow" aria-hidden="true"></span></a>'+
+  '<a class="profile-link" href="../#badges"><span>'+T("Значки и серия","Badges and streak")+'</span><span class="app-arrow" aria-hidden="true"></span></a>'+apkCard()+
   '<div class="stats"><div class="stat"><b>'+n+'</b><small>'+T("Просмотрено","Watched")+'</small></div><div class="stat"><b>'+(avg?avg.toFixed(1):"—")+'</b><small>'+T("Средняя оценка","Average rating")+'</small></div><div class="stat"><b>'+likes+'</b><small>'+T("Нравится","Liked")+'</small></div><div class="stat"><b>'+wl+'</b><small>'+T("Хочу","Watchlist")+'</small></div></div>'+
   '<h2 class="sh">'+T("Оценки","Ratings")+'</h2><div class="hist">'+hist.map(function(c,i){return '<div style="--value:'+Math.round(c/mx*100)+'%" title="'+((i+1)/2)+' · '+c+'"><span>'+((i+1)/2)+'</span></div>'}).join("")+'</div>'+
   '<div class="stats stats-text"><div class="stat"><b>'+esc(top(dec))+'</b><small>'+T("Любимое десятилетие","Favourite decade")+'</small></div><div class="stat"><b>'+esc(top(dir))+'</b><small>'+T("Любимый режиссёр","Favourite director")+'</small></div></div>'+
-  (/HorrorAestheticApp/.test(navigator.userAgent)?'':'<h2 class="sh">'+T("Приложение","App")+'</h2><a class="btn" href="https://github.com/horroraesthetic/horror-aesthetic/releases/download/app-latest/horror-aesthetic.apk">'+T("Скачать для Android (APK)","Download for Android (APK)")+'</a><p style="color:var(--dim);font-size:14px">'+T("Откройте файл, разрешите установку из этого источника. Можно отправлять друзьям.","Open the file and allow installing from this source. You can share it with friends.")+'</p>')+'<h2 class="sh">'+T("Итоги","Wrapped")+'</h2><button class="btn" id="wrap">'+T("Создать мои итоги (картинка)","Create my wrapped (image)")+'</button>'+
+  '<h2 class="sh">'+T("Итоги","Wrapped")+'</h2><button class="btn" id="wrap">'+T("Создать мои итоги (картинка)","Create my wrapped (image)")+'</button>'+
   '<h2 class="sh">'+T("Без интернета","Offline")+'</h2><button class="btn" id="off">'+T("Скачать каталог для офлайна","Download the catalogue for offline")+'</button><p id="offs" style="color:var(--dim);font-size:14px">'+offStatus()+'</p>'+
   '<h2 class="sh">'+T("Данные","Data")+'</h2><button class="btn" id="exp">'+T("Скопировать резервную копию","Copy a backup")+'</button><button class="btn" id="imp">'+T("Восстановить из копии","Restore from a backup")+'</button><p style="color:var(--dim);font-size:14px">'+T("Дневник хранится только на этом телефоне. Копия нужна, чтобы перенести его на другое устройство.","The diary lives only on this phone. A backup lets you move it to another device.")+'</p>'}
 
