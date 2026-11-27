@@ -6,7 +6,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Horror Aesthetic"
+        android:label="HORROR AESTHETIC"
         android:usesCleartextTraffic="false"
         android:theme="@style/AppTheme">
 
