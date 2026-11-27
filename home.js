@@ -2264,61 +2264,71 @@ document.getElementById("snd").addEventListener("click",toggleSound);
  /* the phone */
  var ph=setInterval(function(){if(sndOn&&actx&&!document.hidden&&!ST.ach.phone){clearInterval(ph);window.phoneRing();toast("☎","…");ach("phone")}},1000*45);
 })();
+// The second field is the tile number in the achievement artwork sheet.
 var BG=[
- ["first","ghost",a("Первая кровь","First blood"),a("Зайти на сайт","Visit the site")],
- ["search","eye",a("Следопыт","Pathfinder"),a("Воспользоваться поиском по сайту","Use the site-wide search")],
- ["spiral","eye",a("Спираль","The spiral"),a("Нажать на карточку Дзюндзи Ито","Press the Junji Ito tile")],
- ["s2","cal",a("Вернулся","Back for more"),a("2 дня подряд","2 days in a row")],
- ["s3","cal",a("Привязался","Hooked"),a("3 дня подряд","3 days in a row")],
- ["s7","moon",a("Неделя кошмаров","A week of nightmares"),a("7 дней подряд","7 days in a row")],
- ["s14","pent",a("Культист","Cultist"),a("14 дней подряд","14 days in a row")],
- ["s30","coffin",a("Бессмертный","Undying"),a("30 дней подряд","30 days in a row")],
- ["snd","shock",a("Скрежет","The screech"),a("Включить звук","Turn the sound on")],
- ["fl","eye",a("Во тьме","In the dark"),a("Включить фонарик","Use the flashlight")],
- ["lang","book",a("Полиглот","Bilingual"),a("Переключить язык","Switch the language")],
- ["tour","web",a("Исследователь","Explorer"),a("Открыть 6 разных вкладок","Open 6 different tabs")],
- ["gal","frame",a("Зритель галереи","Gallery visitor"),a("Открыть картинку в галерее","Open a gallery image")],
- ["quiz","ghost",a("Знаток","Know-it-all"),a("Пройти викторину до конца","Finish the quiz")],
- ["want","list",a("Список в кармане","Watchlist"),a("Отметить 5 фильмов в каталоге","Mark 5 films in the catalogue")],
- ["seen","reel",a("Киноман","Cinephile"),a("Отметить 10 фильмов как просмотренные","Mark 10 films as seen")],
- ["play","pent",a("Игрок","Player"),a("Сыграть в игры на вкладке «Игры»","Play the games in the Play tab")],
- ["play60","gore",a("Одержимый","Obsessed"),a("60 действий в играх","60 actions in games")],
- ["end","saw",a("Концовка","The ending"),a("Дойти до конца в истории","Reach an ending in the story")],
- ["hl5","chart",a("Чутьё","Gut feeling"),a("5 верных ответов подряд в «Выше/ниже»","5 right answers in a row in Higher/Lower")],
- ["night","moon",a("Сова","Night owl"),a("Зайти ночью (0–5 часов)","Visit at night (0–5 AM)")],
- ["f13","trash",a("Пятница, 13-е","Friday the 13th"),a("Зайти в пятницу 13-го","Visit on Friday the 13th")],
- ["hw","slasher",a("Хэллоуин","Halloween"),a("Зайти 31 октября","Visit on October 31")],
- ["tape","eye",a("Проклятая кассета","The cursed tape"),a("Досмотреть кассету до конца","Watch the tape to the end")],
- ["phone","shock",a("Звонок","The call"),a("Дождаться звонка телефона (звук включён)","Wait for the phone to ring (sound on)")],
- ["curse","ghost",a("Семь дней","Seven days"),a("Дождаться исполнения проклятия кассеты","Live to see the tape's curse come true"),1],
- ["pass","tape",a("Передать дальше","Pass it on"),a("Передать плёнку другому","Pass the tape on to someone else"),1],
- ["fullmoon","moon",a("Красная луна","Red moon"),a("Зайти на сайт в полнолуние","Visit the site on a full moon"),1],
- ["fog","eye",a("Протереть стекло","Wipe the glass"),a("Протереть запотевшее стекло","Wipe the fogged glass"),1],
- ["spot","eye",a("Зоркий глаз","Sharp eye"),a("Найти призрака на дневной картинке","Find the ghost in the daily picture")],
- ["ouija","ghost",a("Спросить духов","Ask the spirits"),a("Получить ответ на доске духов","Get an answer from the spirit board")],
- ["quiet","ghost",a("Тише","Hush"),a("Слушать комнату в наушниках минуту","Listen to the room in headphones for a minute")],
- ["radio","tape",a("Между станциями","Between stations"),a("Поймать станцию на радио","Tune in a station on the radio")],
- ["silent","saw",a("Не дыши","Do not breathe"),a("Просидеть 18 секунд тише мыши","Stay silent for 18 seconds")],
- ["mirror","eye",a("Зеркало","Mirror"),a("Дожить до конца записи с камеры","Make it to the end of the camera feed")],
- ["corridor","tape",a("Коридор","The corridor"),a("Досмотреть запись коридора","Watch the corridor tape to the end")],
- ["room","pent",a("Запертая комната","The locked room"),a("Дойти до любой концовки","Reach any ending")],
- ["decay","eye",a("Вы заметили","You noticed"),a("Дожить до лица в углу","Live to see the face in the corner"),1],
- ["gone","x",a("Пустая карточка","The empty card"),a("Найти фильм, которого больше нет","Find the film that is gone"),1],
- ["cursed","tape",a("Семь дней","Seven days"),a("Посмотреть кассету и дождаться звонка","Watch the tape and answer the call"),1],
- ["tape2","tape",a("Кассета II","The Tape II"),a("Досмотреть вторую кассету до конца","Watch the second tape to the end")],
- ["dossier","eye",a("Досье","The dossier"),a("Открыть досье зрителя","Open your viewer dossier")],
- ["mail","news",a("На связи","On the list"),a("Подписаться на рассылку","Subscribe to the mailing list")],
-  ["secret","extreme",a("???","???"),a("Секрет: Konami-код (↑↑↓↓←→←→ B A)","Secret: the Konami code (↑↑↓↓←→←→ B A)"),1]
+ ["first",0,a("Первая кровь","First blood"),a("Зайти на сайт","Visit the site")],
+ ["search",1,a("Следопыт","Pathfinder"),a("Воспользоваться поиском по сайту","Use the site-wide search")],
+ ["spiral",2,a("Спираль","The spiral"),a("Нажать на карточку Дзюндзи Ито","Press the Junji Ito tile")],
+ ["s2",3,a("Вернулся","Back for more"),a("2 дня подряд","2 days in a row")],
+ ["s3",4,a("Привязался","Hooked"),a("3 дня подряд","3 days in a row")],
+ ["s7",5,a("Неделя кошмаров","A week of nightmares"),a("7 дней подряд","7 days in a row")],
+ ["s14",6,a("Культист","Cultist"),a("14 дней подряд","14 days in a row")],
+ ["s30",7,a("Бессмертный","Undying"),a("30 дней подряд","30 days in a row")],
+ ["snd",8,a("Скрежет","The screech"),a("Включить звук","Turn the sound on")],
+ ["fl",9,a("Во тьме","In the dark"),a("Включить фонарик","Use the flashlight")],
+ ["lang",10,a("Полиглот","Bilingual"),a("Переключить язык","Switch the language")],
+ ["tour",11,a("Исследователь","Explorer"),a("Открыть 6 разных вкладок","Open 6 different tabs")],
+ ["gal",12,a("Зритель галереи","Gallery visitor"),a("Открыть картинку в галерее","Open a gallery image")],
+ ["quiz",13,a("Знаток","Know-it-all"),a("Пройти викторину до конца","Finish the quiz")],
+ ["want",14,a("Список в кармане","Watchlist"),a("Отметить 5 фильмов в каталоге","Mark 5 films in the catalogue")],
+ ["seen",15,a("Киноман","Cinephile"),a("Отметить 10 фильмов как просмотренные","Mark 10 films as seen")],
+ ["play",16,a("Игрок","Player"),a("Сыграть в игры на вкладке «Игры»","Play the games in the Play tab")],
+ ["play60",17,a("Одержимый","Obsessed"),a("60 действий в играх","60 actions in games")],
+ ["end",18,a("Концовка","The ending"),a("Дойти до конца в истории","Reach an ending in the story")],
+ ["hl5",19,a("Чутьё","Gut feeling"),a("5 верных ответов подряд в «Выше/ниже»","5 right answers in a row in Higher/Lower")],
+ ["night",20,a("Сова","Night owl"),a("Зайти ночью (0–5 часов)","Visit at night (0–5 AM)")],
+ ["f13",21,a("Пятница, 13-е","Friday the 13th"),a("Зайти в пятницу 13-го","Visit on Friday the 13th")],
+ ["hw",22,a("Хэллоуин","Halloween"),a("Зайти 31 октября","Visit on October 31")],
+ ["tape",23,a("Проклятая кассета","The cursed tape"),a("Досмотреть кассету до конца","Watch the tape to the end")],
+ ["phone",24,a("Звонок","The call"),a("Дождаться звонка телефона (звук включён)","Wait for the phone to ring (sound on)")],
+ ["curse",25,a("Семь дней","Seven days"),a("Дождаться исполнения проклятия кассеты","Live to see the tape's curse come true"),1],
+ ["pass",26,a("Передать дальше","Pass it on"),a("Передать плёнку другому","Pass the tape on to someone else"),1],
+ ["fullmoon",27,a("Красная луна","Red moon"),a("Зайти на сайт в полнолуние","Visit the site on a full moon"),1],
+ ["fog",28,a("Протереть стекло","Wipe the glass"),a("Протереть запотевшее стекло","Wipe the fogged glass"),1],
+ ["spot",29,a("Зоркий глаз","Sharp eye"),a("Найти призрака на дневной картинке","Find the ghost in the daily picture")],
+ ["ouija",30,a("Спросить духов","Ask the spirits"),a("Получить ответ на доске духов","Get an answer from the spirit board")],
+ ["quiet",31,a("Тише","Hush"),a("Слушать комнату в наушниках минуту","Listen to the room in headphones for a minute")],
+ ["radio",32,a("Между станциями","Between stations"),a("Поймать станцию на радио","Tune in a station on the radio")],
+ ["silent",33,a("Не дыши","Do not breathe"),a("Просидеть 18 секунд тише мыши","Stay silent for 18 seconds")],
+ ["mirror",34,a("Зеркало","Mirror"),a("Дожить до конца записи с камеры","Make it to the end of the camera feed")],
+ ["corridor",35,a("Коридор","The corridor"),a("Досмотреть запись коридора","Watch the corridor tape to the end")],
+ ["room",36,a("Запертая комната","The locked room"),a("Дойти до любой концовки","Reach any ending")],
+ ["decay",37,a("Вы заметили","You noticed"),a("Дожить до лица в углу","Live to see the face in the corner"),1],
+ ["gone",38,a("Пустая карточка","The empty card"),a("Найти фильм, которого больше нет","Find the film that is gone"),1],
+ ["cursed",39,a("Семь дней","Seven days"),a("Посмотреть кассету и дождаться звонка","Watch the tape and answer the call"),1],
+ ["tape2",40,a("Кассета II","The Tape II"),a("Досмотреть вторую кассету до конца","Watch the second tape to the end")],
+ ["dossier",41,a("Досье","The dossier"),a("Открыть досье зрителя","Open your viewer dossier")],
+ ["mail",42,a("На связи","On the list"),a("Подписаться на рассылку","Subscribe to the mailing list")],
+  ["secret",43,a("???","???"),a("Секрет: Konami-код (↑↑↓↓←→←→ B A)","Secret: the Konami code (↑↑↓↓←→←→ B A)"),1]
 ];
 var ST={last:0,n:0,best:0,days:0,ach:{},tabs:{},plays:0};
 try{var _s=JSON.parse(localStorage.getItem("ha-streak")||"null");if(_s)ST=Object.assign(ST,_s)}catch(e){}
 function saveST(){try{localStorage.setItem("ha-streak",JSON.stringify(ST))}catch(e){}}
 var toastT=null;
-function toast(h,t){var el=document.getElementById("toast");el.innerHTML="<b>"+esc(h)+"</b>"+esc(t);el.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove("on")},3800)}
+var SECRET_BADGE_SEAL=44;
+function badgeArt(tile){
+  var col=tile%8,row=Math.floor(tile/8);
+  return '<span class="badge-art" aria-hidden="true" style="--badge-x:'+col+';--badge-y:'+row+'"></span>';
+}
+function toast(h,t,badgeTile){
+  var el=document.getElementById("toast"),copy="<b>"+esc(h)+"</b>"+esc(t);
+  el.innerHTML=badgeTile===undefined?copy:'<div class="badge-toast">'+badgeArt(badgeTile)+'<div>'+copy+'</div></div>';
+  el.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove("on")},3800);
+}
 function ach(id){
   if(ST.ach[id])return;ST.ach[id]=Date.now();saveST();
   var b=BG.filter(function(x){return x[0]===id})[0];
-  if(b){toast(T(a("Открыт значок","Badge unlocked")),T(b[2]));try{sting("find")}catch(e){}}
+  if(b){toast(T(a("Открыт значок","Badge unlocked")),T(b[2]),b[1]);try{sting("find")}catch(e){}}
   renderBadges();
 }
 function renderBadges(){
@@ -2327,7 +2337,11 @@ function renderBadges(){
   document.getElementById("bd-streak").textContent=T(a("Серия","Streak"))+": "+ST.n+" · "+T(a("рекорд","best"))+": "+ST.best+" · "+T(a("всего дней","total days"))+": "+ST.days;
   document.getElementById("bd-cnt").textContent=got+" / "+BG.length;
   document.getElementById("bd-fill").style.width=Math.round(got/BG.length*100)+"%";
-  g.innerHTML=BG.map(function(b){var on=ST.ach[b[0]],hide=b[4]&&!on;return '<div class="bd '+(on?'got':'lock')+'">'+ic(on?b[1]:"x")+'<div><h4>'+esc(on||!b[4]?T(b[2]):"???")+'</h4><p>'+esc(hide?T(a("Спрятано. Ищи сам.","Hidden. Find it yourself.")):T(b[3]))+'</p></div></div>'}).join("");
+  g.innerHTML=BG.map(function(b){
+    var on=ST.ach[b[0]],hide=b[4]&&!on;
+    return '<div class="bd '+(on?'got':'lock')+'">'+badgeArt(hide?SECRET_BADGE_SEAL:b[1])+
+      '<div><h4>'+esc(hide?"???":T(b[2]))+'</h4><p>'+esc(hide?T(a("Спрятано. Ищи сам.","Hidden. Find it yourself.")):T(b[3]))+'</p></div></div>';
+  }).join("");
   var s=document.getElementById("streak");if(s)s.innerHTML=ic("saw","ic")+" "+esc(T(a("Серия визитов","Visit streak")))+": <b>"+ST.n+"</b> · "+got+"/"+BG.length+" "+esc(T(a("значков","badges")));
 }
 window.renderBadges=renderBadges;
@@ -3680,7 +3694,7 @@ try {
    var cstat=!c?TM("не смотрели","not watched"):c.done?TM("звонок получен","call received"):TM("осталось дней: ","days left: ")+daysLeft(c);
    function chip(l,v){return '<div class="pf-s"><span>'+esc(l)+'</span><b>'+esc(v)+'</b></div>'}
    function list(arr,kind){return arr.length?'<ul class="pf-l">'+arr.map(function(i){return '<li><button type="button" class="pf-j" data-j="'+i+'">'+esc(T(F[i].n))+' <small>'+F[i].y+'</small></button><button type="button" class="pf-x" data-x="'+i+'" aria-label="'+esc(TM("Убрать","Remove"))+'">'+ic("x")+'</button></li>'}).join("")+'</ul>':'<p class="dkn">'+esc(TM("Пока пусто. Отмечайте фильмы в каталоге.","Empty for now. Mark films in the catalogue."))+'</p>'}
-   var badges=Object.keys(ST.ach||{}).map(function(id){var b=BG.filter(function(x){return x[0]===id})[0];return b?'<span class="chip">'+ic(b[1])+esc(T(b[2]))+'</span>':''}).join("");
+   var badges=Object.keys(ST.ach||{}).map(function(id){var b=BG.filter(function(x){return x[0]===id})[0];return b?'<span class="chip">'+badgeArt(b[1])+esc(T(b[2]))+'</span>':''}).join("");
    m.body.innerHTML='<div class="pf-g">'+chip(TM("Посмотрено","Seen"),seen.length)+chip(TM("Хочу","Want"),want.length)+chip(TM("Каталог","Catalogue"),(seen.length/total*100).toFixed(1)+"%")+
     chip(TM("Средний gore","Avg gore"),gcnt?(gsum/gcnt).toFixed(1)+" / 5":"—")+chip(TM("Любимый жанр","Top genre"),top?gname(top):"—")+chip(TM("Дней на сайте","Days here"),days)+
     chip(TM("Лучшая серия","Best streak"),ST.best||0)+chip(TM("Значки","Badges"),unl+" / "+all)+chip(TM("Проклятие","Curse"),cstat)+'</div>'+
