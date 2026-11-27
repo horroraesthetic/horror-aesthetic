@@ -18,6 +18,6 @@
   var art=window.YK_HD&&window.YK_HD[k]?'<div class="yk-art yk-hd dl-art"><svg viewBox="0 0 160 160" aria-hidden="true">'+window.YK_HD[k]+'</svg></div>':"";
   el.innerHTML=art+'<div class="dl-t"><small><span class="l-ru">Ёкай ночи</span><span class="l-en">Yōkai of the night</span></small><b><span class="l-ru">'+esc(n[0])+'</span><span class="l-en">'+esc(n[1])+'</span></b><span><span class="l-ru">'+esc(n[2])+'</span><span class="l-en">'+esc(n[3])+'</span></span></div>';
  }
- function load(){var s=document.createElement("script");s.src="yokai-hd.js?v=5";s.onload=drawY;s.onerror=drawY;document.head.appendChild(s)}
+ function load(){var s=document.createElement("script");s.src="yokai-hd.js?v=6";s.onload=drawY;s.onerror=drawY;document.head.appendChild(s)}
  if(window.YK_HD)drawY();else if("requestIdleCallback"in window)requestIdleCallback(load,{timeout:3000});else setTimeout(load,1500);
 })();
