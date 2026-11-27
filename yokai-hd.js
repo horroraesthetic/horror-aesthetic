@@ -462,5 +462,110 @@
  '<g class="yd-hop2" style="animation-delay:-1s"><g class="yd-fl"><path d="M36 58Q50 74 46 90 42 100 36 100 30 100 26 90 22 74 36 58Z" fill="url(#obF)" opacity=".9"/></g><ellipse cx="32" cy="88" rx="2.2" ry="3" fill="#0a1a3a"/><ellipse cx="41" cy="88" rx="2.2" ry="3" fill="#0a1a3a"/></g>'+
  '<g class="yd-hop2" style="animation-delay:-1.6s"><g class="yd-fl"><path d="M126 52Q140 68 136 84 132 94 126 94 120 94 116 84 112 68 126 52Z" fill="url(#obF)" opacity=".9"/></g><ellipse cx="122" cy="82" rx="2.2" ry="3" fill="#0a1a3a"/><ellipse cx="131" cy="82" rx="2.2" ry="3" fill="#0a1a3a"/></g>';
 
+
+ /* ---------- 33. Ushi-oni ---------- */
+ H.ushioni='<defs><radialGradient id="usA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4a3a" stop-opacity=".3"/><stop offset="1" stop-color="#ff4a3a" stop-opacity="0"/></radialGradient>'+
+ '<radialGradient id="usH" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#6a4a4a"/><stop offset=".7" stop-color="#2a1a1c"/><stop offset="1" stop-color="#0a0606"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#usA)"/>'+
+ '<g stroke="#1a1012" stroke-width="5" stroke-linecap="round" fill="none"><path d="M40 104L14 132 22 156M50 112L30 150M120 104L146 132 138 156M110 112L130 150"/></g>'+
+ '<ellipse cx="80" cy="118" rx="34" ry="24" fill="#1a1012"/>'+
+ '<path d="M44 50C20 52 12 28 22 14 24 32 38 38 50 38ZM116 50C140 52 148 28 138 14 136 32 122 38 110 38Z" fill="#e8dcc0" stroke="#5a4a38" stroke-width="1.2"/>'+
+ '<path d="M44 44C44 22 62 14 80 14 98 14 116 22 116 44 116 76 104 100 80 104 56 100 44 76 44 44Z" fill="url(#usH)" stroke="#000" stroke-width="1.2"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 50px"><path d="M54 48L72 54 70 62 56 58ZM106 48L88 54 90 62 104 58Z" fill="#ff3a2a"/><circle class="yd-pulse2" cx="63" cy="57" r="2.4" fill="#fff0c0"/><circle class="yd-pulse2" cx="97" cy="57" r="2.4" fill="#fff0c0"/></g>'+
+ '<ellipse cx="80" cy="84" rx="20" ry="14" fill="#4a2a2a"/><ellipse cx="72" cy="84" rx="3.4" ry="5" fill="#0a0606"/><ellipse cx="88" cy="84" rx="3.4" ry="5" fill="#0a0606"/>'+
+ '<path d="M60 96Q80 108 100 96" fill="none" stroke="#e8dcc0" stroke-width="2.4" stroke-dasharray="3 3"/>';
+
+ /* ---------- 34. Kamaitachi ---------- */
+ H.kamaitachi='<defs><radialGradient id="ktA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#9ad8e8" stop-opacity=".28"/><stop offset="1" stop-color="#9ad8e8" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="ktF" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#b88a58"/><stop offset="1" stop-color="#4a3018"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#ktA)"/>'+
+ '<g fill="none" stroke="#bfeaf4" stroke-width="1.6" stroke-linecap="round" opacity=".7"><path class="yd-smoke" d="M8 40Q40 28 70 40" /><path class="yd-smoke" style="--d:-1.6s" d="M10 128Q50 114 90 128"/><path class="yd-smoke" style="--d:-3s" d="M92 22Q124 12 152 26"/></g>'+
+ '<g class="yd-hop2"><path d="M148 120C140 100 124 98 110 104" fill="none" stroke="url(#ktF)" stroke-width="9" stroke-linecap="round"/>'+
+ '<ellipse cx="86" cy="106" rx="44" ry="22" fill="url(#ktF)"/><ellipse cx="86" cy="116" rx="34" ry="10" fill="#e8d0a8" opacity=".8"/>'+
+ '<path d="M48 96C40 76 50 62 66 62 80 62 88 74 82 90Z" fill="url(#ktF)"/><path d="M52 64L48 50 60 58ZM66 62L66 48 74 60Z" fill="#6a4a28"/>'+
+ '<circle cx="56" cy="76" r="3" fill="#ffe8a0"/><circle class="yd-pulse2" cx="56" cy="76" r="1.4" fill="#2a0a0a"/><ellipse cx="46" cy="86" rx="3" ry="2.2" fill="#2a1a10"/>'+
+ '<path d="M50 94Q58 98 64 92" stroke="#2a1a10" stroke-width="1.4" fill="none"/>'+
+ '<g class="yd-snip1" style="transform-origin:70px 120px"><path d="M62 112C56 126 50 134 36 136 44 126 46 118 52 110Z" fill="#d8e4ea" stroke="#5a6a78" stroke-width="1.2"/></g>'+
+ '<g class="yd-snip2" style="transform-origin:90px 120px"><path d="M84 114C86 128 84 136 74 142 76 130 74 122 74 112Z" fill="#d8e4ea" stroke="#5a6a78" stroke-width="1.2"/></g>'+
+ '<path d="M30 134L40 132" stroke="#fff" stroke-width="1.6" class="yd-glint"/></g>';
+
+ /* ---------- 36. Sunakake-baba ---------- */
+ H.sunakake='<defs><radialGradient id="skA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#d8b868" stop-opacity=".26"/><stop offset="1" stop-color="#d8b868" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="skK" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6a5a48"/><stop offset="1" stop-color="#2a2018"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#skA)"/>'+
+ '<g fill="#e8c878"><circle class="yd-smoke" cx="112" cy="70" r="1.8"/><circle class="yd-smoke" style="--d:-.8s" cx="124" cy="60" r="1.4"/><circle class="yd-smoke" style="--d:-1.6s" cx="118" cy="84" r="1.6"/><circle class="yd-smoke" style="--d:-2.4s" cx="134" cy="76" r="1.2"/><circle class="yd-smoke" style="--d:-3.2s" cx="106" cy="96" r="1.4"/></g>'+
+ '<path d="M34 160C26 126 38 98 60 92L96 92C112 100 118 130 112 160Z" fill="url(#skK)"/><path d="M56 110Q70 118 88 110" stroke="#8a7a60" fill="none" stroke-width="1.2" opacity=".6"/>'+
+ '<g class="yd-sway2" style="transform-origin:90px 110px"><path d="M96 104C112 98 122 92 130 84" fill="none" stroke="#c8a888" stroke-width="7" stroke-linecap="round"/><circle cx="132" cy="82" r="6" fill="#c8a888"/></g>'+
+ '<path d="M40 60C40 40 56 30 70 30 86 30 98 42 96 62 94 82 84 94 68 94 52 92 40 78 40 60Z" fill="#d8c0a0" stroke="#4a3a28" stroke-width="1.2"/>'+
+ '<path d="M38 56C32 32 54 20 70 22 90 22 104 38 96 52 96 40 84 34 70 34 54 34 44 42 38 56Z" fill="#c8c0b8"/><path d="M40 60C34 78 44 92 56 98 46 84 44 74 44 64Z" fill="#c8c0b8"/>'+
+ '<g class="yd-blink2" style="transform-origin:68px 58px"><path d="M52 58Q58 52 64 58M74 58Q80 52 86 58" stroke="#1a1208" stroke-width="2.2" fill="none" stroke-linecap="round"/></g>'+
+ '<path d="M56 78Q68 90 82 76" fill="#3a0a12" stroke="#2a0a10" stroke-width="1.2"/><path d="M60 78L62 82M68 80L68 85M76 79L76 83" stroke="#e8dcc0" stroke-width="1.6"/>';
+
+ /* ---------- 37. Jinmenju ---------- */
+ H.jinmenju='<defs><radialGradient id="jmA" cx=".5" cy=".4" r=".55"><stop offset="0" stop-color="#8ad870" stop-opacity=".26"/><stop offset="1" stop-color="#8ad870" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="jmT" x1="0" x2="1"><stop offset="0" stop-color="#2a1a12"/><stop offset=".5" stop-color="#5a3a24"/><stop offset="1" stop-color="#1a0e08"/></linearGradient>'+
+ '<radialGradient id="jmF" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#f0dcc4"/><stop offset="1" stop-color="#a88a6c"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="70" r="74" fill="url(#jmA)"/>'+
+ '<path d="M70 160C72 120 66 96 74 70H88C96 96 90 120 94 160Z" fill="url(#jmT)"/><path d="M76 100Q60 84 44 80M86 90Q104 76 122 76M80 122Q58 120 40 130M86 124Q108 126 124 136" stroke="#3a2418" stroke-width="5" fill="none" stroke-linecap="round"/>'+
+ '<g class="yd-sway2" style="transform-origin:80px 150px"><ellipse cx="80" cy="42" rx="52" ry="34" fill="#2a5a2a" opacity=".85"/><ellipse cx="46" cy="64" rx="28" ry="18" fill="#3a6a30" opacity=".8"/><ellipse cx="116" cy="62" rx="28" ry="18" fill="#3a6a30" opacity=".8"/></g>'+
+ '<g class="yd-hop2" style="animation-delay:-.4s"><circle cx="44" cy="84" r="11" fill="url(#jmF)" stroke="#5a4028" stroke-width="1"/><path d="M39 82h4M47 82h4" stroke="#1a0a08" stroke-width="2"/><path d="M41 90Q44 93 48 90" stroke="#7a1a1a" stroke-width="1.6" fill="none"/></g>'+
+ '<g class="yd-hop2" style="animation-delay:-1.2s"><circle cx="122" cy="76" r="11" fill="url(#jmF)" stroke="#5a4028" stroke-width="1"/><circle cx="118" cy="74" r="2" fill="#1a0a08"/><circle cx="126" cy="74" r="2" fill="#1a0a08"/><ellipse cx="122" cy="83" rx="3" ry="2.4" fill="#5a0a0a"/></g>'+
+ '<g class="yd-hop2" style="animation-delay:-2s"><circle cx="80" cy="30" r="12" fill="url(#jmF)" stroke="#5a4028" stroke-width="1"/><path d="M74 28h5M83 28h5" stroke="#1a0a08" stroke-width="2.2" stroke-linecap="round"/><path d="M75 36Q80 40 86 36" stroke="#7a1a1a" stroke-width="1.6" fill="none"/></g>'+
+ '<g class="yd-hop2" style="animation-delay:-2.8s"><circle cx="110" cy="40" r="9" fill="url(#jmF)" stroke="#5a4028" stroke-width="1"/><circle cx="107" cy="39" r="1.6" fill="#1a0a08"/><circle cx="113" cy="39" r="1.6" fill="#1a0a08"/><path d="M106 45Q110 48 114 45" stroke="#7a1a1a" stroke-width="1.4" fill="none"/></g>'+
+ '<g class="yd-hop2" style="animation-delay:-3.4s"><circle cx="52" cy="38" r="9" fill="url(#jmF)" stroke="#5a4028" stroke-width="1"/><path d="M48 37h3M54 37h3" stroke="#1a0a08" stroke-width="2"/><ellipse cx="52" cy="45" rx="2.4" ry="2" fill="#5a0a0a"/></g>';
+
+ /* ---------- 38. Mokumokuren ---------- */
+ H.mokumoku='<defs><radialGradient id="mmA" cx=".5" cy=".5" r=".55"><stop offset="0" stop-color="#e8d098" stop-opacity=".22"/><stop offset="1" stop-color="#e8d098" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="mmP" x1="0" x2="1"><stop offset="0" stop-color="#d8c8a0"/><stop offset="1" stop-color="#a89870"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="82" r="74" fill="url(#mmA)"/>'+
+ '<rect x="22" y="12" width="116" height="136" fill="url(#mmP)" stroke="#2a1a0a" stroke-width="4"/>'+
+ '<path d="M22 46H138M22 80H138M22 114H138M60 12V148M99 12V148" stroke="#2a1a0a" stroke-width="2.4"/>'+
+ '<g stroke="#2a1a0a" stroke-width="1.2" fill="#f4ecd0"><g class="yd-blink2" style="transform-origin:42px 30px"><ellipse cx="42" cy="30" rx="8" ry="5.4"/><circle class="yd-look" cx="42" cy="30" r="3" fill="#a81a1a"/></g>'+
+ '<g class="yd-blink2" style="transform-origin:80px 62px;animation-delay:-1s"><ellipse cx="80" cy="62" rx="9" ry="6"/><circle class="yd-look" cx="80" cy="62" r="3.4" fill="#a81a1a"/></g>'+
+ '<g class="yd-blink2" style="transform-origin:118px 28px;animation-delay:-2s"><ellipse cx="118" cy="28" rx="7" ry="5"/><circle class="yd-look" cx="118" cy="28" r="2.8" fill="#a81a1a"/></g>'+
+ '<g class="yd-blink2" style="transform-origin:42px 98px;animation-delay:-3s"><ellipse cx="42" cy="98" rx="8" ry="5.6"/><circle class="yd-look" cx="42" cy="98" r="3" fill="#a81a1a"/></g>'+
+ '<g class="yd-blink2" style="transform-origin:118px 96px;animation-delay:-.5s"><ellipse cx="118" cy="96" rx="8.6" ry="5.8"/><circle class="yd-look" cx="118" cy="96" r="3.2" fill="#a81a1a"/></g>'+
+ '<g class="yd-blink2" style="transform-origin:80px 132px;animation-delay:-2.6s"><ellipse cx="80" cy="132" rx="8" ry="5.4"/><circle class="yd-look" cx="80" cy="132" r="3" fill="#a81a1a"/></g></g>';
+
+ /* ---------- 39. Shuten-doji ---------- */
+ H.shuten='<defs><radialGradient id="sdA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff3a3a" stop-opacity=".32"/><stop offset="1" stop-color="#ff3a3a" stop-opacity="0"/></radialGradient>'+
+ '<radialGradient id="sdH" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#e85a4a"/><stop offset=".7" stop-color="#8a1a1a"/><stop offset="1" stop-color="#3a0808"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="82" r="74" fill="url(#sdA)"/>'+
+ '<path d="M34 160C34 130 52 116 80 116 108 116 126 130 126 160Z" fill="#1a0a14"/><path d="M60 118L80 140 100 118" stroke="#d8a838" stroke-width="2" fill="none"/>'+
+ '<path d="M46 40C34 30 36 12 46 4 48 18 56 24 64 28ZM114 40C126 30 124 12 114 4 112 18 104 24 96 28Z" fill="#f0e0b8" stroke="#6a5a38" stroke-width="1.2"/>'+
+ '<path d="M42 56C42 32 58 22 80 22 102 22 118 32 118 56 118 90 104 112 80 112 56 112 42 90 42 56Z" fill="url(#sdH)" stroke="#2a0404" stroke-width="1.4"/>'+
+ '<path d="M44 46C38 70 44 96 54 108 46 90 46 68 48 52ZM116 46C122 70 116 96 106 108 114 90 114 68 112 52Z" fill="#c8c0b8" opacity=".9"/>'+
+ '<path d="M52 56L72 62 70 70 54 66ZM108 56L88 62 90 70 106 66Z" fill="#f4e8c0"/><g class="yd-blink2" style="transform-origin:80px 64px"><circle cx="63" cy="65" r="3" fill="#ffcc20"/><circle cx="97" cy="65" r="3" fill="#ffcc20"/><circle cx="63" cy="65" r="1.2" fill="#000"/><circle cx="97" cy="65" r="1.2" fill="#000"/></g>'+
+ '<path d="M62 92Q80 104 98 92 92 98 80 98 68 98 62 92Z" fill="#2a0404"/><path d="M66 93L68 100M94 93L92 100" stroke="#f4e8c0" stroke-width="2.4" stroke-linecap="round"/>'+
+ '<g class="yd-sway2" style="transform-origin:128px 130px"><path d="M118 120H146L142 146Q132 152 122 146Z" fill="#d8a838" stroke="#6a4a10" stroke-width="1.2"/><ellipse cx="132" cy="120" rx="14" ry="3.4" fill="#e8d8a8"/><ellipse class="yd-pulse2" cx="132" cy="120" rx="10" ry="2" fill="#b81a1a"/></g>';
+
+
+ /* ---------- 32. Bake-danuki ---------- */
+ H.tanuki='<defs><radialGradient id="tnkA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8b858" stop-opacity=".28"/><stop offset="1" stop-color="#e8b858" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="tnkF" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#9a7a58"/><stop offset="1" stop-color="#3a2a1a"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#tnkA)"/>'+
+ '<ellipse cx="80" cy="156" rx="40" ry="5" fill="#000" opacity=".5"/>'+
+ '<path d="M120 126C148 130 152 100 140 92 138 108 128 112 118 112Z" fill="url(#tnkF)"/>'+
+ '<ellipse cx="80" cy="116" rx="40" ry="38" fill="url(#tnkF)"/><ellipse cx="80" cy="122" rx="28" ry="28" fill="#e8d4b0"/>'+
+ '<g class="yd-hop2"><ellipse cx="80" cy="124" rx="24" ry="24" fill="none"/></g>'+
+ '<path d="M60 132Q80 150 100 132" stroke="#8a6a48" fill="none" stroke-width="1.6" opacity=".6"/>'+
+ '<path d="M40 52L36 30 56 42ZM120 52L124 30 104 42Z" fill="#4a3220" stroke="#1a1008" stroke-width="1.2"/>'+
+ '<ellipse cx="80" cy="62" rx="40" ry="34" fill="url(#tnkF)" stroke="#1a1008" stroke-width="1.2"/>'+
+ '<path d="M46 64C46 48 62 46 66 60 62 76 48 78 46 64ZM114 64C114 48 98 46 94 60 98 76 112 78 114 64Z" fill="#1a1008"/>'+
+ '<ellipse cx="80" cy="76" rx="22" ry="16" fill="#e8d4b0"/><ellipse cx="80" cy="70" rx="5" ry="3.6" fill="#0a0604"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 60px"><circle cx="56" cy="62" r="2.4" fill="#fff0c0"/><circle cx="104" cy="62" r="2.4" fill="#fff0c0"/></g>'+
+ '<path d="M72 80Q80 86 88 80" stroke="#3a1a10" stroke-width="1.8" fill="none" stroke-linecap="round"/>'+
+ '<g class="yd-sway2" style="transform-origin:80px 36px"><path d="M62 38Q80 14 98 38Q80 30 62 38Z" fill="#4a8a3a" stroke="#1a3a10" stroke-width="1.2"/></g>';
+
+ /* ---------- 33. Nuppeppo ---------- */
+ H.nuppeppo='<defs><radialGradient id="nupA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#d8b0a0" stop-opacity=".26"/><stop offset="1" stop-color="#d8b0a0" stop-opacity="0"/></radialGradient>'+
+ '<radialGradient id="nupB" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#d8b8a0"/><stop offset=".7" stop-color="#9a7a68"/><stop offset="1" stop-color="#4a3228"/></radialGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#nupA)"/>'+
+ '<ellipse cx="80" cy="154" rx="46" ry="5" fill="#000" opacity=".5"/>'+
+ '<g class="yd-hop2"><path d="M26 140C14 108 22 62 48 40 66 24 96 24 114 42 142 66 148 108 134 140 120 156 40 156 26 140Z" fill="url(#nupB)" stroke="#2a1a12" stroke-width="1.4"/>'+
+ '<path d="M36 128Q44 118 52 126M110 134Q122 126 128 138M54 54Q66 44 80 48" stroke="#5a4034" stroke-width="2" fill="none" opacity=".7"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 84px"><ellipse cx="58" cy="82" rx="7" ry="4" fill="#f4e8d0" stroke="#2a1a12"/><circle cx="58" cy="82" r="2.2" fill="#0a0604"/><ellipse cx="102" cy="84" rx="5" ry="3" fill="#f4e8d0" stroke="#2a1a12"/><circle cx="102" cy="84" r="1.8" fill="#0a0604"/></g>'+
+ '<path d="M54 112Q80 130 108 108" fill="#3a0a12" stroke="#2a1a12" stroke-width="1.4"/><path d="M62 114L64 120M76 120L76 126M90 118L90 124" stroke="#e8dcc0" stroke-width="2"/></g>';
+
  window.YK_HD=H;
 })();
