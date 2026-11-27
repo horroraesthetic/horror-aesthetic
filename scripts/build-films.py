@@ -9,6 +9,12 @@ for k,v in manual.items():
 def strip(t):return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',t))).strip()
 ALIAS={'ring':'ringu','pulse':'kairo','dark-water':'darkwater','perfect-blue':'perfectblue'}
 posters={}
+# Keep the filename lookup as a fallback for dossiers without a header poster.
+# An explicit header image also supports shared artwork and versioned filenames.
+header_poster=re.compile(
+    r'<figure\b[^>]*\bclass="(?:hpst|pstf)"[^>]*>\s*<img\b[^>]*\bsrc="'
+    r'(?:\.\./|/horror-aesthetic/)img/posters/([^"/?#]+\.webp)(?:\?[^"]*)?"'
+)
 for f in sorted(glob.glob('img/posters/*.webp'),key=lambda x:('horror-aesthetic' not in x,x)):
     b=os.path.basename(f);st=re.sub(r'\(\d+\)','',b[:-5]);st=re.sub(r'-\d{4}-horror-aesthetic-?','',st).strip('-')
     st=ALIAS.get(st,st)
@@ -19,6 +25,10 @@ for p in sorted(glob.glob('reviews/*.html')):
     if slug=='index':continue
     s=open(p,encoding='utf8').read()
     if 'http-equiv="refresh"' in s:continue
+    header=header_poster.search(s)
+    if header:
+        filename=html.unescape(header[1])
+        if os.path.isfile(os.path.join('img','posters',filename)):posters[slug]=filename
     m=re.search(r'<meta name="description" content="(.*?)"',s,re.S);d=html.unescape(m.group(1)) if m else ''
     pr=d.split(' / ',1);en=pr[0].strip();ru=pr[1].strip() if len(pr)==2 else en
     def ex(cls):

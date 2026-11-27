@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "purpose": "Film poster rights and provenance register for the HORROR AESTHETIC film database.",
-  "policy": "The 294 posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
+  "policy": "The posters currently listed in this register are original archive artworks created for HORROR AESTHETIC (including AI-assisted artwork), not scans or original theatrical posters. They are approved for display in the HORROR AESTHETIC archive and must be credited as original archive artwork. For any future third-party image, film still, fan art, scan, or externally sourced poster, verify the exact source, rights holder or creator, license/permission, attribution requirements, and reuse scope before approval; online availability alone does not grant reuse rights.",
   "films": [
     {
       "title": "Ugetsu",
       "year": 1953,
-      "candidate": "../img/posters/ugetsu-1953-horror-aesthetic.webp",
+      "candidate": "../img/posters/ugetsu-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -14,13 +14,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/ugetsu-1953-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/ugetsu-archive.webp"
     },
     {
       "title": "The Ghost of Yotsuya",
       "year": 1959,
-      "candidate": "../img/posters/yotsuya-1959-horror-aesthetic.webp",
+      "candidate": "../img/posters/yotsuya-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -28,13 +28,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/yotsuya-1959-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/yotsuya-archive.webp"
     },
     {
       "title": "Jigoku",
       "year": 1960,
-      "candidate": "../img/posters/jigoku-1960-horror-aesthetic.webp",
+      "candidate": "../img/posters/jigoku-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -42,13 +42,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/jigoku-1960-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/jigoku-archive.webp"
     },
     {
       "title": "Kwaidan",
       "year": 1964,
-      "candidate": "../img/posters/kwaidan-1964-horror-aesthetic(1).webp",
+      "candidate": "../img/posters/kwaidan-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -56,13 +56,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original cinematic poster artwork created for the HORROR AESTHETIC Japanese horror archive; not an original 1964 theatrical poster.",
-      "src": "../img/posters/kwaidan-1964-horror-aesthetic(1).webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/kwaidan-archive.webp"
     },
     {
       "title": "Onibaba",
       "year": 1964,
-      "candidate": "../img/posters/onibaba-1964-horror-aesthetic.webp",
+      "candidate": "../img/posters/onibaba-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -70,13 +70,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1964 theatrical poster.",
-      "src": "../img/posters/onibaba-1964-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/onibaba-archive.webp"
     },
     {
       "title": "Woman in the Dunes",
       "year": 1964,
-      "candidate": "../img/posters/woman-in-the-dunes-1964-horror-aesthetic.webp",
+      "candidate": "../img/posters/woman-in-the-dunes-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -84,13 +84,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/woman-in-the-dunes-1964-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/woman-in-the-dunes-archive.webp"
     },
     {
       "title": "Kuroneko",
       "year": 1968,
-      "candidate": "../img/posters/kuroneko-1968-horror-aesthetic.webp",
+      "candidate": "../img/posters/kuroneko-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -98,13 +98,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1968 theatrical poster.",
-      "src": "../img/posters/kuroneko-1968-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/kuroneko-archive.webp"
     },
     {
       "title": "Blind Beast",
       "year": 1969,
-      "candidate": "../img/posters/blind-beast-1969-horror-aesthetic.webp",
+      "candidate": "../img/posters/blind-beast-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -112,13 +112,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/blind-beast-1969-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/blind-beast-archive.webp"
     },
     {
       "title": "House",
       "year": 1977,
-      "candidate": "../img/posters/house-1977-horror-aesthetic.webp",
+      "candidate": "../img/posters/hausu.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -126,13 +126,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1977 theatrical poster.",
-      "src": "../img/posters/house-1977-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/hausu.webp"
     },
     {
       "title": "Evil Dead Trap",
       "year": 1988,
-      "candidate": "../img/posters/evil-dead-trap-1988-horror-aesthetic.webp",
+      "candidate": "../img/posters/evil-dead-trap-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -140,13 +140,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/evil-dead-trap-1988-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/evil-dead-trap-archive.webp"
     },
     {
       "title": "Tetsuo: The Iron Man",
       "year": 1989,
-      "candidate": "../img/posters/tetsuo-1989-horror-aesthetic.webp",
+      "candidate": "../img/posters/tetsuo-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -154,41 +154,41 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/tetsuo-1989-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/tetsuo-archive.webp"
     },
     {
       "title": "Cure",
       "year": 1997,
-      "candidate": "../img/posters/cure-1997-horror-aesthetic.webp",
+      "candidate": "../img/posters/cure-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": "Original AI-assisted artwork created for HORROR AESTHETIC",
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive poster artwork generated for HORROR AESTHETIC; not an original theatrical poster.",
-      "src": "../img/posters/cure-1997-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/cure-archive.webp"
     },
     {
       "title": "Perfect Blue",
       "year": 1997,
-      "candidate": "../img/posters/perfect-blue-1997-horror-aesthetic.webp",
+      "candidate": "../img/posters/perfectblue-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": "Original AI-assisted artwork created for HORROR AESTHETIC",
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive poster artwork generated for HORROR AESTHETIC; not an original theatrical poster.",
-      "src": "../img/posters/perfect-blue-1997-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/perfectblue-archive.webp"
     },
     {
       "title": "The Ring",
       "year": 1998,
-      "candidate": "../img/posters/ring-1998-horror-aesthetic.webp",
+      "candidate": "../img/posters/ringu-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -196,13 +196,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original cinematic archive artwork created for HORROR AESTHETIC; not an original 1998 theatrical poster.",
-      "src": "../img/posters/ring-1998-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/ringu-archive.webp"
     },
     {
       "title": "Tomie",
       "year": 1998,
-      "candidate": "../img/posters/tomie-1998-horror-aesthetic.webp",
+      "candidate": "../img/posters/tomie-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -210,27 +210,27 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/tomie-1998-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/tomie-archive.webp"
     },
     {
       "title": "Audition",
       "year": 1999,
-      "candidate": "../img/posters/audition-1999-horror-aesthetic.webp",
+      "candidate": "../img/posters/audition-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
       "source_page": null,
-      "license": "Original AI-assisted artwork created for HORROR AESTHETIC",
+      "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive poster artwork generated for HORROR AESTHETIC; not an original theatrical poster.",
-      "src": "../img/posters/audition-1999-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/audition-archive.webp"
     },
     {
       "title": "Uzumaki",
       "year": 2000,
-      "candidate": "../img/posters/uzumaki-2000-horror-aesthetic.webp",
+      "candidate": "../img/posters/uzumaki-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -238,13 +238,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/uzumaki-2000-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/uzumaki-archive.webp"
     },
     {
       "title": "Pulse",
       "year": 2001,
-      "candidate": "../img/posters/pulse-2001-horror-aesthetic.webp",
+      "candidate": "../img/posters/kairo-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -252,13 +252,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/pulse-2001-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/kairo-archive.webp"
     },
     {
       "title": "Suicide Club",
       "year": 2001,
-      "candidate": "../img/posters/suicide-club-2001-horror-aesthetic.webp",
+      "candidate": "../img/posters/suicide-club-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -266,13 +266,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/suicide-club-2001-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/suicide-club-archive.webp"
     },
     {
       "title": "Dark Water",
       "year": 2002,
-      "candidate": "../img/posters/dark-water-2002-horror-aesthetic.webp",
+      "candidate": "../img/posters/darkwater-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -280,13 +280,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/dark-water-2002-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/darkwater-archive.webp"
     },
     {
       "title": "One Missed Call",
       "year": 2003,
-      "candidate": "../img/posters/one-missed-call-2003-horror-aesthetic.webp",
+      "candidate": "../img/posters/one-missed-call-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -294,13 +294,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/one-missed-call-2003-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/one-missed-call-archive.webp"
     },
     {
       "title": "Infection",
       "year": 2004,
-      "candidate": "../img/posters/infection-2004-horror-aesthetic.webp",
+      "candidate": "../img/posters/infection-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -308,13 +308,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/infection-2004-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/infection-archive.webp"
     },
     {
       "title": "Marebito",
       "year": 2004,
-      "candidate": "../img/posters/marebito-2004-horror-aesthetic.webp",
+      "candidate": "../img/posters/marebito-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -322,13 +322,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/marebito-2004-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/marebito-archive.webp"
     },
     {
       "title": "Noroi: The Curse",
       "year": 2005,
-      "candidate": "../img/posters/noroi-2005-horror-aesthetic.webp",
+      "candidate": "../img/posters/noroi-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -336,13 +336,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/noroi-2005-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/noroi-archive.webp"
     },
     {
       "title": "Reincarnation",
       "year": 2005,
-      "candidate": "../img/posters/reincarnation-2005-horror-aesthetic.webp",
+      "candidate": "../img/posters/reincarnation-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -350,13 +350,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/reincarnation-2005-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/reincarnation-archive.webp"
     },
     {
       "title": "Retribution",
       "year": 2006,
-      "candidate": "../img/posters/retribution-2006-horror-aesthetic.webp",
+      "candidate": "../img/posters/retribution-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -364,13 +364,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/retribution-2006-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/retribution-archive.webp"
     },
     {
       "title": "Occult",
       "year": 2009,
-      "candidate": "../img/posters/occult-2009-horror-aesthetic.webp",
+      "candidate": "../img/posters/occult-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -378,13 +378,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/occult-2009-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/occult-archive.webp"
     },
     {
       "title": "Tag",
       "year": 2015,
-      "candidate": "../img/posters/tag-2015-horror-aesthetic.webp",
+      "candidate": "../img/posters/tag-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -392,13 +392,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/tag-2015-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/tag-archive.webp"
     },
     {
       "title": "One Cut of the Dead",
       "year": 2017,
-      "candidate": "../img/posters/one-cut-of-the-dead-2017-horror-aesthetic.webp",
+      "candidate": "../img/posters/one-cut-of-the-dead-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -406,13 +406,13 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/one-cut-of-the-dead-2017-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/one-cut-of-the-dead-archive.webp"
     },
     {
       "title": "Kisaragi Station",
       "year": 2022,
-      "candidate": "../img/posters/kisaragi-station-2022-horror-aesthetic.webp",
+      "candidate": "../img/posters/kisaragi-station-archive.webp",
       "status": "original-artwork",
       "approved": true,
       "creator": "HORROR AESTHETIC",
@@ -420,8 +420,8 @@
       "license": "Original artwork created for HORROR AESTHETIC",
       "license_url": null,
       "attribution": "Original artwork · HORROR AESTHETIC",
-      "notes": "Original archive artwork created for HORROR AESTHETIC. Approved for display.",
-      "src": "../img/posters/kisaragi-station-2022-horror-aesthetic.webp"
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/kisaragi-station-archive.webp"
     },
     {
       "title": "Oddity",
@@ -4118,6 +4118,216 @@
       "attribution": "Original artwork · HORROR AESTHETIC",
       "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
       "src": "../img/posters/zombi2.webp"
+    },
+    {
+      "title": "An American Werewolf in London",
+      "year": 1981,
+      "candidate": "../img/posters/americanwerewolf-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/americanwerewolf-archive.webp"
+    },
+    {
+      "title": "The Birds",
+      "year": 1963,
+      "candidate": "../img/posters/birds-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/birds-archive.webp"
+    },
+    {
+      "title": "Halloween",
+      "year": 1978,
+      "candidate": "../img/posters/halloween-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/halloween-archive.webp"
+    },
+    {
+      "title": "Hellraiser",
+      "year": 1987,
+      "candidate": "../img/posters/hellraiser-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/hellraiser-archive.webp"
+    },
+    {
+      "title": "Ju-On: The Grudge",
+      "year": 2002,
+      "candidate": "../img/posters/juon-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/juon-archive.webp"
+    },
+    {
+      "title": "The Lighthouse",
+      "year": 2019,
+      "candidate": "../img/posters/lighthouse-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/lighthouse-archive.webp"
+    },
+    {
+      "title": "The Night of the Hunter",
+      "year": 1955,
+      "candidate": "../img/posters/nightofhunter-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/nightofhunter-archive.webp"
+    },
+    {
+      "title": "Psycho",
+      "year": 1960,
+      "candidate": "../img/posters/psycho-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/psycho-archive.webp"
+    },
+    {
+      "title": "Repulsion",
+      "year": 1965,
+      "candidate": "../img/posters/repulsion-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/repulsion-archive.webp"
+    },
+    {
+      "title": "Saint Maud",
+      "year": 2019,
+      "candidate": "../img/posters/saintmaud-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/saintmaud-archive.webp"
+    },
+    {
+      "title": "The Shining",
+      "year": 1980,
+      "candidate": "../img/posters/shining-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/shining-archive.webp"
+    },
+    {
+      "title": "Silent Hill",
+      "year": 2006,
+      "candidate": "../img/posters/silenthill-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/silenthill-archive.webp"
+    },
+    {
+      "title": "Suspiria",
+      "year": 1977,
+      "candidate": "../img/posters/suspiria-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/suspiria-archive.webp"
+    },
+    {
+      "title": "They Live",
+      "year": 1988,
+      "candidate": "../img/posters/theylive-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/theylive-archive.webp"
+    },
+    {
+      "title": "The Thing",
+      "year": 1982,
+      "candidate": "../img/posters/thing-archive.webp",
+      "status": "original-artwork",
+      "approved": true,
+      "creator": "HORROR AESTHETIC",
+      "source_page": null,
+      "license": "Original artwork created for HORROR AESTHETIC",
+      "license_url": null,
+      "attribution": "Original artwork · HORROR AESTHETIC",
+      "notes": "Original AI-assisted archive artwork created for HORROR AESTHETIC.",
+      "src": "../img/posters/thing-archive.webp"
     }
   ],
   "research_log": {
