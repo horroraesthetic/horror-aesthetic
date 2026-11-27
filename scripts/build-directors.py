@@ -45,7 +45,7 @@ for r in rows:
     art='img/editorial/directors/'+r['page'].removesuffix('.html')+'.webp'
     has_emblem=os.path.isfile(art)
     if has_emblem:
-        emblem=f'<img class="ha-profile-emblem" src="../{art}" width="320" height="320" alt="" decoding="async">'
+        emblem=f'<img class="ha-profile-emblem" src="../{art}?v=2" width="320" height="320" alt="" decoding="async">'
         intro=f'<header class="ha-director-intro"><div>{intro}</div>{emblem}</header>'
     body=f'''{intro}
 <ul class="hub">{items}</ul>
