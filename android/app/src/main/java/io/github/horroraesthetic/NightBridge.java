@@ -107,7 +107,8 @@ final class NightBridge {
             try (FileOutputStream out = new FileOutputStream(image)) { out.write(png); }
             Uri uri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".wrapped", image, "horror-aesthetic-wrapped.png");
             Intent send = new Intent(Intent.ACTION_SEND).setType("image/png").putExtra(Intent.EXTRA_STREAM, uri)
-                    .setClipData(ClipData.newRawUri("Horror Wrapped", uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            send.setClipData(ClipData.newRawUri("Horror Wrapped", uri));
             activity.startActivity(Intent.createChooser(send, "Horror Wrapped"));
         } catch (Exception error) {
             if (!(error instanceof ActivityNotFoundException)) android.util.Log.w("NightBridge", "Could not share Wrapped", error);
