@@ -1,4 +1,5 @@
 (function () {
+  let building = false;
   function loadImage(src) {
     return new Promise(resolve => {
       if (!src) return resolve(null);
@@ -11,7 +12,7 @@
 
   window.HAWrapped = async function ({ night, T, posterPath, filmTitle, period, button }) {
     const existing = document.getElementById('wrapview');
-    if (existing) return;
+    if (existing || building) return;
     const stats = night?.wrapStats(period);
     const status = document.getElementById('wrap-note');
     if (!stats?.count) {
@@ -19,6 +20,7 @@
       return;
     }
     status.textContent = '';
+    building = true;
     button.disabled = true;
     try {
       await document.fonts?.load('900 90px "Playfair Display"');
@@ -86,6 +88,7 @@
       text('horroraesthetic.github.io/horror-aesthetic',76,1854,25,'#ce9aa6',924,true);
 
       const url = canvas.toDataURL('image/png');
+      if (!button.isConnected) return;
       const dialog = document.createElement('dialog');
       dialog.id = 'wrapview';
       dialog.setAttribute('aria-label','Horror Wrapped');
@@ -117,6 +120,7 @@
     } catch {
       status.textContent = T('Не удалось собрать карточку. Попробуй ещё раз.', 'Could not make the card. Try again.');
     } finally {
+      building = false;
       button.disabled = false;
     }
   };

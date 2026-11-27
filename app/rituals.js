@@ -23,7 +23,7 @@
     const bridge = window.HANative;
     const index = new Map(yokai.map((row, i) => [row[0], i]));
     let notifyEnabled = false;
-    let audio, source, volume, ambience = '';
+    let audio, source, volume, ambience = '', soundRequest = 0;
 
     function readState() {
       const raw = parse(STORE);
@@ -188,17 +188,22 @@
         '<span class="night-muted" role="status"></span></div>';
     }
 
-    async function setSound(mode) {
+    function stopSound() {
       if (source) { source.stop(); source.disconnect(); source = null; }
       if (volume) { volume.disconnect(); volume = null; }
-      const previous = ambience;
       ambience = '';
+      return ++soundRequest;
+    }
+
+    async function setSound(mode) {
+      const previous = ambience, request = stopSound();
       try {
         if (previous !== mode) {
           const Context = window.AudioContext || window.webkitAudioContext;
           if (!Context) throw new Error('Web Audio');
           audio ||= new Context();
           await audio.resume();
+          if (request !== soundRequest) return;
           const count = audio.sampleRate * 3, buffer = audio.createBuffer(1, count, audio.sampleRate);
           const channel = buffer.getChannelData(0);
           for (let i = 0; i < count; i++) {
@@ -218,6 +223,7 @@
           ambience = mode;
         }
       } catch {
+        if (request !== soundRequest) return;
         document.querySelectorAll('.night-sound [role="status"]').forEach(el => {
           el.textContent = T('Звук недоступен.', 'Sound is unavailable.');
         });
@@ -313,7 +319,7 @@
     }
 
     return {
-      tonight, dailyCard, collection, yokaiCard, moods, challengePage, storiesPage, soundButtons, notifications, award, handle, sync, post,
+      tonight, dailyCard, collection, yokaiCard, moods, challengePage, storiesPage, soundButtons, stopSound, notifications, award, handle, sync, post,
       moodIds: key => data.moods[key],
       storyAssets: stories.map(story => '../img/mag/' + story.img + '.webp'),
       wrapStats, atlas, yokaiSlot:id => index.get(id),

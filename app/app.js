@@ -279,6 +279,7 @@
   if(v==="random"){var r=FILMS[Math.floor(Math.random()*FILMS.length)];location.replace("#film/"+r[0]);return}
   if(v==="pick"){pick(arg);return}
   var main={home:1,films:1,diary:1,lists:1,me:1};var sub=["film","collection","yokai","yokai-card","challenge","stories","story","review"].includes(v);if(!main[v]&&!sub)v="home";
+  if(v!=="story"&&v!=="review")NIGHT?.stopSound();
   $("#ab-b").hidden=!sub;
   $("#ab-b").setAttribute("aria-label",T("Назад","Back"));
   $("#ab-l").textContent=lang()==="ru"?"EN":"RU";
