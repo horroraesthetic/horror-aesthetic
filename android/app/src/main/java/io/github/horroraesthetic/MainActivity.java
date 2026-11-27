@@ -17,8 +17,13 @@ import android.widget.ImageView;
 
 public class MainActivity extends Activity {
     private static final String HOST = "horroraesthetic.github.io";
-    private static final String START = "https://horroraesthetic.github.io/horror-aesthetic/app/";
     private WebView web;
+    private NightBridge nightBridge;
+
+    private static boolean ownUrl(Uri uri) {
+        return uri != null && "https".equals(uri.getScheme()) && HOST.equals(uri.getHost()) &&
+                uri.getPath() != null && uri.getPath().startsWith("/horror-aesthetic/");
+    }
 
     @Override
     protected void onCreate(Bundle state) {
@@ -48,6 +53,9 @@ public class MainActivity extends Activity {
         s.setAllowContentAccess(false);
         s.setUserAgentString(s.getUserAgentString() + " HorrorAestheticApp/1");
 
+        nightBridge = new NightBridge(this, web);
+        YokaiWidget.refresh(this);
+
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient() {
             private void dismissStartup() {
@@ -71,8 +79,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri u = request.getUrl();
-                boolean ours = HOST.equals(u.getHost()) && u.getPath() != null && u.getPath().startsWith("/horror-aesthetic");
-                if (ours) return false;
+                if (ownUrl(u)) return false;
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, u));
                 } catch (Exception ignored) { }
@@ -84,7 +91,7 @@ public class MainActivity extends Activity {
             web.restoreState(state);
         } else {
             Uri data = getIntent() != null ? getIntent().getData() : null;
-            web.loadUrl(data != null ? data.toString() : START);
+            web.loadUrl(ownUrl(data) ? data.toString() : NightData.APP_URL);
         }
     }
 
@@ -98,7 +105,15 @@ public class MainActivity extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Uri data = intent.getData();
-        if (data != null) web.loadUrl(data.toString());
+        if (ownUrl(data)) web.loadUrl(data.toString());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int request, String[] permissions, int[] results) {
+        super.onRequestPermissionsResult(request, permissions, results);
+        if (request == NightBridge.NOTIFICATION_PERMISSION && nightBridge != null) {
+            nightBridge.notificationPermissionResult();
+        }
     }
 
     @Override

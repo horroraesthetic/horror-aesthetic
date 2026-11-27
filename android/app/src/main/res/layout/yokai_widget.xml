@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/widget_background"
+    android:padding="10dp">
+    <ImageView
+        android:id="@+id/widget_image"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        android:importantForAccessibility="no" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/widget_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/yokai_widget"
+            android:textColor="#F893A1"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/widget_yokai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HORROR AESTHETIC"
+            android:textColor="#F4E8DB"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:maxLines="2" />
+    </LinearLayout>
+</LinearLayout>

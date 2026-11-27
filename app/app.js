@@ -1,7 +1,7 @@
 /* Horror Aesthetic app shell: Home / Films / Diary / Lists / Me. Data: ../data/daily.json, ../feed-reviews.xml, local diary. */
 (function(){
  var root=document.documentElement,$=function(s){return document.querySelector(s)},A=$("#app"),D=window.HA_DIARY;
- var GR={},PO={},FD=null,COLS=null,FILMS=[],BY=Object.create(null),recent=[],shown=60,filt={g:"",q:"",dec:"",set:"",sort:"rating"};
+ var NIGHT=null,shownDay="",GR={},PO={},FD=null,COLS=null,FILMS=[],BY=Object.create(null),recent=[],shown=60,filt={g:"",q:"",dec:"",set:"",sort:"rating"};
  try{if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register("/horror-aesthetic/sw.js").catch(function(){})}catch(e){}
  function lang(){return root.dataset.l==="ru"?"ru":"en"}
  function T(ru,en){return lang()==="ru"?ru:en}
@@ -36,7 +36,10 @@
  }
  function cards(list){return list.map(card).join("")}
  var COLL=[["haunted-houses","家","Проклятые дома","Haunted houses"],["cursed-objects","呪","Проклятые вещи","Cursed objects"],["forests-wilderness","森","Леса и глушь","Forests and wilderness"],["ghost-children","子","Дети и призраки","Children and ghosts"],["screens-and-tapes","画","Экраны и плёнки","Screens and tapes"],["folk-horror","村","Фолк-хоррор","Folk horror"],["water","水","Вода и глубина","Water and depth"],["mirrors-and-doubles","鏡","Зеркала и двойники","Mirrors and doubles"],["possession","憑","Одержимость","Possession"],["j-horror","日本","Японский хоррор","J-Horror and Japan"]];
- function pickTonight(){var day=Math.floor(Date.now()/864e5);return FILMS[(Math.imul(day,2654435761)>>>0)%FILMS.length]}
+ function pickTonight(){
+  var day=Date.parse(D.today()+"T00:00:00Z")/864e5;
+  return BY[NIGHT?.tonight()]||FILMS[(Math.imul(day,2654435761)>>>0)%FILMS.length];
+ }
 
  function hist(){try{return JSON.parse(localStorage.getItem("ha-hist")||"[]")}catch(e){return[]}}
  function pushHist(sl){try{var h=hist().filter(function(x){return x!==sl});h.unshift(sl);localStorage.setItem("ha-hist",JSON.stringify(h.slice(0,24)))}catch(e){}}
@@ -55,7 +58,9 @@
  function pick(key){
   var d=D.all(),seen=function(f){return d[f[0]]&&d[f[0]].w};
   function go(pool){var u=pool.filter(function(f){return !seen(f)});if(!u.length)u=pool;if(!u.length){location.replace("#home");alert(T("Тут пока пусто","Nothing here yet"));return}var r=u[Math.floor(Math.random()*u.length)];location.replace("#film/"+r[0])}
-  if(key==="classic")go(FILMS.filter(function(f){return +f[3]<1980}));
+  var mood=NIGHT?.moodIds(key);
+  if(mood)go(mood.map(function(id){return BY[id]}).filter(Boolean));
+  else if(key==="classic")go(FILMS.filter(function(f){return +f[3]<1980}));
   else if(key==="new")go(FILMS.filter(function(f){return +f[3]>=2015}));
   else if(key==="top")go(FILMS.filter(function(f){return +f[5]>=4.5}));
   else if(key==="wl")go(savedFilms(d).filter(function(f){return D.status(d[f[0]])==="want"}));
@@ -67,48 +72,42 @@
   function run(){add("../yokai.js?v=8")}
   if(window.YK_HD)run();else add("../yokai-hd.js?v=8",run)}
 
- function offStatus(){var t="";try{t=localStorage.getItem("ha-off")||""}catch(e){}return t?T("Скачано: ","Downloaded: ")+t:T("Рецензии, постеры и подборки будут открываться без сети.","Reviews, posters and collections will open without a network.")}
- function downloadOffline(btn){
-  if(!window.caches){alert(T("Браузер не поддерживает","Not supported"));return}
-  var urls=["../app/","../folklore/","../creepypasta/","../data/daily.json","../data/films.json","../data/collections.json","../data/posters.json","../data/gore.json"];
-  FILMS.forEach(function(f){urls.push("../reviews/"+f[0]+".html")});Object.keys(PO).forEach(function(k){urls.push("../img/posters/"+encodeURI(PO[k]))});
-  urls=urls.map(function(u){return new URL(u,location.href).href});
-  var i=0,done=0,fail=0,st=$("#offs");btn.disabled=true;
-  caches.open("ha-offline").then(function(c){
-   function next(){if(i>=urls.length)return Promise.resolve();var u=urls[i++];return c.match(u).then(function(h){return h||c.add(u)}).catch(function(){fail++}).then(function(){done++;if(st)st.textContent=T("Скачано ","Saved ")+done+" / "+urls.length;return next()})}
-   var w=[];for(var k=0;k<6;k++)w.push(next());return Promise.all(w)}).then(function(){
-   var d=new Date().toLocaleDateString(lang()==="ru"?"ru-RU":"en-GB");try{localStorage.setItem("ha-off",d)}catch(e){}
-   btn.disabled=false;if(st)st.textContent=(fail?T("Готово, не скачалось: ","Done, failed: ")+fail+" · ":"")+offStatus()})}
- function wrapped(){
-  var d=D.all(),yr=String(new Date().getFullYear()),seen=FILMS.filter(function(f){var e=d[f[0]];return e&&e.w&&String(e.w).slice(0,4)===yr}),label=yr;
-  if(!seen.length){seen=savedFilms(d).filter(function(f){return d[f[0]].w});label=T("ВСЁ ВРЕМЯ","ALL TIME")}
-  if(!seen.length){alert(T("Отметьте хотя бы один просмотренный фильм","Mark at least one film as watched"));return}
-  var rated=seen.filter(function(f){return d[f[0]].r}),avg=rated.length?rated.reduce(function(a,f){return a+d[f[0]].r},0)/rated.length/2:0;
-  var dir={},dec={};seen.forEach(function(f){if(f[4])dir[f[4]]=(dir[f[4]]||0)+1;var k=Math.floor(f[3]/10)*10+"s";dec[k]=(dec[k]||0)+1});
-  function top(o){var k=Object.keys(o).sort(function(a,b){return o[b]-o[a]})[0];return k||"—"}
-  var best=seen.slice().sort(function(a,b){return (d[b[0]].r||0)-(d[a[0]].r||0)||(b[5]-a[5])}).slice(0,3);
-  var W=1080,H=1920,cv=document.createElement("canvas");cv.width=W;cv.height=H;var x=cv.getContext("2d");
-  var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#1a0508");g.addColorStop(.55,"#07090d");g.addColorStop(1,"#000");x.fillStyle=g;x.fillRect(0,0,W,H);
-  x.fillStyle="rgba(255,60,70,.10)";x.beginPath();x.arc(820,330,260,0,7);x.fill();
-  function tx(t,px,py,sz,col,al,wt){x.font=(wt||"900")+" "+sz+"px Impact,'Arial Black',Arial,sans-serif";x.fillStyle=col;x.textAlign=al||"left";x.fillText(t,px,py)}
-  function fit(t,max){return t.length>max?t.slice(0,max-1)+"…":t}
-  tx("HORROR AESTHETIC",80,120,40,"#ff5a64");tx(T("МОИ ИТОГИ","MY WRAPPED"),80,260,120,"#f1e7df");tx(label,80,360,96,"#ff5a64");
-  tx(String(seen.length),80,640,300,"#f1e7df");tx(T("фильмов просмотрено","films watched"),80,720,52,"#b9a8a2","left","700");
-  tx(avg?avg.toFixed(1)+" ★":"—",80,880,110,"#ff8d93");tx(T("средняя оценка","average rating"),80,940,44,"#b9a8a2","left","700");
-  tx(fit(top(dir),22),80,1090,64,"#f1e7df");tx(T("любимый режиссёр","favourite director"),80,1145,40,"#b9a8a2","left","700");
-  tx(top(dec),80,1280,64,"#f1e7df");tx(T("любимое десятилетие","favourite decade"),80,1335,40,"#b9a8a2","left","700");
-  tx(T("ТОП-3","TOP 3"),80,1450,48,"#ff5a64");
-  var jobs=best.map(function(f,i){return new Promise(function(res){var px=80+i*320,py=1480,w=290,h=330;
-   x.fillStyle="hsl("+hue(f[0])+",45%,18%)";x.fillRect(px,py,w,h);
-   function lbl(){x.fillStyle="rgba(0,0,0,.6)";x.fillRect(px,py+h-70,w,70);tx(fit(name(f).replace(/\s*\(\d{4}\)\s*$/,""),16),px+w/2,py+h-26,28,"#f1e7df","center");res()}
-   if(PO[f[0]]){var im=new Image();im.onload=function(){var r=Math.max(w/im.width,h/im.height),dw=im.width*r,dh=im.height*r;x.save();x.beginPath();x.rect(px,py,w,h);x.clip();x.drawImage(im,px+(w-dw)/2,py+(h-dh)/2,dw,dh);x.restore();lbl()};im.onerror=lbl;im.src="../img/posters/"+encodeURI(PO[f[0]])}else lbl()})});
-  Promise.all(jobs).then(function(){
-   tx("horroraesthetic.github.io/horror-aesthetic",W/2,1880,34,"#8a7b76","center","700");
-   var url=cv.toDataURL("image/png");
-   var o=document.createElement("div");o.id="wrapview";o.innerHTML='<img alt="" src="'+url+'"><div><button class="btn" id="wshare">'+T("Поделиться","Share")+'</button><button class="btn" id="wclose">'+T("Закрыть","Close")+'</button></div><p>'+T("Или зажмите картинку, чтобы сохранить","Or press and hold the image to save")+'</p>';
-   document.body.appendChild(o);
-   o.querySelector("#wclose").onclick=function(){o.remove()};
-   o.querySelector("#wshare").onclick=function(){cv.toBlob(function(b){var fl=new File([b],"horror-aesthetic-wrapped.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[fl]}))navigator.share({files:[fl],title:"Horror Aesthetic"}).catch(function(){});else{var a=document.createElement("a");a.href=url;a.download="horror-aesthetic-wrapped.png";a.click()}})}})}
+ function offStatus(){
+  try{
+   var record=JSON.parse(localStorage.getItem("ha-offline-bundle-v2")||"null");
+   if(record?.date)return record.failed?T("Осталось скачать: ","Remaining: ")+record.failed:T("Скачано: ","Downloaded: ")+record.date;
+   var old=localStorage.getItem("ha-off");
+   if(old)return T("Каталог скачан. Обнови пакет для крипипаст и коллекции.","Catalogue downloaded. Refresh for stories and the collection.");
+  }catch(e){}
+  return T("Скачай каталог, постеры, рецензии и крипипасты.","Download the catalogue, posters, reviews and stories.");
+ }
+ async function downloadOffline(btn){
+  var status=$("#offs");
+  if(!window.caches){status.textContent=T("Офлайн недоступен в этом браузере.","Offline is unavailable in this browser.");return}
+  var urls=["./","../folklore/","../data/daily.json","../data/films.json","../data/collections.json","../data/posters.json","../data/gore.json",
+   "night-data/rituals.json?v=1","night-data/stories.json?v=1","night-data/yokai.webp?v=1","night-data/challenge.webp?v=1",
+   "../yokai.js?v=8","../yokai-hd.js?v=8","../yokai.css?v=4",...(NIGHT?.storyAssets||[])];
+  FILMS.forEach(function(f){urls.push("../reviews/"+f[0]+".html")});
+  Object.values(PO).forEach(function(path){urls.push("../img/posters/"+encodeURI(path))});
+  urls=[...new Set(urls.map(function(url){return new URL(url,location.href).href}))];
+  var next=0,done=0,failed=0;
+  btn.disabled=true;
+  try{
+   var cache=await caches.open("ha-offline");
+   async function saveNext(){
+    while(next<urls.length){
+     var url=urls[next++];
+     try{if(!await cache.match(url))await cache.add(url)}catch(e){failed++}
+     status.textContent=T("Скачано ","Saved ")+(++done)+" / "+urls.length;
+    }
+   }
+   await Promise.all(Array.from({length:6},saveNext));
+   var date=new Date().toLocaleDateString(lang()==="ru"?"ru-RU":"en-GB");
+   localStorage.setItem("ha-offline-bundle-v2",JSON.stringify({date:date,failed:failed}));
+   status.textContent=offStatus();
+  }catch(e){status.textContent=T("Не удалось скачать. Попробуй ещё раз.","Download failed. Try again.")}
+  finally{btn.disabled=false}
+ }
  /* ---------- views ---------- */
  function vHome(){
   var f=pickTonight(),d=D.all(),wl=savedFilms(d).filter(function(x){return D.status(d[x[0]])==="want"}),top=FILMS.filter(function(x){return +x[5]>=4.5}).sort(function(a,b){return b[5]-a[5]||a[3]-b[3]}).slice(0,14);
@@ -117,13 +116,16 @@
    '<div class="hero-copy"><p class="eyebrow">'+T("Фильм ночи","Film of the night")+'</p><h1>'+esc(filmTitle(f))+'</h1>'+
    '<p class="hero-meta">'+esc(f[3])+(f[4]?" · "+esc(f[4]):"")+(f[5]?" · ★ "+esc(f[5]):"")+'</p></div>'+
    '<div class="hero-actions"><a class="go primary" href="#film/'+esc(f[0])+'">'+T("Открыть фильм","Open film")+' <span class="app-arrow" aria-hidden="true"></span></a><a class="go" href="#random">'+T("Случайный","Random")+' <span aria-hidden="true">↻</span></a></div></div></section>'+
-  '<h2 class="sh">'+T("Что посмотреть сегодня?","What to watch tonight?")+'</h2><div class="chips moods">'+MOODS.map(function(m){return '<a href="#pick/'+m[0]+'">'+esc(T(m[1],m[2]))+'</a>'}).join("")+'</div>'+
+  (NIGHT?NIGHT.dailyCard():"")+
+  '<h2 class="sh">'+T("Подбери на вечер","Pick for tonight")+'</h2>'+(NIGHT?NIGHT.moods():"")+
+  '<div class="chips moods">'+MOODS.map(function(m){return '<a href="#pick/'+m[0]+'">'+esc(T(m[1],m[2]))+'</a>'}).join("")+'</div>'+
+  (NIGHT?'<a class="night-card night-challenge-link" href="#challenge"><img src="night-data/challenge.webp?v=1" width="52" height="52" alt=""><b>'+T("31 день хоррора","31 Days of Horror")+'</b><span class="app-arrow" aria-hidden="true"></span></a>':"")+
   (rec.length?'<h2 class="sh">'+T("Новые рецензии","New reviews")+'<a href="#films">'+T("все","all")+'</a></h2><div class="row">'+cards(rec)+'</div>':'')+
   (wl.length?'<h2 class="sh">'+T("Хочу посмотреть","Your watchlist")+'<a href="#lists">'+T("все","all")+'</a></h2><div class="row">'+cards(wl.slice(0,14))+'</div>':'')+
   (function(){var h=hist().map(function(x){return filmInfo(x,d[x])}).filter(Boolean);return h.length?'<h2 class="sh">'+T("Недавно открывали","Recently opened")+'</h2><div class="row">'+cards(h.slice(0,14))+'</div>':''})()+
   '<h2 class="sh">'+T("Лучшее в архиве","Top rated")+'</h2><div class="row">'+cards(top)+'</div>'+
   '<h2 class="sh">'+T("Подборки","Collections")+'<a href="#lists">'+T("все","all")+'</a></h2><div class="chips">'+COLL.slice(0,6).map(function(c){return '<button type="button" onclick="location.hash=\'#collection/'+c[0]+'\'">'+c[1]+" "+esc(T(c[2],c[3]))+'</button>'}).join("")+'</div>'+
-  '<h2 class="sh">'+T("Крипипасты и журнал","Stories and magazine")+'</h2><div class="lst"><a href="../creepypasta/"><span>怖い話</span><b>'+T("Крипипасты","Creepypastas")+'</b></a><a href="../magazine/"><span>№1</span><b>'+T("Журнал","The journal")+'</b></a><a href="#yokai"><span>妖怪</span><b>'+T("Ёкаи","Yōkai")+'</b></a></div>'}
+  '<h2 class="sh">'+T("Крипипасты и журнал","Stories and magazine")+'</h2><div class="lst"><a href="'+(NIGHT?'#stories':'../creepypasta/')+'"><span>怖い話</span><b>'+T("Крипипасты","Creepypastas")+'</b></a><a href="../magazine/"><span>№1</span><b>'+T("Журнал","The journal")+'</b></a><a href="#yokai"><span>妖怪</span><b>'+T("Ёкаи","Yōkai")+'</b></a></div>'}
  function filtered(){
   var d=D.all(),q=filt.q.trim().toLowerCase(),L=FILMS.filter(function(f){
    if(q&&(f[1]+" "+f[2]+" "+f[4]).toLowerCase().indexOf(q)<0)return false;
@@ -202,8 +204,8 @@
   '<div class="stats"><div class="stat"><b>'+n+'</b><small>'+T("Просмотрено","Watched")+'</small></div><div class="stat"><b>'+(avg?avg.toFixed(1):"—")+'</b><small>'+T("Средняя оценка","Average rating")+'</small></div><div class="stat"><b>'+likes+'</b><small>'+T("Нравится","Liked")+'</small></div><div class="stat"><b>'+wl+'</b><small>'+T("Хочу","Watchlist")+'</small></div></div>'+
   '<h2 class="sh">'+T("Оценки","Ratings")+'</h2><div class="hist">'+hist.map(function(c,i){return '<div style="--value:'+Math.round(c/mx*100)+'%" title="'+((i+1)/2)+' · '+c+'"><span>'+((i+1)/2)+'</span></div>'}).join("")+'</div>'+
   '<div class="stats stats-text"><div class="stat"><b>'+esc(top(dec))+'</b><small>'+T("Любимое десятилетие","Favourite decade")+'</small></div><div class="stat"><b>'+esc(top(dir))+'</b><small>'+T("Любимый режиссёр","Favourite director")+'</small></div></div>'+
-  '<h2 class="sh">'+T("Итоги","Wrapped")+'</h2><button class="btn" id="wrap">'+T("Создать мои итоги (картинка)","Create my wrapped (image)")+'</button>'+
-  '<h2 class="sh">'+T("Без интернета","Offline")+'</h2><button class="btn" id="off">'+T("Скачать каталог для офлайна","Download the catalogue for offline")+'</button><p id="offs" style="color:var(--dim);font-size:14px">'+offStatus()+'</p>'+
+  (NIGHT?'<h2 class="sh">Horror Wrapped</h2><div class="night-actions"><button class="go" type="button" data-wrap="week">'+T("За 7 дней","Last 7 days")+'</button><button class="go" id="wrap" type="button" data-wrap="year">'+T("За год","This year")+'</button></div><p class="night-muted" id="wrap-note" role="status"></p>'+NIGHT.award()+NIGHT.notifications():"")+
+  '<h2 class="sh">'+T("Без интернета","Offline")+'</h2><button class="btn" id="off">'+T("Скачать офлайн-пакет","Download offline pack")+'</button><p id="offs" role="status" style="color:var(--dim);font-size:14px">'+offStatus()+'</p>'+
   '<h2 class="sh">'+T("Данные","Data")+'</h2><button class="btn" id="exp">'+T("Скопировать резервную копию","Copy a backup")+'</button><button class="btn" id="imp">'+T("Восстановить из копии","Restore from a backup")+'</button><p style="color:var(--dim);font-size:14px">'+T("Дневник хранится только на этом телефоне. Копия нужна, чтобы перенести его на другое устройство.","The diary lives only on this phone. A backup lets you move it to another device.")+'</p>'}
 
  function vFilm(sl){
@@ -228,8 +230,36 @@
    var same=FILMS.filter(function(o){return o[0]!==sl&&o[4]&&o[4]===f[4]}).slice(0,12);
    if(same.length<6){var dc=Math.floor(f[3]/10);same=same.concat(FILMS.filter(function(o){return o[0]!==sl&&Math.floor(o[3]/10)===dc&&same.indexOf(o)<0}).sort(function(a,b){return b[5]-a[5]}).slice(0,12-same.length))}
    el.innerHTML='<p class="syn">'+esc(T(x[1],x[0]))+'</p>'+(x[2]?'<h2 class="sh">'+T("Из рецензии","From the review")+'</h2><p class="ex">'+esc(T(x[3],x[2]))+'</p>':'')+(x[4]>=0?'<p class="gore">'+T("Жестокость","Gore")+': '+"●".repeat(x[4])+"○".repeat(5-x[4])+' '+x[4]+' / 5</p>':'')+
-   '<a class="btn" href="../reviews/'+esc(sl)+'.html">'+T("Читать полную рецензию","Read the full review")+'</a><button class="btn" type="button" id="share" data-sl="'+esc(sl)+'">'+T("Поделиться","Share")+'</button>'+
+   '<a class="btn" href="#review/'+esc(sl)+'">'+T("Читать полную рецензию","Read the full review")+'</a><button class="btn" type="button" id="share" data-sl="'+esc(sl)+'">'+T("Поделиться","Share")+'</button>'+
    (same.length?'<h2 class="sh">'+(f[4]?T("Ещё это","More from this"):T("Похожие","Similar"))+'</h2><div class="row">'+cards(same)+'</div>':'')})}
+ // Render the project's own review text inside the app, including from the offline bundle.
+ async function fillReview(id, el){
+  if(!BY[id]){el.textContent=T("Рецензия не найдена.","Review not found.");return}
+  var selected=lang();
+  try{
+   var response=await fetch("../reviews/"+encodeURIComponent(id)+".html");
+   if(!response.ok)throw new Error("Review unavailable");
+   var page=new DOMParser().parseFromString(await response.text(),"text/html");
+   var body=page.querySelector('.body.l-'+selected)||page.querySelector('.body[lang="'+selected+'"]');
+   if(!el.isConnected)return;
+   var allowed=new Set(["P","H2","H3","H4","BLOCKQUOTE","UL","OL","LI","EM","STRONG","B","I","BR","CODE"]);
+   function copy(node, target){
+    if(node.nodeType===Node.TEXT_NODE){target.append(document.createTextNode(node.nodeValue));return}
+    if(node.nodeType!==Node.ELEMENT_NODE||["SCRIPT","STYLE","IFRAME"].includes(node.tagName))return;
+    var safe=allowed.has(node.tagName)?document.createElement(node.tagName.toLowerCase()):target;
+    node.childNodes.forEach(function(child){copy(child,safe)});
+    if(safe!==target)target.append(safe);
+   }
+   if(!body)throw new Error("Review text unavailable");
+   el.replaceChildren();
+   body.childNodes.forEach(function(child){copy(child,el)});
+  }catch(e){if(el.isConnected)el.textContent=T("Рецензия недоступна. Открой её с интернетом или скачай офлайн-пакет.","Review unavailable. Open it online or download the offline pack.")}
+ }
+ function reviewPage(id){
+  if(!BY[id])return '<p class="empty">'+T("Рецензия не найдена.","Review not found.")+'</p>';
+  return '<article class="night-reader">'+pageTitle(T("Рецензия","Review")+' · '+filmTitle(BY[id]))+
+   (NIGHT?NIGHT.soundButtons():"")+'<div id="review-text" aria-live="polite">…</div></article>';
+ }
  function vCollection(id){
   var c=COLL.filter(function(x){return x[0]===id})[0];if(!c)return '<div class="empty">'+T("Подборка не найдена","Collection not found")+'</div>';
   return '<div class="lvl cv" style="--cv:url(cov/'+c[0]+'.webp)"><small aria-hidden="true">'+c[1]+'</small><h1>'+esc(T(c[2],c[3]))+'</h1></div><div id="cg"><div class="empty">…</div></div>'}
@@ -248,16 +278,26 @@
   var parts=(location.hash||"#home").slice(1).split("/"),v=parts[0],arg=parts[1]||"";
   if(v==="random"){var r=FILMS[Math.floor(Math.random()*FILMS.length)];location.replace("#film/"+r[0]);return}
   if(v==="pick"){pick(arg);return}
-  var main={home:1,films:1,diary:1,lists:1,me:1};var sub=(v==="film"||v==="collection"||v==="yokai");if(!main[v]&&!sub)v="home";
+  var main={home:1,films:1,diary:1,lists:1,me:1};var sub=["film","collection","yokai","yokai-card","challenge","stories","story","review"].includes(v);if(!main[v]&&!sub)v="home";
+  if(v!=="story"&&v!=="review")NIGHT?.stopSound();
   $("#ab-b").hidden=!sub;
   $("#ab-b").setAttribute("aria-label",T("Назад","Back"));
   $("#ab-l").textContent=lang()==="ru"?"EN":"RU";
   $("#ab-l").setAttribute("aria-label",T("Switch to English","Переключить на русский"));
   if(v==="film"){A.innerHTML=vFilm(arg);fillFilm(arg)}
   else if(v==="collection"){A.innerHTML=vCollection(arg);fillCollection(arg)}
-  else if(v==="yokai"){A.innerHTML=pageTitle(T("Ёкаи","Yōkai"))+'<div id="yokai-gallery"></div><a class="btn" href="../folklore/">'+T("Все легенды на сайте","All legends on the site")+'</a>';loadYokai()}
+  else if(v==="review"){A.innerHTML=reviewPage(arg);if($("#review-text"))fillReview(arg,$("#review-text"))}
+  else if(v==="yokai"){
+   A.innerHTML=NIGHT?NIGHT.collection():pageTitle(T("Ёкаи","Yōkai"))+'<div id="yokai-gallery"></div>';
+   if(!NIGHT)loadYokai();
+  }
+  else if(v==="yokai-card"&&NIGHT)A.innerHTML=NIGHT.yokaiCard(arg);
+  else if(v==="challenge"&&NIGHT)A.innerHTML=NIGHT.challengePage();
+  else if((v==="stories"||v==="story")&&NIGHT)A.innerHTML=NIGHT.storiesPage(v==="story"?arg:"");
+  else if(sub)A.innerHTML='<div class="empty">'+T("Раздел недоступен.","Section unavailable.")+'</div>';
   else A.innerHTML=({home:vHome,films:vFilms,diary:vDiary,lists:vLists,me:vMe})[v]();
   if(v==="films")fillFilms();
+  shownDay=D.today();
   window.scrollTo(0,0)}
  A.addEventListener("input",function(e){if(e.target.id==="q"){filt.q=e.target.value;shown=60;fillFilms()}});
  A.addEventListener("change",function(e){
@@ -286,7 +326,8 @@
    if(e.detail===0)$('#fact [data-fa="'+a+'"]').focus();
    return;
   }
-  if(b.id==="wrap"){wrapped();return}
+  if(b.dataset.night&&NIGHT){NIGHT.handle(b,route);return}
+  if(b.dataset.wrap&&NIGHT){HAWrapped({night:NIGHT,T:T,posterPath:posterPath,filmTitle:filmTitle,period:b.dataset.wrap,button:b});return}
   if(b.id==="off"){downloadOffline(b);return}
   if(b.id==="share"){var sl3=b.dataset.sl,url="https://horroraesthetic.github.io/horror-aesthetic/reviews/"+sl3+".html",ttl=(BY[sl3]||[])[1]||"Horror Aesthetic";if(navigator.share)navigator.share({title:ttl,url:url}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(url).then(function(){alert(T("Ссылка скопирована","Link copied"))});return}
   if(b.dataset.set!==undefined){
@@ -297,17 +338,25 @@
   else if(b.id==="more"){shown+=60;fillFilms()}
   else if(b.id==="exp"){var s=JSON.stringify(D.all());(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(function(){alert(T("Копия в буфере обмена. Сохраните её в заметках.","Copied to the clipboard. Save it in your notes."))},function(){prompt(T("Скопируйте текст:","Copy the text:"),s)})}
   else if(b.id==="imp"){var t=prompt(T("Вставьте копию:","Paste your backup:"));if(!t)return;try{if(!D.replace(JSON.parse(t)))throw new Error("Invalid diary backup")}catch(x){alert(T("Не получилось прочитать копию.","Could not read the backup."))}}});
- $("#ab-l").addEventListener("click",function(){var n=lang()==="ru"?"en":"ru";root.dataset.l=n;root.lang=n;try{localStorage.setItem("ha-lang",n)}catch(e){}route()});
+ $("#ab-l").addEventListener("click",function(){var n=lang()==="ru"?"en":"ru";root.dataset.l=n;root.lang=n;try{localStorage.setItem("ha-lang",n)}catch(e){}NIGHT?.post("status");route()});
  addEventListener("hashchange",route);
  document.addEventListener("ha-diary",function(event){
+  NIGHT?.sync();
   var v=(location.hash||"#home").slice(1).split("/")[0];
   if(v==="films"){fillFilms();return}
   if((v!=="film"||!event.detail)&&!A.querySelector("input"))route();
  });
  $("#ab-b").addEventListener("click",function(){if(history.length>1)history.back();else location.hash="#home"});
+ function refreshDay(){
+  if(!NIGHT||shownDay===D.today()||document.hidden)return;
+  if(/^#?(home|yokai|challenge)?$/.test(location.hash))route();
+ }
+ setInterval(refreshDay,60000);
+ document.addEventListener("visibilitychange",refreshDay);
  /* ---------- data ---------- */
- Promise.all([fetch("../data/daily.json").then(function(r){return r.json()}),fetch("../feed-reviews.xml").then(function(r){return r.text()}).catch(function(){return""}),fetch("../data/posters.json").then(function(r){return r.json()}).catch(function(){return{}}),fetch("../data/gore.json").then(function(r){return r.json()}).catch(function(){return{}}),D.ready()]).then(function(r){
+ Promise.all([fetch("../data/daily.json").then(function(r){return r.json()}),fetch("../feed-reviews.xml").then(function(r){return r.text()}).catch(function(){return""}),fetch("../data/posters.json").then(function(r){return r.json()}).catch(function(){return{}}),fetch("../data/gore.json").then(function(r){return r.json()}).catch(function(){return{}}),D.ready(),HANightApp.load().catch(function(){return null})]).then(function(r){
   PO=r[2]||{};GR=r[3]||{};FILMS=r[0];FILMS.forEach(function(f){BY[f[0]]=f});
   var m,re=/reviews\/([a-z0-9_-]+)\.html<\/link>/gi;while((m=re.exec(r[1])))recent.push(m[1]);
+  if(r[5])NIGHT=HANightApp.create(r[5][0],r[5][1],{D:D,T:T,lang:lang,esc:esc,film:filmInfo,filmTitle:filmTitle,posterPath:posterPath});
   route()}).catch(function(){A.innerHTML='<div class="empty">'+T("Нет соединения. Откройте приложение с интернетом хотя бы раз.","No connection. Open the app online at least once.")+'</div>'});
 })();
