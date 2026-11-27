@@ -64,8 +64,8 @@
  function loadYokai(){
   if(!document.getElementById("yk-css")){var l=document.createElement("link");l.id="yk-css";l.rel="stylesheet";l.href="../yokai.css?v=4";document.head.appendChild(l)}
   function add(src,cb){var e=document.createElement("script");e.src=src;e.onload=cb;document.head.appendChild(e)}
-  function run(){add("../yokai.js?v=7")}
-  if(window.YK_HD)run();else add("../yokai-hd.js?v=7",run)}
+  function run(){add("../yokai.js?v=8")}
+  if(window.YK_HD)run();else add("../yokai-hd.js?v=8",run)}
 
  function offStatus(){var t="";try{t=localStorage.getItem("ha-off")||""}catch(e){}return t?T("Скачано: ","Downloaded: ")+t:T("Рецензии, постеры и подборки будут открываться без сети.","Reviews, posters and collections will open without a network.")}
  function downloadOffline(btn){
