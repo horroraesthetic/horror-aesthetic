@@ -1,12 +1,12 @@
 /* HORROR AESTHETIC — offline-first shell, network-first pages */
-const CACHE_VERSION = 'ha-v306';
+const CACHE_VERSION = 'ha-v307';
 const MAX_RUNTIME_ENTRIES = 180;
 const BASE = '/horror-aesthetic/';
 const OFFLINE_URL = BASE + 'offline.html';
 const SHELL = [
   BASE, BASE + 'index.html', OFFLINE_URL, BASE + 'posters/',
   BASE + 'manifest.webmanifest', BASE + 'favicon-48.png',
-  BASE + 'home.css?v=208', BASE + 'enhancements.css?v=195', BASE + 'visual-refresh.css?v=3', BASE + 'enhancements.js?v=201', BASE + 'reviews-more.js?v=5', BASE + 'home.js?v=213',
+  BASE + 'home.css?v=208', BASE + 'enhancements.css?v=195', BASE + 'visual-refresh.css?v=3', BASE + 'enhancements.js?v=201', BASE + 'reviews-more.js?v=6', BASE + 'home.js?v=213',
   BASE + 'lollipop.js?v=4', BASE + 'footer-scene.js?v=1', BASE + 'ambient.js?v=2', BASE + 'psy-banner.js?v=1', BASE + 'yokai.js?v=9', BASE + 'yokai-hd.js?v=9', BASE + 'yokai.css?v=4', BASE + 'daily.js?v=2', BASE + 'diary.js?v=7', BASE + 'data/updates.json', BASE + 'data/daily.json', BASE + 'data/films.json', BASE + 'data/posters.json', BASE + 'data/gore.json', BASE + 'data/collections.json', BASE + 'listen.js?v=1', BASE + 'story-sound.js?v=1', BASE + 'daily.css?v=3', BASE + 'psy-banner.css?v=1', BASE + 'ambient.css?v=2', BASE + 'footer-scene.css?v=1', BASE + 'assistant.js?v=6', BASE + 'assistant.css?v=6', BASE + 'tone-fixes.css?v=3', BASE + 'mag-gallery.css?v=1', BASE + 'lollipop.css?v=1', BASE + 'flashlight.css?v=1', BASE + 'flashlight.js?v=2', BASE + 'ha-effects.css?v=5', BASE + 'ha-effects.js?v=4', BASE + 'mobile-dock-fix.css?v=4',
   BASE + 'apk-card.css?v=2', BASE + 'apk-card.js?v=1', BASE + 'img/brand/android-launcher.webp',
   BASE + 'app/', BASE + 'app/index.html', BASE + 'app/app.css?v=11', BASE + 'app/app.js?v=22',
