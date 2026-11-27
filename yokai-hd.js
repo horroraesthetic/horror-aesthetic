@@ -567,5 +567,96 @@
  '<g class="yd-blink2" style="transform-origin:80px 84px"><ellipse cx="58" cy="82" rx="7" ry="4" fill="#f4e8d0" stroke="#2a1a12"/><circle cx="58" cy="82" r="2.2" fill="#0a0604"/><ellipse cx="102" cy="84" rx="5" ry="3" fill="#f4e8d0" stroke="#2a1a12"/><circle cx="102" cy="84" r="1.8" fill="#0a0604"/></g>'+
  '<path d="M54 112Q80 130 108 108" fill="#3a0a12" stroke="#2a1a12" stroke-width="1.4"/><path d="M62 114L64 120M76 120L76 126M90 118L90 124" stroke="#e8dcc0" stroke-width="2"/></g>';
 
+ /* ---------- 40. Tekeke ---------- */
+ H.tekeke='<defs><radialGradient id="tkA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff5a5a" stop-opacity=".26"/><stop offset="1" stop-color="#ff5a5a" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="tkB" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e8e4dc"/><stop offset="1" stop-color="#8a8480"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#tkA)"/>'+
+ '<path d="M10 150H150" stroke="#3a1a1a" stroke-width="2"/>'+
+ '<path d="M54 150C54 120 60 104 80 100 100 104 106 120 106 150Z" fill="url(#tkB)"/><path d="M62 150C62 134 66 124 74 118M98 150C98 134 94 124 86 118" stroke="#a81a1a" stroke-width="3" fill="none" opacity=".8"/>'+
+ '<path class="yd-drip" d="M60 148V158M80 148V160M100 148V158" stroke="#a81a1a" stroke-width="3" stroke-linecap="round"/>'+
+ '<g class="yd-sway2" style="transform-origin:80px 120px"><path d="M62 112L40 132M98 112L120 132" stroke="#d8d0c4" stroke-width="7" stroke-linecap="round"/>'+
+ '<path d="M52 56C52 34 64 26 80 26 96 26 108 34 108 56 108 78 96 96 80 96 64 96 52 78 52 56Z" fill="#efe8dc" stroke="#4a4038" stroke-width="1.2"/>'+
+ '<path d="M48 60C40 30 62 18 80 18 100 18 120 32 112 62 112 42 100 34 80 34 62 34 52 42 48 60ZM48 60C46 90 56 110 60 118 52 104 50 82 54 66Z M112 62C114 90 104 110 100 118 108 104 110 82 106 66Z" fill="#0a0a0e"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 58px"><ellipse cx="68" cy="58" rx="5" ry="3.6" fill="#0a0a0a"/><ellipse cx="92" cy="58" rx="5" ry="3.6" fill="#0a0a0a"/><circle cx="69" cy="57" r="1.2" fill="#ff6a6a"/><circle cx="93" cy="57" r="1.2" fill="#ff6a6a"/></g>'+
+ '<path d="M68 78Q80 90 92 78" fill="#5a0a12" stroke="#3a0a10" stroke-width="1.2"/></g>';
+
+ /* ---------- 41. Kasha ---------- */
+ H.kasha='<defs><radialGradient id="kshA" cx=".5" cy=".6" r=".55"><stop offset="0" stop-color="#ff7a2a" stop-opacity=".34"/><stop offset="1" stop-color="#ff7a2a" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="kshF" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffe070"/><stop offset=".5" stop-color="#ff7a20"/><stop offset="1" stop-color="#a81a0a"/></linearGradient>'+
+ '<linearGradient id="kshC" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#5a5a62"/><stop offset="1" stop-color="#1a1a20"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="96" r="74" fill="url(#kshA)"/>'+
+ '<path d="M20 150C30 140 40 146 50 138 70 150 90 140 110 148 124 142 134 146 144 142V158H20Z" fill="#0a0a10"/>'+
+ '<g class="yd-fl" style="transform-origin:80px 140px"><path d="M22 136C20 112 40 108 38 84 52 96 52 108 58 100 56 80 72 66 70 44 86 62 82 84 96 88 98 74 108 70 112 56 126 82 134 104 126 132 120 142 28 142 22 136Z" fill="url(#kshF)" opacity=".95"/></g>'+
+ '<path d="M44 128L54 108 74 112 82 128ZM74 112L86 98 108 104 112 128 82 128Z" fill="url(#kshC)" stroke="#000" stroke-width="1.2"/>'+
+ '<path d="M52 108C40 96 44 76 60 68 76 62 96 66 104 80 108 92 100 104 88 106Z" fill="#2a2a32" stroke="#000" stroke-width="1.2"/>'+
+ '<path d="M60 72L56 52 70 66ZM96 74L104 54 90 68Z" fill="#2a2a32" stroke="#000" stroke-width="1.2"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 84px"><path d="M64 84L74 88 72 94 62 90ZM96 84L86 88 88 94 98 90Z" fill="#ffd020"/><circle class="yd-pulse2" cx="68" cy="90" r="1.6" fill="#000"/><circle class="yd-pulse2" cx="92" cy="90" r="1.6" fill="#000"/></g>'+
+ '<path d="M70 98Q80 104 90 98" fill="#6a0a12"/><path d="M72 98L74 103M88 98L86 103" stroke="#f0e8d0" stroke-width="1.6"/>';
+
+ /* ---------- 42. Nurarihyon ---------- */
+ H.nurarihyon='<defs><radialGradient id="nrA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#d8c868" stop-opacity=".22"/><stop offset="1" stop-color="#d8c868" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="nrK" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4a3a6a"/><stop offset="1" stop-color="#14101c"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#nrA)"/>'+
+ '<path d="M24 160C24 130 48 116 80 116 112 116 136 130 136 160Z" fill="url(#nrK)"/><path d="M80 116L64 160M80 116L96 160" stroke="#d8c868" stroke-width="1.2" opacity=".5"/>'+
+ '<path d="M44 58C20 54 18 32 34 22 42 30 48 40 52 48ZM116 58C140 54 142 32 126 22 118 30 112 40 108 48Z" fill="none"/>'+
+ '<path d="M52 48C42 26 58 4 80 4 102 4 118 26 108 48 114 66 104 84 94 92 88 100 72 100 66 92 56 84 46 66 52 48Z" fill="#e8d8c0" stroke="#4a3a28" stroke-width="1.2"/>'+
+ '<path d="M52 40C60 20 70 12 80 12 90 12 100 20 108 40 98 26 90 24 80 24 70 24 62 26 52 40Z" fill="#c8c8d0"/>'+
+ '<path d="M54 58Q60 50 70 56M90 56Q100 50 106 58" stroke="#8a8a92" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 62px"><path d="M58 64Q64 60 72 64M88 64Q96 60 102 64" stroke="#1a1208" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>'+
+ '<path d="M72 72Q80 84 88 72" fill="none" stroke="#7a3a2a" stroke-width="2.2" stroke-linecap="round"/><path d="M62 92Q80 110 98 92" stroke="#c8c8d0" stroke-width="3" fill="none" opacity=".9"/>'+
+ '<g class="yd-smoke"><path d="M118 118Q128 108 122 98" fill="none" stroke="#c8c8d8" stroke-width="2" opacity=".6"/></g>';
+
+ /* ---------- 43. Baku ---------- */
+ H.baku='<defs><radialGradient id="bkuA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#a890ff" stop-opacity=".3"/><stop offset="1" stop-color="#a890ff" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="bkuF" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c8c0d0"/><stop offset="1" stop-color="#5a5468"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#bkuA)"/>'+
+ '<g fill="#e8e0ff"><circle class="yd-smoke" cx="22" cy="40" r="3"/><circle class="yd-smoke" style="--d:-1.4s" cx="32" cy="22" r="2"/><circle class="yd-smoke" style="--d:-2.8s" cx="16" cy="62" r="2.4"/></g>'+
+ '<ellipse cx="80" cy="140" rx="46" ry="14" fill="url(#bkuF)"/>'+
+ '<path d="M44 90C36 60 54 34 82 34 108 34 126 56 120 84 114 108 96 122 72 118Z" fill="url(#bkuF)" stroke="#2a2438" stroke-width="1.2"/>'+
+ '<path d="M54 94C30 96 18 112 28 128 38 138 56 126 62 108Z" fill="#a898b8" stroke="#2a2438" stroke-width="1.2"/><path class="yd-tongue" style="transform-origin:44px 112px" d="M30 120Q22 124 20 134" stroke="#8a7898" stroke-width="3" fill="none"/>'+
+ '<path d="M96 40L104 20 112 44ZM74 38L72 20 86 38Z" fill="#8a8498" stroke="#2a2438" stroke-width="1.2"/>'+
+ '<g class="yd-blink2" style="transform-origin:90px 66px"><circle cx="90" cy="66" r="7" fill="#f4f0ff"/><circle cx="91" cy="66" r="3.4" fill="#4a2aa8"/><circle cx="92" cy="65" r="1" fill="#fff"/></g>'+
+ '<path d="M104 80Q110 84 112 92" stroke="#2a2438" stroke-width="1.6" fill="none"/>'+
+ '<circle cx="28" cy="130" r="2" fill="#2a2438"/><circle cx="36" cy="132" r="2" fill="#2a2438"/>';
+
+ /* ---------- 44. Ubume ---------- */
+ H.ubume='<defs><radialGradient id="ubA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#a8c8e8" stop-opacity=".3"/><stop offset="1" stop-color="#a8c8e8" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="ubK" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f0f4f8"/><stop offset="1" stop-color="#6a7a8a" stop-opacity=".3"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#ubA)"/>'+
+ '<g class="yd-sway2" style="transform-origin:80px 150px"><path d="M44 160C44 120 56 98 80 92 104 98 116 120 116 160Z" fill="url(#ubK)" opacity=".9"/>'+
+ '<path d="M62 160C62 130 70 114 80 106M98 160C98 130 90 114 80 106" stroke="#a8c8e8" stroke-width="1.2" fill="none" opacity=".7"/>'+
+ '<path d="M54 44C52 24 66 14 80 14 94 14 108 24 106 44 110 60 108 80 100 100 96 84 98 70 96 58H64C62 70 64 84 60 100 52 80 50 60 54 44Z" fill="#101420"/>'+
+ '<path d="M62 48C62 36 70 32 80 32 90 32 98 36 98 48 98 62 90 70 80 70 70 70 62 62 62 48Z" fill="#eef2f6" stroke="#4a5a6a" stroke-width="1.2"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 50px"><path d="M68 50Q72 46 76 50M84 50Q88 46 92 50" stroke="#1a1a24" stroke-width="2" fill="none" stroke-linecap="round"/></g><path d="M76 60Q80 63 84 60" stroke="#6a2a3a" stroke-width="1.6" fill="none"/>'+
+ '<path class="yd-drip" d="M70 54V64" stroke="#a8c8e8" stroke-width="1.4" opacity=".8"/>'+
+ '<g transform="translate(96 108)"><ellipse cx="0" cy="8" rx="12" ry="18" fill="#e0d4c0" stroke="#6a5a48" stroke-width="1.2"/><circle cx="0" cy="-12" r="8" fill="#f0e4d0" stroke="#6a5a48" stroke-width="1.2"/><path d="M-4 -12h2M2 -12h2" stroke="#2a1a10" stroke-width="1.4"/></g></g>';
+
+ /* ---------- 45. Nekomata ---------- */
+ H.nekomata='<defs><radialGradient id="nkA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#8aa8ff" stop-opacity=".28"/><stop offset="1" stop-color="#8aa8ff" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="nkF" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#6a6a78"/><stop offset="1" stop-color="#1a1a24"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="84" r="74" fill="url(#nkA)"/>'+
+ '<ellipse cx="80" cy="154" rx="36" ry="5" fill="#000" opacity=".5"/>'+
+ '<ellipse cx="76" cy="128" rx="30" ry="26" fill="url(#nkF)"/>'+
+ '<g class="yd-tail" style="transform-origin:104px 132px"><path d="M104 140C132 140 138 112 126 94" fill="none" stroke="url(#nkF)" stroke-width="9" stroke-linecap="round"/></g>'+
+ '<g class="yd-tail2" style="transform-origin:104px 132px"><path d="M104 136C136 138 150 116 148 92" fill="none" stroke="url(#nkF)" stroke-width="9" stroke-linecap="round"/></g>'+
+ '<path d="M44 60L40 28 64 44ZM112 60L116 28 92 44Z" fill="#2a2a34" stroke="#000" stroke-width="1.2"/><path d="M46 52L46 38 56 46ZM110 52L110 38 100 46Z" fill="#a85a6a"/>'+
+ '<ellipse cx="78" cy="70" rx="38" ry="32" fill="url(#nkF)" stroke="#000" stroke-width="1.2"/>'+
+ '<g class="yd-blink2" style="transform-origin:78px 66px"><path d="M52 62Q60 52 70 64 60 72 52 62ZM104 62Q96 52 86 64 96 72 104 62Z" fill="#8aa8ff"/><ellipse cx="62" cy="64" rx="1.6" ry="5" fill="#000"/><ellipse cx="94" cy="64" rx="1.6" ry="5" fill="#000"/></g>'+
+ '<path d="M74 78L82 78 78 83Z" fill="#c86a7a"/><path d="M78 83Q70 90 64 84M78 83Q86 90 92 84" stroke="#e8e0d0" stroke-width="1.6" fill="none"/>'+
+ '<path d="M34 76L56 80M34 86L56 84M122 76L100 80M122 86L100 84" stroke="#c8c8d0" stroke-width="1" opacity=".7"/>';
+
+ /* ---------- 46. Onyudo ---------- */
+ H.onyudo='<defs><radialGradient id="oyA" cx=".5" cy=".4" r=".55"><stop offset="0" stop-color="#8a8aa8" stop-opacity=".3"/><stop offset="1" stop-color="#8a8aa8" stop-opacity="0"/></radialGradient>'+
+ '<linearGradient id="oyH" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d8c0a0"/><stop offset="1" stop-color="#8a6a50"/></linearGradient>'+
+ '<linearGradient id="oyR" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2a2a38"/><stop offset="1" stop-color="#08080e"/></linearGradient></defs>'+
+ '<circle class="yd-pulse" cx="80" cy="70" r="74" fill="url(#oyA)"/><circle cx="124" cy="26" r="10" fill="#e8e8d8" opacity=".8"/>'+
+ '<path d="M10 160C14 120 40 100 80 100 120 100 146 120 150 160Z" fill="url(#oyR)"/>'+
+ '<g class="yd-head" style="transform-origin:80px 110px"><path d="M40 56C38 26 58 10 80 10 102 10 122 26 120 56 120 88 104 108 80 108 56 108 42 88 40 56Z" fill="url(#oyH)" stroke="#2a1a10" stroke-width="1.4"/>'+
+ '<path d="M44 40C54 22 68 16 80 16 92 16 106 22 116 40 104 30 92 28 80 28 68 28 56 30 44 40Z" fill="#c8a888" opacity=".7"/>'+
+ '<path d="M46 52Q54 46 70 52M90 52Q106 46 114 52" stroke="#2a1a10" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+ '<g class="yd-blink2" style="transform-origin:80px 62px"><ellipse cx="62" cy="62" rx="8" ry="5.4" fill="#f4ecd0" stroke="#2a1a10"/><circle class="yd-look" cx="62" cy="62" r="3" fill="#8a1a1a"/><ellipse cx="98" cy="62" rx="8" ry="5.4" fill="#f4ecd0" stroke="#2a1a10"/><circle class="yd-look" cx="98" cy="62" r="3" fill="#8a1a1a"/></g>'+
+ '<path d="M76 66Q80 80 84 66" fill="none" stroke="#6a4a30" stroke-width="1.6"/>'+
+ '<path d="M54 88Q80 108 106 88Q80 98 54 88Z" fill="#3a0a12" stroke="#2a1a10" stroke-width="1.2"/></g>';
+
  window.YK_HD=H;
 })();
