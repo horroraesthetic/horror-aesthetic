@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.widget.RemoteViews;
 
 import java.util.Calendar;
 
@@ -74,8 +75,13 @@ public final class NightReminder extends BroadcastReceiver {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent click = PendingIntent.getActivity(context, REQUEST, open, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             Notification.Builder notice = Build.VERSION.SDK_INT >= 26 ? new Notification.Builder(context, CHANNEL) : new Notification.Builder(context);
+            String filmTitle = film.getString(ru ? 2 : 1);
+            RemoteViews card = new RemoteViews(context.getPackageName(), R.layout.night_notice);
+            card.setTextViewText(R.id.notice_title, title);
+            card.setTextViewText(R.id.notice_film, filmTitle);
             manager.notify(REQUEST, notice.setSmallIcon(R.drawable.ic_night_notice).setColor(Color.rgb(174, 24, 52))
-                    .setContentTitle(title).setContentText(film.getString(ru ? 2 : 1))
+                    .setContentTitle(title).setContentText(filmTitle).setCustomContentView(card)
+                    .setStyle(new Notification.DecoratedCustomViewStyle())
                     .setContentIntent(click).setAutoCancel(true).build());
             NightData.prefs(context).edit().putLong("lastNight", date).apply();
         } catch (Exception error) {
