@@ -1,14 +1,20 @@
 <!doctype html><html lang="ru" data-l="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Horror Aesthetic App</title><meta name="description" content="Horror Aesthetic as an app: films, diary, watchlist and lists. / Horror Aesthetic как приложение: фильмы, дневник, список «хочу» и подборки.">
-<meta name="theme-color" content="#0a0606"><meta name="robots" content="noindex"><link rel="manifest" href="/horror-aesthetic/manifest.webmanifest"><link rel="apple-touch-icon" href="/horror-aesthetic/apple-touch-icon.png"><link rel="icon" href="/horror-aesthetic/favicon-48.png">
+<meta name="theme-color" content="#0b080b"><meta name="robots" content="noindex"><link rel="manifest" href="/horror-aesthetic/manifest.webmanifest"><link rel="apple-touch-icon" href="/horror-aesthetic/apple-touch-icon.png"><link rel="icon" href="/horror-aesthetic/favicon-48.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Horror Aesthetic">
-<link rel="stylesheet" href="app.css?v=10">
+<link rel="stylesheet" href="app.css?v=11">
 <script>(function(){var l="";try{l=localStorage.getItem("ha-lang")||""}catch(e){}if(l!=="ru"&&l!=="en")l=/^ru/i.test(navigator.language||"")?"ru":"en";document.documentElement.dataset.l=l;document.documentElement.lang=l})()</script>
-</head><body>
-<header class="ab"><button type="button" id="ab-b" hidden aria-label="Back">‹</button><b id="ab-t">HORROR AESTHETIC</b><button type="button" id="ab-l" aria-label="Language">RU</button></header>
+</head><body class="app-shell">
+<header class="ab">
+  <div class="ab-inner">
+    <button type="button" id="ab-b" hidden aria-label="Back"><span aria-hidden="true">←</span></button>
+    <a class="app-brand" href="#home"><img src="torii-mark.webp" width="30" height="30" alt="">HORROR AESTHETIC</a>
+    <button type="button" id="ab-l" aria-label="Switch language">RU</button>
+  </div>
+</header>
 <main id="app" aria-live="polite"><div class="app-splash" role="status">
   <img src="startup-illustration.webp" width="720" height="1080" alt="" fetchpriority="high" decoding="async">
   <p><span lang="ru">Загрузка приложения…</span><span lang="en">Loading the app…</span></p>
 </div></main>
-<script defer src="../diary.js?v=7"></script><script defer src="app.js?v=17"></script>
+<script defer src="../diary.js?v=7"></script><script defer src="app.js?v=18"></script>
 </body></html>
