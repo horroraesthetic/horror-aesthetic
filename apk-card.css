@@ -130,12 +130,33 @@ a.apk-card__identity:hover .apk-card__action {
   font: 16px/1.2 system-ui, sans-serif;
 }
 
+footer > .apk-card,
+footer > .ft-credit {
+  grid-column: 1 / -1;
+}
+
+footer > .apk-card {
+  margin: 0;
+}
+
+footer .apk-card__identity img {
+  animation: none;
+  box-shadow: none;
+}
+
+footer .ft-web-app {
+  align-self: flex-start;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 390px) {
   .apk-card__share svg { display: none; }
 }
 
 @media (max-width: 640px) {
-  /* Leave the site's floating guide room on the right of the header. */
-  .mast .apk-card { width: min(510px, calc(100% - 38px)); }
-  .mast .apk-card__share { padding-inline: 7px; }
+  /* Leave the site's floating guide room on the right. */
+  :is(.mast, footer) > .apk-card { width: min(510px, calc(100% - 38px)); }
+  :is(.mast, footer) > .apk-card .apk-card__share { padding-inline: 7px; }
 }
