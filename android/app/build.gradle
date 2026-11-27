@@ -8,6 +8,11 @@ android {
     namespace 'io.github.horroraesthetic'
     compileSdk 34
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
     defaultConfig {
         applicationId 'io.github.horroraesthetic'
         minSdk 24
@@ -36,4 +41,11 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+}
+
+android.sourceSets.main.assets.srcDir '../../app/night-data'
+
+dependencies {
+    implementation 'androidx.core:core:1.12.0'
+    implementation 'androidx.webkit:webkit:1.10.0'
 }

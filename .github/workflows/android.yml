@@ -4,17 +4,24 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 4 * * 1'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - 'app/night-data/**'
+      - '.github/workflows/android.yml'
   push:
     branches: [main]
     paths:
       - 'android/**'
+      - 'app/night-data/**'
       - '.github/workflows/android.yml'
 
 permissions:
   contents: write
 
 concurrency:
-  group: android-apk
+  group: android-apk-${{ github.event_name == 'pull_request' && github.ref || 'release' }}
   cancel-in-progress: true
 
 jobs:
@@ -36,11 +43,13 @@ jobs:
         with:
           gradle-version: '8.9'
       - name: Restore the stable signing key from the private cache
+        if: github.event_name != 'pull_request'
         uses: actions/cache@v4
         with:
           path: ${{ runner.temp }}/ks
           key: android-keystore-v1
       - name: Signing key (repository secret if set, else the private cached key, else a new one that gets cached)
+        if: github.event_name != 'pull_request'
         env:
           KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
           KS_PASS_SECRET: ${{ secrets.ANDROID_KEYSTORE_PASS }}
@@ -65,10 +74,31 @@ jobs:
             echo "Created a new signing key (cached for next builds)"
           fi
           echo "KS_FILE=$D/release.jks" >> "$GITHUB_ENV"
-      - name: Build
+      - name: Compile Android for review
+        if: github.event_name == 'pull_request'
+        working-directory: android
+        run: gradle assembleDebug --no-daemon --stacktrace
+      - name: Build signed APK
+        if: github.event_name != 'pull_request'
         working-directory: android
         run: gradle assembleRelease -Pvc=${{ github.run_number }} --no-daemon --stacktrace
+      - name: Verify signed APK
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          signer="$ANDROID_HOME/build-tools/34.0.0/apksigner"
+          apk=android/app/build/outputs/apk/release/app-release.apk
+          "$signer" verify --print-certs "$apk" > "$RUNNER_TEMP/new-apk-signature"
+          if gh release view app-latest >/dev/null 2>&1; then
+            gh release download app-latest --pattern horror-aesthetic.apk --dir "$RUNNER_TEMP/previous"
+            "$signer" verify --print-certs "$RUNNER_TEMP/previous/horror-aesthetic.apk" > "$RUNNER_TEMP/old-apk-signature"
+            old="$(grep 'certificate SHA-256 digest' "$RUNNER_TEMP/old-apk-signature")"
+            new="$(grep 'certificate SHA-256 digest' "$RUNNER_TEMP/new-apk-signature")"
+            test "$old" = "$new"
+          fi
       - name: Publish release
+        if: github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

@@ -1,0 +1,134 @@
+.night-card {
+  padding: 12px;
+  background: linear-gradient(118deg, #291220, #151016 72%);
+  border: 1px solid #623044;
+  border-radius: 4px;
+  color: var(--bone);
+}
+
+.night-daily, .night-detail, .night-award, .night-challenge-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 14px 0;
+}
+
+.night-daily > div, .night-award > div { min-width: 0; }
+.night-daily h2 { margin: 0 0 8px; font-size: clamp(17px, 5.3vw, 27px); line-height: 1.1; }
+.night-actions, .night-sound { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.night-actions .go { padding-inline: 9px; }
+.night-muted { color: var(--dim); font-size: 13px; }
+.night-muted:empty { display: none; }
+
+.night-tile, .night-figure {
+  display: block;
+  flex: none;
+  width: clamp(69px, 23vw, 112px);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background-color: #150c15;
+}
+.night-figure.yk-art { width: clamp(69px, 23vw, 112px); height: auto; }
+.night-figure svg { display: block; width: 100%; }
+.night-tile {
+  background-image: url("night-data/yokai.webp?v=1");
+  background-size: var(--atlas);
+  background-position: var(--x) var(--y);
+}
+.night-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(89px, 1fr));
+  gap: 7px;
+}
+.night-entry {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  font-size: 12px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.night-entry .night-tile { width: 100%; }
+.night-entry.locked { color: var(--dim); }
+.night-entry.locked .night-tile { filter: grayscale(1) brightness(.47); }
+
+.night-moods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 7px;
+  margin-bottom: 9px;
+}
+.night-mood {
+  position: relative;
+  isolation: isolate;
+  min-height: 99px;
+  display: flex;
+  align-items: end;
+  padding: 8px;
+  border: 1px solid #623044;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #251220;
+}
+.night-mood img, .night-mood::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.night-mood img { z-index: -2; object-fit: cover; object-position: center 27%; }
+.night-mood::after { content: ""; z-index: -1; background: linear-gradient(transparent 14%, rgb(11 6 12 / 96%) 91%); }
+.night-mood b { font: 800 clamp(13px, 3.6vw, 18px)/1.16 var(--f-head); overflow-wrap: anywhere; }
+.night-mood b span { color: #ff7b8d; }
+
+.night-challenge-link img, .night-award img { flex: none; border-radius: 4px; }
+.night-challenge-link .app-arrow { margin-left: auto; color: var(--red); }
+.night-award span { display: block; color: var(--dim); font-size: 13px; }
+.night-award p { margin-top: 0; }
+.night-progress { width: 100%; accent-color: var(--red); }
+.night-days { padding: 0; list-style: none; }
+.night-days li {
+  display: grid;
+  grid-template-columns: 30px minmax(0,1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.night-days li.locked { color: var(--dim); }
+.night-days a { display: flex; min-height: 44px; align-items: center; text-decoration: underline; text-underline-offset: 3px; }
+.night-days small { color: #efa4af; }
+.night-days b, .night-days a { overflow-wrap: anywhere; }
+.night-days span { color: var(--red); font: 700 13px/1 var(--f-mono); }
+
+.night-stories { display: grid; gap: 8px; }
+.night-story { display: grid; grid-template-columns: 84px minmax(0,1fr); gap: 10px; align-items: center; }
+.night-story img { width: 84px; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
+.night-story p { margin: 5px 0 0; color: var(--dim); font-size: 13px; }
+.night-reader { overflow-wrap: anywhere; font-size: 16px; line-height: 1.65; }
+.night-reader > img { width: 100%; max-height: 390px; object-fit: cover; border: 1px solid var(--line); border-radius: 4px; }
+.night-reader blockquote { margin-inline: 0; padding-left: 12px; border-left: 2px solid #a92945; color: var(--dim); }
+.night-sound { margin-bottom: 12px; }
+.night-sound [aria-pressed=true], .night-setting [aria-pressed=true] { border-color: #d84558; background: #4b1324; }
+.night-setting { display: grid; gap: 6px; justify-items: start; }
+.night-setting > span { color: var(--dim); font-size: 13px; }
+
+#wrapview {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  color: var(--bone);
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .night-figure *, .night-figure { animation: none !important; }
+}
